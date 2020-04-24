@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.camerademo.utils.Camera2Util;
+import com.lilanz.camerademo.utils.FileUtil;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -220,9 +221,19 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
             byte[] bytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(bytes);
             //ImageFormat.JPEG格式直接转化为Bitmap格式。
-            Bitmap temp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            final Bitmap temp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             showMsg("imageSize:[" + temp.getWidth() + "," + temp.getHeight() + "]");
             ivPreview.setImageBitmap(temp);
+
+            // 保存图片
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    FileUtil.saveBitmap(Camera2Activity.this, temp);
+                }
+            };
+            thread.start();
 
             // 一定需要close，否则不会收到新的Image回调。
             image.close();

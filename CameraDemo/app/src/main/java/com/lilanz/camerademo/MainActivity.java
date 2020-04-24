@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.lilanz.camerademo.utils.FileUtil;
 import com.lilanz.camerademo.utils.StringUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -60,7 +61,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback, Vi
     private void openCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[] {Manifest.permission.CAMERA}, 1);
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
             }
         }
 
@@ -135,8 +136,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback, Vi
                         @Override
                         public void run() {
                             super.run();
-                            String path = StringUtil.getPictureFile(".png").getAbsolutePath();
-                            StringUtil.saveBitmap(bmp, path);
+                            String path = FileUtil.getPictureFile(MainActivity.this).getAbsolutePath();
+                            FileUtil.saveBitmap(MainActivity.this, bmp, path);
                         }
                     };
                     thread.start();
@@ -227,7 +228,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback, Vi
 //            mediaRecorder.setVideoFrameRate(20);
 
             // 设置视频文件输出的路径
-            String path = StringUtil.getPictureFile(".mp4").getAbsolutePath();
+            String path = FileUtil.getVideoFile(this).getAbsolutePath();
             showMsg("path=" + path);
             mediaRecorder.setOutputFile(path);
             mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
