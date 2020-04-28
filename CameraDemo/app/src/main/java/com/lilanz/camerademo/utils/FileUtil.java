@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class FileUtil {
 
-    private static final String PICTURE_FILE_NAME = "判定桌";
+    private static final String PICTURE_FILE_NAME = "picture";
 
     /**
      * 保存bitmap图片到本地内存

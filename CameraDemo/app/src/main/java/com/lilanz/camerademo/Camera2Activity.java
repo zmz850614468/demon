@@ -14,14 +14,17 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -33,7 +36,10 @@ import android.widget.Toast;
 
 import com.lilanz.camerademo.utils.Camera2Util;
 import com.lilanz.camerademo.utils.FileUtil;
+import com.lilanz.camerademo.utils.StringUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -44,6 +50,8 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
     private Button btCapture;
     private Button btOpen;
     private Button btClose;
+    private Button btStartVideo;
+    private Button btStopVideo;
     private ImageView ivPreview;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
@@ -85,8 +93,92 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
             case R.id.bt_focus:
                 focusRequest();
                 break;
+            case R.id.bt_start_video:
+                startRecordingVideo();
+                break;
+            case R.id.bt_stop_video:
+                stopRecordingVideo();
+                break;
 
         }
+    }
+
+    /**
+     * 开始视频录制。
+     */
+    private void startRecordingVideo() {
+        try {
+            //创建录制的session会话中的请求
+            CaptureRequest.Builder builder = null;
+            builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD);
+            builder.addTarget(surfaceHolder.getSurface());
+            builder.addTarget(mMediaRecorder.getSurface());
+            captureSession.setRepeatingRequest(builder.build(), null, msgHandle);
+            mMediaRecorder.start();
+            showMsg("开始录制视频");
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 停止视频播放
+     */
+    private void stopRecordingVideo() {
+        try {
+            captureSession.stopRepeating();
+            captureSession.abortCaptures();
+            captureSession.close();
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        mMediaRecorder.stop();
+        mMediaRecorder.reset();
+        cameraDevice.close();
+        showMsg("结束视频录制");
+    }
+
+    /**
+     * MediaRecorder
+     */
+    private MediaRecorder mMediaRecorder;
+
+    /**
+     * 设置媒体录制器的配置参数
+     * <p>
+     * 音频，视频格式，文件路径，频率，编码格式等等
+     *
+     * @throws IOException
+     */
+    private void setUpMediaRecorder() throws IOException {
+        mMediaRecorder = new MediaRecorder();
+
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+//        videoPath = FileUtils.createVideoDiskFile(appContext, FileUtils.createVideoFileName()).getAbsolutePath();
+        String videoPath = this.getExternalFilesDir(Environment.DIRECTORY_MOVIES).getAbsolutePath() + File.separator + StringUtil.getDataStr() + ".mp4";
+        mMediaRecorder.setOutputFile(videoPath);
+        mMediaRecorder.setVideoEncodingBitRate(10000000);
+        //每秒30帧
+        mMediaRecorder.setVideoFrameRate(30);
+//        mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
+        mMediaRecorder.setVideoSize(640, 480);
+        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+//        int rotation = this.getWindowManager().getDefaultDisplay().getRotation();
+//        switch (mSensorOrientation) {
+//            case SENSOR_ORIENTATION_DEFAULT_DEGREES:
+//                mMediaRecorder.setOrientationHint(DEFAULT_ORIENTATIONS.get(rotation));
+//                break;
+//            case SENSOR_ORIENTATION_INVERSE_DEGREES:
+//                mMediaRecorder.setOrientationHint(ORIENTATIONS.get(rotation));
+//                break;
+//            default:
+//                break;
+//        }
+        mMediaRecorder.prepare();
     }
 
     // 打开相机，并预览
@@ -121,8 +213,17 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
     }
 
     private void createCameraSession() {
+        if (captureSession != null) {
+            captureSession.close();
+        }
+
+        try {
+            setUpMediaRecorder();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         CaptureSessionHelper sessionHelper = new CaptureSessionHelper(cameraDevice,
-                Arrays.asList(surfaceHolder.getSurface(), imageReader.getSurface()));
+                Arrays.asList(surfaceHolder.getSurface(), imageReader.getSurface(), mMediaRecorder.getSurface()));
         sessionHelper.setCreateCaptureSesseionListener(new CaptureSessionHelper.CreateCaptureSessionListener() {
             @Override
             public void onSucceed(CameraCaptureSession cameraCaptureSession) {
@@ -247,7 +348,6 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     hasCameraPermisson = true;
                 }
-                break;
         }
     }
 
@@ -258,11 +358,16 @@ public class Camera2Activity extends Activity implements View.OnClickListener {
         btCapture = findViewById(R.id.bt_capture);
         btOpen = findViewById(R.id.bt_open);
         btClose = findViewById(R.id.bt_close);
+        btStartVideo = findViewById(R.id.bt_start_video);
+        btStopVideo = findViewById(R.id.bt_stop_video);
+        btStopVideo.setOnClickListener(this);
+        btStartVideo.setOnClickListener(this);
         btFocus.setOnClickListener(this);
         btClose.setOnClickListener(this);
         btOpen.setOnClickListener(this);
         btCapture.setOnClickListener(this);
         surfaceView = findViewById(R.id.surfaceview);
+
         surfaceHolder = surfaceView.getHolder();
 
         imageReader = ImageReader.newInstance(1600, 1200, ImageFormat.JPEG, 1);
