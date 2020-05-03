@@ -3,14 +3,12 @@ package com.lilanz.camerademo.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.graphics.Rect;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.params.MeteringRectangle;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -19,6 +17,8 @@ import android.view.Surface;
 public class Camera2Util {
 
     public static final int REQUEST_CAMERA_CODE = 1;
+
+
 
     /**
      * 检查并申请相机权限
@@ -38,11 +38,12 @@ public class Camera2Util {
 
     /**
      * 默认获取后置摄像头 id
-     *
      * @param manager
+     * @param cameraFacing
+     * @param usedId 已经在使用的id值
      * @return 返回后置摄像头id，否则为null
      */
-    public static String getCameraId(CameraManager manager) {
+    public static String getCameraId(CameraManager manager, int cameraFacing, String usedId) {
         try {
             for (String id : manager.getCameraIdList()) {
                 // 获取相机属性
@@ -53,7 +54,7 @@ public class Camera2Util {
                 StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
                 // 打开后置摄像头
-                if (CameraCharacteristics.LENS_FACING_BACK == facing) {
+                if (cameraFacing == facing && !id.equals(usedId)) {
                     return id;
                 }
             }
@@ -76,7 +77,6 @@ public class Camera2Util {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             for (Surface surface : surfaces) {
                 builder.addTarget(surface);
-
             }
 
             // 对焦模式必须设置为AUTO
@@ -112,7 +112,7 @@ public class Camera2Util {
                     CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
 
             // 对获取的图片进行旋转
-            builder.set(CaptureRequest.JPEG_ORIENTATION, 90);
+//            builder.set(CaptureRequest.JPEG_ORIENTATION, 90);
 
             return builder.build();
         } catch (CameraAccessException ex) {

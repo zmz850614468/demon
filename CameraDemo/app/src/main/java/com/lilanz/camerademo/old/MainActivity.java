@@ -1,4 +1,4 @@
-package com.lilanz.camerademo;
+package com.lilanz.camerademo.old;
 
 import android.Manifest;
 import android.app.Activity;
@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
@@ -22,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.lilanz.camerademo.R;
 import com.lilanz.camerademo.utils.FileUtil;
 import com.lilanz.camerademo.utils.StringUtil;
 

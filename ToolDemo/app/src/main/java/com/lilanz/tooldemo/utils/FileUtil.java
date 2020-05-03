@@ -2,7 +2,9 @@ package com.lilanz.tooldemo.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -63,6 +65,22 @@ public class FileUtil {
         dir.mkdirs();
         if (dir.canWrite()) {
             return new File(dir, StringUtil.getDataStr() + ".png");
+        }
+        return null;
+    }
+
+    /**
+     * 获取视频保存路径：
+     * 主目录：安卓系统的 Movies 文件下
+     *
+     * @return 图片文件的具体路径
+     */
+    public static final File getVideoFile(Context context) {
+        // 子目录文件名："myPicture"
+        File dir = new File(context.getExternalFilesDir(Environment.DIRECTORY_MOVIES), "PICTURE_FILE_NAME");
+        dir.mkdirs();
+        if (dir.canWrite()) {
+            return new File(dir, StringUtil.getDataStr() + ".mp4");
         }
         return null;
     }

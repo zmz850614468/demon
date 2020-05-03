@@ -22,10 +22,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".old.MainActivity">
         </activity>
 
         <activity android:name=".Camera2Activity">
+        </activity>
+
+        <activity android:name=".DoubleCameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
