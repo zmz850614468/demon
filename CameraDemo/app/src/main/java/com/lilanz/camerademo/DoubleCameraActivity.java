@@ -179,6 +179,9 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
 
     // 开启前置摄像头会话
     private void createFrontPreviewSession() {
+        frontImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 2);
+        frontImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
+
         CaptureSessionHelper sessionHelper = new CaptureSessionHelper(frontCamera,
                 Arrays.asList(frontSurface.getHolder().getSurface(), frontImageReader.getSurface()));
         sessionHelper.setCreateCaptureSesseionListener(new CaptureSessionHelper.CreateCaptureSessionListener() {
@@ -224,6 +227,10 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
             frontCamera = null;
             showMsg("关闭前置摄像头");
         }
+        if (frontImageReader != null) {
+            frontImageReader.close();
+            frontImageReader = null;
+        }
     }
 
     // 前置摄像头截图请求
@@ -240,11 +247,7 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
 
     // 打开后置摄像头
     private void openBackCamera() {
-        try {
-            initBackMediaRecorder();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         String cameraId = Camera2Util.getCameraId(cameraManager, CameraCharacteristics.LENS_FACING_BACK, frontCamearId);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -263,6 +266,14 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
 
     // 开启后置摄像头会话
     private void createBackPreviewSession() {
+        backImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 2);
+        backImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
+        try {
+            initBackMediaRecorder();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         CaptureSessionHelper sessionHelper = new CaptureSessionHelper(backCamera,
                 Arrays.asList(backSurface.getHolder().getSurface(), backImageReader.getSurface(), backMediaRecorder.getSurface()));
         sessionHelper.setCreateCaptureSesseionListener(new CaptureSessionHelper.CreateCaptureSessionListener() {
@@ -307,6 +318,10 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
             backCamera.close();
             backCamera = null;
             showMsg("关闭后置摄像头");
+        }
+        if (backImageReader != null) {
+            backImageReader.close();
+            backImageReader = null;
         }
     }
 
@@ -433,10 +448,7 @@ public class DoubleCameraActivity extends Activity implements View.OnClickListen
         btOpenBack.setOnClickListener(this);
         btCloseBack.setOnClickListener(this);
 
-        frontImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 2);
-        frontImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
-        backImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 2);
-        backImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
+
     }
 
     private ImageReader.OnImageAvailableListener onImageAvailableListener = new ImageReader.OnImageAvailableListener() {
