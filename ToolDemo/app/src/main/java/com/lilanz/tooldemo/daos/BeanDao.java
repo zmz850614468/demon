@@ -63,6 +63,16 @@ public class BeanDao<T> {
         }
     }
 
+    public void deleteById(int id){
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                dao.deleteById(id);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
     // 插入数据集合
     public void insertList(List<T> list){
         try {

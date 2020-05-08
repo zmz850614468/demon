@@ -2,20 +2,29 @@ package com.lilanz.tooldemo.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Build;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.support.annotation.RequiresApi;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class FileUtil {
 
     private static final String PICTURE_FILE_NAME = "恶天使魔";
+
+    /**
+     * 保存字节图片
+     *
+     * @param context
+     * @param imageBytes    字节图片数据
+     * @param path          保存的图片路径
+     */
+    public static void saveImageByte(Context context, byte[] imageBytes, String path) {
+        Bitmap temp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        FileUtil.saveBitmap(context, temp, path);
+    }
 
     /**
      * 保存bitmap图片到本地内存
