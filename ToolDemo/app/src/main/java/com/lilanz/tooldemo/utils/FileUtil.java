@@ -70,7 +70,7 @@ public class FileUtil {
      */
     public static final File getPictureFile(Context context) {
         // 子目录文件名："myPicture"
-        File dir = new File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM), "PICTURE_FILE_NAME");
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DCIM);
         dir.mkdirs();
         if (dir.canWrite()) {
             return new File(dir, StringUtil.getDataStr() + ".png");
@@ -86,7 +86,7 @@ public class FileUtil {
      */
     public static final File getVideoFile(Context context) {
         // 子目录文件名："myPicture"
-        File dir = new File(context.getExternalFilesDir(Environment.DIRECTORY_MOVIES), "PICTURE_FILE_NAME");
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
         dir.mkdirs();
         if (dir.canWrite()) {
             return new File(dir, StringUtil.getDataStr() + ".mp4");

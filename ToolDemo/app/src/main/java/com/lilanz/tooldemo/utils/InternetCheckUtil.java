@@ -17,12 +17,11 @@ public class InternetCheckUtil {
      * @param url      需要检测的网址
      * @param times    需要ping的次数
      */
-    private static void checkInternet(final Activity activity, final String url, final int times) {
+    public static void checkInternet(final Activity activity, final String url, final int times) {
         Thread checkThread = new Thread() {
             @Override
             public void run() {
                 super.run();
-
 
                 int receiveTimes = 0;
                 int timeCount = 0;
@@ -60,7 +59,7 @@ public class InternetCheckUtil {
                         final float averageTime = timeCount * 1.0f / receiveTimes;   // 平均收包时间
                         String msg = null;
                         if (receiveTimes == 0) {
-                            msg = "网络状态较差，访问速度较差";
+                            msg = "网络状态差，访问速度差";
                         }
 
                         // 收包情况大于90%；平均时间：60ms一下；100ms一下；100ms以上
@@ -93,11 +92,11 @@ public class InternetCheckUtil {
                             // 收包情况小于60%
                         } else {
                             if (averageTime < 60.0f) {
-                                msg = "网络状态较差，访问速度良好";
+                                msg = "网络状态差，访问速度良好";
                             } else if (averageTime < 100.0f) {
-                                msg = "网络状态较差，访问速度一般";
+                                msg = "网络状态差，访问速度一般";
                             } else {
-                                msg = "网络状态较差，访问速度较差";
+                                msg = "网络状态差，访问速度较差";
                             }
                         }
                         final String finalMsg = msg;
