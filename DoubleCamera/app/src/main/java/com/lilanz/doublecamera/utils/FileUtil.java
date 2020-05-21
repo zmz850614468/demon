@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.utils;
+package com.lilanz.doublecamera.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.camera2;
+package com.lilanz.doublecamera.camera2;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,10 +24,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.camera2.utils.Camera2Util;
-import com.lilanz.tooldemo.utils.FileUtil;
-import com.lilanz.tooldemo.utils.StringUtil;
+import com.lilanz.doublecamera.R;
+import com.lilanz.doublecamera.camera2.utils.Camera2Util;
+import com.lilanz.doublecamera.utils.FileUtil;
+import com.lilanz.doublecamera.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,8 +74,8 @@ public class Camera2Helper {
     }
 
     // 打开摄像头
-    public void openCamera(int cameraFacing) {
-        String cameraId = Camera2Util.getCameraId(cameraManager, cameraFacing);
+    public void openCamera(String id) {
+        String cameraId = Camera2Util.getCameraId(cameraManager, id);
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -109,6 +109,7 @@ public class Camera2Helper {
             cameraStatus = CAMERA_STATUS_INIT;
             camera.close();
             Log.d(TAG, "摄像头断开连接 ");
+            showToast("摄像头断开连接 ");
         }
 
         @Override
@@ -116,6 +117,7 @@ public class Camera2Helper {
             cameraStatus = CAMERA_STATUS_INIT;
             camera.close();
             Log.d(TAG, "打开摄像头错误 ");
+            showToast("打开摄像头错误 ");
         }
     };
 

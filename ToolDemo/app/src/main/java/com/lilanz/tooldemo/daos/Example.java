@@ -2,17 +2,17 @@ package com.lilanz.tooldemo.daos;
 
 import android.content.Context;
 
-import com.lilanz.tooldemo.beans.FlawBean;
+import com.lilanz.tooldemo.beans.StudentBean;
 
 public class Example {
 
-    public void insert(Context context, FlawBean bean){
-        BeanDao dao = BeanDao.getDaoOperate(context, FlawBean.class);
+    public void insert(Context context, StudentBean bean){
+        BeanDao dao = BeanDao.getDaoOperate(context, StudentBean.class);
         dao.insert(bean);
     }
 
-    public void delete(Context context, FlawBean bean){
-        BeanDao dao = BeanDao.getDaoOperate(context, FlawBean.class);
+    public void delete(Context context, StudentBean bean){
+        BeanDao dao = BeanDao.getDaoOperate(context, StudentBean.class);
         dao.delete(bean);
     }
 }

@@ -10,7 +10,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.lilanz.tooldemo.beans.FlawBean;
+import com.lilanz.tooldemo.beans.StudentBean;
 
 import java.sql.SQLException;
 
@@ -67,7 +67,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, FlawBean.class);
+            TableUtils.createTable(connectionSource, StudentBean.class);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, FlawBean.class, true);
+            TableUtils.dropTable(connectionSource, StudentBean.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException ex) {
             ex.printStackTrace();
