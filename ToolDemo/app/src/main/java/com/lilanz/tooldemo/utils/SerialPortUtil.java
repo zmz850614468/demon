@@ -6,7 +6,7 @@ public class SerialPortUtil {
      * @param buffer 串口传回来的16进制数据
      * @return 屏幕能够显示的16进制数据
      */
-    public static String byte2hex(byte[] buffer) {
+    public static String byte2hexStr(byte[] buffer) {
         String h = "";
         for (int i = 0; i < buffer.length; i++) {
             String temp = Integer.toHexString(buffer[i] & 0xFF);
@@ -23,7 +23,7 @@ public class SerialPortUtil {
      * @param inputStr 屏幕端显示的16进制字符串
      * @return 机器能够识别的16进制字节（可以直接发给串口使用）
      */
-    public static byte[] hexStringToString(String inputStr) {
+    public static byte[] toRobitHexStr(String inputStr) {
         if (inputStr == null || inputStr.equals("")) {
             return null;
         }
@@ -38,8 +38,6 @@ public class SerialPortUtil {
         }
         return baKeyword;
     }
-
-
 
 
 }

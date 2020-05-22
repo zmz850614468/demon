@@ -50,7 +50,7 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-                camera2Helper.openCamera(CameraCharacteristics.LENS_FACING_FRONT);
+                camera2Helper.openCamera(0);
                 break;
             case R.id.bt_close:
                 camera2Helper.closeCamera();

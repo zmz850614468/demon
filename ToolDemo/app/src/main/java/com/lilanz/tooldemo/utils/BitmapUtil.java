@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -16,6 +17,24 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.Hashtable;
 
 public class BitmapUtil {
+
+    /**
+     * scrollView转为Bitmap ： 可以处理布局超出界面的情况
+     * @param scrollView
+     * @return
+     */
+    public static Bitmap getBitmapByView(ScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+        }
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.RGB_565);
+        final Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.WHITE);
+        scrollView.draw(canvas);
+        return bitmap;
+    }
 
     /**
      * 获取视图的bitmap图片
