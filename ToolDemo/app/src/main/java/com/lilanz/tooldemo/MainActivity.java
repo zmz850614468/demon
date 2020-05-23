@@ -7,16 +7,18 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lilanz.tooldemo.camera2.Camera2ExaActivity;
+import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private Button btCamera2;
+    private Button btInternalCheck;
+    private Button btCheckUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initUI();
     }
 
@@ -27,11 +29,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent(this, Camera2ExaActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.bt_internal_check:
+                InternetCheckUtil.internetCheck(this, "webt.lilang.com");//"webt.lilang.com" ; "www.baidu.com"
+                break;
+            case R.id.bt_:
+                break;
         }
     }
 
     private void initUI() {
         btCamera2 = findViewById(R.id.bt_camera2);
+        btInternalCheck = findViewById(R.id.bt_internal_check);
+        btCheckUpdate=findViewById(R.id.bt_);
+        btCheckUpdate.setOnClickListener(this);
+        btInternalCheck.setOnClickListener(this);
         btCamera2.setOnClickListener(this);
     }
 }

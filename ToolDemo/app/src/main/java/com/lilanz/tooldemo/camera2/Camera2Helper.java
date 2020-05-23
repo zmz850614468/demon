@@ -38,6 +38,13 @@ import java.util.List;
 public class Camera2Helper {
 
     private static final String TAG = "Camera2Helper";
+    // 截图的分辨率
+    private static final int CAPTURE_WIDTH = 1280;
+    private static final int CAPTURE_HEIGHT = 960;
+    // 视频录制的分辨率
+    private static final int VIDEO_WIDTH = 640;
+    private static final int VIDEO_HEIGHT = 480;
+
 
     // 摄像头
     private SurfaceView cameraSurface;
@@ -130,7 +137,7 @@ public class Camera2Helper {
             }
         }
         // 添加截图功能
-        cameraImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 5);
+        cameraImageReader = ImageReader.newInstance(CAPTURE_WIDTH, CAPTURE_HEIGHT, ImageFormat.JPEG, 5);
         cameraImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
 
         List<Surface> surfaceList = new ArrayList<>();
@@ -234,7 +241,7 @@ public class Camera2Helper {
         //每秒16帧
         mediaRecorder.setVideoFrameRate(16);
 //        mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
-        mediaRecorder.setVideoSize(640, 480);
+        mediaRecorder.setVideoSize(VIDEO_WIDTH, VIDEO_HEIGHT);
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 //        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();

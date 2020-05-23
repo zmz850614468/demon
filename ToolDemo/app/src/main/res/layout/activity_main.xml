@@ -14,4 +14,20 @@
         android:background="@drawable/selector"
         android:text="摄像头" />
 
+    <Button
+        android:id="@+id/bt_internal_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="网络测试" />
+
+    <Button
+        android:id="@+id/bt_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="" />
+
 </LinearLayout>
