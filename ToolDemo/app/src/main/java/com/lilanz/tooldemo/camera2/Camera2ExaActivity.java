@@ -28,7 +28,7 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera2);
+        setContentView(R.layout.activity_camera2_exa);
 
         initUI();
         // 相机和语音录制权限请求

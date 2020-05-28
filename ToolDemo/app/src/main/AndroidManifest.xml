@@ -23,6 +23,8 @@
         </activity>
 
         <activity android:name=".camera2.Camera2ExaActivity"></activity>
+
+        <activity android:name=".qrcode.CodeScanExaActivity"></activity>
     </application>
 
 </manifest>

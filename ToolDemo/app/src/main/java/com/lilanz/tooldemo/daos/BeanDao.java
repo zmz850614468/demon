@@ -84,6 +84,17 @@ public class BeanDao<T> {
         }
     }
 
+    // 更新数据
+    public void update(T t){
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                dao.createOrUpdate(t);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     // 删除数据集合
     public void deleteList(List<T> list){
         try {

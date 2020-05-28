@@ -315,6 +315,8 @@ public class Camera2Helper {
                     cameraSession.abortCaptures();
                 } catch (CameraAccessException e) {
                     e.printStackTrace();
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
                 cameraSession.close();
                 cameraSession = null;
