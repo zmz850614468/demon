@@ -10,12 +10,13 @@ import retrofit2.http.POST;
 public interface APIService {
 
     /**
-     * 视频数据上传成功接口
+     * 步骤一：请求开发编号列表
      *
      * @param body
      * @return
      */
     @Headers("Content-Type:application/json;charset=UTF-8")
-    @POST("svr-ecommodity/eVideoStatus/setVideoStatus")
-    Call<ResponseBody> uploadVideoSucceed(@Body RequestBody body);
+    @POST("erpYpPicUpload/kfbh")
+    Call<ResponseBody> getNumberList(@Body RequestBody body);
+
 }
