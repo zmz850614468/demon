@@ -1,6 +1,5 @@
 package com.lilanz.tooldemo.camera2;
 
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.support.annotation.NonNull;
@@ -41,7 +40,7 @@ public class CaptureSessionHelper {
                             }
                         }
                     }, null);
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e("CaptureSessionHelper", "create: " + e.toString());
         }

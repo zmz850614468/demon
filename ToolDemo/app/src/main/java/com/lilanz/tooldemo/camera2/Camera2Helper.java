@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -96,7 +95,7 @@ public class Camera2Helper {
             } else {
                 showToast("摄像头已经开启");
             }
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         cameraSurface.setBackground(null);
@@ -132,7 +131,7 @@ public class Camera2Helper {
         if (canRecord) {
             try {
                 initMediaRecorder();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -157,7 +156,7 @@ public class Camera2Helper {
                 try {
                     cameraSession.setRepeatingRequest(previewRequest, null, null);
                     Log.d(TAG, "开启摄像头预览");
-                } catch (CameraAccessException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -213,7 +212,7 @@ public class Camera2Helper {
                 showToast("开始截图");
                 cameraSession.capture(Camera2Util.getCaptureRequest(cameraDevie, new Surface[]{cameraImageReader.getSurface()}),
                         null, null);
-            } catch (CameraAccessException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -226,7 +225,7 @@ public class Camera2Helper {
      *
      * @throws IOException
      */
-    private void initMediaRecorder() throws IOException {
+    private void initMediaRecorder() throws Exception {
         mediaRecorder = new MediaRecorder();
 
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -276,7 +275,7 @@ public class Camera2Helper {
                 mediaRecorder.start();
 //                isRecording = true;
                 showToast("开始录制视频");
-            } catch (CameraAccessException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (cameraStatus == CAMERA_STATUS_INIT) {
@@ -313,8 +312,6 @@ public class Camera2Helper {
                 try {
                     cameraSession.stopRepeating();
                     cameraSession.abortCaptures();
-                } catch (CameraAccessException e) {
-                    e.printStackTrace();
                 } catch (Exception e){
                     e.printStackTrace();
                 }

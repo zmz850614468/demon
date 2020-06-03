@@ -9,15 +9,18 @@ import com.lilanz.tooldemo.daos.BeanDao;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Exa {
@@ -85,5 +88,54 @@ public class Exa {
         }
 
         return false;
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param zldh      指令单号
+     * @param type      类型
+     * @param imagePath
+     */
+    private void uploadPic(String zldh, String type, String imagePath) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+
+        File file = new File(imagePath);
+        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//        builder.addFormDataPart("zlmxidStr", zldh);
+        // TODO 正式版，一定要修改
+        builder.addFormDataPart("zlmxidStr", "412079");
+        builder.addFormDataPart("typeStr", type);
+        builder.addFormDataPart("file", file.getName(), body);
+
+        List<MultipartBody.Part> parts = builder.build().parts();
+
+        APIService apiService = APIManager.getService(APIService.class);
+        Call<ResponseBody> uploadPic = apiService.uploadPic(parts);
+        uploadPic.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    try {
+                        String msg = response.body().string();
+                        JSONObject object = new JSONObject(msg);
+                        if (object.has("errcode") && object.getInt("errcode") == 0) {
+//                            showToast("照片上传成功");
+                        } else {
+//                            showToast("照片上传失败");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                showToast("照片上传请求失败");
+            }
+        });
+
     }
 }

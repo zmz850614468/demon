@@ -3,7 +3,6 @@ package com.lilanz.tooldemo.camera2.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -60,7 +59,7 @@ public class Camera2Util {
                     return id;
                 }
             }
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -81,7 +80,7 @@ public class Camera2Util {
                     return id;
                 }
             }
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -103,7 +102,7 @@ public class Camera2Util {
                     return id;
                 }
             }
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -134,7 +133,7 @@ public class Camera2Util {
             // 开启相机预览并添加事件
             return builder.build();
 
-        } catch (CameraAccessException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             Log.e("Camera2Util", "getPreviewRequest: " + ex.toString());
         }
@@ -161,7 +160,7 @@ public class Camera2Util {
 //            builder.set(CaptureRequest.JPEG_ORIENTATION, 90);
 
             return builder.build();
-        } catch (CameraAccessException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             Log.e("Camera2Util", "getPreviewRequest: " + ex.toString());
         }
@@ -185,7 +184,7 @@ public class Camera2Util {
             builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
             builder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START);
             return builder.build();
-        } catch (CameraAccessException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             Log.e("Camera2Util", "getPreviewRequest: " + ex.toString());
         }
