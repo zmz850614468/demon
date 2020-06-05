@@ -20,6 +20,7 @@ import retrofit2.Response;
 
 /**
  * json数据格式的网络请求和解析
+ *
  * @param <T>
  */
 public class APIRequest<T> {
@@ -82,7 +83,7 @@ public class APIRequest<T> {
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     if (parseListener != null) {
-                        parseListener.onError("数据请求失败");
+                        parseListener.onError(t.toString());
                     }
                 }
             });
