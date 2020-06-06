@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lilanz.tooldemo.camera2.Camera2ExaActivity;
+import com.lilanz.tooldemo.daos.DaoExaActivity;
 import com.lilanz.tooldemo.qrcode.CodeScanExaActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
@@ -15,7 +16,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button btScanCode;
     private Button btCamera2;
     private Button btInternalCheck;
-    private Button btCheckUpdate;
+    private Button btDaoTest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 intent = new Intent(this, CodeScanExaActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.bt_dao_test:
+                intent = new Intent(this, DaoExaActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -45,9 +51,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btScanCode = findViewById(R.id.bt_scan_code);
         btCamera2 = findViewById(R.id.bt_camera2);
         btInternalCheck = findViewById(R.id.bt_internal_check);
-        btCheckUpdate = findViewById(R.id.bt_);
+        btDaoTest = findViewById(R.id.bt_dao_test);
         btScanCode.setOnClickListener(this);
-        btCheckUpdate.setOnClickListener(this);
+        btDaoTest.setOnClickListener(this);
         btInternalCheck.setOnClickListener(this);
         btCamera2.setOnClickListener(this);
     }

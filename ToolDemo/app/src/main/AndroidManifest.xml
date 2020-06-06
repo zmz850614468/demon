@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".daos.DaoExaActivity"></activity>
+
         <activity android:name=".camera2.Camera2ExaActivity"></activity>
 
         <activity android:name=".qrcode.CodeScanExaActivity"></activity>
