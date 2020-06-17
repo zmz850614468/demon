@@ -3,14 +3,11 @@ package com.lilanz.tooldemo.API;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.lilanz.tooldemo.beans.StudentBean;
-import com.lilanz.tooldemo.daos.BeanDao;
+import com.lilanz.tooldemo.beans.BaseBean;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +22,7 @@ import retrofit2.Response;
 
 public class Exa {
 
-    private APIRequest<StudentBean> numberBeanAPIRequest;
+    private APIRequest<BaseBean> numberBeanAPIRequest;
 
     /**
      * 第一种请求方式
@@ -33,15 +30,15 @@ public class Exa {
     public void requestDemo1() {
 
         if (numberBeanAPIRequest == null) {
-            numberBeanAPIRequest = new APIRequest<StudentBean>(StudentBean.class);
-            numberBeanAPIRequest.setParseListener(new ParseListener<StudentBean>() {
+            numberBeanAPIRequest = new APIRequest<BaseBean>(BaseBean.class);
+            numberBeanAPIRequest.setParseListener(new ParseListener<BaseBean>() {
                 @Override
-                public void jsonParsed(@NonNull List<StudentBean> beanList) {
+                public void jsonParsed(@NonNull List<BaseBean> beanList) {
                     // 获取List数据
                 }
 
                 @Override
-                public void jsonParsed(StudentBean studentBean) {
+                public void jsonParsed(BaseBean studentBean) {
                     // 获取Object数据
                 }
 
@@ -57,7 +54,7 @@ public class Exa {
             });
         }
         Map<String, String> map = new HashMap<String, String>();
-        numberBeanAPIRequest.requestForList(map, "getNumberList", APIRequest.PARSE_TYPE_LIST);
+        numberBeanAPIRequest.requestFor(map, "getNumberList", APIRequest.PARSE_TYPE_LIST);
 
     }
 

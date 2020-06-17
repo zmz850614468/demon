@@ -22,6 +22,6 @@ public class TeacherBean {
     public String age;
 
     @ForeignCollectionField(eager = true)
-    public ForeignCollection<StudentBean> studentList;
+    public ForeignCollection<BaseBean> studentList;
 
 }

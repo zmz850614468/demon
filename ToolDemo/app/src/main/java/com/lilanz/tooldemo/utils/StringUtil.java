@@ -6,7 +6,7 @@ import java.util.Date;
 public class StringUtil {
 
     public static boolean isEmpty(String str) {
-        return str == null || "".equals(str) ? true : false;
+        return str == null || "".equals(str);
     }
 
     /**

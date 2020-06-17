@@ -23,7 +23,7 @@ public class SerialPortUtil {
      * @param inputStr 屏幕端显示的16进制字符串
      * @return 机器能够识别的16进制字节（可以直接发给串口使用）
      */
-    public static byte[] toRobitHexStr(String inputStr) {
+    public static byte[] hexStr2Byte(String inputStr) {
         if (inputStr == null || inputStr.equals("")) {
             return null;
         }

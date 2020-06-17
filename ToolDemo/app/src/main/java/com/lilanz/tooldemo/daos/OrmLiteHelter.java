@@ -10,7 +10,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.lilanz.tooldemo.beans.StudentBean;
+import com.lilanz.tooldemo.beans.BaseBean;
 
 import java.sql.SQLException;
 
@@ -42,19 +42,25 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
         return instance;
     }
 
+    /**
+     * 获取bean的Dao对象
+     *
+     * @param clazz
+     * @return
+     */
     public Dao getDao(Class clazz) {
         Dao dao = null;
         String className = clazz.getSimpleName();
-        if (daos.containsKey(className)){
+        if (daos.containsKey(className)) {
             dao = daos.get(className);
         }
-        if (dao == null){
-            synchronized (DATA_LOCK){
-                if (dao == null){
+        if (dao == null) {
+            synchronized (DATA_LOCK) {
+                if (dao == null) {
                     try {
                         dao = super.getDao(clazz);
                         daos.put(className, dao);
-                    }catch (SQLException ex){
+                    } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -64,19 +70,33 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
         return dao;
     }
 
+    /**
+     * 创建表
+     *
+     * @param database
+     * @param connectionSource
+     */
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, StudentBean.class);
+            TableUtils.createTable(connectionSource, BaseBean.class);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     * 更新表
+     *
+     * @param database
+     * @param connectionSource
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, StudentBean.class, true);
+            TableUtils.dropTable(connectionSource, BaseBean.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException ex) {
             ex.printStackTrace();

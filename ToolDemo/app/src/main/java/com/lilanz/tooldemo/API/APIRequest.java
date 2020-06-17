@@ -30,7 +30,7 @@ public class APIRequest<T> {
     public static final int PARSE_TYPE_LIST = 2;
     public static final int PARSE_TYPE_NULL = 3;
 
-    private ParseListener parseListener;
+    private ParseListener<T> parseListener;
     private Class clazz;
 
     public APIRequest(Class clazz) {
@@ -42,7 +42,7 @@ public class APIRequest<T> {
      * @param methodName 要调用的方法名
      * @param parseType  数据解析的类型
      */
-    public void requestForList(@NonNull Map<String, String> map, @NonNull String methodName, final int parseType) {
+    public void requestFor(@NonNull Map<String, String> map, @NonNull String methodName, final int parseType) {
         String entity = new Gson().toJson(map);
         MediaType mediaType = MediaType.parse("application/json; charset=UTF-8");
         RequestBody body = RequestBody.create(mediaType, entity);
@@ -139,7 +139,7 @@ public class APIRequest<T> {
         }
     }
 
-    public void setParseListener(ParseListener parseListener) {
+    public void setParseListener(ParseListener<T> parseListener) {
         this.parseListener = parseListener;
     }
 }

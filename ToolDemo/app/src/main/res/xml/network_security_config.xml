@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 为android系统9.0以上的添加网络请求权限 -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

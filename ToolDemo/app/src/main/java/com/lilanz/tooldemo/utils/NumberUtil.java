@@ -19,7 +19,7 @@ public class NumberUtil {
     /**
      * 判断是否为整数
      */
-    public static boolean isInteger(String str) {
+    public static boolean isInt(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
@@ -38,7 +38,7 @@ public class NumberUtil {
      * @param hexStr 屏幕端显示的16进制数据
      * @return 屏幕端显示的10进制数据
      */
-    public static int hexStr2Int(@NonNull String hexStr) {
+    public static int hex2Int(@NonNull String hexStr) {
         int count = 0;
         int num = 0;
         for (char c : hexStr.toCharArray()) {
@@ -75,8 +75,5 @@ public class NumberUtil {
         }
         return count;
     }
-
-
-
 
 }

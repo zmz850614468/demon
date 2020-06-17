@@ -3,7 +3,7 @@
     <!--  start:常用颜色定义  -->
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="gray">#CCCCCC</color>
+    <color name="gray">#E9ECF0</color>
     <color name="black">#000000</color>
     <color name="red">#FF0033</color>
     <color name="deepRed">#CC0033</color>

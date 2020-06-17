@@ -18,7 +18,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button btInternalCheck;
     private Button btDaoTest;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
