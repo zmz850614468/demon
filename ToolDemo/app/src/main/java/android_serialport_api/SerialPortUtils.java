@@ -146,7 +146,7 @@ public class SerialPortUtils {
             String low_2 = Integer.toHexString(buffer[4] & 0xff);
             String hig_1 = Integer.toHexString(buffer[5] & 0xff);
             String hig_2 = Integer.toHexString(buffer[6] & 0xff);
-            int num = NumberUtil.hexStr2Int(hig_1 + hig_2 + low_1 + low_2);
+            int num = NumberUtil.hex2Int(hig_1 + hig_2 + low_1 + low_2);
 
             DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
             String result = decimalFormat.format(num / 1000.00f);//format 返回的是字符串
@@ -161,7 +161,7 @@ public class SerialPortUtils {
             String type = SerialPortUtil.byte2hexStr(new byte[]{buffer[2]});
             String str_2 = SerialPortUtil.byte2hexStr(new byte[]{buffer[3]});
             String str_3 = SerialPortUtil.byte2hexStr(new byte[]{buffer[4]});
-            int num = NumberUtil.hexStr2Int(str_2 + str_3);
+            int num = NumberUtil.hex2Int(str_2 + str_3);
             if (onDataReceiveListener != null) {
                 if ("aa550a".equals(msgType)) {
                     // 有布数据

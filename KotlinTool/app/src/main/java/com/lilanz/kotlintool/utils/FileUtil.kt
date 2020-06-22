@@ -28,7 +28,8 @@ class FileUtil {
          */
         fun getVideoFile(context: Context): File? {
             var dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES)
-            if (dir != null && dir.mkdirs() && dir.canWrite()) {
+            dir.mkdirs()
+            if (dir != null && dir.canWrite()) {
                 return File(dir, StringUtil.getDataStr() + ".mp4")
             }
             return null
@@ -37,12 +38,12 @@ class FileUtil {
         /**
          * 获取视频地址名字
          */
-        fun getVidoFile(context: Context, videoName: String): File? {
+        fun getVideoFile(context: Context, videoName: String?): File? {
             val dir =
                 context.getExternalFilesDir(Environment.DIRECTORY_MOVIES)
             dir!!.mkdirs()
             return if (dir.canWrite()) {
-                File(dir, videoName + ".mp4")
+                File(dir, "$videoName.mp4")
             } else null
         }
 

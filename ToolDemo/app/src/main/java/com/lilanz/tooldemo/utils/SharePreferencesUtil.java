@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SharePreferencesUtil {
 
-    private static final String SHARED_PREFERENCE_NAME = "sharedClothMeasure";
+    private static final String SHARED_PREFERENCE_NAME = "shared";
     private static final String PARTERN_ID = "parternId";   // 合作者Id
 
     private static SharedPreferences instance = null;
