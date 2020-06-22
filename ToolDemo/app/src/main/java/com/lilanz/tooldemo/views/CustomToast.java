@@ -1,6 +1,7 @@
 package com.lilanz.tooldemo.views;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class CustomToast {
     public void show(String tip) {
         tvTip.setTextColor(context.getResources().getColor(R.color.black));
         tvTip.setText(tip);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -57,6 +59,7 @@ public class CustomToast {
     public void errShow(String tip) {
         tvTip.setTextColor(context.getResources().getColor(R.color.red));
         tvTip.setText(tip);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
