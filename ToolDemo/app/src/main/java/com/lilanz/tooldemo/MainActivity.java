@@ -14,12 +14,10 @@ import com.lilanz.tooldemo.qrcode.CodeScanExaActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 import com.lilanz.tooldemo.views.CustomToast;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private Button btScanCode;
-    private Button btCamera2;
-    private Button btInternalCheck;
-    private Button btDaoTest;
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +27,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_main);
-        initUI();
+        ButterKnife.bind(this);
     }
 
-    @Override
+    @OnClick({R.id.bt_internal_check, R.id.bt_camera2, R.id.bt_scan_code, R.id.bt_dao_test})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_camera2:
@@ -51,19 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.bt_dao_test:
                 intent = new Intent(this, DaoExaActivity.class);
                 startActivity(intent);
-                CustomToast.errShow(this, "错误提醒信息。。。");
+                CustomToast.testShow("测试用的提示信息");
                 break;
         }
     }
 
-    private void initUI() {
-        btScanCode = findViewById(R.id.bt_scan_code);
-        btCamera2 = findViewById(R.id.bt_camera2);
-        btInternalCheck = findViewById(R.id.bt_internal_check);
-        btDaoTest = findViewById(R.id.bt_dao_test);
-        btScanCode.setOnClickListener(this);
-        btDaoTest.setOnClickListener(this);
-        btInternalCheck.setOnClickListener(this);
-        btCamera2.setOnClickListener(this);
-    }
 }
