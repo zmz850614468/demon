@@ -4,30 +4,33 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 /**
  * 打包相关方法
  */
 public class BuildUtil {
 
+
     /**
-     * 获取当前版本号
-     *
-     * @return
+     * 获得应用版本名
      */
-    public static int getVersionCode(Context context) {
-        // 包管理器 可以获取清单文件信息
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            // 获取包信息
-            // 参1 包名 参2 获取额外信息的flag 不需要的话 写0
-            PackageInfo packageInfo = packageManager.getPackageInfo(
-                    context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return 0;
+    public static String getVersionName(final Context con) {
+        return getPackgeInfo(con).versionName;
+    }
+
+    /**
+     * 获得应用版本号
+     */
+    public static int getVersionCode(final Context con) {
+        return getPackgeInfo(con).versionCode;
+    }
+
+    /**
+     * 获得应用包名
+     */
+    public static String getPackageName(final Context con) {
+        return getPackgeInfo(con).packageName;
     }
 
     /**
@@ -40,6 +43,20 @@ public class BuildUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 获取应用包相关信息
+     */
+    public static PackageInfo getPackgeInfo(final Context con) {
+        PackageManager packageManager = con.getPackageManager();
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = packageManager.getPackageInfo(con.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("BuildUtil", e.toString());
+        }
+        return packageInfo;
     }
 
 }

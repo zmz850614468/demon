@@ -47,12 +47,11 @@ public class FileUtil {
     }
 
     /**
-     *
      * @param context
      * @param VideoName
      * @return
      */
-    public static File getVideoFile(Context context, String VideoName){
+    public static File getVideoFile(Context context, String VideoName) {
         File dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
         dir.mkdirs();
         if (dir.canWrite()) {
@@ -60,6 +59,35 @@ public class FileUtil {
         }
         return null;
     }
+
+    /**
+     * 获取当前文件夹大小，不递归子文件夹
+     *
+     * @param file
+     * @return
+     */
+    public static long getCurrentFolderSize(File file) {
+        if (file == null || !file.exists()) {
+            return 0;
+        }
+        long size = 0;
+        try {
+            java.io.File[] fileList = file.listFiles();
+            for (int i = 0; i < fileList.length; i++) {
+                if (fileList[i].isDirectory()) {
+                    //跳过子文件夹
+
+                } else {
+                    size = size + fileList[i].length();
+                }
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return size;
+    }
+
     /**
      * 删除指定文件夹下的所有数据
      *

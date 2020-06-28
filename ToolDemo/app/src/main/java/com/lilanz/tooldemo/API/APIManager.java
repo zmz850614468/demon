@@ -1,5 +1,8 @@
 package com.lilanz.tooldemo.API;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,10 +14,16 @@ public class APIManager {
 
     public static Retrofit getRetrofit() {
         if (retrofitInstance == null) {
+            // 添加网络拦截器
+            OkHttpClient.Builder client = new OkHttpClient.Builder()
+                    .addNetworkInterceptor(new StethoInterceptor());
+
             retrofitInstance = new Retrofit.Builder()
+                    .client(client.build())
                     .baseUrl(BASE_PATH)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
         }
 
         return retrofitInstance;
