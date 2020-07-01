@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <!--    允许系统9.0以上使用网络
-            android:networkSecurityConfig="@xml/network_security_config"   -->
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -25,14 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".daos.DaoExaActivity"></activity>
-
-        <activity android:name=".camera2.Camera2ExaActivity"></activity>
-
-        <activity android:name=".qrcode.CodeScanExaActivity"></activity>
-
-        <!--    允许系统7.0以上的拍照，视频录制存储    -->
+        <activity android:name=".daos.DaoExaActivity" />
+        <activity android:name=".camera2.Camera2ExaActivity" />
+        <activity android:name=".qrcode.CodeScanExaActivity" /> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lilanz.tooldemo.provider"

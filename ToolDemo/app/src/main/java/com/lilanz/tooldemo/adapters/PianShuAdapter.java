@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.beans.BaseBean;
+import com.lilanz.tooldemo.beans.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.List;
 public class PianShuAdapter extends RecyclerView.Adapter<PianShuAdapter.PianShuHolder> {
 
     private Context context;
-    private List<BaseBean> beanList;
+    private List<Bean> beanList;
 
     // TODO 1.修改对象
-    public PianShuAdapter(Context context, List<BaseBean> list) {
+    public PianShuAdapter(Context context, List<Bean> list) {
         this.context = context;
         this.beanList = list;
         if (beanList == null) {
@@ -38,7 +38,7 @@ public class PianShuAdapter extends RecyclerView.Adapter<PianShuAdapter.PianShuH
     @Override
     public void onBindViewHolder(@NonNull PianShuHolder pianShuHolder, final int i) {
         // TODO 3.设置界面数据
-        BaseBean bean = beanList.get(i);
+        Bean bean = beanList.get(i);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class PianShuAdapter extends RecyclerView.Adapter<PianShuAdapter.PianShuH
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(BaseBean bean);
+        public void onItemClick(Bean bean);
     }
 }

@@ -25,23 +25,11 @@ public class StringUtil {
      * @return
      */
     public static String getTimeStr(int intTime) {
-        StringBuffer buffer = new StringBuffer();
         // 秒显示
         int fen = intTime / 60;
         int miao = intTime % 60;
-        if (fen < 10) {
-            buffer.append("0" + fen);
-        } else {
-            buffer.append(fen);
-        }
-        buffer.append(":");
-        if (miao < 10) {
-            buffer.append("0" + miao);
-        } else {
-            buffer.append(miao);
-        }
 
-        return buffer.toString();
+        return String.format("%02d:%02d", fen, miao);
     }
 
 }

@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * 要与服务器数据进行对接:进行json解析
  */
 @DatabaseTable(tableName = "student_table")
-public class BaseBean {
+public class Bean {
 
     @DatabaseField(columnName = "id", generatedId = true)
     public int id;      // 表主键
@@ -30,6 +30,14 @@ public class BaseBean {
         return "{id:" + id + ",name:" + name + ",isboy:" + isBoy + "}";
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     // 只用于数据库存储，关联主表的主键
 //    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "juan_id")

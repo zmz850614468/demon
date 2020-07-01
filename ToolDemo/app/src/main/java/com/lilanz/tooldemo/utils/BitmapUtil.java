@@ -1,6 +1,7 @@
 package com.lilanz.tooldemo.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -23,6 +24,19 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 public class BitmapUtil {
+
+    /**
+     * 通过资源ID获取Bitmap
+     *
+     * @param res
+     * @param resId
+     * @return
+     */
+//    public static Bitmap getBitmapFromResource(Context context, int resId) {
+//        Context context;
+//        context.getResources()
+//        return BitmapFactory.decodeResource(res, resId);
+//    }
 
     /**
      * scrollView转为Bitmap ： 可以处理布局超出界面的情况

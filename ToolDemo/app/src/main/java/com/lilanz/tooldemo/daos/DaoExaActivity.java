@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.beans.BaseBean;
+import com.lilanz.tooldemo.beans.Bean;
 import com.lilanz.tooldemo.utils.NumberUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
 
@@ -70,8 +70,8 @@ public class DaoExaActivity extends Activity {
                     }
                 }
 
-                BeanDao dao = BeanDao.getDaoOperate(DaoExaActivity.this, BaseBean.class);
-                BaseBean bean = (BaseBean) dao.queryWhereForOne(map);
+                BeanDao dao = BeanDao.getDaoOperate(DaoExaActivity.this, Bean.class);
+                Bean bean = (Bean) dao.queryWhereForOne(map);
                 if (bean == null) {
                     tvSearch.setText("search null");
                 } else {
@@ -90,7 +90,7 @@ public class DaoExaActivity extends Activity {
         btInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseBean bean = new BaseBean();
+                Bean bean = new Bean();
                 bean.name = etName.getText().toString();
                 bean.age = 0;
                 bean.isBoy = false;
@@ -107,7 +107,7 @@ public class DaoExaActivity extends Activity {
                 }
 
                 // 插入数据
-                BeanDao dao = BeanDao.getDaoOperate(DaoExaActivity.this, BaseBean.class);
+                BeanDao dao = BeanDao.getDaoOperate(DaoExaActivity.this, Bean.class);
                 dao.insert(bean);
                 searchAll();
             }
@@ -124,9 +124,9 @@ public class DaoExaActivity extends Activity {
      */
     private void searchAll() {
         tvAll.setText("");
-        BeanDao dao = BeanDao.getDaoOperate(this, BaseBean.class);
-        List<BaseBean> list = dao.queryAll();
-        for (BaseBean bean : list) {
+        BeanDao dao = BeanDao.getDaoOperate(this, Bean.class);
+        List<Bean> list = dao.queryAll();
+        for (Bean bean : list) {
             tvAll.append(bean.toString() + "\n");
         }
     }

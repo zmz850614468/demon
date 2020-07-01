@@ -42,7 +42,7 @@ public class APIRequest<T> {
      * @param methodName 要调用的方法名
      * @param parseType  数据解析的类型
      */
-    public void requestFor(@NonNull Map<String, String> map, @NonNull String methodName, final int parseType) {
+    public void requestFor(@NonNull Map<String, Object> map, @NonNull String methodName, final int parseType) {
         String entity = new Gson().toJson(map);
         MediaType mediaType = MediaType.parse("application/json; charset=UTF-8");
         RequestBody body = RequestBody.create(mediaType, entity);

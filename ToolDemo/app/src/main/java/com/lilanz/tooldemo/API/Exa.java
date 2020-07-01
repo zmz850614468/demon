@@ -3,7 +3,7 @@ package com.lilanz.tooldemo.API;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.lilanz.tooldemo.beans.BaseBean;
+import com.lilanz.tooldemo.beans.Bean;
 
 import org.json.JSONObject;
 
@@ -22,23 +22,23 @@ import retrofit2.Response;
 
 public class Exa {
 
-    private APIRequest<BaseBean> numberBeanAPIRequest;
+    private APIRequest<Bean> $requestName$;
 
     /**
      * 第一种请求方式
      */
     public void requestDemo1() {
 
-        if (numberBeanAPIRequest == null) {
-            numberBeanAPIRequest = new APIRequest<BaseBean>(BaseBean.class);
-            numberBeanAPIRequest.setParseListener(new ParseListener<BaseBean>() {
+        if ($requestName$ == null) {
+            $requestName$ = new APIRequest<Bean>(Bean.class);
+            $requestName$.setParseListener(new ParseListener<Bean>() {
                 @Override
-                public void jsonParsed(@NonNull List<BaseBean> beanList) {
+                public void jsonParsed(@NonNull List<Bean> beanList) {
                     // 获取List数据
                 }
 
                 @Override
-                public void jsonParsed(BaseBean studentBean) {
+                public void jsonParsed(Bean studentBean) {
                     // 获取Object数据
                 }
 
@@ -53,9 +53,8 @@ public class Exa {
                 }
             });
         }
-        Map<String, String> map = new HashMap<String, String>();
-        numberBeanAPIRequest.requestFor(map, "getNumberList", APIRequest.PARSE_TYPE_LIST);
-
+        Map<String, Object> map = new HashMap<>();
+        $requestName$.requestFor(map, "getNumberList", APIRequest.PARSE_TYPE_LIST);
     }
 
 
@@ -133,6 +132,7 @@ public class Exa {
 //                showToast("照片上传请求失败");
             }
         });
-
     }
+
+
 }
