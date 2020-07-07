@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.lilanz.kotlintool.R
-import com.lilanz.kotlintool.beans.StudentBean
+import com.lilanz.kotlintool.beans.Bean
 import com.lilanz.kotlintool.utils.NumberUtil
 import com.lilanz.kotlintool.utils.StringUtil
 import kotlin.collections.HashMap
@@ -54,7 +54,7 @@ class DaoExaActivity : Activity() {
              * 查询数据
              */
             val dao: BeanDao<*>? =
-                BeanDao.getDaoOperate(this, StudentBean::class.java)
+                BeanDao.getDaoOperate(this, Bean::class.java)
             val bean = dao?.queryWhereForOne(map)
             if (bean == null) {
                 tvSearch?.text = "search null"
@@ -70,7 +70,7 @@ class DaoExaActivity : Activity() {
         etIsBoy = findViewById<EditText>(R.id.et_isboy)
         btInsert = findViewById<Button>(R.id.bt_insert)
         btInsert!!.setOnClickListener {
-            val bean = StudentBean()
+            val bean = Bean()
             bean.name = etName!!.text.toString()
             bean.age = 0
             bean.isBoy = false
@@ -89,7 +89,7 @@ class DaoExaActivity : Activity() {
              *
              */
             val dao =
-                BeanDao.getDaoOperate(this, StudentBean::class.java) as BeanDao<StudentBean>?
+                BeanDao.getDaoOperate(this, Bean::class.java) as BeanDao<Bean>?
             if (dao != null) {
                 dao.insert(bean)
             }
@@ -107,8 +107,8 @@ class DaoExaActivity : Activity() {
      */
     private fun searchAll() {
         tvAll!!.text = ""
-        val dao: BeanDao<*>? = BeanDao.getDaoOperate(this, StudentBean::class.java)
-        val list: List<StudentBean>? = dao?.queryAll() as List<StudentBean>?
+        val dao: BeanDao<*>? = BeanDao.getDaoOperate(this, Bean::class.java)
+        val list: List<Bean>? = dao?.queryAll() as List<Bean>?
         if (list != null) {
             for (bean in list) {
                 tvAll!!.append(bean.toString().toString() + "\n")

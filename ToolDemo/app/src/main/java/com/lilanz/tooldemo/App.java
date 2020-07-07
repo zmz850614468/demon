@@ -20,6 +20,6 @@ public class App extends Application {
         Logger.addLogAdapter(new AndroidLogAdapter());
 
         // 网络调试，数据库查看框架
-        Stetho.initializeWithDefaults(this);
+//        Stetho.initializeWithDefaults(this);
     }
 }

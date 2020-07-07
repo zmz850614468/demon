@@ -7,10 +7,10 @@ import com.j256.ormlite.table.DatabaseTable
  * 要与服务器数据进行对接:进行json解析
  */
 @DatabaseTable(tableName = "student_table")
-class StudentBean {
+class Bean {
 
     @DatabaseField(columnName = "id", generatedId = true)
-    var id = 0
+     var id = 0
 
     @DatabaseField(columnName = "name")
     var name: String? = null

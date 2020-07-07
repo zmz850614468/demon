@@ -7,7 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
-import com.lilanz.kotlintool.beans.StudentBean
+import com.lilanz.kotlintool.beans.Bean
 import java.sql.SQLException
 
 class OrmLiteHelter : OrmLiteSqliteOpenHelper {
@@ -69,7 +69,7 @@ class OrmLiteHelter : OrmLiteSqliteOpenHelper {
      */
     override fun onCreate(database: SQLiteDatabase, connectionSource: ConnectionSource) {
         try {
-            TableUtils.createTable<StudentBean>(connectionSource, StudentBean::class.java)
+            TableUtils.createTable<Bean>(connectionSource, Bean::class.java)
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
@@ -83,9 +83,9 @@ class OrmLiteHelter : OrmLiteSqliteOpenHelper {
         connectionSource: ConnectionSource, oldVersion: Int, newVersion: Int
     ) {
         try {
-            TableUtils.dropTable<StudentBean, Any>(
+            TableUtils.dropTable<Bean, Any>(
                 connectionSource,
-                StudentBean::class.java, true
+                Bean::class.java, true
             )
             onCreate(database, connectionSource)
         } catch (ex: Exception) {

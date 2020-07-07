@@ -37,9 +37,7 @@ class APIRequest<T> {
      * @param parseType  数据解析的类型
      */
     fun requestFor(
-        map: Map<String?, String?>,
-        methodName: String,
-        parseType: Int
+        map: Map<String?, Objects?>, methodName: String, parseType: Int
     ) {
         val entity = Gson().toJson(map)
         val mediaType =
@@ -82,8 +80,7 @@ class APIRequest<T> {
             }
 
             override fun onFailure(
-                call: Call<ResponseBody?>,
-                t: Throwable
+                call: Call<ResponseBody?>, t: Throwable
             ) {
                 if (parseListener != null) {
                     parseListener?.onError(t.toString())
@@ -140,7 +137,7 @@ class APIRequest<T> {
         }
     }
 
-    fun  setParseListener(parseListener: ParseListener<T>?) {
+    fun setParseListener(parseListener: ParseListener<T>?) {
         this.parseListener = parseListener
     }
 //

@@ -51,5 +51,40 @@ class StringUtilTest {
         }
     }
 
+    @Test
+    fun test() {
+        var list = ArrayList<String>()
+        list.add("晋江")
+        list.add("厦门")
+        list.add("福田")
+        list.add("莆田")
+
+        for ((index, value) in list.withIndex()) {
+            var a = 0
+        }
+    }
+
+    @Test
+    fun test2() {
+        var p = Person("恶魔", 3, "eat")
+        var s = p.hobbi
+        p.like()
+        var h = p.hobbi
+        var d = p.name
+        var a = p.age
+        var o = 0;
+    }
+
+    data class Person(var name: String, var age: Int) {
+        lateinit var hobbi: String
+
+        constructor(name: String, age: Int, hobbi: String) : this(name, age) {
+            this.hobbi = hobbi
+        }
+
+        fun like(){
+            hobbi = "like"
+        }
+    }
 
 }

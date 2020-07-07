@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +15,6 @@ import com.lilanz.tooldemo.API.ParseListener;
 import com.lilanz.tooldemo.camera2.Camera2ExaActivity;
 import com.lilanz.tooldemo.daos.DaoExaActivity;
 import com.lilanz.tooldemo.qrcode.CodeScanExaActivity;
-import com.lilanz.tooldemo.utils.StringUtil;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 import com.lilanz.tooldemo.views.CustomToast;
 
@@ -95,10 +91,7 @@ public class MainActivity extends Activity {
     }
 
     private void test() {
-        boolean b;
-        int id ;
-
-       
+        boolean b = false;
     }
 }
 
