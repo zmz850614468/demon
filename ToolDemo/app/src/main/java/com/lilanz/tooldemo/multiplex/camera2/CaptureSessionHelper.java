@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.camera2;
+package com.lilanz.tooldemo.multiplex.camera2;
 
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;

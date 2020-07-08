@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.camera2;
+package com.lilanz.tooldemo.multiplex.camera2;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -10,13 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.oned.EAN13Reader;
-import com.google.zxing.oned.EAN13Writer;
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.camera2.utils.Camera2Util;
+import com.lilanz.tooldemo.multiplex.camera2.utils.Camera2Util;
 
 public class Camera2ExaActivity extends Activity implements View.OnClickListener {
 

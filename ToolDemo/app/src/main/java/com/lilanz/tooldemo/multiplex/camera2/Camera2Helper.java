@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.camera2;
+package com.lilanz.tooldemo.multiplex.camera2;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.camera2.utils.Camera2Util;
+import com.lilanz.tooldemo.multiplex.camera2.utils.Camera2Util;
 import com.lilanz.tooldemo.utils.FileUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
 

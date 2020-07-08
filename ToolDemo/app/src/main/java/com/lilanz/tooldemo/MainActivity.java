@@ -12,11 +12,9 @@ import android.widget.Toast;
 
 import com.lilanz.tooldemo.API.APIRequest;
 import com.lilanz.tooldemo.API.ParseListener;
-import com.lilanz.tooldemo.camera2.Camera2ExaActivity;
-import com.lilanz.tooldemo.daos.DaoExaActivity;
-import com.lilanz.tooldemo.qrcode.CodeScanExaActivity;
+import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
+import com.lilanz.tooldemo.utils.StringUtil;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
-import com.lilanz.tooldemo.views.CustomToast;
 
 import java.util.HashMap;
 
@@ -42,26 +40,15 @@ public class MainActivity extends Activity {
 //        showMsg(StringUtil.getTimeStr(68));
     }
 
-    @OnClick({R.id.bt_internal_check, R.id.bt_camera2, R.id.bt_scan_code, R.id.bt_dao_test})
+    @OnClick({R.id.bt_internal_check, R.id.bt_reuse})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bt_camera2:
-                Intent intent = new Intent(this, Camera2ExaActivity.class);
+            case R.id.bt_reuse:
+                Intent intent = new Intent(this, ReuseActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_internal_check:
                 InternetCheckUtil.internetCheck(this, "webt.lilang.com");//"webt.lilang.com" ; "www.baidu.com"
-                break;
-            case R.id.bt_scan_code:
-                requestTest();
-                CustomToast.show(this, "常规提醒信息。。。");
-                intent = new Intent(this, CodeScanExaActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.bt_dao_test:
-                intent = new Intent(this, DaoExaActivity.class);
-                startActivity(intent);
-                CustomToast.testShow("测试用的提示信息");
                 break;
         }
     }

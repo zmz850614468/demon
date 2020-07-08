@@ -8,19 +8,11 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/bt_scan_code"
+        android:id="@+id/bt_reuse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector"
-        android:text="条形码和二维码扫描" />
-
-    <Button
-        android:id="@+id/bt_camera2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/selector"
-        android:text="摄像头" />
+        android:text="可复用的例子" />
 
     <Button
         android:id="@+id/bt_internal_check"
@@ -30,19 +22,10 @@
         android:background="@drawable/selector"
         android:text="网络测试" />
 
-    <Button
-        android:id="@+id/bt_dao_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/selector"
-        android:text="数据库测试" />
-
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="提示信息" />
-
 
 </LinearLayout>

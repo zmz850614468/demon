@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.qrcode;
+package com.lilanz.tooldemo.multiplex.qrcode;
 
 import android.app.Activity;
 import android.os.Bundle;

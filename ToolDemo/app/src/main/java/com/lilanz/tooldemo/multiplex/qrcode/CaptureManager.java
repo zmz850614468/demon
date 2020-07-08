@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.qrcode;
+package com.lilanz.tooldemo.multiplex.qrcode;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -30,7 +30,6 @@ import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CameraPreview;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.lilanz.tooldemo.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;

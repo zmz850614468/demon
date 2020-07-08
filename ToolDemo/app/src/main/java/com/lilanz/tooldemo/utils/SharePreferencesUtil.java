@@ -21,6 +21,17 @@ public class SharePreferencesUtil {
         setIntegre(context, PARTERN_ID, id);
     }
 
+    private static final String SELECT_BLE_ADDRESS = "selectedBleAddress";   //
+
+    // 获取选择的蓝牙地址
+    public static String getBleAddress(Context context) {
+        return getInstance(context).getString(SELECT_BLE_ADDRESS, "");
+    }
+
+    public static void saveBleAddress(Context context, String address) {
+        setString(context, SELECT_BLE_ADDRESS, address);
+    }
+
     //============================      以下为固定模式        =============================
 
     // 保存int型数据

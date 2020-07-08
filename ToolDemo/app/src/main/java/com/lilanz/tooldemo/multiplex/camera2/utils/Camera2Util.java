@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.camera2.utils;
+package com.lilanz.tooldemo.multiplex.camera2.utils;
 
 import android.Manifest;
 import android.app.Activity;

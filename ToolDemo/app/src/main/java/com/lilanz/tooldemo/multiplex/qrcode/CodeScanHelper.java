@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.qrcode;
+package com.lilanz.tooldemo.multiplex.qrcode;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.lilanz.tooldemo.MainActivity;
 
 public class CodeScanHelper {
 
