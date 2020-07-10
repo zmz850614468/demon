@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/bt_search_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="搜索IP地址" />
+
+    <Button
+        android:id="@+id/bt_get_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取本机ip地址" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_port"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:hint="服务端口"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:text="5566" />
+
+        <Button
+            android:id="@+id/bt_open_service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开启端口服务" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_ip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:hint="ip地址"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:text="" />
+
+        <Button
+            android:id="@+id/bt_start_connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="连接服务" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_close_port"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭wifi端口" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_msg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:hint="信息"
+            android:paddingLeft="20dp"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/bt_send_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="发送数据" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="msg" />
+
+</LinearLayout>
