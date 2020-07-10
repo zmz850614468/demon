@@ -10,6 +10,53 @@
         android:layout_width="250px"
         android:layout_height="250px" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/front_surface_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="提示信息" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_get_camera_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="过去所有相机id" />
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:hint="相机id"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/bt_get_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取相机属性" />
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +67,13 @@
             android:id="@+id/iv_capture"
             android:layout_width="100dp"
             android:layout_height="100dp" />
+
+        <EditText
+            android:id="@+id/et_open_camera_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="相机id"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/bt_open"

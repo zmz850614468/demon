@@ -1,17 +1,34 @@
 package com.lilanz.tooldemo.multiplex.camera2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.params.StreamConfigurationMap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
+import android.util.Range;
+import android.util.Size;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.multiplex.camera2.utils.Camera2Util;
+import com.lilanz.tooldemo.utils.StringUtil;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Camera2ExaActivity extends Activity implements View.OnClickListener {
 
@@ -23,12 +40,22 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
     private Button btStartRecord;
     private Button btStopRecord;
 
+    @BindView(R.id.et_open_camera_id)
+    protected EditText etOpenCameraId;
+    @BindView(R.id.tv_msg)
+    protected TextView tvMsg;
+    @BindView(R.id.et_id)
+    protected EditText etCameraId;
+
     private Camera2Helper camera2Helper;
+
+    private CameraManager cameraManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera2_exa);
+        ButterKnife.bind(this);
 
         initUI();
         // 相机和语音录制权限请求
@@ -43,13 +70,15 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
             }
         });
         // 开启视频录制功能
+        cameraManager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-                camera2Helper.openCamera(0);
+                String id = etOpenCameraId.getText().toString();
+                camera2Helper.openCamera(id);
                 break;
             case R.id.bt_close:
                 camera2Helper.closeCamera();
@@ -63,6 +92,95 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
             case R.id.bt_stop_record:
                 camera2Helper.stopMediaRecord();
                 break;
+        }
+    }
+
+    @OnClick(R.id.bt_get_camera_id)
+    public void onGetCameraIdsClick(View v) {
+        tvMsg.setText("所有相机id\n");
+        try {
+            for (String s : cameraManager.getCameraIdList()) {
+                showMsg(s);
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @OnClick(R.id.bt_get_info)
+    public void onGetInfoClick(View v) {
+        String cameraId = etCameraId.getText().toString();
+        if (StringUtil.isEmpty(cameraId)) {
+            showToast("相机id为空");
+            return;
+        }
+        tvMsg.setText("");
+        showMsg("相机id：" + cameraId);
+
+        try {
+            // 获取相机属性
+            CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
+            // 前置或是后置摄像头
+            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+            showMsg("摄像头方向(1:后置;0:前置)：" + facing);
+            // 是否支持闪光灯
+            boolean canUseFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+            showMsg("是否支持闪光灯：" + canUseFlash);
+            // 最大调焦值
+            float maxZoom = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+            showMsg("最大调焦值:" + maxZoom);
+            // 最小调焦值
+            float minZoom = characteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
+            showMsg("最小调焦值:" + minZoom);
+
+            StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            // 输入模式
+            int[] inputFormatArr = map.getInputFormats();
+            for (int i : inputFormatArr) {
+                Size[] size = map.getInputSizes(i);
+                showMsg("inputFormat:" + i);
+                for (Size size1 : size) {
+                    showMsg("[" + size1.getWidth() + "," + size1.getHeight() + "]");
+                }
+            }
+            // 输出模式
+            // JPEG:256; PRIVATE:34;YUV_420_888:35
+            StringBuffer buffer = new StringBuffer();
+            int[] outFormatArr = map.getOutputFormats();
+            for (int i : outFormatArr) {
+                Size[] sizes = map.getOutputSizes(i);
+                showMsg("outputFormat:" + i);
+                for (Size size : sizes) {
+                    buffer = new StringBuffer();
+                    buffer.append("size=[" + size.getWidth() + "," + size.getHeight() + "]");
+                    long minFrame = map.getOutputMinFrameDuration(i, size);
+                    long stall = map.getOutputStallDuration(i, size);
+                    buffer.append("  MinFrameDuration=" + minFrame);
+                    buffer.append("  StallDuration=" + stall);
+                    showMsg(buffer.toString());
+                }
+            }
+            // 高速视频 speedVideo
+            Range<Integer>[] fpsArr = map.getHighSpeedVideoFpsRanges();
+            for (Range<Integer> range : fpsArr) {
+                buffer = new StringBuffer();
+                buffer.append("speedVideo: range=[" + range.getLower() + "," + range.getUpper() + "]");
+                Size[] sizes = map.getHighSpeedVideoSizesFor(range);
+                for (Size size : sizes) {
+                    buffer.append(" [" + size.getWidth() + "," + size.getHeight() + "]");
+                }
+                showMsg(buffer.toString());
+            }
+            // 硬件支持等级： LEVEL_3 > FULL > LIMIT > LEGACY
+            // 当支持到 FULL 等级的相机设备，将拥有比旧 API 强大的新特性，
+            // 如 30fps 全高清连拍，帧之间的手动设置，RAW 格式的图片拍摄，
+            // 快门零延迟以及视频速拍等，否则和旧 API 功能差别不大。
+//                int hardwareLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+            showMsg("硬件支持等级：" + isHardwareSupported(characteristics));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -81,15 +199,48 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
         btStopRecord.setOnClickListener(this);
     }
 
+    private static final String TAG = "CameraInfoActivity";
+
+    private int isHardwareSupported(CameraCharacteristics characteristics) {
+        Integer deviceLevel = characteristics.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL);
+        if (deviceLevel == null) {
+            Log.e(TAG, "can not get INFO_SUPPORTED_HARDWARE_LEVEL");
+            return -1;
+        }
+        switch (deviceLevel) {
+            case CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL:
+                Log.w(TAG, "hardware supported level:LEVEL_FULL");
+                break;
+            case CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY:
+                Log.w(TAG, "hardware supported level:LEVEL_LEGACY");
+                break;
+            case CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_3:
+                Log.w(TAG, "hardware supported level:LEVEL_3");
+                break;
+            case CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED:
+                Log.w(TAG, "hardware supported level:LEVEL_LIMITED");
+                break;
+        }
+        return deviceLevel;
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        camera2Helper.openCamera(CameraCharacteristics.LENS_FACING_BACK);
+//        camera2Helper.openCamera(CameraCharacteristics.LENS_FACING_BACK);
     }
 
     @Override
     protected void onPause() {
         camera2Helper.onPause();
         super.onPause();
+    }
+
+    private void showMsg(String msg) {
+        tvMsg.append(msg + "\n");
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

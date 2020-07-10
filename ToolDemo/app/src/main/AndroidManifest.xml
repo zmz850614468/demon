@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lilanz.tooldemo">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -9,6 +11,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 
     <application
@@ -31,7 +34,7 @@
         <activity android:name=".multiplex.camera2.Camera2ExaActivity" />
         <activity android:name=".multiplex.qrcode.CodeScanExaActivity" /> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
 
-        <activity android:name=".multiplex.activitys.ReuseActivity"/>
+        <activity android:name=".multiplex.activitys.ReuseActivity" />
         <!--    蓝牙适配类    -->
         <activity android:name=".multiplex.bleModel.BleActivity" />
 

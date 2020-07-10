@@ -80,8 +80,8 @@ public class Camera2Helper {
     }
 
     // 打开摄像头
-    public void openCamera(int id) {
-        String cameraId = Camera2Util.getCameraId(cameraManager, id + "");
+    public void openCamera(String id) {
+        String cameraId = Camera2Util.getCameraId(cameraManager, id);
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
         }

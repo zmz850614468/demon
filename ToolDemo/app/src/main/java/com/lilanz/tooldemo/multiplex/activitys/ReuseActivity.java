@@ -17,6 +17,9 @@ import com.lilanz.tooldemo.multiplex.qrcode.CodeScanExaActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 各种复用例子集合类
+ */
 public class ReuseActivity extends Activity {
 
     @Override

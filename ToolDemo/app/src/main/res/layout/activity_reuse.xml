@@ -8,8 +8,9 @@
         android:id="@+id/bt_ble"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/selector"
-        android:text="蓝牙例子" />
+        android:text="已匹配蓝牙设备信息" />
 
     <Button
         android:id="@+id/bt_scan_code"
@@ -34,38 +35,5 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/selector"
         android:text="摄像头" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/bt_scan_code"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:background="@drawable/selector"-->
-    <!--        android:text="条形码和二维码扫描" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/bt_camera2"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:background="@drawable/selector"-->
-    <!--        android:text="摄像头" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/bt_internal_check"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:background="@drawable/selector"-->
-    <!--        android:text="网络测试" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/bt_dao_test"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:background="@drawable/selector"-->
-    <!--        android:text="数据库测试" />-->
-
 
 </LinearLayout>

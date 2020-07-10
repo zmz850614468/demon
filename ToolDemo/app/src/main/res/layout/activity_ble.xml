@@ -11,6 +11,74 @@
         android:id="@+id/recycler_ble"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_bottom"
         android:layout_below="@id/layout_title" />
+
+    <RelativeLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/layout_button">
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="提示消息"
+                android:padding="5dp" />
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_wait_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="等待连接" />
+
+            <Button
+                android:id="@+id/bt_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发起连接" />
+
+            <Button
+                android:id="@+id/bt_disconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="断开连接" />
+
+            <EditText
+                android:id="@+id/et_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="msg" />
+
+            <Button
+                android:id="@+id/bt_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>
