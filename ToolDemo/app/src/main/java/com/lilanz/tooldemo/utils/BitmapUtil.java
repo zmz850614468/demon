@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -24,19 +25,6 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 public class BitmapUtil {
-
-    /**
-     * 通过资源ID获取Bitmap
-     *
-     * @param res
-     * @param resId
-     * @return
-     */
-//    public static Bitmap getBitmapFromResource(Context context, int resId) {
-//        Context context;
-//        context.getResources()
-//        return BitmapFactory.decodeResource(res, resId);
-//    }
 
     /**
      * scrollView转为Bitmap ： 可以处理布局超出界面的情况
@@ -74,6 +62,18 @@ public class BitmapUtil {
             c.drawColor(Color.WHITE);
         v.draw(c);
         return b;
+    }
+
+    /**
+     * 通过 Base64 字符串 获取图片资源
+     *
+     * @param base64
+     * @return
+     */
+    public static Bitmap getBitmapByBase64(String base64) {
+        byte[] decodeByte = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);
+        return bitmap;
     }
 
     /**

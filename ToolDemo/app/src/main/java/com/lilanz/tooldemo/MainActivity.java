@@ -10,10 +10,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lilanz.tooldemo.API.APIRequest;
-import com.lilanz.tooldemo.API.ParseListener;
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
-import com.lilanz.tooldemo.utils.StringUtil;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
 import java.util.HashMap;
@@ -53,21 +50,21 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void requestTest() {
-        APIRequest<Nullable> request = new APIRequest<>(Nullable.class);
-        request.setParseListener(new ParseListener<Nullable>() {
-            @Override
-            public void onTip(String msg) {
-                showToast(msg);
-            }
-
-            @Override
-            public void onError(String msg) {
-                showToast(msg);
-            }
-        });
-        request.requestFor(new HashMap<String, Object>(), "getNumberList", APIRequest.PARSE_TYPE_NULL);
-    }
+//    private void requestTest() {
+//        APIRequest<Nullable> request = new APIRequest<>(Nullable.class);
+//        request.setParseListener(new ParseListener<Nullable>() {
+//            @Override
+//            public void onTip(String msg) {
+//                showToast(msg);
+//            }
+//
+//            @Override
+//            public void onError(String msg) {
+//                showToast(msg);
+//            }
+//        });
+//        request.requestByJson(new HashMap<String, Object>(), "getNumberList", APIRequest.PARSE_TYPE_NULL);
+//    }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

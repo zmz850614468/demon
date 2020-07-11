@@ -62,7 +62,7 @@ public class BleSocketThread extends Thread {
                     return;
                 }
 
-                sendMsg(1, "有蓝牙连接");
+//                sendMsg(1, "有蓝牙连接");
                 socketThread = new SocketThread(bluetoothSocket, handler);
                 socketThread.start();
             }
@@ -76,7 +76,7 @@ public class BleSocketThread extends Thread {
                 return;
             }
 
-            sendMsg(1, "蓝牙连接成功");
+//            sendMsg(1, "蓝牙连接成功");
             socketThread = new SocketThread(bluetoothSocket, handler);
             socketThread.start();
         }

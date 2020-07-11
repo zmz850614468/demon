@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.multiplex.camera2.Camera2ExaActivity;
+import com.lilanz.tooldemo.multiplex.API.APIActivity;
 import com.lilanz.tooldemo.multiplex.bleModel.BleActivity;
 import com.lilanz.tooldemo.multiplex.daos.DaoExaActivity;
 import com.lilanz.tooldemo.multiplex.qrcode.CodeScanExaActivity;
@@ -32,7 +33,8 @@ public class ReuseActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_ble, R.id.bt_scan_code, R.id.bt_dao_test, R.id.bt_camera2})
+    @OnClick({R.id.bt_ble, R.id.bt_scan_code, R.id.bt_dao_test, R.id.bt_camera2,
+            R.id.bt_api_request})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ble:           // 蓝牙例子
@@ -49,6 +51,10 @@ public class ReuseActivity extends Activity {
                 break;
             case R.id.bt_camera2:       // 相机例子
                 intent = new Intent(this, Camera2ExaActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_api_request:
+                intent = new Intent(this, APIActivity.class);
                 startActivity(intent);
                 break;
         }

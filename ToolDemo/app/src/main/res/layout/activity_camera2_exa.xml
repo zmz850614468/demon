@@ -39,7 +39,7 @@
             android:id="@+id/bt_get_camera_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="过去所有相机id" />
+            android:text="所有相机id" />
 
         <EditText
             android:id="@+id/et_id"
@@ -52,7 +52,7 @@
             android:id="@+id/bt_get_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="获取相机属性" />
+            android:text="相机属性" />
 
     </LinearLayout>
 

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.utils.SharePreferencesUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

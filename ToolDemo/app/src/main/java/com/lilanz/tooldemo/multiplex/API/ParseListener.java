@@ -1,6 +1,8 @@
-package com.lilanz.tooldemo.API;
+package com.lilanz.tooldemo.multiplex.API;
 
 import android.support.annotation.NonNull;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -16,6 +18,12 @@ public abstract class ParseListener<T> {
     public void onTip(String msg) {
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
+
     // 回调的错误信息
-    public abstract void onError(String msg);
+    public abstract void onError(int errCode, String errMsg);
 }
