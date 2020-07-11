@@ -6,15 +6,33 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-// 监听器：获取解析后的数据
+/**
+ * 监听器：获取解析后的数据
+ *
+ * @param <T>
+ */
 public abstract class ParseListener<T> {
+    /**
+     * @param beanList 请求结果的List对象
+     */
     public void jsonParsed(@NonNull List<T> beanList) {
     }
 
+    /**
+     * @param t 请求结果的Bean对象
+     */
     public void jsonParsed(T t) {
     }
 
-    // 请求成功后的回调信息
+    /**
+     * @param jsonStr 请求结果 json字符串
+     */
+    public void jsonResult(String jsonStr) {
+    }
+
+    /**
+     * @param msg 请求成功后的回调信息
+     */
     public void onTip(String msg) {
     }
 
@@ -24,6 +42,9 @@ public abstract class ParseListener<T> {
         return new Gson().toJson(this);
     }
 
-    // 回调的错误信息
+    /**
+     * @param errCode 错误代码
+     * @param errMsg  错误信息
+     */
     public abstract void onError(int errCode, String errMsg);
 }

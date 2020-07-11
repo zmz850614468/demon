@@ -1,8 +1,12 @@
 package com.lilanz.tooldemo.multiplex.API;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.lilanz.tooldemo.R;
+import com.lilanz.tooldemo.multiplex.bleModel.BleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -29,9 +34,10 @@ import retrofit2.Response;
 public class APIRequest<T> {
 
     // 解析数据的类型
-    public static final int PARSE_TYPE_BEAN = 1;
-    public static final int PARSE_TYPE_LIST = 2;
-    public static final int PARSE_TYPE_NULL = 3;
+    public static final int PARSE_TYPE_BEAN = 1;    // 返回 Bean 对象
+    public static final int PARSE_TYPE_LIST = 2;    // 返回 List 对象
+    public static final int PARSE_TYPE_NULL = 3;    // 返回 提示 信息
+    public static final int PARSE_TYPE_JSON = 4;    // 返回 json 信息
 
     private ParseListener<T> parseListener;
     private Class clazz;
@@ -107,49 +113,6 @@ public class APIRequest<T> {
         RequestBody body = RequestBody.create(mediaType, entity);
 
         requestNormal(body, methodName, parseType);
-//        APIService apiService = APIManager.getService(APIService.class);
-//
-//        Call<ResponseBody> call = null;
-//        try {
-//            Method[] methods = apiService.getClass().getMethods();
-//            for (Method method : methods) {
-//                String name = method.getName();
-//                if (methodName.equals(name)) {
-//                    call = (Call<ResponseBody>) method.invoke(apiService, new Object[]{body});
-//                    break;
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            showErrMsg(-1, "获取call方法异常");
-//        }
-//        if (call != null) {
-//            // 异步请求：call.enqueue();
-//            call.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    try {
-//                        if (response.body() != null) {
-//                            parseJson(response.body().string(), parseType);
-//                        } else {
-//                            showErrMsg(-1, "返回体为空");
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        showErrMsg(-1, "数据解析异常");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    if (parseListener != null) {
-//                        parseListener.onError(-1, t.toString());
-//                    }
-//                }
-//            });
-//        } else {
-//            showErrMsg(-1, "call为空");
-//        }
     }
 
     /**
@@ -183,6 +146,15 @@ public class APIRequest<T> {
      * @throws Exception
      */
     private void parseJson(String jsonStr, int parseType) throws Exception {
+        // 直接返回json字符串
+        if (parseType == PARSE_TYPE_JSON) {
+            if (parseListener != null) {
+                parseListener.jsonResult(jsonStr);
+            }
+            return;
+        }
+
+        // 解析json字符串，返回对应的对象
         JSONObject object = new JSONObject(jsonStr);
         if (object.has("errcode") && object.getInt("errcode") == 0) {
 

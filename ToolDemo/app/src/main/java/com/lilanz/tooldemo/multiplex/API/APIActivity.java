@@ -57,7 +57,7 @@ public class APIActivity extends Activity {
     @OnClick(R.id.bt_has_authority)
     public void hasAuthority(View v) {
         if (hasAuthority == null) {
-            hasAuthority = new APIRequest<LoginBean>(LoginBean.class);
+            hasAuthority = new APIRequest<>(LoginBean.class);
             hasAuthority.setRequestBasePath(APIManager.LOGIN_BASE_PATH);
             hasAuthority.setParseListener(new ParseListener<LoginBean>() {
                 @Override
@@ -67,13 +67,18 @@ public class APIActivity extends Activity {
                 }
 
                 @Override
+                public void jsonResult(String jsonStr) {
+                    showMsg("jsonResult:" + jsonStr);
+                }
+
+                @Override
                 public void onError(int errCode, String errMsg) {
                     showMsg(errCode + ";" + errMsg);
                 }
             });
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("token", "984417e84c4eecb4");
+        map.put("token", "8e8e353ffe0ceb3c");
         map.put("AppName", "0");
         hasAuthority.requestNormal(map, "hasAuthority", APIRequest.PARSE_TYPE_BEAN);
     }
@@ -145,7 +150,6 @@ public class APIActivity extends Activity {
 //
 //        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 ////        builder.addFormDataPart("zlmxidStr", zldh);
-//        // TODO 正式版，一定要修改
 //        builder.addFormDataPart("zlmxidStr", "412079");
 //        builder.addFormDataPart("typeStr", "1");
 //        builder.addFormDataPart("file", file.getName(), body);
@@ -154,55 +158,6 @@ public class APIActivity extends Activity {
 //
 //        uploadImageRequest.requestNormal(parts, "uploadPic", APIRequest.PARSE_TYPE_BEAN);
     }
-
-//    /**
-//     * 上传图片
-//     *
-//     * @param zldh      指令单号
-//     * @param type      类型
-//     * @param imagePath
-//     */
-//    private void uploadPic(String zldh, String type, String imagePath) {
-//        MultipartBody.Builder builder = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM);
-//
-//        File file = new File(imagePath);
-//        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-////        builder.addFormDataPart("zlmxidStr", zldh);
-//        // TODO 正式版，一定要修改
-//        builder.addFormDataPart("zlmxidStr", "412079");
-//        builder.addFormDataPart("typeStr", type);
-//        builder.addFormDataPart("file", file.getName(), body);
-//
-//        List<MultipartBody.Part> parts = builder.build().parts();
-//
-//
-//        APIService apiService = APIManager.getService(APIService.class);
-//        Call<ResponseBody> uploadPic = apiService.uploadPic(parts);
-//        uploadPic.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.body() != null) {
-//                    try {
-//                        String msg = response.body().string();
-//                        JSONObject object = new JSONObject(msg);
-//                        if (object.has("errcode") && object.getInt("errcode") == 0) {
-////                            showToast("照片上传成功");
-//                        } else {
-////                            showToast("照片上传失败");
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-////                showToast("照片上传请求失败");
-//            }
-//        });
-//    }
 
     private void showMsg(String msg) {
         tvMsg.append(msg + "\n");
