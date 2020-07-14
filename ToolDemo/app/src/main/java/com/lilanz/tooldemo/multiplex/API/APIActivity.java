@@ -1,6 +1,8 @@
 package com.lilanz.tooldemo.multiplex.API;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -8,15 +10,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.beans.LoginBean;
 import com.lilanz.tooldemo.beans.NumberBean;
 import com.lilanz.tooldemo.beans.UploadBean;
-import com.lilanz.tooldemo.utils.FileUtil;
-import com.lilanz.tooldemo.utils.StringUtil;
-
-import org.json.JSONObject;
+import com.lilanz.tooldemo.utils.BitmapUtil;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,13 +24,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class APIActivity extends Activity {
 
@@ -44,6 +35,14 @@ public class APIActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api);
         ButterKnife.bind(this);
+
+        // 保存图片
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_setting);
+
+        File dir = getExternalFilesDir(Environment.DIRECTORY_DCIM);
+        dir.mkdirs();
+        String imagePath = new File(dir, "test.jpg").getAbsolutePath();
+        BitmapUtil.saveBitmap(this, bitmap, imagePath);
     }
 
     private APIRequest<LoginBean> hasAuthority;
@@ -55,7 +54,7 @@ public class APIActivity extends Activity {
      * @param v
      */
     @OnClick(R.id.bt_has_authority)
-    public void hasAuthority(View v) {
+    public void hasAuthorityRequest(View v) {
         if (hasAuthority == null) {
             hasAuthority = new APIRequest<>(LoginBean.class);
             hasAuthority.setRequestBasePath(APIManager.LOGIN_BASE_PATH);
@@ -92,7 +91,7 @@ public class APIActivity extends Activity {
      * @param v
      */
     @OnClick(R.id.bt_get_number_list)
-    public void getNumberList(View v) {
+    public void getNumberListRequest(View v) {
         if (numberRequest == null) {
             numberRequest = new APIRequest<NumberBean>(NumberBean.class);
             numberRequest.setParseListener(new ParseListener<NumberBean>() {
@@ -120,7 +119,7 @@ public class APIActivity extends Activity {
      * @param v
      */
     @OnClick(R.id.bt_upload_image)
-    public void uploadImage(View v) {
+    public void uploadImageRequest(View v) {
         if (uploadImageRequest == null) {
             uploadImageRequest = new APIRequest<UploadBean>(UploadBean.class);
             uploadImageRequest.setParseListener(new ParseListener<UploadBean>() {

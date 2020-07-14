@@ -56,9 +56,4 @@ public class APIManager {
         return getRetrofit(path).create(clazz);
     }
 
-    // 创建类的对象，并返回
-//    public static <T> T getLoginService(Class<T> clazz) {
-//        return getRetrofit().create(clazz);
-//    }
-
 }

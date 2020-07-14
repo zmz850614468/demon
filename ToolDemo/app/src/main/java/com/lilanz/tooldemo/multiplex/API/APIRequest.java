@@ -116,7 +116,7 @@ public class APIRequest<T> {
     }
 
     /**
-     * 请求参数格式：Body-FormData 格式  @Multipart
+     *
      *
      * @param fileKey    文件参数名
      * @param file       文件

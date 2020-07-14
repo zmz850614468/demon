@@ -15,6 +15,11 @@ interface ParseListener<T> {
     fun jsonParsed(t: T) {}
 
     /**
+     * @param jsonStr 请求结果 json字符串
+     */
+    fun jsonResult(jsonStr: String?) {}
+
+    /**
      * 请求成功后的回调信息
      */
     fun onTip(msg: String?) {}
@@ -22,5 +27,5 @@ interface ParseListener<T> {
     /**
      * 回调的错误信息
      */
-    fun onError(msg: String?)
+    fun onError(errCode: Int, errMsg: String?)
 }

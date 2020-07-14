@@ -70,18 +70,17 @@ public class CompressBitmapUtil {
      * @param filePath 源图片路径
      * @return 压缩后的路径
      */
-
     public static String compressImage(String filePath, int width, int heigth) {
         //原文件
         File oldFile = new File(filePath);
 
         //压缩文件路径 照片路径/
         String targetPath = oldFile.getPath();
-        int quality = 70;//压缩比例0-100
-        Bitmap bm = getSmallBitmap(filePath, width, heigth);//获取一定尺寸的图片
-        int degree = getRotateAngle(filePath);//获取相片拍摄角度
+        int quality = 70;           //压缩比例0-100
+        Bitmap bm = getSmallBitmap(filePath, width, heigth);    //获取一定尺寸的图片
+        int degree = getRotateAngle(filePath);                  //获取相片拍摄角度
 
-        if (degree != 0) {//旋转照片角度，防止头像横着显示
+        if (degree != 0) {          //旋转照片角度，防止头像横着显示
             bm = setRotateAngle(degree, bm);
         }
         File outputFile = new File(targetPath);

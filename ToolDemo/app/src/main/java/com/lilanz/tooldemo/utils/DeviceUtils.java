@@ -4,6 +4,7 @@ package com.lilanz.tooldemo.utils;
  * 设备相关帮助类
  */
 public class DeviceUtils {
+
     /**
      * 系统版本号
      */
@@ -13,9 +14,10 @@ public class DeviceUtils {
 
     /**
      * 获取设备序列号
+     *
      * @return
      */
-    public static String getSerialNumber(){
+    public static String getSerialNumber() {
         return android.os.Build.SERIAL;
     }
 
@@ -34,8 +36,5 @@ public class DeviceUtils {
     public static String getPhoneName() {
         return android.os.Build.MANUFACTURER;
     }
-
-
-
 
 }
