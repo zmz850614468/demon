@@ -3,7 +3,6 @@ package com.lilanz.tooldemo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,9 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
+import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,11 +35,15 @@ public class MainActivity extends Activity {
 //        showMsg(StringUtil.getTimeStr(68));
     }
 
-    @OnClick({R.id.bt_internal_check, R.id.bt_reuse})
+    @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.bt_prints:
+                Intent intent = new Intent(this, PrintsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_reuse:
-                Intent intent = new Intent(this, ReuseActivity.class);
+                intent = new Intent(this, ReuseActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_internal_check:

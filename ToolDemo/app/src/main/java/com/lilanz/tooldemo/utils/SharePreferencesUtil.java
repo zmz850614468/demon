@@ -18,7 +18,7 @@ public class SharePreferencesUtil {
 
     // 保存合作者id
     public static void setParternId(Context context, int id) {
-        setIntegre(context, PARTERN_ID, id);
+        setInteger(context, PARTERN_ID, id);
     }
 
     private static final String SELECT_BLE_ADDRESS = "selectedBleAddress";   //
@@ -35,7 +35,7 @@ public class SharePreferencesUtil {
     //============================      以下为固定模式        =============================
 
     // 保存int型数据
-    private static void setIntegre(Context context, String key, int value) {
+    private static void setInteger(Context context, String key, int value) {
         SharedPreferences.Editor editor = getInstance(context).edit();
         editor.putInt(key, value);
         editor.commit();

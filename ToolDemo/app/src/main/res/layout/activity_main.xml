@@ -8,6 +8,13 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/bt_prints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector"
+        android:text="各种打印机例子" />
+
+    <Button
         android:id="@+id/bt_reuse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

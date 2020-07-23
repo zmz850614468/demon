@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_1"
+        android:layout_width="576px"
+        android:layout_height="500px"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="400px"
+            android:layout_height="400px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20px"
+            android:src="@drawable/shape_box_red" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/iv_photo"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_select_ble_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector"
+        android:text="选择蓝牙地址" />
+
+    <Button
+        android:id="@+id/bt_save_bitmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector"
+        android:text="保存图片" />
+
+    <Button
+        android:id="@+id/bt_print"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector"
+        android:text="打印" />
+
+
+</LinearLayout>

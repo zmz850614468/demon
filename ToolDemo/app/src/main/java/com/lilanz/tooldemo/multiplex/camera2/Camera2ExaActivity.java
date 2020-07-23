@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.Range;
 import android.util.Size;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +67,9 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
         camera2Helper.setOnCamera2CallBack(new Camera2Helper.OnCamera2CallBack() {
             @Override
             public void onCaptureCallBack(Bitmap bitmap) {
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                showMsg("图片大小：" + width + ";" + height);
                 ivCapture.setImageBitmap(bitmap);
             }
         });
@@ -121,6 +125,23 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
         try {
             // 获取相机属性
             CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
+            {
+                Size[] sizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP).getOutputSizes(SurfaceHolder.class);
+                showMsg("\n\n支持的预览大小\n");
+                for (Size size : sizes) {
+                    showMsg(size.toString() + "\n");
+                }
+                showMsg("\n");
+            }
+
+
+            Range<Integer> controlAECompensationRange = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
+            if (controlAECompensationRange != null) {
+                int min = controlAECompensationRange.getLower();
+                int max = controlAECompensationRange.getUpper();
+                showMsg("亮度：[" + min + "," + max + "]");
+            }
+
             // 前置或是后置摄像头
             Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
             showMsg("摄像头方向(1:后置;0:前置)：" + facing);
@@ -181,6 +202,17 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.bt_reset_light)
+    public void onResetLight(View v) {
+        try {
+            int light = Integer.parseInt(etCameraId.getText().toString());
+            camera2Helper.resetLight(light);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
     }
 

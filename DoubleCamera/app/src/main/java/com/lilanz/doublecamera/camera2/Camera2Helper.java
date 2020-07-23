@@ -132,7 +132,7 @@ public class Camera2Helper {
             }
         }
         // 添加截图功能
-        cameraImageReader = ImageReader.newInstance(1280, 960, ImageFormat.JPEG, 5);
+        cameraImageReader = ImageReader.newInstance(1600, 1200, ImageFormat.JPEG, 5);
         cameraImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
 
         List<Surface> surfaceList = new ArrayList<>();
@@ -236,7 +236,7 @@ public class Camera2Helper {
         //每秒16帧
         mediaRecorder.setVideoFrameRate(16);
 //        mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
-        mediaRecorder.setVideoSize(640, 480);
+        mediaRecorder.setVideoSize(1600, 1200);
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 //        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();

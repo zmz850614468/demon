@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
@@ -38,12 +39,11 @@ public class Camera2Helper {
 
     private static final String TAG = "Camera2Helper";
     // 截图的分辨率
-    private static final int CAPTURE_WIDTH = 1280;
-    private static final int CAPTURE_HEIGHT = 960;
+    private static final int CAPTURE_WIDTH = 3264;
+    private static final int CAPTURE_HEIGHT = 2448;
     // 视频录制的分辨率
     private static final int VIDEO_WIDTH = 640;
     private static final int VIDEO_HEIGHT = 480;
-
 
     // 摄像头
     private SurfaceView cameraSurface;
@@ -77,6 +77,19 @@ public class Camera2Helper {
         this.cameraSurface = surfaceView;
         this.activity = activity;
         cameraManager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
+    }
+
+    /**
+     * 设置预览大小
+     *
+     * @param width
+     * @param height
+     */
+    public void setPreviewSize(int width, int height) {
+        if (cameraSurface != null) {
+            SurfaceHolder holder = cameraSurface.getHolder();
+            holder.setFixedSize(width, height);
+        }
     }
 
     // 打开摄像头
@@ -152,7 +165,7 @@ public class Camera2Helper {
             public void onSucceed(CameraCaptureSession cameraCaptureSession) {
                 cameraSession = cameraCaptureSession;
                 // 开启摄像头预览
-                CaptureRequest previewRequest = Camera2Util.getPreviewRequest(cameraDevie, new Surface[]{cameraSurface.getHolder().getSurface()});
+                CaptureRequest previewRequest = Camera2Util.getPreviewRequest(cameraDevie, new Surface[]{cameraSurface.getHolder().getSurface()}, 0);
                 try {
                     cameraSession.setRepeatingRequest(previewRequest, null, null);
                     Log.d(TAG, "开启摄像头预览");
@@ -167,6 +180,22 @@ public class Camera2Helper {
             }
         });
         sessionHelper.create();
+    }
+
+    /**
+     * @param light 荣耀30s[-4,4]
+     */
+    public void resetLight(int light) {
+        if (cameraSession != null) {
+            // 开启摄像头预览
+            CaptureRequest previewRequest = Camera2Util.getPreviewRequest(cameraDevie, new Surface[]{cameraSurface.getHolder().getSurface()}, light);
+            try {
+                cameraSession.setRepeatingRequest(previewRequest, null, null);
+                Log.d(TAG, "开启摄像头预览");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // 图片截取监听
@@ -312,7 +341,7 @@ public class Camera2Helper {
                 try {
                     cameraSession.stopRepeating();
                     cameraSession.abortCaptures();
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 cameraSession.close();

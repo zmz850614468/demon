@@ -13,6 +13,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.util.Range;
 import android.view.Surface;
 
 public class Camera2Util {
@@ -115,7 +116,7 @@ public class Camera2Util {
      * @param surfaces
      * @return
      */
-    public static CaptureRequest getPreviewRequest(CameraDevice cameraDevice, Surface[] surfaces) {
+    public static CaptureRequest getPreviewRequest(CameraDevice cameraDevice, Surface[] surfaces, int light) {
         //设置了一个具有输出Surface的CaptureRequest.Builder。
         try {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -130,6 +131,15 @@ public class Camera2Util {
             // 连续自动对焦应
             builder.set(CaptureRequest.CONTROL_AF_MODE,
                     CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            // 设置自动曝光模式
+            builder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+
+            builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, light);
+            //设置自动曝光帧率范围
+//            builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(150, 160));
+            //对焦触发器设置为空闲状态
+//            builder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_IDLE);
             // 开启相机预览并添加事件
             return builder.build();
 
