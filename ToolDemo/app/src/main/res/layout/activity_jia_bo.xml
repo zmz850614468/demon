@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_creqte_qrcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生成二维码图片" />
+
+    <Button
+        android:id="@+id/bt_request_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请求图片资源" />
+
+    <Button
+        android:id="@+id/bt_print"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="USB打印图片" />
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp" />
+
+</LinearLayout>

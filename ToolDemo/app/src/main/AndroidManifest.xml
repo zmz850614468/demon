@@ -41,7 +41,8 @@
 
         <!--    打印机相关类    -->
         <activity android:name=".prints.PrintsActivity" />
-        <activity android:name=".prints.zicoxPrint.ZicoxActivity"/>
+        <activity android:name=".prints.zicoxPrint.ZicoxActivity" />
+        <activity android:name=".prints.jiabo.JiaBoActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

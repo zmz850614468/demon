@@ -57,7 +57,7 @@ public class APIActivity extends Activity {
     public void hasAuthorityRequest(View v) {
         if (hasAuthority == null) {
             hasAuthority = new APIRequest<>(LoginBean.class);
-            hasAuthority.setRequestBasePath(APIManager.LOGIN_BASE_PATH);
+            hasAuthority.setRequestBasePath(APIManager.LOGIN_AUTHON_PATH);
             hasAuthority.setParseListener(new ParseListener<LoginBean>() {
                 @Override
                 public void jsonParsed(LoginBean bean) {

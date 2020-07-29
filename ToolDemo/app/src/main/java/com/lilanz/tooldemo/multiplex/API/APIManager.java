@@ -10,8 +10,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIManager {
 
-    public static final String BASE_PATH = "http://192.168.35.136:14000/";         // 样衣拍照
-    public static final String LOGIN_BASE_PATH = "http://webt.lilang.com:8901/";   // 是否有登录权限
+    public static final String LOGIN_PATH = "http://tm.lilanz.com/";                // 登录
+    public static final String LOGIN_AUTHON_PATH = "http://webt.lilang.com:8901/cxlogingetapplistproject/";   // 是否有登录权限
+
+    public static final String APP_BASE_PATH = "http://192.168.35.136:14000/";         // 项目相关接口
     //    private static final String BASE_PATH = "http://192.168.35.90:8900/";
 
     // 允许多个首地址
@@ -19,7 +21,7 @@ public class APIManager {
 
     private static Retrofit getRetrofit(String path) {
         if (StringUtil.isEmpty(path)) {
-            path = BASE_PATH;
+            path = APP_BASE_PATH;
         }
 
         if (!retrofitMap.containsKey(path)) {

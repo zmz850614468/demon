@@ -34,9 +34,9 @@ import retrofit2.Response;
 public class APIRequest<T> {
 
     // 解析数据的类型
-    public static final int PARSE_TYPE_BEAN = 1;    // 返回 Bean 对象
-    public static final int PARSE_TYPE_LIST = 2;    // 返回 List 对象
-    public static final int PARSE_TYPE_NULL = 3;    // 返回 提示 信息
+    public static final int PARSE_TYPE_BEAN = 1;    // 解析data数据，返回 Bean 对象
+    public static final int PARSE_TYPE_LIST = 2;    // 解析data数据，返回 List 对象
+    public static final int PARSE_TYPE_NULL = 3;    // 解析data数据，返回 提示 信息
     public static final int PARSE_TYPE_JSON = 4;    // 返回 json 信息
 
     private ParseListener<T> parseListener;
