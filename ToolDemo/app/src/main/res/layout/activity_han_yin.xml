@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_connect_usb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="连接USB打印机" />
+
+    <Button
+        android:id="@+id/bt_disconnect_usb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开USB打印机" />
+
+    <Button
+        android:id="@+id/bt_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="打印对齐" />
+
+    <Button
+        android:id="@+id/bt_print_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打印图片资源" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="提示信息" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/iv_image"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="300dp" />-->
+
+
+</LinearLayout>

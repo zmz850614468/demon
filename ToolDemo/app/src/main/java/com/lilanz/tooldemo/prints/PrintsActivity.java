@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.lilanz.tooldemo.R;
+import com.lilanz.tooldemo.prints.hanYin.HanYinActivity;
 import com.lilanz.tooldemo.prints.jiabo.JiaBoActivity;
 import com.lilanz.tooldemo.prints.zicoxPrint.ZicoxActivity;
 
@@ -25,7 +26,7 @@ public class PrintsActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_zicox, R.id.bt_jia_bo})
+    @OnClick({R.id.bt_zicox, R.id.bt_jia_bo, R.id.bt_han_yin})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_zicox:
@@ -34,6 +35,10 @@ public class PrintsActivity extends Activity {
                 break;
             case R.id.bt_jia_bo:
                 intent = new Intent(this, JiaBoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_han_yin:
+                intent = new Intent(this, HanYinActivity.class);
                 startActivity(intent);
                 break;
         }
