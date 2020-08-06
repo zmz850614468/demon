@@ -13,6 +13,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -90,8 +93,21 @@ public class APIRequest<T> {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    int code = -1;
+                    String msg = null;
+                    if (t instanceof UnknownHostException) {
+                        code = -10;
+                        msg = "无法连接服务器，请先检查网络状态";
+                    } else if (t instanceof ConnectException) {
+                        code = -11;
+                        msg = "无法连接服务器，请先检查网络状态";
+                    } else if (t instanceof SocketTimeoutException) {
+                        code = -12;
+                        msg = "网络请求超时，请联系服务端";
+                    }
+
                     if (parseListener != null) {
-                        parseListener.onError(-1, t.toString());
+                        parseListener.onError(code, msg + ";\n" + t.toString());
                     }
                 }
             });
@@ -116,8 +132,6 @@ public class APIRequest<T> {
     }
 
     /**
-     *
-     *
      * @param fileKey    文件参数名
      * @param file       文件
      * @param map        其他参数

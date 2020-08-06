@@ -9,10 +9,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <!--搜索蓝牙需要，因为蓝牙可以被用来定位，所以需要定位权限-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".App"
@@ -38,12 +40,16 @@
         <activity android:name=".multiplex.activitys.ReuseActivity" />
         <!--    蓝牙适配类    -->
         <activity android:name=".multiplex.bleModel.BleActivity" />
-
+        <!--   wifi通信     -->
+        <activity android:name=".multiplex.wificonnect.WifiConnectActivity" />
+        <activity android:name=".multiplex.wificonnect.SearchIpActivity" />
+        <!-- webView -->
+        <activity android:name=".multiplex.web.WebActivity" />
         <!--    打印机相关类    -->
         <activity android:name=".prints.PrintsActivity" />
         <activity android:name=".prints.zicoxPrint.ZicoxActivity" />
         <activity android:name=".prints.jiabo.JiaBoActivity" />
-        <activity android:name=".prints.hanYin.HanYinActivity"/>
+        <activity android:name=".prints.hanYin.HanYinActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

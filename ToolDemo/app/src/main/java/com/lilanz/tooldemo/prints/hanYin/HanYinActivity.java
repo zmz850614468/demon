@@ -204,5 +204,4 @@ public class HanYinActivity extends Activity {
     private void showMsg(String msg) {
         tvMsg.append(msg + "\n");
     }
-
 }

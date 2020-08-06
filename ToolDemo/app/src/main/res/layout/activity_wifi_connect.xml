@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_search_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="所有同网段所有ip地址" />
+
+    <Button
+        android:id="@+id/bt_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本机ip地址" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_port"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:text="5566" />
+
+        <Button
+            android:id="@+id/bt_open_service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开启端口服务" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_ip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="ip地址"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:text="" />
+
+        <Button
+            android:id="@+id/bt_start_connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="连接服务" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="提示信息" />
+
+
+</LinearLayout>

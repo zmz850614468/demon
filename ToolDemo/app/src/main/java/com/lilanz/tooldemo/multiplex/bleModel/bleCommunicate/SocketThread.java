@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.multiplex.bleModel;
+package com.lilanz.tooldemo.multiplex.bleModel.bleCommunicate;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
@@ -65,6 +65,7 @@ public class SocketThread extends Thread {
                 break;
             }
         }
+        close();
     }
 
     /**
@@ -112,6 +113,14 @@ public class SocketThread extends Thread {
                 e.printStackTrace();
             }
             outputStream = null;
+        }
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            socket = null;
         }
     }
 

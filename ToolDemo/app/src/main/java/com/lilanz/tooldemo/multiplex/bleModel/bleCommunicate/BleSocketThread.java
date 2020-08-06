@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.multiplex.bleModel;
+package com.lilanz.tooldemo.multiplex.bleModel.bleCommunicate;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -6,8 +6,6 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
-
-import com.lilanz.tooldemo.utils.StringUtil;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -104,10 +102,10 @@ public class BleSocketThread extends Thread {
                 e.printStackTrace();
             }
         }
-        if (socketThread != null) {
-            socketThread.close();
-            socketThread = null;
-        }
+//        if (socketThread != null) {
+//            socketThread.close();
+//            socketThread = null;
+//        }
     }
 
     /**

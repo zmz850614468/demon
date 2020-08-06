@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        button:first-child{width:300px;height:60px;}
+    </style>
+
+</head>
+<body>
+<button onresize="30" type="button" onclick="myFunction()">开始蓝牙扫描</button>
+
+<button type="button" onclick="myFunction()">结束蓝牙扫描</button>
+
+<button type="button" onclick="myFunction()">连接蓝牙设备</button>
+
+<h1>信息提示</h1>
+<p id="msg"></p>
+<script>
+function myFunction()
+{
+    document.getElementById("msg").innerHTML="我的第一个 JavaScript 函数";
+}
+
+
+</script>
+</body>
+</html>

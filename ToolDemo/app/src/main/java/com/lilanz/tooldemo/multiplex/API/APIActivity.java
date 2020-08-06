@@ -1,5 +1,6 @@
 package com.lilanz.tooldemo.multiplex.API;
 
+import android.Manifest;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,6 +45,12 @@ public class APIActivity extends Activity {
         dir.mkdirs();
         String imagePath = new File(dir, "test.jpg").getAbsolutePath();
         BitmapUtil.saveBitmap(this, bitmap, imagePath);
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.INTERNET
+        }, 1);
     }
 
     private APIRequest<LoginBean> hasAuthority;
