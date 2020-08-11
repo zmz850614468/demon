@@ -1,5 +1,6 @@
 package com.lilanz.tooldemo.multiplex.bleModel;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -72,10 +74,17 @@ public class BleActivity extends Activity {
         initUI();
         initBle();
         initScanAdapter();
+        requestPermi();
 
         // 注册广播接收器，以获取蓝牙设备搜索结果
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter);
+    }
+
+    private void requestPermi() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.BLUETOOTH_PRIVILEGED,
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 101);
     }
 
     @OnClick({R.id.iv_back, R.id.iv_setting, R.id.bt_wait_connect, R.id.bt_connect, R.id.bt_send,
@@ -310,6 +319,16 @@ public class BleActivity extends Activity {
             @Override
             public void onItemClick(String bean) {
                 showToast("选择的蓝牙：" + bean);
+
+                String address = SharePreferencesUtil.getBleAddress(BleActivity.this);
+                String[] strs = address.split("=");
+                if (strs.length == 2) {
+                    BluetoothDevice device = bluetoothAdapter.getRemoteDevice(strs[1]);
+                    bleSocketThread = new BleSocketThread(device, handler);
+                    bleSocketThread.start();
+                } else {
+                    showToast("没有选择要连接的蓝牙设备");
+                }
 //                SharePreferencesUtil.saveBleAddress(BleActivity.this, bean);
             }
         });

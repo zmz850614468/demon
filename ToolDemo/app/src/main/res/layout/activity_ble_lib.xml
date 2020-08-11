@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_bind_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="绑定蓝牙服务" />
+
+    <Button
+        android:id="@+id/bt_unbind_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="解绑蓝牙服务" />
+
+    <Button
+        android:id="@+id/bt_start_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫描蓝牙设备" />
+
+    <Button
+        android:id="@+id/bt_stop_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="结束蓝牙扫描" />
+
+    <Button
+        android:id="@+id/bt_read_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="读取数据"
+        android:visibility="gone" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_ble_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+</LinearLayout>

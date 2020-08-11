@@ -40,6 +40,10 @@
         <activity android:name=".multiplex.activitys.ReuseActivity" />
         <!--    蓝牙适配类    -->
         <activity android:name=".multiplex.bleModel.BleActivity" />
+        <activity android:name=".multiplex.BLELIB.BLELIBActivity" />
+        <activity android:name=".multiplex.BLELIB.BleScanActivity" />
+
+        <service android:name=".multiplex.BLELIB.lib.BleService" />
         <!--   wifi通信     -->
         <activity android:name=".multiplex.wificonnect.WifiConnectActivity" />
         <activity android:name=".multiplex.wificonnect.SearchIpActivity" />

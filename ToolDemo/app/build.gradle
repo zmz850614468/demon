@@ -61,6 +61,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
+    //    蓝牙 BLE
+    implementation 'com.junkchen.blelib:blelib:1.2.4'
+
     // 注解注入
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0'

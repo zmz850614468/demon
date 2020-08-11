@@ -6,12 +6,16 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
+import android.os.ParcelUuid;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class BleSocketThread extends Thread {
-    private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+        private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+//    private static UUID uuid = UUID.fromString("00001124-0000-1000-8000-00805f9b34fb");
+//    private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private BluetoothServerSocket serverSocket;     // 服务器socket
     private BluetoothSocket bluetoothSocket;        // 蓝夜连接socket
     private BluetoothDevice bluetoothDevice;        // 蓝牙设备
@@ -27,6 +31,10 @@ public class BleSocketThread extends Thread {
         this.bluetoothDevice = device;
         this.handler = handler;
         type = 2;       // 蓝牙连接器设备
+        for (ParcelUuid deviceUuid : device.getUuids()) {
+            deviceUuid.getUuid();
+            Log.e("TAG", "BleSocketThread: " + deviceUuid.getUuid());
+        }
     }
 
     public BleSocketThread(BluetoothAdapter bluetoothAdapter, Handler handler) {
