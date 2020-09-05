@@ -41,6 +41,13 @@ public class SharePreferencesUtil {
         editor.commit();
     }
 
+    // 保存float型数据
+    private static void setFloat(Context context, String key, float value) {
+        SharedPreferences.Editor editor = getInstance(context).edit();
+        editor.putFloat(key, value);
+        editor.commit();
+    }
+
     // 保存boolean型数据
     private static void setBoolean(Context context, String key, boolean b) {
         SharedPreferences.Editor editor = getInstance(context).edit();

@@ -17,7 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.lilanz.tooldemo.multiplex.BLELIB.lib.BleService;
+import com.junkchen.blelib.BleService;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -297,7 +297,7 @@ public class BLELIBHelper {
     }
 
     /**
-     * 服务是否处于连接状态
+     * 蓝牙是否处于连接状态
      *
      * @return
      */
@@ -306,7 +306,7 @@ public class BLELIBHelper {
     }
 
     /**
-     * 端口蓝牙服务连接
+     * 断开蓝牙连接
      */
     public void disConnect() {
         if (isConnect()) {

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.multiplex.BLELIB.lib.BleService;
 import com.lilanz.tooldemo.multiplex.bleModel.BleAdapter;
 
 import java.util.ArrayList;
@@ -25,9 +24,6 @@ public class BLELIBActivity extends Activity implements View.OnClickListener {
     private BleAdapter bleAdapter;
     private List<String> bleList;
 
-    private BleService mBleService;
-    private boolean mIsBind = false;
-
     public static BLELIBHelper blelibHelper;
 
     private Button btBindService;
@@ -35,8 +31,6 @@ public class BLELIBActivity extends Activity implements View.OnClickListener {
     private Button btStartScan;
     private Button btStopScan;
     private TextView tvMsg;
-
-    private String bleAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,9 +111,7 @@ public class BLELIBActivity extends Activity implements View.OnClickListener {
             public void onItemClick(String content) {
                 String[] strings = content.split("=");
                 // 发起蓝牙设备连接
-//                connect(strings[0], strings[1]);
                 blelibHelper.connect(strings[0], strings[1]);
-                bleAddress = strings[1];
             }
         });
     }
