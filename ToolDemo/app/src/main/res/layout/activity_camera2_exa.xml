@@ -7,8 +7,9 @@
 
     <SurfaceView
         android:id="@+id/front_surface_view"
-        android:layout_width="600px"
-        android:layout_height="800px" />
+        android:layout_width="300px"
+        android:layout_height="400px"
+        android:layout_alignParentRight="true" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -84,7 +85,7 @@
             android:layout_height="wrap_content"
             android:hint="相机id"
             android:inputType="number"
-            android:textColor="@color/white" />
+            android:textColor="@color/green" />
 
         <Button
             android:id="@+id/bt_open"
