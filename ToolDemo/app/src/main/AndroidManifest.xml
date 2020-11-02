@@ -26,18 +26,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".multiplex.API.APIActivity" />
-        <activity android:name=".multiplex.daos.DaoExaActivity" />
-        <activity android:name=".multiplex.camera2.Camera2ExaActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".multiplex.API.APIActivity" />
+        <activity android:name=".multiplex.daos.DaoExaActivity" />
+        <activity android:name=".multiplex.camera2.Camera2ExaActivity">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
         <activity android:name=".multiplex.qrcode.CodeScanExaActivity" /> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
 
@@ -47,7 +47,7 @@
         <activity android:name=".multiplex.BLELIB.BLELIBActivity" />
         <activity android:name=".multiplex.BLELIB.BleScanActivity" />
 
-        <service android:name=".multiplex.BLELIB.lib.BleService" />
+        <!--        <service android:name=".multiplex.BLELIB.lib.BleService" />-->
         <!--   wifi通信     -->
         <activity android:name=".multiplex.wificonnect.WifiConnectActivity" />
         <activity android:name=".multiplex.wificonnect.SearchIpActivity" />
@@ -58,6 +58,8 @@
         <activity android:name=".prints.zicoxPrint.ZicoxActivity" />
         <activity android:name=".prints.jiabo.JiaBoActivity" />
         <activity android:name=".prints.hanYin.HanYinActivity" />
+
+        <activity android:name=".multiplex.scanhelper.ScanActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
