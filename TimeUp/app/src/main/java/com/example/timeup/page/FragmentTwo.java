@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.timeup.R;
 import com.example.timeup.adapters.ExecuteAdapter;
 import com.example.timeup.beans.TypeBean;
+import com.example.timeup.controls.MediaControl;
 
 import java.util.List;
 import java.util.Timer;
@@ -28,13 +29,13 @@ public class FragmentTwo extends Fragment {
     private ExecuteAdapter executeAdapter;
     private List<TypeBean> typeBeanList;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View chatView = inflater.inflate(R.layout.fragment_2, container, false);
         ButterKnife.bind(this, chatView);
         initAdapter();
-
         startTimer();
         return chatView;
     }
@@ -48,24 +49,27 @@ public class FragmentTwo extends Fragment {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             private int count = 0;
-
             @Override
             public void run() {
                 for (TypeBean bean : typeBeanList) {
                     bean.during--;
                     if (bean.during == 0) {
-                        ;
+                        MediaControl.getInstance(getActivity()).playRandon();
                     }
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateUI();
-                    }
-                });
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateUI();
+                        }
+                    });
+                }
             }
         }, 1000, 1000);
+
     }
+
 
     public void updateUI() {
         executeAdapter.notifyDataSetChanged();
@@ -83,6 +87,9 @@ public class FragmentTwo extends Fragment {
         executeAdapter.setListener(new ExecuteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(TypeBean bean) {
+                if (bean.during <= 0) {
+                    SlipPageActivity.removerTimer(bean);
+                }
             }
 
             @Override
@@ -98,6 +105,7 @@ public class FragmentTwo extends Fragment {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                SlipPageActivity.removerTimer(bean);
                             }
                         });
                 builder.create().show();

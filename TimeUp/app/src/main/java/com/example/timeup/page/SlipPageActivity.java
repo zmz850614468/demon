@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.timeup.R;
 import com.example.timeup.beans.TypeBean;
+import com.example.timeup.controls.MediaControl;
 import com.example.timeup.services.TiminigService;
 
 import java.util.ArrayList;
@@ -151,8 +152,28 @@ public class SlipPageActivity extends FragmentActivity {
      */
     public static void addTimer(@NonNull String name, int during) {
         TypeBean typeBean = new TypeBean(name, during);
-
         typeBeanList.add(typeBean);
+    }
+
+    /**
+     * 删除计时器
+     *
+     * @param bean
+     */
+    public static void removerTimer(@NonNull TypeBean bean) {
+        typeBeanList.remove(bean);
+
+        boolean canStopPlay = true;
+        for (TypeBean typeBean : typeBeanList) {
+            if (typeBean.during <= 0) {
+                canStopPlay = false;
+                break;
+            }
+        }
+
+        if (canStopPlay) {
+            MediaControl.getInstance(App.context).stopPlay();
+        }
     }
 
 }
