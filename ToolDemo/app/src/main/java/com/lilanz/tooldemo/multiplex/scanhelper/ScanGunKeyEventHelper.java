@@ -19,7 +19,6 @@ public class ScanGunKeyEventHelper {
     private Handler mHandler = new Handler();
     private int id;
 
-
     public ScanGunKeyEventHelper(int id) {
         this.id = id;
     }
@@ -45,9 +44,25 @@ public class ScanGunKeyEventHelper {
         int keyCode = event.getKeyCode();
 
         //字母大小写判断
-        checkLetterStatus(event);
-
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//        checkLetterStatus(event);
+        if (keyCode == KeyEvent.KEYCODE_CAPS_LOCK) {    // Caps lock
+            if (KeyEvent.META_CAPS_LOCK_ON == (event.getMetaState() & KeyEvent.META_CAPS_LOCK_ON)) {
+                //表示大写
+                mCaps = true;
+            } else {
+                //表示小写
+                mCaps = false;
+            }
+            // 左右 Shift
+        } else if (keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT || keyCode == KeyEvent.KEYCODE_SHIFT_LEFT) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                //按着shift键，表示大写
+                mCaps = true;
+            } else {
+                //松开shift键，表示小写
+                mCaps = false;
+            }
+        } else if (event.getAction() == KeyEvent.ACTION_DOWN) {
 
             char aChar = getInputCode(event);
 
@@ -55,7 +70,7 @@ public class ScanGunKeyEventHelper {
                 mStringBufferResult.append(aChar);
             }
 
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
                 //若为回车键，直接返回
                 mHandler.removeCallbacks(mScanningFishedRunnable);
                 mHandler.post(mScanningFishedRunnable);
@@ -64,7 +79,6 @@ public class ScanGunKeyEventHelper {
                 mHandler.removeCallbacks(mScanningFishedRunnable);
                 mHandler.postDelayed(mScanningFishedRunnable, MESSAGE_DELAY);
             }
-
         }
     }
 
@@ -96,20 +110,37 @@ public class ScanGunKeyEventHelper {
         } else if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
             //数字
             aChar = (char) ('0' + keyCode - KeyEvent.KEYCODE_0);
+            // 小键盘中的数字
+        } else if (keyCode >= KeyEvent.KEYCODE_NUMPAD_0 && keyCode <= KeyEvent.KEYCODE_NUMPAD_9) {
+            aChar = (char) ('0' + keyCode - KeyEvent.KEYCODE_NUMPAD_0);
         } else {
             //其他符号
             switch (keyCode) {
-                case KeyEvent.KEYCODE_PERIOD:
-                    aChar = '.';
-                    break;
                 case KeyEvent.KEYCODE_MINUS:
                     aChar = mCaps ? '_' : '-';
                     break;
+                case KeyEvent.KEYCODE_EQUALS:
+                    aChar = mCaps ? '+' : '=';
+                    break;
+                case KeyEvent.KEYCODE_PERIOD:
+                case KeyEvent.KEYCODE_NUMPAD_DOT:
+                    aChar = '.';
+                    break;
+                case KeyEvent.KEYCODE_NUMPAD_SUBTRACT:
+                    aChar = '-';
+                    break;
+                case KeyEvent.KEYCODE_NUMPAD_DIVIDE:
                 case KeyEvent.KEYCODE_SLASH:
                     aChar = '/';
                     break;
                 case KeyEvent.KEYCODE_BACKSLASH:
                     aChar = mCaps ? '|' : '\\';
+                    break;
+                case KeyEvent.KEYCODE_NUMPAD_MULTIPLY:
+                    aChar = '*';
+                    break;
+                case KeyEvent.KEYCODE_NUMPAD_ADD:
+                    aChar = '+';
                     break;
                 default:
                     aChar = 0;

@@ -20,7 +20,8 @@ include $(CLEAR_VARS)
 TARGET_PLATFORM := android-3
 LOCAL_MODULE    := local_serial_port
 
-LOCAL_SRC_FILES := SerialPort.c
+LOCAL_SRC_FILES := SerialPort.c     \
+                   KeyBoard.cpp
 
 LOCAL_LDLIBS    := -llog
 
