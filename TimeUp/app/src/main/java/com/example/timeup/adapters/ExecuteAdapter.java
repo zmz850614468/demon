@@ -50,28 +50,43 @@ public class ExecuteAdapter extends RecyclerView.Adapter<ExecuteAdapter.TypeHold
         holder.tvDuring.setText(bean.getSecond());
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
+            private long lastClickTime;
+
             @Override
             public void onClick(View v) {
+//                if (listener != null) {
+//                    listener.onItemClick(beanList.get(i));
+//                }
+
+                long currentTime = System.currentTimeMillis();
+
                 if (listener != null) {
-                    listener.onItemClick(beanList.get(i));
+                    if (beanList.get(i).during > 0 && currentTime - lastClickTime < 1000) {
+                        listener.onDeleteClick(beanList.get(i));
+                    } else {
+                        listener.onItemClick(beanList.get(i));
+                    }
                 }
+
+                lastClickTime = currentTime;
+
             }
         });
 
-        holder.viewGroup.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (listener != null) {
-                    listener.onLongClick(beanList.get(i));
-                }
-                return true;
-            }
-        });
+//        holder.viewGroup.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (listener != null) {
+//                    listener.onLongClick(beanList.get(i));
+//                }
+//                return true;
+//            }
+//        });
 
         if (i % 2 == 0) {
-            holder.viewGroup.setBackgroundResource(R.drawable.shape_box_gray);
-        } else {
             holder.viewGroup.setBackgroundResource(R.drawable.shape_box_white);
+        } else {
+            holder.viewGroup.setBackgroundResource(R.drawable.shape_box_gray);
         }
     }
 
@@ -94,6 +109,9 @@ public class ExecuteAdapter extends RecyclerView.Adapter<ExecuteAdapter.TypeHold
         public TypeHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
+            tvOrder.setTextSize(16);
+            tvName.setTextSize(16);
+            tvDuring.setTextSize(16);
             // 4.查找界面控件
         }
     }
@@ -109,6 +127,6 @@ public class ExecuteAdapter extends RecyclerView.Adapter<ExecuteAdapter.TypeHold
 
         void onStartClick(TypeBean bean);
 
-        void onLongClick(TypeBean bean);
+        void onDeleteClick(TypeBean bean);
     }
 }

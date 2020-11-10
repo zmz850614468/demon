@@ -28,6 +28,7 @@ public class FragmentTwo extends Fragment {
     RecyclerView rvType;
     private ExecuteAdapter executeAdapter;
     private List<TypeBean> typeBeanList;
+    private static Timer timer;
 
 
     @Override
@@ -46,9 +47,13 @@ public class FragmentTwo extends Fragment {
     }
 
     private void startTimer() {
-        Timer timer = new Timer();
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             private int count = 0;
+
             @Override
             public void run() {
                 for (TypeBean bean : typeBeanList) {
@@ -89,6 +94,7 @@ public class FragmentTwo extends Fragment {
             public void onItemClick(TypeBean bean) {
                 if (bean.during <= 0) {
                     SlipPageActivity.removerTimer(bean);
+                    executeAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -97,7 +103,7 @@ public class FragmentTwo extends Fragment {
             }
 
             @Override
-            public void onLongClick(final TypeBean bean) {
+            public void onDeleteClick(final TypeBean bean) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                         .setTitle("注意")
                         .setMessage("确定删除计时任务：" + bean.name)
@@ -106,6 +112,7 @@ public class FragmentTwo extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SlipPageActivity.removerTimer(bean);
+                                executeAdapter.notifyDataSetChanged();
                             }
                         });
                 builder.create().show();

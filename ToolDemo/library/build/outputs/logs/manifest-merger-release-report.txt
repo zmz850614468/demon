@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml:1:1-41
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml:1:1-41
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml:1:1-41
+	package
+		ADDED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml:1:11-39
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml:1:1-41
+uses-sdk
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+		ADDED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+		ADDED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+		INJECTED from E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml

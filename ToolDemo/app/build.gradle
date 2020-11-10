@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation project(":library")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -109,4 +110,6 @@ dependencies {
 //    // js 的桥接
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

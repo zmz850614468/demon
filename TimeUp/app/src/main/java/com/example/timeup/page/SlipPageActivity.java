@@ -163,6 +163,7 @@ public class SlipPageActivity extends FragmentActivity {
     public static void removerTimer(@NonNull TypeBean bean) {
         typeBeanList.remove(bean);
 
+
         boolean canStopPlay = true;
         for (TypeBean typeBean : typeBeanList) {
             if (typeBean.during <= 0) {

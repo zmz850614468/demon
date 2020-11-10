@@ -17,7 +17,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
 
     // 数据库名称
     private static final String DATABASE_NAME = "orm.db";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     private static OrmLiteHelter instance;
 

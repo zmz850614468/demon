@@ -62,6 +62,13 @@ public class SharePreferencesUtil {
         editor.commit();
     }
 
+    // 保存Long型数据
+    private static void setLong(Context context, String key, long value) {
+        SharedPreferences.Editor editor = getInstance(context).edit();
+        editor.putLong(key, value);
+        editor.commit();
+    }
+
     private static SharedPreferences getInstance(Context context) {
         if (instance == null) {
             instance = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);

@@ -15,6 +15,9 @@ public class TypeBean {
     @DatabaseField(columnName = "during")
     public int during;
 
+    @DatabaseField(columnName = "order_id")
+    public int orderId;
+
     public boolean canRing = true;     // 是否可以播放提示音
 
     public TypeBean() {

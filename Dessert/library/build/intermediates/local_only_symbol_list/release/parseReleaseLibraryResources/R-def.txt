@@ -1,0 +1,24 @@
+R_DEF: Internal format may change without notice
+local
+attr? arrowDrawable
+attr? arrowTint
+attr? backgroundSelector
+attr? dropDownListPaddingBottom
+attr? entries
+attr? hideArrow
+attr popupTextAlignment
+attr? textTint
+color light_gray
+dimen one_and_a_half_grid_unit
+dimen three_grid_unit
+drawable arrow
+drawable drop_down_shadow
+drawable ic_arrow_drop_down_black_24dp
+drawable selector
+drawable spinner_drawable
+id center
+id end
+id start
+id text_view_spinner
+layout spinner_list_item
+styleable NiceSpinner arrowTint hideArrow arrowDrawable dropDownListPaddingBottom backgroundSelector textTint popupTextAlignment entries

@@ -10,15 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timeup.R;
 import com.example.timeup.adapters.TypeAdapter;
 import com.example.timeup.beans.TypeBean;
+import com.example.timeup.controls.TouchControl;
 import com.example.timeup.controls.TypeDBControl;
 import com.example.timeup.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,14 +33,19 @@ import butterknife.OnClick;
 
 public class FragmentOne extends Fragment {
 
+
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_during)
     EditText etDuring;
+    @BindView(R.id.tv_show_Or_hind)
+    TextView tvShowOrHind;
 
     @BindView(R.id.rv_type)
     RecyclerView rvType;
-    private TypeAdapter typrAdapter;
+    private TypeAdapter typeAdapter;
     private List<TypeBean> typeBeanList;
 
     @Override
@@ -56,7 +66,7 @@ public class FragmentOne extends Fragment {
 
 
     @OnClick(R.id.bt_save)
-    public void onClicked(View v) {
+    public void onSaveClicked(View v) {
         String name = etName.getText().toString();
         String during = etDuring.getText().toString();
 
@@ -105,10 +115,32 @@ public class FragmentOne extends Fragment {
         updateData();
     }
 
+
+    private boolean isShow = false;
+
+    @OnClick(R.id.tv_show_Or_hind)
+    public void onShowOrHindClicked(View v) {
+        if (isShow) {
+            layoutBottom.setVisibility(View.GONE);
+            tvShowOrHind.setText("+");
+        } else {
+            layoutBottom.setVisibility(View.VISIBLE);
+            tvShowOrHind.setText("--");
+            clear();
+        }
+        isShow = !isShow;
+    }
+
     private void updateData() {
         typeBeanList.clear();
         typeBeanList.addAll(TypeDBControl.quaryAll(getActivity()));
-        typrAdapter.notifyDataSetChanged();
+        Collections.sort(typeBeanList, new Comparator<TypeBean>() {
+            @Override
+            public int compare(TypeBean o1, TypeBean o2) {
+                return o1.orderId - o2.orderId;
+            }
+        });
+        typeAdapter.notifyDataSetChanged();
     }
 
     private void clear() {
@@ -119,13 +151,25 @@ public class FragmentOne extends Fragment {
     private void initAdapter() {
         typeBeanList = new ArrayList<>();
 
-        typrAdapter = new TypeAdapter(getActivity(), typeBeanList);
+        typeAdapter = new TypeAdapter(getActivity(), typeBeanList);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvType.setLayoutManager(manager);
-        rvType.setAdapter(typrAdapter);
+        rvType.setAdapter(typeAdapter);
+        TouchControl touchControl = new TouchControl<>(rvType, typeAdapter, typeBeanList, new TouchControl.OnUpdateListener<TypeBean>() {
+            @Override
+            public void onUpdate(List<TypeBean> list) {
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).orderId = i;
+                }
+                TypeDBControl.createOrUpdate(getActivity(), list);
+                TypeDBControl.saveDB2File(getActivity());
+            }
+        });
+        touchControl.attachToRecyclerView(rvType);
 
-        typrAdapter.setListener(new TypeAdapter.OnItemClickListener() {
+
+        typeAdapter.setListener(new TypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(TypeBean bean) {
                 etName.setText(bean.name);
@@ -139,7 +183,7 @@ public class FragmentOne extends Fragment {
             }
 
             @Override
-            public void onLongClick(final TypeBean bean) {
+            public void onDeleteClick(final TypeBean bean) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                         .setTitle("注意")
                         .setMessage("确定删除计时器：" + bean.name)

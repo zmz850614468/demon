@@ -15,6 +15,18 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tv_show_Or_hind"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="+"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
     <include
         android:id="@+id/layout_title"
         layout="@layout/item_type"
@@ -34,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_box_white">
+        android:background="@drawable/shape_box_white"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +67,7 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="15dp"
                 android:gravity="center"
                 android:selectAllOnFocus="true"
                 android:textColor="@color/black"
@@ -81,7 +94,7 @@
                 android:id="@+id/et_during"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="15dp"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="4"

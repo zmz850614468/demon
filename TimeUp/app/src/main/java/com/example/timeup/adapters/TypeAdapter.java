@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.timeup.R;
@@ -51,21 +50,21 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeHolder> {
         holder.tvDuring.setText(bean.during + "");
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
+            private long lastClickTime;
+
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(beanList.get(i));
-                }
-            }
-        });
+                long currentTime = System.currentTimeMillis();
 
-        holder.viewGroup.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
                 if (listener != null) {
-                    listener.onLongClick(beanList.get(i));
+                    if (currentTime - lastClickTime < 1000) {
+                        listener.onDeleteClick(beanList.get(i));
+                    } else {
+                        listener.onItemClick(beanList.get(i));
+                    }
                 }
-                return true;
+
+                lastClickTime = currentTime;
             }
         });
 
@@ -79,9 +78,9 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeHolder> {
         });
 
         if (i % 2 == 0) {
-            holder.viewGroup.setBackgroundResource(R.drawable.shape_box_gray);
-        } else {
             holder.viewGroup.setBackgroundResource(R.drawable.shape_box_white);
+        } else {
+            holder.viewGroup.setBackgroundResource(R.drawable.shape_box_gray);
         }
     }
 
@@ -106,6 +105,9 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeHolder> {
         public TypeHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
+            tvOrder.setTextSize(16);
+            tvName.setTextSize(16);
+            tvDuring.setTextSize(16);
             tvStart.setText("Go");
             tvStart.setTextColor(context.getResources().getColor(R.color.red));
             // 4.查找界面控件
@@ -123,6 +125,6 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeHolder> {
 
         void onStartClick(TypeBean bean);
 
-        void onLongClick(TypeBean bean);
+        void onDeleteClick(TypeBean bean);
     }
 }
