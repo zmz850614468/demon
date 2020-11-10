@@ -42,39 +42,46 @@ public class TypeDBControl {
      *
      * @param context
      */
-    public static void saveDB2File(Context context) {
-        String path = Environment.getExternalStorageDirectory().getPath();
-        path += "/YuanYi/save";
+    public static void saveDB2File(final Context context) {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
 
-        List<TypeBean> TypeList = quaryAll(context);
-        for (TypeBean bean : TypeList) {
-            bean.id = 0;
-        }
+                String path = Environment.getExternalStorageDirectory().getPath();
+                path += "/YuanYi/save";
 
-        FileWriter writer = null;
-        try {
-            File file = new File(path);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            file = new File(file, "clockDB.txt");
-            file.createNewFile();
+                List<TypeBean> TypeList = quaryAll(context);
+                for (TypeBean bean : TypeList) {
+                    bean.id = 0;
+                }
 
-            writer = new FileWriter(file);
-            writer.write(new Gson().toJson(TypeList));
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (writer != null) {
+                FileWriter writer = null;
                 try {
+                    File file = new File(path);
+                    if (!file.exists()) {
+                        file.mkdirs();
+                    }
+                    file = new File(file, "clockDB.txt");
+                    file.createNewFile();
+
+                    writer = new FileWriter(file);
+                    writer.write(new Gson().toJson(TypeList));
                     writer.flush();
                     writer.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (writer != null) {
+                        try {
+                            writer.flush();
+                            writer.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
                 }
             }
-        }
+        }.start();
     }
 
     /**

@@ -105,8 +105,6 @@ public class SlipPageActivity extends FragmentActivity {
 
         fragmentAdapter = new FragmentAdapter(this.getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setCurrentItem(0);
-        selected(0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -120,7 +118,6 @@ public class SlipPageActivity extends FragmentActivity {
                         break;
                     case 1:
                         selected(1);
-                        fragmentTwo.updateUI();
                         break;
                     case 2:
                         selected(2);
@@ -132,6 +129,14 @@ public class SlipPageActivity extends FragmentActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+        if (typeBeanList.isEmpty()) {
+            viewPager.setCurrentItem(0);
+            selected(0);
+        } else {
+            viewPager.setCurrentItem(1);
+            selected(1);
+        }
+
     }
 
     @Override

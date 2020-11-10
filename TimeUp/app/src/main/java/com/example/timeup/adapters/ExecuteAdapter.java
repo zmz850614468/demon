@@ -50,25 +50,20 @@ public class ExecuteAdapter extends RecyclerView.Adapter<ExecuteAdapter.TypeHold
         holder.tvDuring.setText(bean.getSecond());
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
-            private long lastClickTime;
-
             @Override
             public void onClick(View v) {
-//                if (listener != null) {
-//                    listener.onItemClick(beanList.get(i));
-//                }
-
                 long currentTime = System.currentTimeMillis();
 
                 if (listener != null) {
-                    if (beanList.get(i).during > 0 && currentTime - lastClickTime < 1000) {
+                    TypeBean typeBean = beanList.get(i);
+
+                    if (typeBean.during > 0 && currentTime - typeBean.lastClickTime < 1000) {
                         listener.onDeleteClick(beanList.get(i));
                     } else {
                         listener.onItemClick(beanList.get(i));
                     }
+                    typeBean.lastClickTime = currentTime;
                 }
-
-                lastClickTime = currentTime;
 
             }
         });

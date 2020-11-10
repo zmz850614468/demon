@@ -20,6 +20,8 @@ public class TypeBean {
 
     public boolean canRing = true;     // 是否可以播放提示音
 
+    public long lastClickTime;
+
     public TypeBean() {
     }
 

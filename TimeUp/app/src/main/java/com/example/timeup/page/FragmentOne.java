@@ -30,7 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class FragmentOne extends Fragment {
 
 
@@ -98,6 +97,7 @@ public class FragmentOne extends Fragment {
         if (typeBean == null) {
             typeBean = new TypeBean();
             typeBean.name = name;
+            typeBean.orderId = typeBeanList.size();
         }
         try {
             typeBean.during = Integer.parseInt(during);
@@ -113,6 +113,9 @@ public class FragmentOne extends Fragment {
         TypeDBControl.createOrUpdate(getActivity(), typeBean);
         clear();
         updateData();
+        rvType.scrollToPosition(typeBeanList.size() - 1);
+
+        TypeDBControl.saveDB2File(getActivity());
     }
 
 
@@ -158,12 +161,18 @@ public class FragmentOne extends Fragment {
         rvType.setAdapter(typeAdapter);
         TouchControl touchControl = new TouchControl<>(rvType, typeAdapter, typeBeanList, new TouchControl.OnUpdateListener<TypeBean>() {
             @Override
-            public void onUpdate(List<TypeBean> list) {
+            public void onUpdate(final List<TypeBean> list) {
                 for (int i = 0; i < list.size(); i++) {
                     list.get(i).orderId = i;
                 }
-                TypeDBControl.createOrUpdate(getActivity(), list);
-                TypeDBControl.saveDB2File(getActivity());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        TypeDBControl.createOrUpdate(getActivity(), list);
+                        TypeDBControl.saveDB2File(getActivity());
+                    }
+                }.start();
             }
         });
         touchControl.attachToRecyclerView(rvType);
@@ -194,6 +203,7 @@ public class FragmentOne extends Fragment {
                                 TypeDBControl.delete(getActivity(), bean);
                                 clear();
                                 updateData();
+                                TypeDBControl.saveDB2File(getActivity());
                             }
                         });
                 builder.create().show();
