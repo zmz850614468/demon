@@ -97,10 +97,10 @@ public class DaoExaActivity extends Activity {
 
                 String ageStr = etAge.getText().toString();
                 String isBoyStr = etIsBoy.getText().toString();
-                if (!StringUtil.isEmpty(ageStr) && NumberUtil.isInt(ageStr)) {
+                if (!StringUtil.isEmpty(ageStr)) {
                     bean.age = Integer.parseInt(ageStr);
                 }
-                if (!StringUtil.isEmpty(isBoyStr) && NumberUtil.isInt(isBoyStr)) {
+                if (!StringUtil.isEmpty(isBoyStr) ) {
                     if (Integer.parseInt(isBoyStr) != 0) {
                         bean.isBoy = true;
                     }

@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\demon\Dessert\library\src\main\AndroidManifest.xml:1:1-41
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml:1:1-41
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml:1:1-41
+ADDED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml:1:1-41
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml:1:1-41
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml:1:1-41
 	package
-		ADDED from E:\demon\Dessert\library\src\main\AndroidManifest.xml:1:11-39
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
+		ADDED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml:1:11-39
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\demon\Dessert\library\src\main\AndroidManifest.xml:1:1-41
+		ADDED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml:1:1-41
 uses-sdk
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-		ADDED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+		ADDED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-		ADDED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
-		INJECTED from E:\demon\Dessert\library\src\main\AndroidManifest.xml
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+		ADDED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
+		INJECTED from E:\demon\ToolDemo\library\src\main\AndroidManifest.xml

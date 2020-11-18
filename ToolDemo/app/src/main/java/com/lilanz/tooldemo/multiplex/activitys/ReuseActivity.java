@@ -9,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.multiplex.BLELIB.BLELIBActivity;
 import com.lilanz.tooldemo.multiplex.camera2.Camera2ExaActivity;
 import com.lilanz.tooldemo.multiplex.API.APIActivity;
 import com.lilanz.tooldemo.multiplex.bleModel.BleActivity;
@@ -38,16 +37,12 @@ public class ReuseActivity extends Activity {
     }
 
     @OnClick({R.id.bt_ble, R.id.bt_scan_code, R.id.bt_dao_test, R.id.bt_camera2,
-            R.id.bt_api_request, R.id.bt_wifi_connect, R.id.bt_webview, R.id.bt_ble_lib,
+            R.id.bt_api_request, R.id.bt_wifi_connect, R.id.bt_webview,
             R.id.bt_scan})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ble:           // 蓝牙例子
                 Intent intent = new Intent(this, BleActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.bt_ble_lib:
-                intent = new Intent(this, BLELIBActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_scan_code:     // 扫描例子

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
 
+import com.demon.myapplication.Beans.GroupBean;
 import com.demon.myapplication.Beans.MaterialBean;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -17,7 +18,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
 
     // 数据库名称
     private static final String DATABASE_NAME = "orm.db";
-    private static final int VERSION = 1;
+    private static final int VERSION = 3;
 
     private static OrmLiteHelter instance;
 
@@ -79,6 +80,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, MaterialBean.class);
+            TableUtils.createTable(connectionSource, GroupBean.class);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -96,6 +98,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, MaterialBean.class, true);
+            TableUtils.dropTable(connectionSource, GroupBean.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException ex) {
             ex.printStackTrace();

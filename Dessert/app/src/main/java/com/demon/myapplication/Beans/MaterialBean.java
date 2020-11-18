@@ -10,7 +10,7 @@ public class MaterialBean {
     public int id;
 
     @DatabaseField(columnName = "type")
-    public String type;     // 所属的类型
+    public String type;     // 对应的配方名称
 
     @DatabaseField(columnName = "name")
     public String name;
@@ -20,5 +20,10 @@ public class MaterialBean {
 
     @DatabaseField(columnName = "unit")
     public String unit;     // 单位
+
+    @DatabaseField(columnName = "order_id")
+    public int orderId;
+
+    public String group;    // 对应的组
 
 }

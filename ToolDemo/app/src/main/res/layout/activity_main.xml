@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/bt_prints"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector"
-        android:text="各种打印机例子" />
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/bt_reuse"
@@ -22,6 +13,15 @@
         android:background="@drawable/selector"
         android:text="可复用的例子" />
 
+
+    <Button
+        android:id="@+id/bt_prints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="各种打印机例子" />
+
     <Button
         android:id="@+id/bt_internal_check"
         android:layout_width="match_parent"
@@ -29,6 +29,21 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/selector"
         android:text="网络测试" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/black" />
+
+    <Button
+        android:id="@+id/bt_copy_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="demon：整理可复用例子，有简单demo" />
+
 
     <TextView
         android:id="@+id/tv_msg"

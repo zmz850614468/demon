@@ -141,7 +141,7 @@ public class NiceSpinner extends AppCompatTextView {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NiceSpinner);
         int defaultPadding = resources.getDimensionPixelSize(R.dimen.one_and_a_half_grid_unit);
 
-        setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        setGravity(Gravity.CENTER);
         setPadding(resources.getDimensionPixelSize(R.dimen.three_grid_unit), defaultPadding, defaultPadding,
                 defaultPadding);
         setClickable(true);
@@ -328,7 +328,6 @@ public class NiceSpinner extends AppCompatTextView {
     }
 
 
-
     /**
      * @deprecated use setOnSpinnerItemSelectedListener instead.
      */
@@ -403,7 +402,7 @@ public class NiceSpinner extends AppCompatTextView {
         popupWindow.setAnchorView(this);
         popupWindow.show();
         final ListView listView = popupWindow.getListView();
-        if(listView != null) {
+        if (listView != null) {
             listView.setVerticalScrollBarEnabled(false);
             listView.setHorizontalScrollBarEnabled(false);
             listView.setVerticalFadingEdgeEnabled(false);
@@ -467,13 +466,14 @@ public class NiceSpinner extends AppCompatTextView {
     }
 
 
-    public void performItemClick( int position,boolean showDropdown) {
-        if(showDropdown) showDropDown();
+    public void performItemClick(int position, boolean showDropdown) {
+        if (showDropdown) showDropDown();
         setSelectedIndex(position);
     }
 
     /**
      * only applicable when popup is shown .
+     *
      * @param view
      * @param position
      * @param id
@@ -481,7 +481,7 @@ public class NiceSpinner extends AppCompatTextView {
     public void performItemClick(View view, int position, int id) {
         showDropDown();
         final ListView listView = popupWindow.getListView();
-        if(listView != null) {
+        if (listView != null) {
             listView.performItemClick(view, position, id);
         }
     }

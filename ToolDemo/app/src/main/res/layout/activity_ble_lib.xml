@@ -30,6 +30,12 @@
         android:text="结束蓝牙扫描" />
 
     <Button
+        android:id="@+id/bt_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送数据：FE" />
+
+    <Button
         android:id="@+id/bt_read_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

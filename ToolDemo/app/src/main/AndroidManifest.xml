@@ -61,6 +61,12 @@
 
         <activity android:name=".multiplex.scanhelper.ScanActivity" />
 
+
+        <!--   copyUse 可以直接复制使用    -->
+        <activity android:name="demon.CopyUseActivity" />
+        <activity android:name="demon.blecommunicate.BleDemoActivity" />
+        <activity android:name="demon.BLELib.BLELibDemoActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lilanz.tooldemo.provider"

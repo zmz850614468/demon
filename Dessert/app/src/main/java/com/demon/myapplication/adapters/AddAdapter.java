@@ -57,23 +57,34 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.AddHolder> {
         }
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
+
+            private long lastClickTime = 0;
+
             @Override
             public void onClick(View v) {
+                long currentTime = System.currentTimeMillis();
+
                 if (listener != null) {
-                    listener.onItemClick(beanList.get(i));
+                    if (currentTime - lastClickTime < 1000) {
+                        listener.onDeleteClick(beanList.get(i));
+                    } else {
+                        listener.onItemClick(beanList.get(i));
+                    }
                 }
+
+                lastClickTime = currentTime;
             }
         });
 
-        holder.viewGroup.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (listener != null) {
-                    listener.onItemLongClick(beanList.get(i));
-                }
-                return true;
-            }
-        });
+//        holder.viewGroup.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (listener != null) {
+//                    listener.onItemLongClick(beanList.get(i));
+//                }
+//                return true;
+//            }
+//        });
     }
 
     @Override
@@ -110,6 +121,6 @@ public class AddAdapter extends RecyclerView.Adapter<AddAdapter.AddHolder> {
     public interface OnItemClickListener {
         void onItemClick(MaterialBean bean);
 
-        void onItemLongClick(MaterialBean bean);
+        void onDeleteClick(MaterialBean bean);
     }
 }

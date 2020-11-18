@@ -6,10 +6,9 @@
     android:layout_gravity="center"
     android:ellipsize="marquee"
     android:gravity="center"
-    android:padding="@dimen/one_and_a_half_grid_unit"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:singleLine="true"
-    android:textSize="20sp"
+    android:textSize="17sp"
     tools:text="Item"
     tools:textColor="@android:color/black" />

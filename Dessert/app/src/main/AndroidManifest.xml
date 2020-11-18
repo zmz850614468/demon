@@ -25,6 +25,10 @@
 
         <activity
             android:name=".activitys.AddDessertActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activitys.ManagerActivity"
             android:screenOrientation="portrait">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demon.myapplication.Beans.GroupBean;
 import com.demon.myapplication.Beans.MaterialBean;
 import com.demon.myapplication.R;
 import com.demon.myapplication.adapters.AddAdapter;
@@ -22,8 +23,13 @@ import com.demon.myapplication.utils.SharePreferencesUtil;
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.OnSpinnerItemSelectedListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean needUpdate = false;
 
+    @BindView(R.id.ns_group)
+    NiceSpinner nsGroup;
     @BindView(R.id.ns_dessert)
     NiceSpinner nsDessert;
     @BindView(R.id.ns_number)
@@ -43,10 +51,9 @@ public class MainActivity extends AppCompatActivity {
     private AddAdapter MaterialAdapter;
     private List<MaterialBean> materialList;
 
+    private List<String> groupList;
     private List<String> dessertList;
     private List<String> numberList;
-
-    private InputDialog inputDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initPermission();
-        initUI();
         initAdapter();
         initNiceSpinner();
     }
@@ -65,29 +71,27 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (needUpdate) {
             needUpdate = false;
-            dessertList = SharePreferencesUtil.getDessert(this);
-            nsDessert.attachDataSource(dessertList);
-            updateData();
-        } else {
-            updateData();
+            initNiceSpinner();
         }
+        updateData();
     }
 
-    @OnClick({R.id.iv_setting, R.id.tv_add})
+    @OnClick({R.id.tv_add})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_setting:
-                if (dessertList.isEmpty()) {
-                    showToast("配方不能为空！");
-                    return;
-                }
-                String type = ((String) nsDessert.getSelectedItem());
-                Intent intent = new Intent(this, AddDessertActivity.class);
-                intent.putExtra("type", type);
-                startActivity(intent);
-                break;
+//            case R.id.iv_setting:
+//                if (dessertList.isEmpty()) {
+//                    showToast("配方不能为空！");
+//                    return;
+//                }
+//                String type = ((String) nsDessert.getSelectedItem());
+//                Intent intent = new Intent(this, AddDessertActivity.class);
+//                intent.putExtra("type", type);
+//                startActivity(intent);
+//                break;
             case R.id.tv_add:
-                inputDialog.show();
+                Intent intent = new Intent(this, ManagerActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -106,11 +110,34 @@ public class MainActivity extends AppCompatActivity {
 
         materialList.clear();
         materialList.addAll(list);
+        Collections.sort(materialList, new Comparator<MaterialBean>() {
+            @Override
+            public int compare(MaterialBean o1, MaterialBean o2) {
+                return o1.orderId - o2.orderId;
+            }
+        });
         MaterialAdapter.notifyDataSetChanged();
     }
 
     private void initNiceSpinner() {
-        dessertList = SharePreferencesUtil.getDessert(this);
+
+        List<GroupBean> list = DBControl.getDistinct(this, GroupBean.class, "group_name");
+        groupList = new ArrayList<>();
+        for (GroupBean bean : list) {
+            groupList.add(bean.groupName);
+        }
+        Collections.sort(groupList);
+        nsGroup.attachDataSource(groupList);
+
+        dessertList = new ArrayList<>();
+        if (!groupList.isEmpty()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("group_name", groupList.get(0));
+            list = DBControl.quaryByColumn(this, GroupBean.class, map);
+            for (GroupBean bean : list) {
+                dessertList.add(bean.peiFangName);
+            }
+        }
         nsDessert.attachDataSource(dessertList);
 
         numberList = new ArrayList<>();
@@ -118,6 +145,26 @@ public class MainActivity extends AppCompatActivity {
             numberList.add(i + "");
         }
         nsNumber.attachDataSource(numberList);
+
+        nsGroup.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
+            @Override
+            public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("group_name", ((TextView) view).getText().toString());
+                List<GroupBean> list = DBControl.quaryByColumn(MainActivity.this, GroupBean.class, map);
+                dessertList.clear();
+                for (GroupBean bean : list) {
+                    dessertList.add(bean.peiFangName);
+                }
+                nsDessert.attachDataSource(dessertList);
+
+                if (!dessertList.isEmpty()) {
+                    String type = nsDessert.getText().toString();
+                    int number = Integer.parseInt(nsNumber.getText().toString());
+                    updateData(type, number);
+                }
+            }
+        });
 
         nsDessert.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
             @Override
@@ -147,24 +194,6 @@ public class MainActivity extends AppCompatActivity {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvDetail.setLayoutManager(manager);
         rvDetail.setAdapter(MaterialAdapter);
-    }
-
-    private void initUI() {
-        inputDialog = new InputDialog(this, R.style.DialogStyleOne);
-        inputDialog.setListener(new InputDialog.OnClickListener() {
-            @Override
-            public void onConfirm(String str) {
-                if (dessertList.contains(str)) {
-                    showToast("配方已经存在");
-                } else {
-                    dessertList.add(str);
-                    SharePreferencesUtil.saveDessert(MainActivity.this, dessertList);
-                    nsDessert.attachDataSource(dessertList);
-                }
-            }
-        });
-        inputDialog.show();
-        inputDialog.dismiss();
     }
 
     private void initPermission() {

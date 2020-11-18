@@ -7,7 +7,9 @@
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/shape_box_white">
+        android:background="@drawable/shape_box_white"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,55 +23,56 @@
 
         <TextView
             android:id="@+id/tv_add"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:text="管理"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/ns_number"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="+"
             android:textColor="@color/black"
-            android:textSize="35sp" />
+            android:textSize="17sp" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_select"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/layout_title"
         android:background="@drawable/shape_box_gray"
         android:orientation="horizontal"
-        android:paddingEnd="7dp">
+        android:paddingStart="10dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="3dp">
 
-        <ImageView
-            android:id="@+id/iv_setting"
-            android:layout_width="55dp"
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/ns_group"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:padding="10dp"
-            android:src="@mipmap/icon_setting" />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
 
         <org.angmarch.views.NiceSpinner
             android:id="@+id/ns_dessert"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="2"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <org.angmarch.views.NiceSpinner
-            android:id="@+id/ns_number"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
     </LinearLayout>
 

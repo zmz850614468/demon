@@ -30,7 +30,8 @@
             android:paddingRight="15dp"
             android:text="删除"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

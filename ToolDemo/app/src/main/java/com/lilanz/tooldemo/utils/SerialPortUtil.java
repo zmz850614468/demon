@@ -39,5 +39,26 @@ public class SerialPortUtil {
         return baKeyword;
     }
 
+    /**
+     * 垂直校验
+     *
+     * @param str
+     * @return
+     */
+    public static String verticalCheck(String str) {
+        str = str.replace(" ", "");
+        if (str.length() % 2 != 0) {
+            return "error";
+        }
+
+        int count = 0;
+        for (int i = 0; i < str.length(); i = i + 2) {
+            count += NumberUtil.hex2Int(str.substring(i, i + 2));
+        }
+
+        int result = count % 256;
+
+        return String.format("%02x", result);
+    }
 
 }

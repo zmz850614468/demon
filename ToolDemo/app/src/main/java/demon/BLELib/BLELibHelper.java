@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.multiplex.BLELIB;
+package demon.BLELib;
 
 import android.Manifest;
 import android.app.Activity;
@@ -26,14 +26,14 @@ import java.util.UUID;
 /**
  * 蓝牙扫描、连接帮助类
  */
-public class BLELIBHelper {
+public class BLELibHelper {
 
     private Activity activity;
 
     private BleService mBleService;
     private boolean mIsBind = false;
 
-    public BLELIBHelper(Activity activity) {
+    public BLELibHelper(Activity activity) {
         this.activity = activity;
 
         requestPermi();
@@ -71,6 +71,10 @@ public class BLELIBHelper {
         } else {
             showToast("已经解绑蓝牙服务");
         }
+    }
+
+    public boolean isScaning() {
+        return mBleService.isScanning();
     }
 
     /**
@@ -160,6 +164,18 @@ public class BLELIBHelper {
         }
     }
 
+    public void send(String msg) {
+        if (write_UUID_chara != null && write_UUID_service != null) {
+            mBleService.writeCharacteristic(write_UUID_service.toString(), write_UUID_chara.toString(), msg);
+        }
+    }
+
+    public void send(byte[] bytes) {
+        if (write_UUID_chara != null && write_UUID_service != null) {
+            mBleService.writeCharacteristic(write_UUID_service.toString(), write_UUID_chara.toString(), bytes);
+        }
+    }
+
     /**
      * 蓝牙连接状态监听
      */
@@ -168,10 +184,16 @@ public class BLELIBHelper {
         public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 showToast("Ble连接已断开");
+                if (bleListener != null) {
+                    bleListener.onDisConnected();
+                }
             } else if (newState == BluetoothProfile.STATE_CONNECTING) {
                 showToast("Ble正在连接");
             } else if (newState == BluetoothProfile.STATE_CONNECTED) {
                 showToast("Ble已连接");
+                if (bleListener != null) {
+                    bleListener.onConnected();
+                }
             } else if (newState == BluetoothProfile.STATE_DISCONNECTING) {
                 showToast("Ble正在断开连接");
             } else {

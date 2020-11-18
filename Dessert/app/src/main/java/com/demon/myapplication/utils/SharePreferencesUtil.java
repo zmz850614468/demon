@@ -17,6 +17,17 @@ public class SharePreferencesUtil {
 
     private static final String DESSERT_LIST = "dessertList";   //
 
+    private static final String DB_LAST_UPDATE = "dbLastUpdate";   //
+
+    // 获取 数据库上次更新时间
+    public static long getDBLastUpdate(Context context) {
+        return getInstance(context).getLong(DB_LAST_UPDATE, 0);
+    }
+
+    public static void saveDBLastUpdate(Context context, long time) {
+        setLong(context, DB_LAST_UPDATE, time);
+    }
+
     // 获取
     public static List<String> getDessert(Context context) {
         List<String> list = null;
@@ -76,6 +87,13 @@ public class SharePreferencesUtil {
     private static void setString(Context context, String key, String value) {
         SharedPreferences.Editor editor = getInstance(context).edit();
         editor.putString(key, value);
+        editor.commit();
+    }
+
+    // 保存Long型数据
+    private static void setLong(Context context, String key, long value) {
+        SharedPreferences.Editor editor = getInstance(context).edit();
+        editor.putLong(key, value);
         editor.commit();
     }
 

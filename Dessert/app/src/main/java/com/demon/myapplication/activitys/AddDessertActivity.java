@@ -3,7 +3,6 @@ package com.demon.myapplication.activitys;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,13 +16,15 @@ import com.demon.myapplication.Beans.MaterialBean;
 import com.demon.myapplication.R;
 import com.demon.myapplication.adapters.AddAdapter;
 import com.demon.myapplication.controls.DBControl;
-import com.demon.myapplication.utils.FileUtil;
+import com.demon.myapplication.controls.TouchControl;
 import com.demon.myapplication.utils.SharePreferencesUtil;
 import com.demon.myapplication.utils.StringUtil;
 
 import org.angmarch.views.NiceSpinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,7 +65,7 @@ public class AddDessertActivity extends AppCompatActivity {
 
 
     @OnClick(R.id.bt_save)
-    public void onClick(View v) {
+    public void onSaveClick(View v) {
         String name = etName.getText().toString();
         String numberStr = etNumber.getText().toString();
         String unit = nsUnit.getText().toString();
@@ -85,11 +86,19 @@ public class AddDessertActivity extends AppCompatActivity {
             return;
         }
 
-        MaterialBean bean = new MaterialBean();
+        MaterialBean bean = null;
         for (MaterialBean materialBean : materialList) {
             if (name.equals(materialBean.name)) {
                 bean = materialBean;
                 break;
+            }
+        }
+
+        if (bean == null) {
+            bean = new MaterialBean();
+            bean.orderId = 0;
+            if (!materialList.isEmpty()) {
+                bean.orderId = materialList.get(materialList.size() - 1).orderId + 1;
             }
         }
 
@@ -100,6 +109,9 @@ public class AddDessertActivity extends AppCompatActivity {
         DBControl.createOrUpdate(this, bean);
         updateData();
         clearUI();
+        if (!materialList.isEmpty()) {
+            rvDetail.scrollToPosition(materialList.size() - 1);
+        }
     }
 
     @OnClick(R.id.tv_delete)
@@ -130,6 +142,12 @@ public class AddDessertActivity extends AppCompatActivity {
         List<MaterialBean> list = DBControl.quaryByType(this, type);
         materialList.clear();
         materialList.addAll(list);
+        Collections.sort(materialList, new Comparator<MaterialBean>() {
+            @Override
+            public int compare(MaterialBean o1, MaterialBean o2) {
+                return o1.orderId - o2.orderId;
+            }
+        });
         adapter.notifyDataSetChanged();
     }
 
@@ -141,6 +159,24 @@ public class AddDessertActivity extends AppCompatActivity {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvDetail.setLayoutManager(manager);
         rvDetail.setAdapter(adapter);
+        TouchControl touchControl = new TouchControl<>(rvDetail, adapter, materialList, new TouchControl.OnUpdateListener<MaterialBean>() {
+            @Override
+            public void onUpdate(List<MaterialBean> list) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        for (int i = 0; i < list.size(); i++) {
+                            list.get(i).orderId = i;
+                            DBControl.createOrUpdate(AddDessertActivity.this, list.get(i));
+                        }
+                        DBControl.saveDB2File(AddDessertActivity.this);
+                    }
+                }.start();
+            }
+        });
+        touchControl.attachToRecyclerView(rvDetail);
+
 
         adapter.setListener(new AddAdapter.OnItemClickListener() {
             @Override
@@ -156,7 +192,7 @@ public class AddDessertActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onItemLongClick(final MaterialBean bean) {
+            public void onDeleteClick(final MaterialBean bean) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddDessertActivity.this)
                         .setTitle("注意:")
                         .setMessage("确定删除材料：" + bean.name)

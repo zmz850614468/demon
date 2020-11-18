@@ -13,14 +13,6 @@
         android:text="已匹配蓝牙设备信息" />
 
     <Button
-        android:id="@+id/bt_ble_lib"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/selector"
-        android:text="蓝牙包开发" />
-
-    <Button
         android:id="@+id/bt_wifi_connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

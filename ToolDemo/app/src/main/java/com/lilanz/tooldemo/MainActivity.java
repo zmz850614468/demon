@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import demon.CopyUseActivity;
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
@@ -29,11 +28,15 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints})
+    @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints, R.id.bt_copy_use})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.bt_copy_use:
+                Intent intent = new Intent(this, CopyUseActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_prints:
-                Intent intent = new Intent(this, PrintsActivity.class);
+                intent = new Intent(this, PrintsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_reuse:

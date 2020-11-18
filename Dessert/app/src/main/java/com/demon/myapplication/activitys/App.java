@@ -3,6 +3,7 @@ package com.demon.myapplication.activitys;
 import android.app.Application;
 import android.content.Context;
 
+import com.demon.myapplication.controls.DBControl;
 import com.tencent.bugly.Bugly;
 
 public class App extends Application {
@@ -16,5 +17,7 @@ public class App extends Application {
         context = this;
 
         Bugly.init(this, "5585fac602", false);
+
+        DBControl.updateDBFromFile(this);
     }
 }
