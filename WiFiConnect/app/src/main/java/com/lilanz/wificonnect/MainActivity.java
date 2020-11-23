@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     int port = Integer.parseInt(etPort.getText().toString());
                     String ip = etIp.getText().toString();
                     startConnect("192.168.1." + ip, port);
+//                    startConnect("103.46.128.45", 48539);
                 } catch (Exception e) {
                     e.printStackTrace();
                     showMsg("ip或端口 数据错误");
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     sendMsg(msg);
                 }
+                etMsg.setText("");
                 break;
             case R.id.bt_close_port:
                 tvMsg.setText("");

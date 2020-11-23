@@ -41,7 +41,6 @@ public class ServerThread extends Thread {
         }
         while (isContinue) {
             try {
-
                 Socket socket = serverSocket.accept();
                 if (socketThreadList == null) {
                     socketThreadList = new ArrayList<>();
@@ -63,6 +62,7 @@ public class ServerThread extends Thread {
                     public void onReceiver(String msg) {
                         if (listener != null) {
                             listener.onReceiver(socketThread.getIp() + ":" + msg);
+//                            listener.onReceiver("收到消息:" + msg);
                         }
                     }
                 });
@@ -70,7 +70,7 @@ public class ServerThread extends Thread {
                 String add = dd.getHostAddress();
                 socketThread.setIp(add);
                 if (listener != null) {
-                    listener.onReceiver(add + "连接上");
+                    listener.onReceiver(socket.getInetAddress() + "连接上");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

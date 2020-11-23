@@ -35,7 +35,7 @@
             android:inputType="number"
             android:paddingLeft="20dp"
             android:singleLine="true"
-            android:text="5566" />
+            android:text="3344" />
 
         <Button
             android:id="@+id/bt_open_service"

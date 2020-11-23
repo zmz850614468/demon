@@ -57,7 +57,8 @@ public class WifiConnectActivity extends Activity {
     /**
      * 初始化socket服务器
      */
-    private void initSocketServer() {
+    @OnClick(R.id.bt_open_service)
+    public void initSocketServer(View v) {
         String ip = etIp.getText().toString();
         String port = etPort.getText().toString();
         try {

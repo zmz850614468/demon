@@ -80,7 +80,7 @@ public class SearchIpActivity extends Activity implements View.OnClickListener {
                 }
 
                 try {
-                    sleep(2000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -58,6 +58,7 @@ public class BLELibDemoActivity extends Activity {
                 if (!StringUtil.isEmpty(msg)) {
                     bleLibDialog.send(SerialPortUtil.hexStr2Byte(msg));
                 }
+                etInput.setText("");
                 break;
         }
     }

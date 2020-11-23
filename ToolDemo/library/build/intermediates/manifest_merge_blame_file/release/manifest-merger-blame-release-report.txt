@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="14"
-6-->E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+6-->E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="28" />
-7-->E:\LedSeed\LEDSeed\library\src\main\AndroidManifest.xml
+7-->E:\demon\ToolDemo\library\src\main\AndroidManifest.xml
 8
 9</manifest>
