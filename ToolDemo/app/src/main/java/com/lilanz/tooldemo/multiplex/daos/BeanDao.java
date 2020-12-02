@@ -156,4 +156,21 @@ public class BeanDao<T> {
         return list == null ? new ArrayList<T>() : list;
     }
 
+    /**
+     *
+     * @param columnName
+     * @return
+     */
+    public List<T> getDistinctList(String columnName){
+        List<T> list = null;
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                list = dao.queryBuilder().selectColumns(columnName).distinct().query();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list == null ? new ArrayList<T>() : list;
+    }
+
 }

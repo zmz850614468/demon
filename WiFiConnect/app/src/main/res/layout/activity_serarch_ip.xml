@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activitys.ServiceActivity">
 
     <Button
         android:id="@+id/bt_search_ip"
@@ -14,7 +14,7 @@
         android:text="搜索IP地址" />
 
     <Button
-        android:id="@+id/bt_get_name"
+        android:id="@+id/tv_get_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="获取本机ip地址"

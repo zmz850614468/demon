@@ -2,6 +2,7 @@ package com.example.timeup.page;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timeup.R;
+import com.example.timeup.SettingActivity;
 import com.example.timeup.adapters.TypeAdapter;
 import com.example.timeup.beans.TypeBean;
 import com.example.timeup.controls.TouchControl;
@@ -63,6 +65,11 @@ public class FragmentOne extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @OnClick(R.id.iv_setting)
+    public void onSettingClicked(View v) {
+        Intent intent = new Intent(getActivity(), SettingActivity.class);
+        getActivity().startActivity(intent);
+    }
 
     @OnClick(R.id.bt_save)
     public void onSaveClicked(View v) {

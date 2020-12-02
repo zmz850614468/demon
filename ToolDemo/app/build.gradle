@@ -95,6 +95,11 @@ dependencies {
 
     // IO socket
     implementation('io.socket:socket.io-client:1.0.0')
+
+    // 图片加载 Glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+//    Glide.with(this).load(url).into(iv);
+
 //    // MinIO 文件上传
 //    implementation ('io.minio:minio:3.0.10') {
 //        // 取消重复依赖
@@ -114,6 +119,8 @@ dependencies {
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'
+//    List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {
+//    }.getType());
 
 }
 

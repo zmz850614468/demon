@@ -64,4 +64,11 @@ public class MediaControl {
         player.start();
     }
 
+    public boolean isPlaying() {
+        if (player != null) {
+            return player.isPlaying();
+        }
+        return false;
+    }
+
 }

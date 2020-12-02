@@ -1,6 +1,12 @@
 package com.lilanz.wificonnect.threads;
 
-import com.lilanz.wificonnect.SocketThread;
+import android.media.MediaPlayer;
+import android.os.Handler;
+
+import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.beans.MsgBean;
+import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.MediaControl;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -8,6 +14,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 /**
  * Wifi通讯的服务类
@@ -30,12 +37,12 @@ public class ServerThread extends Thread {
         try {
             serverSocket = new ServerSocket(port);
             if (listener != null) {
-                listener.onReceiver("开启服务端口：" + port);
+                listener.onTip(3, "开启服务端口：" + port);
             }
         } catch (IOException e) {
             e.printStackTrace();
             if (listener != null) {
-                listener.onReceiver("开启服务端口出错：" + port);
+                listener.onTip(4, "开启服务端口出错：" + port);
             }
             return;
         }
@@ -49,20 +56,31 @@ public class ServerThread extends Thread {
                 socketThreadList.add(socketThread);
                 socketThread.startServer(socket);
                 socketThread.setListener(new OnReceiverListener() {
+
                     @Override
-                    public void onReceiver(SocketThread thread, String msg) {
-                        super.onReceiver(thread, msg);
+                    public void onTip(int type, String msg) {
+                        if (listener != null) {
+                            listener.onTip(type, socketThread.getIp() + ":" + msg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(SocketThread thread, String msg) {
+                        super.onError(thread, msg);
                         socketThreadList.remove(thread);
                         if (listener != null) {
-                            listener.onReceiver(thread.getIp() + " " + msg);
+                            listener.onError(thread, msg);
                         }
                     }
 
                     @Override
                     public void onReceiver(String msg) {
                         if (listener != null) {
-                            listener.onReceiver(socketThread.getIp() + ":" + msg);
+                            listener.onReceiver(socketThread, msg);
 //                            listener.onReceiver("收到消息:" + msg);
+//                            if (App.isDebug) {
+                            socketThread.sendMsg(new MsgBean(2, "服务器收到消息！！").toString());
+//                            }
                         }
                     }
                 });
@@ -70,15 +88,32 @@ public class ServerThread extends Thread {
                 String add = dd.getHostAddress();
                 socketThread.setIp(add);
                 if (listener != null) {
-                    listener.onReceiver(socket.getInetAddress() + "连接上");
+                    listener.onTip(1, socket.getInetAddress() + "连接上");
                 }
-            } catch (IOException e) {
+                Thread.sleep(300);
+                sendConnectedInfo(socketThread);
+            } catch (Exception e) {
                 e.printStackTrace();
                 if (listener != null) {
-                    listener.onReceiver("服务端接收出现异常");
+                    listener.onTip(0, "服务端接收出现异常");
                 }
-                break;
+//                break;
             }
+        }
+    }
+
+    /**
+     * 连接上后，发送一些必须的信息
+     */
+    private void sendConnectedInfo(SocketThread socketThread) {
+        // 歌曲播放模式
+        MsgBean msgBean = new MsgBean(MsgBean.MUSIC_PLAY_MODE, AppDataControl.playMode + "");
+        socketThread.sendMsg(msgBean.toString());
+
+        // 目前正在播放的音乐信息
+        msgBean = MediaControl.getInstance(App.context).getPlayingInfo();
+        if (msgBean != null) {
+            socketThread.sendMsg(msgBean.toString());
         }
     }
 
@@ -113,6 +148,9 @@ public class ServerThread extends Thread {
                 e.printStackTrace();
             }
             serverSocket = null;
+        }
+        if (listener != null) {
+            listener.onTip(2, "断开连接");
         }
     }
 

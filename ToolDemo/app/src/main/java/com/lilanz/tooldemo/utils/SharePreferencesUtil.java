@@ -32,6 +32,17 @@ public class SharePreferencesUtil {
         setString(context, SELECT_BLE_ADDRESS, address);
     }
 
+    private static final String LAST_SAVE_DAY = "lastSaveDay";   //
+
+    // 获取
+    public static String getLastSaveDay(Context context) {
+        return getInstance(context).getString(LAST_SAVE_DAY, "");
+    }
+
+    public static void saveLastSaveDay(Context context, String dayStr) {
+        setString(context, LAST_SAVE_DAY, dayStr);
+    }
+
     //============================      以下为固定模式        =============================
 
     // 保存int型数据

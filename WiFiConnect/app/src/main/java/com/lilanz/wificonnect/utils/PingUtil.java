@@ -12,7 +12,7 @@ public class PingUtil {
      *
      * @param ip
      */
-    private void pingIp(String ip) {
+    public static void pingIp(String ip) {
         try {
             java.lang.Process process = Runtime.getRuntime().exec("ping -c 1 -w 10 " + ip);
             process.waitFor();
@@ -41,6 +41,19 @@ public class PingUtil {
                 socket = new DatagramSocket();
             }
         }
+        socket.close();
+    }
+
+    /**
+     * 发送udp包给路由器网段
+     *
+     * @throws Exception
+     */
+    public static void sendUdpMsg(String ip) throws Exception {
+        DatagramPacket dp = new DatagramPacket(new byte[0], 0, 0);
+        DatagramSocket socket = new DatagramSocket();
+        dp.setAddress(InetAddress.getByName(ip));
+        socket.send(dp);
         socket.close();
     }
 }

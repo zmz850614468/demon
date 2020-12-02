@@ -15,6 +15,13 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:src="@mipmap/icon_setting" />
+
     <TextView
         android:id="@+id/tv_show_Or_hind"
         android:layout_width="wrap_content"

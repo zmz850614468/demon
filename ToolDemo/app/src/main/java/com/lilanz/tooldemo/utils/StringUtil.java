@@ -19,6 +19,15 @@ public class StringUtil {
     }
 
     /**
+     * @return 获取系统时间格式："yyyy-MM-dd"
+     */
+    public static String getDay() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        return format.format(date);
+    }
+
+    /**
      * 把秒数时间转换成时间格式：00:00
      *
      * @param intTime

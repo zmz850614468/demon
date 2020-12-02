@@ -1,110 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="@color/gray">
 
-    <Button
-        android:id="@+id/bt_search_ip"
+    <RelativeLayout
+        android:id="@+id/layout_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="搜索IP地址" />
+        android:layout_height="50dp"
+        android:background="@color/white">
 
-    <Button
-        android:id="@+id/bt_get_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="获取本机ip地址" />
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:src="@mipmap/icon_setting" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="恶魔家"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_refresh" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_info"
+        android:layout_below="@+id/layout_title"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_port"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_msg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:hint="信息"
+                android:paddingLeft="20dp"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/tv_send_msg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:text="发送数据"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:gravity="center_vertical"
-            android:hint="服务端口"
-            android:inputType="number"
-            android:paddingLeft="20dp"
-            android:singleLine="true"
-            android:text="3344" />
+            android:layout_marginTop="10dp"
+            android:hint="msg"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/bt_open_service"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="开启端口服务" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layout_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-        <EditText
-            android:id="@+id/et_ip"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:gravity="center_vertical"
-            android:hint="ip地址"
-            android:inputType="number"
-            android:paddingLeft="20dp"
-            android:singleLine="true"
-            android:text="" />
-
-        <Button
-            android:id="@+id/bt_start_connect"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="连接服务" />
-    </LinearLayout>
+            android:textColor="@color/black"
+            android:textSize="13sp" />
 
-    <Button
-        android:id="@+id/bt_close_port"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="关闭wifi端口" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/et_msg"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:gravity="center_vertical"
-            android:hint="信息"
-            android:paddingLeft="20dp"
-            android:singleLine="true" />
-
-        <Button
-            android:id="@+id/bt_send_msg"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="发送数据" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:text="断开连接"
+            android:textColor="@color/red"
+            android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/tv_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="msg" />
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

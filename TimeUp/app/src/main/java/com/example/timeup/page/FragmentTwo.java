@@ -1,19 +1,27 @@
 package com.example.timeup.page;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.timeup.R;
+import com.example.timeup.SettingActivity;
 import com.example.timeup.adapters.ExecuteAdapter;
 import com.example.timeup.beans.TypeBean;
 import com.example.timeup.controls.MediaControl;
+import com.example.timeup.services.TimingService;
 
 import java.util.List;
 import java.util.Timer;
@@ -21,6 +29,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FragmentTwo extends Fragment {
 
@@ -30,6 +39,8 @@ public class FragmentTwo extends Fragment {
     private List<TypeBean> typeBeanList;
     private static Timer timer;
 
+    private TimingService timingService;
+    public static boolean isDestroy;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +48,8 @@ public class FragmentTwo extends Fragment {
         View chatView = inflater.inflate(R.layout.fragment_2, container, false);
         ButterKnife.bind(this, chatView);
         initAdapter();
-        startTimer();
+        initService();
+        isDestroy = false;
         return chatView;
     }
 
@@ -46,39 +58,36 @@ public class FragmentTwo extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void startTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            private int count = 0;
+    private void initService() {
+        Intent intent = new Intent(getActivity(), TimingService.class);
+        getActivity().startService(intent);
+        getActivity().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
 
-            @Override
-            public void run() {
-                for (TypeBean bean : typeBeanList) {
-                    bean.during--;
-                    if (bean.during == 0) {
-                        MediaControl.getInstance(getActivity()).playRandon();
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            timingService = ((TimingService.TimingBind) service).getService();
+            timingService.setListener(new TimingService.OnUpdateUIListener() {
+                @Override
+                public void onUpdate() {
+                    if (!isDestroy && getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                executeAdapter.notifyDataSetChanged();
+                            }
+                        });
                     }
                 }
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateUI();
-                        }
-                    });
-                }
-            }
-        }, 1000, 1000);
+            });
+        }
 
-    }
-
-
-    public void updateUI() {
-        executeAdapter.notifyDataSetChanged();
-    }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            timingService = null;
+        }
+    };
 
     private void initAdapter() {
         typeBeanList = SlipPageActivity.typeBeanList;
@@ -118,5 +127,23 @@ public class FragmentTwo extends Fragment {
                 builder.create().show();
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (timingService != null) {
+            Intent intent = new Intent(getActivity(), TimingService.class);
+            getActivity().unbindService(connection);
+            timingService = null;
+        }
+        isDestroy = true;
+        showLog("fragmentTwo sonDestroyView");
+        super.onDestroyView();
+    }
+
+    private void showLog(String msg) {
+        if (!App.isDebug) {
+            Log.e("timeup", msg);
+        }
     }
 }

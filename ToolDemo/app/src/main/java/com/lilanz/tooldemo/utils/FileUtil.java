@@ -9,6 +9,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,49 +21,80 @@ public class FileUtil {
     private static final String PICTURE_FILE_NAME = "恶天使魔";
 
     /**
-     * 获取图片保存路径：
-     * 主目录：安卓系统的 DCIM 文件下
+     * 创建文件
      *
-     * @return 图片文件的具体路径
+     * @param dir  文件夹地址
+     * @param name 文件名，包含后缀
+     * @return null：文件不存在或创建失败
      */
-    public static File getPictureFile(Context context) {
-        // 子目录文件名："myPicture"
-        File dir = context.getExternalFilesDir(Environment.DIRECTORY_DCIM);
-        dir.mkdirs();
-        if (dir.canWrite()) {
-            return new File(dir, StringUtil.getDataStr() + ".png");
+    public static File createIfNotExit(String dir, String name) {
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
         }
+
+        if (file.canWrite()) {
+            file = new File(file, name);
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+            return file;
+        }
+
         return null;
     }
 
     /**
-     * 获取视频保存路径：
-     * 主目录：安卓系统的 Movies 文件下
+     * 向文件中写入数据
      *
-     * @return 图片文件的具体路径
+     * @param file    文件地址
+     * @param content 要写入的内容
+     * @return true:写入成功；否则 false
      */
-    public static File getVideoFile(Context context) {
-        // 子目录文件名："myPicture"
-        File dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
-        dir.mkdirs();
-        if (dir.canWrite()) {
-            return new File(dir, StringUtil.getDataStr() + ".mp4");
-        }
-        return null;
+    public static boolean writeFile(File file, String content) {
+        return writeFile(file, content, false);
     }
 
     /**
-     * @param context
-     * @param VideoName
-     * @return
+     * 向文件尾部添加新的数据
+     *
+     * @param file    文件地址
+     * @param content 要写入的内容
+     * @return true:写入成功；否则 false
      */
-    public static File getVideoFile(Context context, String VideoName) {
-        File dir = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
-        dir.mkdirs();
-        if (dir.canWrite()) {
-            return new File(dir, VideoName + ".mp4");
+    public static boolean appendFile(File file, String content) {
+        return writeFile(file, content, true);
+    }
+
+    /**
+     * 向文件写入内容
+     *
+     * @param file     文件地址
+     * @param content  要写入的内容
+     * @param isAppend
+     * @return true:写入成功；否则 false
+     */
+    private static boolean writeFile(File file, String content, boolean isAppend) {
+        if (!file.exists() || !file.canWrite()) {
+            return false;
         }
-        return null;
+
+        try {
+            FileWriter fileWriter = new FileWriter(file, isAppend);
+            fileWriter.write(content);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -118,69 +150,6 @@ public class FileUtil {
                 file.delete();
             }
         }
-    }
-
-    /**
-     * 获取存储路径
-     *
-     * @return 所有可用于存储的不同的卡的位置，用一个List来保存
-     */
-    public static List<String> getExtSDCardPathList() {
-        List<String> paths = new ArrayList<String>();
-        String extFileStatus = Environment.getExternalStorageState();
-        File extFile = Environment.getExternalStorageDirectory();
-        //首先判断一下外置SD卡的状态，处于挂载状态才能获取的到
-        if (extFileStatus.equals(Environment.MEDIA_MOUNTED) && extFile.exists() && extFile.isDirectory() && extFile.canWrite()) {
-            //外置SD卡的路径
-            paths.add(extFile.getAbsolutePath());
-        }
-        try {
-            Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec("mount");
-            InputStream is = process.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            int mountPathIndex = 1;
-            while ((line = br.readLine()) != null) {
-                // format of sdcard file system: vfat/fuse
-                if ((!line.contains("fat") && !line.contains("fuse") && !line
-                        .contains("storage"))
-                        || line.contains("secure")
-                        || line.contains("asec")
-                        || line.contains("firmware")
-                        || line.contains("shell")
-                        || line.contains("obb")
-                        || line.contains("legacy") || line.contains("data")) {
-                    continue;
-                }
-                String[] parts = line.split(" ");
-                int length = parts.length;
-                if (mountPathIndex >= length) {
-                    continue;
-                }
-                String mountPath = parts[mountPathIndex];
-                if (!mountPath.contains("/") || mountPath.contains("data")
-                        || mountPath.contains("Data")) {
-                    continue;
-                }
-                File mountRoot = new File(mountPath);
-                if (!mountRoot.exists() || !mountRoot.isDirectory()
-                        || !mountRoot.canWrite()) {
-                    continue;
-                }
-                boolean equalsToPrimarySD = mountPath.equals(extFile
-                        .getAbsolutePath());
-                if (equalsToPrimarySD) {
-                    continue;
-                }
-                //扩展存储卡即TF卡或者SD卡路径
-                paths.add(mountPath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return paths;
     }
 
 }

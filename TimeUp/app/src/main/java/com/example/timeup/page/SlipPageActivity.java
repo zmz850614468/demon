@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.timeup.R;
 import com.example.timeup.beans.TypeBean;
 import com.example.timeup.controls.MediaControl;
-import com.example.timeup.services.TiminigService;
 
 import java.util.ArrayList;
 import java.util.List;
