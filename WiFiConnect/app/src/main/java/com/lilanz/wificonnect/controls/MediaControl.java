@@ -17,6 +17,10 @@ import java.util.List;
 
 public class MediaControl {
 
+    public static final int STOP_NONE = 1;       // 不设置停止时间
+    public static final int STOP_TIME = 2;       // X分钟后停止播放
+    public static final int STOP_SONG_COUNT = 3; // X首歌后停止播放
+
     public static final int PLAY_LIST = 1;      // 列表播放
     public static final int PLAY_ONLY_ONE = 2;  // 单曲播放
     public static final int PLAY_RANDOM = 3;    // 随机播放
@@ -108,7 +112,15 @@ public class MediaControl {
      * 播放下一曲音乐
      */
     public void playNext() {
-        // TODO 音乐播放方式
+        if (MusicTimerControl.stopMode == STOP_SONG_COUNT) {
+            if (MusicTimerControl.songCount <= 0) {
+                stopPlay();
+                sendPlayingInfo();
+                return;
+            }
+            MusicTimerControl.subSongCount();
+        }
+
         switch (AppDataControl.playMode) {
             case MediaControl.PLAY_LIST:    // 顺序播放
                 playIndex++;

@@ -10,13 +10,18 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.beans.SongBean;
+import com.lilanz.wificonnect.beans.StopBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.InfoFileControl;
 import com.lilanz.wificonnect.controls.MediaControl;
+import com.lilanz.wificonnect.controls.MusicTimerControl;
 import com.lilanz.wificonnect.controls.SongControl;
 import com.lilanz.wificonnect.controls.SoundControl;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
@@ -38,6 +43,8 @@ public class WifiService extends Service {
     private SocketThread socketThread;
     private int identify;
 
+    private MusicTimerControl musicTimerControl;
+
 
     public class WifiBind extends Binder {
         public WifiService getService() {
@@ -48,6 +55,7 @@ public class WifiService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        initData();
         initListener();
     }
 
@@ -362,7 +370,33 @@ public class WifiService extends Service {
             case MsgBean.RECEIVE_TIP:   // 服务器收到消息，反馈提示
                 SoundControl.getInstance(App.context).play(R.raw.pi_ka_qiu);
                 break;
+            case MsgBean.MUSIC_STOP_MODE:   // 歌曲停止模式
+                try {
+                    musicTimerControl.updateStopMode(new Gson().fromJson(bean.content, StopBean.class));
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MsgBean.DEVICE_CONTROL:
+                try {
+                    DeviceControlBean deviceControlBean = new Gson().fromJson(bean.content, DeviceControlBean.class);
+                    DeviceControl.getInstance(this).handleMsg(deviceControlBean);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
+    }
+
+    private void initData() {
+        musicTimerControl = new MusicTimerControl();
+        musicTimerControl.setOnMusicStopListener(new MusicTimerControl.OnMusicStopListener() {
+            @Override
+            public void onMusicStop() {
+                MediaControl.getInstance(WifiService.this).stopPlay();
+                sendMsg(MediaControl.getInstance(WifiService.this).getPlayingInfo().toString());
+            }
+        });
     }
 
     private void initListener() {

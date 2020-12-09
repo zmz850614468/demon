@@ -9,6 +9,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.SongBean;
 
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
 
     // 数据库名称
     private static final String DATABASE_NAME = "orm.db";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     private static OrmLiteHelter instance;
 
@@ -79,6 +80,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, SongBean.class);
+            TableUtils.createTable(connectionSource, DeviceBean.class);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -96,6 +98,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, SongBean.class, true);
+            TableUtils.dropTable(connectionSource, DeviceBean.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException ex) {
             ex.printStackTrace();

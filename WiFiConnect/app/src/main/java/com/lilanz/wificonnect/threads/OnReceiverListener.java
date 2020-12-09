@@ -2,8 +2,27 @@ package com.lilanz.wificonnect.threads;
 
 public abstract class OnReceiverListener {
 
+
     /**
-     * 发生错误时
+     * 连接成功后
+     *
+     * @param thread
+     * @param msg
+     */
+    public void onConnected(SocketThread thread, String msg) {
+    }
+
+    /**
+     * 断开连接
+     *
+     * @param thread
+     * @param msg
+     */
+    public void onDisconnect(SocketThread thread, String msg) {
+    }
+
+    /**
+     * 发生错误，断开连接
      *
      * @param msg
      */
@@ -16,7 +35,7 @@ public abstract class OnReceiverListener {
      * @param type 0：提示信息 1:连接成功 2：断开连接
      * @param msg
      */
-    public abstract void onTip(int type, String msg);
+    public void onTip(int type, String msg){};
 
     /**
      * 客服端收到的信息

@@ -10,18 +10,15 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
 import com.lilanz.wificonnect.beans.ItemBean;
-import com.lilanz.wificonnect.beans.MsgBean;
+import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
@@ -45,7 +42,7 @@ public class OperateActivity extends Activity {
     @BindView(R.id.iv_refresh)
     ImageView ivRefresh;
 
-    private WifiService wifiService;
+//    private WifiService wifiService;
     private PermissionControl permissionControl;
 
     @BindView(R.id.rv_function)
@@ -81,15 +78,15 @@ public class OperateActivity extends Activity {
     public void onRefreshClicked() {
         showToast("重连服务器!");
         ivRefresh.setEnabled(false);
-        if (wifiService != null) {
-            wifiService.close();
+        if (AppDataControl.wifiService != null) {
+            AppDataControl.wifiService.close();
             String selectedIpType = SharePreferencesUtil.getSelectedIpType(this);
             String ip = SharePreferencesUtil.getServiceIp(this);        // 默认广域网服务器地址
             if (selectedIpType.equals("局域网")) {
                 ip = SharePreferencesUtil.getInsideServiceIp(this);     // 局域网服务器地址
             }
             int port = SharePreferencesUtil.getServicePort(this);
-            wifiService.startConnect(ip, port);
+            AppDataControl.wifiService.startConnect(ip, port);
 //                wifiService.startConnect("103.46.128.45", 48539);
         }
         new Handler().postDelayed(new Runnable() {
@@ -119,8 +116,8 @@ public class OperateActivity extends Activity {
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            wifiService = ((WifiService.WifiBind) service).getService();
-            wifiService.setListener(new WifiService.OnDataCallbackListener() {
+            AppDataControl.wifiService = ((WifiService.WifiBind) service).getService();
+            AppDataControl.wifiService.setListener(new WifiService.OnDataCallbackListener() {
                 @Override
                 public void onCallBack(int type, String msg) {
                     runOnUiThread(new Runnable() {
@@ -148,7 +145,7 @@ public class OperateActivity extends Activity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            wifiService = null;
+            AppDataControl.wifiService = null;
         }
     };
 
@@ -161,23 +158,30 @@ public class OperateActivity extends Activity {
         adapter.setListener(new ItemBeanAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ItemBean bean) {
-                if (wifiService == null || wifiService.canOpen()) {
-                    showToast("请先连接服务器！");
-                    return;
-                }
+//                if ("断开状态".equals(tvStatus.getText().toString())) {
+//                    showToast("请先连接服务器！");
+//                    return;
+//                }
 
                 switch (bean.name) {
                     case "逗逗你":
                         Intent intent = new Intent(OperateActivity.this, PlayVoiceActivity.class);
                         startActivity(intent);
-
                         break;
                     case "来点音乐":
                         intent = new Intent(OperateActivity.this, MusicActivity.class);
                         startActivity(intent);
                         break;
+                    case "设备控制":
+                        intent = new Intent(OperateActivity.this, DeviceManagerActivity.class);
+                        startActivity(intent);
+                        break;
                     case "文件传输":
                         intent = new Intent(OperateActivity.this, FileActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "WIFI设置":
+                        intent = new Intent(OperateActivity.this, WifiSettingActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -189,6 +193,8 @@ public class OperateActivity extends Activity {
         beanList = new ArrayList<>();
         beanList.add(new ItemBean(R.mipmap.ding_dong, "逗逗你"));
         beanList.add(new ItemBean(R.mipmap.play_music, "来点音乐"));
+        beanList.add(new ItemBean(R.mipmap.device, "设备控制"));
+        beanList.add(new ItemBean(R.mipmap.wifi_setting, "WIFI设置"));
 //        beanList.add(new ItemBean(R.mipmap.play_music, "文件传输"));
     }
 
@@ -198,9 +204,9 @@ public class OperateActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        if (wifiService != null) {
+        if (AppDataControl.wifiService != null) {
             unbindService(connection);
-            wifiService = null;
+            AppDataControl.wifiService = null;
         }
         super.onDestroy();
     }

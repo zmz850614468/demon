@@ -3,7 +3,11 @@ package com.lilanz.wificonnect.activitys;
 import android.app.Application;
 import android.content.Context;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
+import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.controls.SoundControl;
+import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.utils.BuildUtil;
 import com.tencent.bugly.Bugly;
 
@@ -19,9 +23,20 @@ public class App extends Application {
         context = this;
         isDebug = BuildUtil.isApkInDebug(this);
 
-        Bugly.init(context, "1fa246be97", false);
+        Bugly.init(context, "1fa246be97", true);
 
         SoundControl.getInstance(context).initData();
 
+//        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5fc9e265");
+
+        // 讯飞语音识别
+        StringBuffer param = new StringBuffer();
+        param.append("appid=5fc9e265");
+//        param.append(",");
+//        // 设置使用v5+
+//        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
+        SpeechUtility.createUtility(context, param.toString());
+//        XunFeiVoiceControl.getInstance(context);
     }
+
 }

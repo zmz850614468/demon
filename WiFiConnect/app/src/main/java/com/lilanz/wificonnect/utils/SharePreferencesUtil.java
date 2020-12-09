@@ -3,6 +3,8 @@ package com.lilanz.wificonnect.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.lilanz.wificonnect.controls.MediaControl;
+
 public class SharePreferencesUtil {
 
     private static final String SHARED_PREFERENCE_NAME = "shared";
@@ -13,8 +15,59 @@ public class SharePreferencesUtil {
     private static final String INSIDE_SERVICE_IP = "insideServiceIp";   //
     private static final String SERVICE_PORT = "servicePort";   //
     private static final String SELECTED_IP_TYPE = "selectedIpType";   //
+    private static final String STOP_MODE = "stopMode";   // 歌曲停止模式
+    private static final String STOP_TIME = "stopTime";   // X分钟后停止播放
+    private static final String STOP_SONG_COUNT = "stopSongCount";   // X首歌后停止播放
+    private static final String LUYQ_NAME = "luYQName";   // 路由器名称
+    private static final String LUYQ_PWD = "luYQPwd";   // 路由器密码
 
     private static SharedPreferences instance = null;
+
+
+    // 获取 路由器密码
+    public static String getLuYQPwd(Context context) {
+        return getInstance(context).getString(LUYQ_PWD, "");
+    }
+
+    public static void saveLuYQPwd(Context context, String luYQPwd) {
+        setString(context, LUYQ_PWD, luYQPwd);
+    }
+
+    // 获取 路由器名称
+    public static String getLuYQName(Context context) {
+        return getInstance(context).getString(LUYQ_NAME, "");
+    }
+
+    public static void saveLuYQName(Context context, String luYQName) {
+        setString(context, LUYQ_NAME, luYQName);
+    }
+
+    // 获取
+    public static int getStopSongCount(Context context) {
+        return getInstance(context).getInt(STOP_SONG_COUNT, 10);
+    }
+
+    public static void saveStopSongCount(Context context, int songCount) {
+        setInteger(context, STOP_SONG_COUNT, songCount);
+    }
+
+    // 获取
+    public static int getStopTime(Context context) {
+        return getInstance(context).getInt(STOP_TIME, 30);
+    }
+
+    public static void saveStopTime(Context context, int stopTime) {
+        setInteger(context, STOP_TIME, stopTime);
+    }
+
+    // 获取
+    public static int getStopMode(Context context) {
+        return getInstance(context).getInt(STOP_MODE, MediaControl.STOP_NONE);
+    }
+
+    public static void saveStopMode(Context context, int stopMode) {
+        setInteger(context, STOP_MODE, stopMode);
+    }
 
 
     // 获取 选择的网络IP

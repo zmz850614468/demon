@@ -49,10 +49,11 @@ public class PingUtil {
      *
      * @throws Exception
      */
-    public static void sendUdpMsg(String ip) throws Exception {
-        DatagramPacket dp = new DatagramPacket(new byte[0], 0, 0);
+    public static void sendUdpMsg(String ip, byte[] bytes) throws Exception {
+        DatagramPacket dp = new DatagramPacket(bytes, 0, bytes.length);
         DatagramSocket socket = new DatagramSocket();
         dp.setAddress(InetAddress.getByName(ip));
+        dp.setPort(8080);
         socket.send(dp);
         socket.close();
     }

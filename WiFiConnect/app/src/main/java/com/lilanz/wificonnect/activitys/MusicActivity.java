@@ -24,10 +24,12 @@ import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.SongAdapter;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.beans.SongBean;
+import com.lilanz.wificonnect.beans.StopBean;
 import com.lilanz.wificonnect.beans.VoiceBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.daos.DBControl;
+import com.lilanz.wificonnect.dialogs.TimerDialog;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.StringUtil;
@@ -39,12 +41,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 客户端：音乐列表界面
+ */
 public class MusicActivity extends Activity {
 
     @BindView(R.id.iv_player)
     ImageView ivPlayer;
-    @BindView(R.id.iv_refresh)
-    ImageView ivRefresh;
 
     @BindView(R.id.rv_song)
     protected RecyclerView recycler;
@@ -52,6 +55,8 @@ public class MusicActivity extends Activity {
 
     private List<SongBean> beanList;
     private WifiService wifiService;
+
+    private boolean canFreshMusic = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,11 +68,22 @@ public class MusicActivity extends Activity {
         updatePlayStatus();
         initService();
         initAdapter();
+        updatePlayMode();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @OnClick(R.id.iv_refresh)
     public void onRefreshClicked() {    // 更新音乐列表
-        ivRefresh.setEnabled(false);
+        if (!canFreshMusic) {
+            showToast("10秒钟内，只能刷新一次");
+            return;
+        }
+
+        canFreshMusic = false;
         showToast("更新音乐列表");
         if (!beanList.isEmpty()) {  // 清空播放列表
             DBControl.deleteAll(this, SongBean.class, beanList);
@@ -80,7 +96,7 @@ public class MusicActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ivRefresh.setEnabled(true);
+                canFreshMusic = true;
             }
         }, 10000);
     }
@@ -190,6 +206,26 @@ public class MusicActivity extends Activity {
         }
     }
 
+    /**
+     * 音乐播放模式
+     */
+    private void updatePlayMode() {
+        switch (AppDataControl.playMode) {
+            case MediaControl.PLAY_LIST:
+                rgPlayMode.check(R.id.rb_play_list);
+                ivPlayMode.setImageResource(R.mipmap.play_list);
+                break;
+            case MediaControl.PLAY_ONLY_ONE:
+                rgPlayMode.check(R.id.rb_play_one);
+                ivPlayMode.setImageResource(R.mipmap.play_only_one);
+                break;
+            case MediaControl.PLAY_RANDOM:
+                rgPlayMode.check(R.id.rb_play_random);
+                ivPlayMode.setImageResource(R.mipmap.play_random);
+                break;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if (wifiService != null) {
@@ -197,6 +233,7 @@ public class MusicActivity extends Activity {
             unbindService(connection);
             wifiService = null;
         }
+        timerDialog.cancel();
         super.onDestroy();
     }
 
@@ -216,7 +253,7 @@ public class MusicActivity extends Activity {
     @BindView(R.id.iv_play_mode)
     ImageView ivPlayMode;
 
-    @OnClick({R.id.layout_music_setting, R.id.iv_voice, R.id.iv_play_mode})
+    @OnClick({R.id.layout_music_setting, R.id.iv_voice, R.id.iv_play_mode, R.id.iv_timer})
     public void onMusicSettingClicked(View v) {
         switch (v.getId()) {
             case R.id.layout_music_setting:
@@ -231,27 +268,19 @@ public class MusicActivity extends Activity {
                 voiceSeekBar.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_play_mode:
-                switch (AppDataControl.playMode) {
-                    case MediaControl.PLAY_LIST:
-                        rgPlayMode.check(R.id.rb_play_list);
-                        ivPlayMode.setImageResource(R.mipmap.play_list);
-                        break;
-                    case MediaControl.PLAY_ONLY_ONE:
-                        rgPlayMode.check(R.id.rb_play_one);
-                        ivPlayMode.setImageResource(R.mipmap.play_only_one);
-                        break;
-                    case MediaControl.PLAY_RANDOM:
-                        rgPlayMode.check(R.id.rb_play_random);
-                        ivPlayMode.setImageResource(R.mipmap.play_random);
-                        break;
-                }
+                updatePlayMode();
                 layoutMusicSetting.setVisibility(View.VISIBLE);
                 rgPlayMode.setVisibility(View.VISIBLE);
+                break;
+            case R.id.iv_timer:
+                timerDialog.updateUI();
+                timerDialog.show();
                 break;
         }
     }
 
     private void initVoiceUI() {
+        initDialog();
         layoutMusicSetting.setVisibility(View.GONE);
         rgPlayMode.setVisibility(View.GONE);
         voiceSeekBar.setVisibility(View.GONE);
@@ -288,6 +317,24 @@ public class MusicActivity extends Activity {
 
                 if (wifiService != null) {
                     wifiService.sendMsg(new MsgBean(MsgBean.MUSIC_PLAY_MODE, AppDataControl.playMode + "").toString());
+                }
+            }
+        });
+    }
+
+    private TimerDialog timerDialog;
+
+    private void initDialog() {
+        timerDialog = new TimerDialog(this, R.style.DialogStyleOne);
+        timerDialog.show();
+        timerDialog.hide();
+        timerDialog.setListener(new TimerDialog.OnClickListener() {
+            @Override
+            public void onConfirm(int stopMode, int count) {
+                if (wifiService != null) {
+                    StopBean stopBean = new StopBean(stopMode, count);
+                    MsgBean msgBean = new MsgBean(MsgBean.MUSIC_STOP_MODE, stopBean.toString());
+                    wifiService.sendMsg(msgBean.toString());
                 }
             }
         });

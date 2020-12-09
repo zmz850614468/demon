@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="断开连接"
+            android:text="断开状态"
             android:textColor="@color/red"
             android:textSize="13sp" />
 

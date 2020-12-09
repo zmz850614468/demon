@@ -17,6 +17,7 @@
     <color name="green">#00CC99</color>
     <color name="lightGreen">#33FF33</color>
     <color name="deepGreen">#006600</color>
+    <color name="dialogBg">#88000000</color>
     <!--   end:常用颜色值    -->
 
     <color name="colorPrimary">#6200EE</color>

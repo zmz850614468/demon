@@ -65,19 +65,22 @@ public class SocketThread extends Thread {
         try {
             if (type == 1) {
                 // 服务器端口
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
             } else if (type == 2) { // 客服端口
                 socket = new Socket(ip, port);
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
                 if (listener != null) {
                     listener.onTip(1, "连接服务端口：" + ip + "：" + port);
+                    listener.onConnected(this, "连接服务器：" + ip + "：" + port);
                 }
             }
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
         } catch (IOException e) {
             e.printStackTrace();
             if (listener != null) {
-                listener.onTip(2, "连接出错" + ip + "：" + port);
-                listener.onError(this, "连接出错");
+                listener.onTip(2, "没有连接上目标" + ip + "：" + port);
+                listener.onError(this, "没有连接上目标");
             }
             return;
         }
@@ -125,9 +128,28 @@ public class SocketThread extends Thread {
 
     public static final String SPLIT = ".-_-.";
 
+    /**
+     * 发送信息，有对信息进行处理
+     *
+     * @param msg
+     */
     public void sendMsg(String msg) {
         try {   //发送
             outputStream.write((msg + SPLIT).getBytes());
+            outputStream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 发送信息，没有对信息进行处理
+     *
+     * @param bytes
+     */
+    public void sendMsg(byte[] bytes) {
+        try {   //发送
+            outputStream.write(bytes);
             outputStream.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,10 +196,6 @@ public class SocketThread extends Thread {
 
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
     }
 
     private OnReceiverListener listener;

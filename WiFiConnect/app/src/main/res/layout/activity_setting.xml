@@ -48,7 +48,7 @@
                 android:layout_weight="1" />
 
             <EditText
-                android:id="@+id/et_ip"
+                android:id="@+id/et_wifi_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -126,7 +126,7 @@
                 android:textSize="17sp" />
 
             <EditText
-                android:id="@+id/et_port"
+                android:id="@+id/et_wifi_pwd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"

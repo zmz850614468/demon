@@ -8,7 +8,7 @@ android {
         applicationId "com.lilanz.wificonnect"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
+        versionCode 4
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -21,17 +21,42 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    allprojects {
+        repositories {
+
+            // Msc.jar线上maven地址
+            jcenter()
+            mavenCentral()
+            maven { url "https://jitpack.io" }
+        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/Msc.jar')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation "com.android.support:support-v4:28.0.0"
     implementation "com.android.support:support-annotations:28.0.0"
+
+    // Retrofit2.0网络请求
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+
+    // NiceSpinner
+    implementation 'com.github.arcadefire:nice-spinner:1.3.1'
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'

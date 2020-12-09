@@ -23,11 +23,11 @@ public class SettingActivity extends Activity {
 
     @BindView(R.id.tv_exit)
     TextView tvExit;
-    @BindView(R.id.et_ip)
+    @BindView(R.id.et_wifi_name)
     EditText etIp;
     @BindView(R.id.et_inside_ip)
     EditText etInsideIp;
-    @BindView(R.id.et_port)
+    @BindView(R.id.et_wifi_pwd)
     EditText etPort;
     @BindView(R.id.rb_ip)
     RadioButton rbIp;

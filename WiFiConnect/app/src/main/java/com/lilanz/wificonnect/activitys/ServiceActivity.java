@@ -8,6 +8,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,9 +19,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.beans.MsgBean;
+import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
+import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
+import com.lilanz.wificonnect.utils.StringUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 import com.tencent.bugly.Bugly;
 
@@ -41,7 +46,7 @@ public class ServiceActivity extends AppCompatActivity {
     @BindView(R.id.et_msg)
     protected EditText etMsg;
 
-    private WifiService wifiService;
+    //    private WifiService wifiService;
     private PermissionControl permissionControl;
 
     @Override
@@ -49,13 +54,12 @@ public class ServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Bugly.init(this, "1fa246be97", true);
         initUI();
         permissionControl = new PermissionControl(this);
         permissionControl.storagePermission();
 
-        initUI();
         initService();
+//        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @OnClick(R.id.iv_setting)
@@ -68,9 +72,9 @@ public class ServiceActivity extends AppCompatActivity {
     public void onRefreshClicked() {
         tvMsg.setText("");
         ivRefresh.setEnabled(false);
-        if (wifiService != null) {
-            wifiService.close();
-            wifiService.startService(SharePreferencesUtil.getServicePort(this));
+        if (AppDataControl.wifiService != null) {
+            AppDataControl.wifiService.close();
+            AppDataControl.wifiService.startService(SharePreferencesUtil.getServicePort(this));
         }
 
         new Handler().postDelayed(new Runnable() {
@@ -90,8 +94,8 @@ public class ServiceActivity extends AppCompatActivity {
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            wifiService = ((WifiService.WifiBind) service).getService();
-            wifiService.setListener(new WifiService.OnDataCallbackListener() {
+            AppDataControl.wifiService = ((WifiService.WifiBind) service).getService();
+            AppDataControl.wifiService.setListener(new WifiService.OnDataCallbackListener() {
                 @Override
                 public void onCallBack(int type, String msg) {
                     runOnUiThread(new Runnable() {
@@ -119,7 +123,7 @@ public class ServiceActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            wifiService = null;
+            AppDataControl.wifiService = null;
         }
     };
 
@@ -136,8 +140,8 @@ public class ServiceActivity extends AppCompatActivity {
         if ("".equals(msg)) {
             showMsg("信息不能为空");
         } else {
-            if (wifiService != null) {
-                wifiService.sendMsg(new MsgBean(2, msg).toString());
+            if (AppDataControl.wifiService != null) {
+                AppDataControl.wifiService.sendMsg(new MsgBean(2, msg).toString());
             }
         }
         etMsg.setText("");
@@ -148,11 +152,49 @@ public class ServiceActivity extends AppCompatActivity {
         tvAddress.setText("ip:" + ipAddr);
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:     // 打开讯飞语音监听
+                    initXunFei();
+                    break;
+            }
+        }
+    };
+
+
+    private void initXunFei() {
+
+        XunFeiVoiceControl.getInstance(ServiceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
+            @Override
+            public void onResult(String result) {
+                if ("播放音乐来点音乐播放歌曲".contains(result)) {
+                    if (!MediaControl.getInstance(ServiceActivity.this).isPlaying()) {
+                        if (StringUtil.isEmpty(AppDataControl.playingPath)) {
+                            MediaControl.getInstance(ServiceActivity.this).playNext();
+                        } else {
+                            MediaControl.getInstance(ServiceActivity.this).switchPlay(AppDataControl.playingPath);
+                        }
+                    }
+                } else if ("停止播放暂停播放".contains(result)) {
+                    MediaControl.getInstance(ServiceActivity.this).stopPlay();
+                } else if ("换首歌换首音乐下一首".contains(result)) {
+                    MediaControl.getInstance(ServiceActivity.this).playNext();
+                }
+
+                handler.sendEmptyMessageDelayed(1, 300);
+            }
+        });
+        XunFeiVoiceControl.getInstance(ServiceActivity.this).oneShot();
+    }
+
     @Override
     protected void onDestroy() {
-        if (wifiService != null) {
+        if (AppDataControl.wifiService != null) {
             unbindService(connection);
-            wifiService = null;
+            AppDataControl.wifiService = null;
         }
         super.onDestroy();
     }

@@ -10,6 +10,12 @@
         android:layout_height="50dp"
         android:background="@color/white">
 
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_refresh" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,11 +25,12 @@
             android:textSize="25sp" />
 
         <ImageView
-            android:id="@+id/iv_refresh"
+            android:id="@+id/iv_timer"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/icon_refresh" />
+            android:padding="5dp"
+            android:src="@mipmap/icon_timer" />
 
     </RelativeLayout>
 

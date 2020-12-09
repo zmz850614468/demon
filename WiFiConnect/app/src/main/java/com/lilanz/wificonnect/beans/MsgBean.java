@@ -21,8 +21,11 @@ public class MsgBean {
     public static final int MUSIC_GET_VOICE_INFO = 43;  // 获取音量信息
     public static final int MUSIC_VOICE_INFO = 44;      // 音乐的播放音量
     public static final int MUSIC_PLAY_MODE = 45;       // 歌曲播放模式
+    public static final int MUSIC_STOP_MODE = 46;       // 歌曲停止模式
 
     public static final int FILE_EXCHANGE = 5;          // 文件传输
+
+    public static final int DEVICE_CONTROL = 6;         // 设备控制
 
     public static final int RECEIVE_TIP = 10;           // 服务器收到消息，返回提示
 

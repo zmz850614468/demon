@@ -147,7 +147,6 @@ public class SearchIpActivity extends Activity implements View.OnClickListener {
                 }
             }
             br.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
