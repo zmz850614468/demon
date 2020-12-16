@@ -30,6 +30,12 @@ public class DBControl {
         return dao.queryWhereForList(map);
     }
 
+    public static void deleteByColumn(Context context, Class clazz, Map<String, Object> map) {
+        BeanDao dao = BeanDao.getDaoOperate(context, clazz);
+        List list = quaryByColumn(context, clazz, map);
+        dao.deleteList(list);
+    }
+
     public static List quaryAll(Context context, Class clazz) {
         BeanDao dao = BeanDao.getDaoOperate(context, clazz);
         return dao.queryAll();

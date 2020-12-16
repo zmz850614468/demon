@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.beans.VoiceBean;
+import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.threads.WifiService;
+import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 
 import java.util.List;
 
@@ -75,6 +77,45 @@ public class AppDataControl {
     public static void sendMsg(@NonNull List<MsgBean> list) {
         if (wifiService != null) {
             wifiService.sendMsg(list);
+        }
+    }
+
+    /**
+     * 添加监听
+     *
+     * @param listener
+     */
+    public static void addCallbackListener(MsgCallbackListener listener) {
+        if (wifiService != null) {
+            wifiService.addMsgCallBackListener(listener);
+        }
+    }
+
+    /**
+     * 移除监听
+     *
+     * @param listener
+     */
+    public static void removeCallbackListener(MsgCallbackListener listener) {
+        if (wifiService != null) {
+            wifiService.removeCallbackListener(listener);
+        }
+    }
+
+    /**
+     * 重连wifiService 服务
+     */
+    public static void reconnectWifiService(Context context){
+        if (wifiService != null) {
+            wifiService.close();
+
+            String selectedIpType = SharePreferencesUtil.getSelectedIpType(context);
+            String ip = SharePreferencesUtil.getServiceIp(context);        // 默认广域网服务器地址
+            if (selectedIpType.equals("局域网")) {
+                ip = SharePreferencesUtil.getInsideServiceIp(context);     // 局域网服务器地址
+            }
+            int port = SharePreferencesUtil.getServicePort(context);
+            wifiService.startConnect(ip, port);
         }
     }
 

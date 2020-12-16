@@ -131,11 +131,9 @@ public class MusicActivity extends Activity {
             @Override
             public void onItemClick(SongBean bean) {
                 if (wifiService != null) {  // 点击播放歌曲
-                    if (!AppDataControl.isPlaying) {
-                        AppDataControl.isPlaying = true;
-                        AppDataControl.playingPath = bean.path;
-                        updatePlayStatus();
-                    }
+                    AppDataControl.isPlaying = true;
+                    AppDataControl.playingPath = bean.path;
+                    updatePlayStatus();
                     wifiService.sendMsg(new MsgBean(MsgBean.PLAY_MUSIC, bean.path).toString());
                 }
             }

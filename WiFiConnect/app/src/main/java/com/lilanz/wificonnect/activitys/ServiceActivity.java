@@ -18,16 +18,24 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.beans.DeviceBean;
+import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
+import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.StringUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 import com.tencent.bugly.Bugly;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +67,7 @@ public class ServiceActivity extends AppCompatActivity {
         permissionControl.storagePermission();
 
         initService();
-//        handler.sendEmptyMessageDelayed(1, 1000);
+        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @OnClick(R.id.iv_setting)
@@ -164,24 +172,41 @@ public class ServiceActivity extends AppCompatActivity {
         }
     };
 
-
     private void initXunFei() {
-
         XunFeiVoiceControl.getInstance(ServiceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
             @Override
-            public void onResult(String result) {
-                if ("播放音乐来点音乐播放歌曲".contains(result)) {
-                    if (!MediaControl.getInstance(ServiceActivity.this).isPlaying()) {
-                        if (StringUtil.isEmpty(AppDataControl.playingPath)) {
-                            MediaControl.getInstance(ServiceActivity.this).playNext();
-                        } else {
-                            MediaControl.getInstance(ServiceActivity.this).switchPlay(AppDataControl.playingPath);
+            public void onResult(boolean status, String result) {
+                if ("音乐|歌曲".contains(result)) {
+                    if (status) {   // 播放歌曲
+                        if (!MediaControl.getInstance(ServiceActivity.this).isPlaying()) {
+                            if (StringUtil.isEmpty(AppDataControl.playingPath)) {
+                                MediaControl.getInstance(ServiceActivity.this).playNext();
+                            } else {
+                                MediaControl.getInstance(ServiceActivity.this).switchPlay(AppDataControl.playingPath);
+                            }
                         }
+                    } else {         // 关闭歌曲
+                        MediaControl.getInstance(ServiceActivity.this).stopPlay();
                     }
-                } else if ("停止播放暂停播放".contains(result)) {
-                    MediaControl.getInstance(ServiceActivity.this).stopPlay();
-                } else if ("换首歌换首音乐下一首".contains(result)) {
-                    MediaControl.getInstance(ServiceActivity.this).playNext();
+                } else if ("下一曲".contains(result)) {
+                    if (status) {
+                        MediaControl.getInstance(ServiceActivity.this).playNext();
+                    }
+                } else if ("灯|热水器".contains(result)) {
+                    if (result.equals("灯")) {   // 点灯是反接线的，所以控制反向了
+                        status = !status;
+                    }
+                    String operate = status ? "open" : "close";
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("device_type", result);
+                    List<DeviceBean> list = DBControl.quaryByColumn(ServiceActivity.this, DeviceBean.class, map);
+                    for (DeviceBean deviceBean : list) {
+                        DeviceControlBean deviceControlBean = new DeviceControlBean();
+                        deviceControlBean.ip = deviceBean.ip;
+                        deviceControlBean.port = deviceBean.port;
+                        deviceControlBean.control = operate;
+                        DeviceControl.getInstance(ServiceActivity.this).handleMsg(deviceControlBean);
+                    }
                 }
 
                 handler.sendEmptyMessageDelayed(1, 300);

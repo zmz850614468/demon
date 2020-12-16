@@ -26,6 +26,13 @@ public class MsgBean {
     public static final int FILE_EXCHANGE = 5;          // 文件传输
 
     public static final int DEVICE_CONTROL = 6;         // 设备控制
+    public static final int DEVICE_CONTROL_CALLBACK = 61;// 设备控制回复
+    public static final int DEVICE_ADD_OR_UPDATE = 62;  // 添加或跟新设备
+    public static final int DEVICE_ADD_OR_UPDATE_CALLBACK = 63; // 添加或跟新设备回调
+    public static final int DEVICE_REFRESH = 64;        // 服务端：获取所有设备信息 ； 客户端：更新所有设备信息
+    public static final int DEVICE_DELETE = 65;         // 删除设备
+//    public static final int DEVICE_STATUS = 66;         // 获取设备状态
+    public static final int DEVICE_STATUS_BALLBACK = 66;// 设备状态回调
 
     public static final int RECEIVE_TIP = 10;           // 服务器收到消息，返回提示
 

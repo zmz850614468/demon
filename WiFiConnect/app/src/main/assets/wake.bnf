@@ -4,5 +4,5 @@
 !slot <contact>;
 !start <callStart>;
 <callStart>:[<callCmd>]<callName>;
-<callCmd>:定时;
-<callName>:未识别|播放音乐|来点音乐|播放歌曲|停止播放|暂停播放|换首歌|换首音乐|下一首;
+<callCmd>:叮咚叮咚叮咚叮咚叮咚叮咚叮咚叮咚咚叮咚叮咚咚叮咚叮咚;
+<callName>:未识别|灯|热水器|音乐|歌曲|下一曲;

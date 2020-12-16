@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.beans.SongBean;
@@ -24,13 +25,18 @@ import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.MusicTimerControl;
 import com.lilanz.wificonnect.controls.SongControl;
 import com.lilanz.wificonnect.controls.SoundControl;
+import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.utils.PingUtil;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -318,6 +324,12 @@ public class WifiService extends Service {
             case MsgBean.UPDATE_MUSIC: // 更新音乐
                 if (thread != null) {
                     List<SongBean> songList = SongControl.getSongList(this);
+                    Collections.sort(songList, new Comparator<SongBean>() {
+                        @Override
+                        public int compare(SongBean o1, SongBean o2) {
+                            return o1.singer.compareTo(o2.singer);
+                        }
+                    });
                     MediaControl.getInstance(this).setSongList(songList);
                     int size = songList.size();
                     for (int i = 0; i < size; i++) {
@@ -377,10 +389,87 @@ public class WifiService extends Service {
                     e.printStackTrace();
                 }
                 break;
-            case MsgBean.DEVICE_CONTROL:
+            case MsgBean.DEVICE_CONTROL:    // 控制设备
                 try {
                     DeviceControlBean deviceControlBean = new Gson().fromJson(bean.content, DeviceControlBean.class);
                     DeviceControl.getInstance(this).handleMsg(deviceControlBean);
+                    // 回复客户端，服务器成功收的消息
+                    msgBean = new MsgBean(MsgBean.DEVICE_CONTROL_CALLBACK, deviceControlBean.toString());
+                    thread.sendMsg(msgBean.toString());
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MsgBean.DEVICE_CONTROL_CALLBACK:   // 控制设备回调
+                try {
+                    DeviceControlBean deviceControlBean = new Gson().fromJson(bean.content, DeviceControlBean.class);
+                    for (MsgCallbackListener callback : callbacklistenerList) {
+                        callback.onControlCallback(deviceControlBean);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MsgBean.DEVICE_ADD_OR_UPDATE:      // 更新设备信息
+                try {
+                    DeviceBean deviceBean = new Gson().fromJson(bean.content, DeviceBean.class);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("ip", deviceBean.ip);
+                    DBControl.deleteByColumn(this, DeviceBean.class, map);
+                    DBControl.createOrUpdate(this, DeviceBean.class, deviceBean);
+                    // 回复客户端，服务器成功收的消息
+                    msgBean = new MsgBean(MsgBean.DEVICE_ADD_OR_UPDATE_CALLBACK, "添加或更新设备成功");
+                    thread.sendMsg(msgBean.toString());
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MsgBean.DEVICE_ADD_OR_UPDATE_CALLBACK:     // 更新设备信息回调
+                for (MsgCallbackListener callback : callbacklistenerList) {
+                    callback.onDeviceUpdateCallback(bean.content);
+                }
+                break;
+            case MsgBean.DEVICE_REFRESH:        // 服务端：获取所有设备信息 ； 客户端：更新所有设备信息
+                if (identify == 1) {    // 服务端
+                    List<DeviceBean> list = DBControl.quaryAll(App.context, DeviceBean.class);
+                    int size = list.size();
+                    for (int i = 0; i < size; i++) {
+                        msgBean = new MsgBean(MsgBean.DEVICE_REFRESH, list.get(i).toString());
+                        if (i == size - 1) {
+                            msgBean.isLast = true;
+                        }
+                        thread.sendMsg(msgBean.toString());
+                    }
+                } else if (identify == 2) {         // 客户端
+                    try {
+                        DeviceBean deviceBean = new Gson().fromJson(bean.content, DeviceBean.class);
+                        for (MsgCallbackListener callback : callbacklistenerList) {
+                            callback.onDeviceRefresh(deviceBean, bean.isLast);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case MsgBean.DEVICE_DELETE:         // 删除设备
+                try {
+                    DeviceBean deviceBean = new Gson().fromJson(bean.content, DeviceBean.class);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("ip", deviceBean.ip);
+                    DBControl.deleteByColumn(this, DeviceBean.class, map);
+                    // 回复客户端，服务器成功收的消息
+                    msgBean = new MsgBean(MsgBean.DEVICE_ADD_OR_UPDATE_CALLBACK, "删除设备成功!");
+                    thread.sendMsg(msgBean.toString());
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MsgBean.DEVICE_STATUS_BALLBACK:
+                try {
+                    DeviceBean deviceBean = new Gson().fromJson(bean.content, DeviceBean.class);
+                    for (MsgCallbackListener callback : callbacklistenerList) {
+                        callback.onDeviceStatusUpdate(deviceBean);
+                    }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
                 }

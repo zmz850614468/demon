@@ -11,6 +11,7 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -30,10 +31,11 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iv_pic"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:background="@mipmap/wifi_setting" />
+            android:background="@mipmap/lamp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +44,7 @@
             android:padding="5dp">
 
             <EditText
+                android:id="@+id/et_device_name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -60,6 +63,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/et_device_ip"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
@@ -72,6 +76,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/et_device_port"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -113,6 +118,7 @@
                 android:textSize="20sp" />
 
             <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_device_type"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
@@ -139,12 +145,14 @@
                 android:textSize="20sp" />
 
             <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_decice_control"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_open_setting"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/layout_basic_info"
@@ -164,6 +172,7 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/et_open_setting"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -175,15 +184,32 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/bt_ok"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/selector"
-        android:text="确 认"
-        android:textColor="@color/red"
-        android:textSize="20sp" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/selector"
+            android:text="确 认"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/bt_delete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector"
+            android:text="删 除"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 
 </RelativeLayout>

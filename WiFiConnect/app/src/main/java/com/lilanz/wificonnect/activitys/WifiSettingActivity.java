@@ -15,6 +15,10 @@ import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +37,10 @@ public class WifiSettingActivity extends Activity {
     EditText etWifiPwd;
     @BindView(R.id.et_host_ip)
     EditText etHostIP;
-    @BindView(R.id.tv_msg)
-    TextView tvMsg;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.tv_device_ip)
+    TextView tvDeviceIp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,13 +69,15 @@ public class WifiSettingActivity extends Activity {
         setIpRequest.setParseListener(new ParseListener<String>() {
             @Override
             public void onError(int errCode, String errMsg) {
-                showMsg("errcode:" + errMsg + " ; errmsg:" + errMsg);
+//                tvDeviceIp.setText("路由器分配的设备ip：未获取");
+                showToast("errcode:" + errMsg + " ; errmsg:" + errMsg);
             }
 
             @Override
             public void jsonResult(String jsonStr) {
                 super.jsonResult(jsonStr);
-                showMsg(jsonStr);
+//                showMsg(jsonStr);
+                tvDeviceIp.setText("路由器分配的设备ip：" + jsonStr);
             }
         });
 //        }
@@ -95,13 +103,13 @@ public class WifiSettingActivity extends Activity {
 
     @OnClick(R.id.iv_refresh)
     public void onRefreshClicked(View v) {
-        tvMsg.setText("");
+        tvDeviceIp.setText("路由器分配的设备ip：");
         initUI();
     }
 
     private void initUI() {
         String localIp = WiFiUtil.getIpAddr(this);
-        showMsg("本地IP：" + localIp);
+        tvAddress.setText("ip：" + localIp);
         int last = localIp.lastIndexOf(".");
         etHostIP.setText(localIp.substring(0, last + 1) + "1");
 
@@ -135,7 +143,24 @@ public class WifiSettingActivity extends Activity {
         }
     }
 
-    private void showMsg(String msg) {
-        tvMsg.append(msg + "\n");
-    }
+//    @OnClick(R.id.tv_address)
+//    public void onClicked(View v) {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                super.run();
+//                try {
+//                    byte[] bytes = "udp msg".getBytes();
+//                    DatagramPacket dp = new DatagramPacket(bytes, 0, bytes.length);
+//                    DatagramSocket socket = new DatagramSocket();
+//                    dp.setAddress(InetAddress.getByName("192.168.4.1"));
+//                    dp.setPort(8080);
+//                    socket.send(dp);
+//                    socket.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//    }
 }

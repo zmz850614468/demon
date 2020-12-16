@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="WIFI设置"
+            android:text="WIFI设备设置"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
@@ -42,6 +42,15 @@
         android:layout_below="@+id/layout_title"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:text="请先连接设备的wifi热点"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="Wifi设备IP："
+                android:text="设备热点ip："
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -123,10 +132,10 @@
                 android:layout_weight="3"
                 android:background="@drawable/shape_box_white"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:singleLine="true"
                 android:text="87654321" />
         </LinearLayout>
-
 
     </LinearLayout>
 
@@ -155,6 +164,16 @@
             android:text="获取Wifi设备的IP地址"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/tv_device_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="5dp"
+            android:text="路由器分配的设备ip："
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <Button
             android:id="@+id/bt_restart_wifi"
             android:layout_width="match_parent"
@@ -166,16 +185,23 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layout_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <TextView
-            android:id="@+id/tv_msg"
+            android:id="@+id/tv_address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -20,9 +20,19 @@ public class SharePreferencesUtil {
     private static final String STOP_SONG_COUNT = "stopSongCount";   // X首歌后停止播放
     private static final String LUYQ_NAME = "luYQName";   // 路由器名称
     private static final String LUYQ_PWD = "luYQPwd";   // 路由器密码
+    private static final String VOICE_SENSITIVITY = "voiceSensitivity";   // 声音灵敏度
 
     private static SharedPreferences instance = null;
 
+
+    // 获取 声音灵敏度
+    public static int getVoiceSensitivity(Context context) {
+        return getInstance(context).getInt(VOICE_SENSITIVITY, 1450);
+    }
+
+    public static void saveVoiceSensitivity(Context context, int voiceSensitivity) {
+        setInteger(context, VOICE_SENSITIVITY, voiceSensitivity);
+    }
 
     // 获取 路由器密码
     public static String getLuYQPwd(Context context) {

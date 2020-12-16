@@ -16,7 +16,6 @@ public class SocketThread extends Thread {
 
     private String TAG = "SocketThread";
 
-    //    private ServerSocket serverSocket;
     private Socket socket;
 
     private InputStream inputStream;
@@ -25,6 +24,8 @@ public class SocketThread extends Thread {
     private boolean isContinue = true;
     private String ip;
     private int port;
+
+    private int sendMsgTimes;   // 发送数据的次数
 
     /**
      * 1:服务端口
@@ -134,6 +135,7 @@ public class SocketThread extends Thread {
      * @param msg
      */
     public void sendMsg(String msg) {
+        sendMsgTimes++;
         try {   //发送
             outputStream.write((msg + SPLIT).getBytes());
             outputStream.flush();
@@ -148,6 +150,7 @@ public class SocketThread extends Thread {
      * @param bytes
      */
     public void sendMsg(byte[] bytes) {
+        sendMsgTimes++;
         try {   //发送
             outputStream.write(bytes);
             outputStream.flush();
@@ -187,7 +190,12 @@ public class SocketThread extends Thread {
         isContinue = false;
         if (listener != null) {
             listener.onTip(2, "断开连接");
+//            listener.onError(this, "断开连接");
         }
+    }
+
+    public int getSendMsgTimes() {
+        return sendMsgTimes;
     }
 
     public String getIp() {

@@ -8,24 +8,36 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
+import com.lilanz.wificonnect.beans.DeviceBean;
+import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.ItemBean;
+import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.DeviceControl;
+import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
+import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
+import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
+import com.lilanz.wificonnect.utils.StringUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +54,7 @@ public class OperateActivity extends Activity {
     @BindView(R.id.iv_refresh)
     ImageView ivRefresh;
 
-//    private WifiService wifiService;
+    //    private WifiService wifiService;
     private PermissionControl permissionControl;
 
     @BindView(R.id.rv_function)
@@ -65,7 +77,21 @@ public class OperateActivity extends Activity {
         initData();
         initAdapter();
         initService();
-//        byteTest();
+        handler.sendEmptyMessageDelayed(1, 1000);
+
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 1; i <= 60; i++) {
+            buffer.append("|").append(i);
+        }
+        showLog(buffer.toString());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ("断开状态".equals(tvStatus.getText().toString())) {
+            AppDataControl.reconnectWifiService(this);
+        }
     }
 
     @OnClick(R.id.iv_setting)
@@ -78,17 +104,7 @@ public class OperateActivity extends Activity {
     public void onRefreshClicked() {
         showToast("重连服务器!");
         ivRefresh.setEnabled(false);
-        if (AppDataControl.wifiService != null) {
-            AppDataControl.wifiService.close();
-            String selectedIpType = SharePreferencesUtil.getSelectedIpType(this);
-            String ip = SharePreferencesUtil.getServiceIp(this);        // 默认广域网服务器地址
-            if (selectedIpType.equals("局域网")) {
-                ip = SharePreferencesUtil.getInsideServiceIp(this);     // 局域网服务器地址
-            }
-            int port = SharePreferencesUtil.getServicePort(this);
-            AppDataControl.wifiService.startConnect(ip, port);
-//                wifiService.startConnect("103.46.128.45", 48539);
-        }
+        AppDataControl.reconnectWifiService(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -202,6 +218,60 @@ public class OperateActivity extends Activity {
         tvAddress.setText("ip：" + WiFiUtil.getIpAddr(this));
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:     // 打开讯飞语音监听
+                    initXunFei();
+                    break;
+            }
+        }
+    };
+
+    private void initXunFei() {
+        XunFeiVoiceControl.getInstance(OperateActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
+            @Override
+            public void onResult(boolean status, String result) {
+                if ("音乐|歌曲".contains(result)) {
+                    if (status) {   // 播放歌曲
+                        AppDataControl.sendMsg(new MsgBean(MsgBean.PLAY_MUSIC, AppDataControl.playingPath));
+                    } else {         // 关闭歌曲
+                        if (AppDataControl.isPlaying) {
+                            AppDataControl.sendMsg(new MsgBean(MsgBean.MUSIC_PAUSE_OR_START, AppDataControl.playingPath));
+                        }
+                    }
+                } else if ("下一曲".contains(result)) {
+                    if (status) {
+                    }
+                } else if ("灯|热水器".contains(result)) {
+                    if (result.equals("灯")) {   // 点灯是反接线的，所以控制反向了
+                        status = !status;
+                    }
+                    String operate = status ? "open" : "close";
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("device_type", result);
+                    List<DeviceBean> list = DBControl.quaryByColumn(OperateActivity.this, DeviceBean.class, map);
+
+                    for (DeviceBean deviceBean : list) {
+                        DeviceControlBean controlBean = new DeviceControlBean();
+                        controlBean.ip = deviceBean.ip;
+                        controlBean.port = deviceBean.port;
+                        controlBean.control = operate;
+                        MsgBean msgBean = new MsgBean(MsgBean.DEVICE_CONTROL, controlBean.toString());
+                        AppDataControl.sendMsg(msgBean);
+                    }
+                }
+
+                handler.sendEmptyMessageDelayed(1, 300);
+            }
+        });
+        XunFeiVoiceControl.getInstance(OperateActivity.this).oneShot();
+    }
+
+
     @Override
     protected void onDestroy() {
         if (AppDataControl.wifiService != null) {
@@ -216,6 +286,12 @@ public class OperateActivity extends Activity {
             tvMsg.setText(msg + "\n");
         } else {
             tvMsg.append(msg + "\n");
+        }
+    }
+
+    private void showLog(String msg) {
+        if (App.isDebug) {
+            Log.e("", msg);
         }
     }
 

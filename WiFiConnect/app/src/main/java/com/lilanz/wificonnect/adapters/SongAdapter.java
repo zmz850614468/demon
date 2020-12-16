@@ -3,6 +3,7 @@ package com.lilanz.wificonnect.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongHolder> {
             ButterKnife.bind(this, view);
             tvOrder.setTextSize(15);
             tvName.setTextSize(15);
+            tvName.setGravity(Gravity.CENTER_VERTICAL);
             tvSinger.setTextSize(15);
             tvDuring.setTextSize(15);
             // 4.查找界面控件

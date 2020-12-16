@@ -38,7 +38,7 @@ public class BLELibDialog extends Dialog implements DialogInterface.OnClickListe
     protected RecyclerView recyclerView;
     private BLELibAdapter bleDeviceAdapter;
 
-    public static BLELibHelper blelibHelper;
+    public BLELibHelper blelibHelper;
 
     private Map<String, String> bleMap = new HashMap<>();
 
@@ -63,6 +63,14 @@ public class BLELibDialog extends Dialog implements DialogInterface.OnClickListe
         initUI();
     }
 
+    /**
+     * 断开连接后，重新初始化
+     */
+    public void onResume() {
+        if (blelibHelper != null && !blelibHelper.isConnect()) {
+            initBLEHelper();
+        }
+    }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {

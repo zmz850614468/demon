@@ -13,8 +13,13 @@ public class DeviceControlBean {
 
     public int port;
 
-    public int type;            // 类型
+//    public int type;            // 类型
 
+    /**
+     * open:
+     * close:
+     * status:
+     */
     public String control;      // 控制方式
 
     @NonNull

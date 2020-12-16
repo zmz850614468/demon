@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.utils.BuildUtil;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.tencent.bugly.beta.Beta;
 
@@ -19,7 +20,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends Activity {
-
 
     @BindView(R.id.tv_exit)
     TextView tvExit;
@@ -33,6 +33,10 @@ public class SettingActivity extends Activity {
     RadioButton rbIp;
     @BindView(R.id.rb_inside_ip)
     RadioButton rbInsideIp;
+    @BindView(R.id.tv_update_check)
+    TextView tvUpdateCheck;
+    @BindView(R.id.et_voice_sensitivity)
+    EditText etVoiceSensitivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +96,10 @@ public class SettingActivity extends Activity {
             }
         });
 
+        int voiceSensitivity = SharePreferencesUtil.getVoiceSensitivity(this);
+        etVoiceSensitivity.setText(voiceSensitivity + "");
+
+        tvUpdateCheck.append("(" + BuildUtil.getVersionName(this) + "." + BuildUtil.getVersionCode(this) + ")");
     }
 
     @Override
@@ -108,6 +116,20 @@ public class SettingActivity extends Activity {
             int port = Integer.parseInt(etPort.getText().toString());
             SharePreferencesUtil.saveServicePort(this, port);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String voiceStr = etVoiceSensitivity.getText().toString();
+
+        try {
+            int voiceSensitivity = Integer.parseInt(voiceStr);
+            if (voiceSensitivity < 1) {
+                voiceSensitivity = 1;
+            } else if (voiceSensitivity > 3000) {
+                voiceSensitivity = 3000;
+            }
+            SharePreferencesUtil.saveVoiceSensitivity(this, voiceSensitivity);
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 

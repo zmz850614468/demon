@@ -23,6 +23,7 @@ import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.lilanz.wificonnect.activitys.App;
 import com.lilanz.wificonnect.beans.WakeUpBean;
+import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.XunFeiUtil;
 
 import java.io.InputStream;
@@ -139,7 +140,8 @@ public class XunFeiVoiceControl {
             // 清空参数
             voiceWakeuper.setParameter(SpeechConstant.PARAMS, null);
             // 唤醒门限值，根据资源携带的唤醒词个数按照“id:门限;id:门限”的格式传入
-            voiceWakeuper.setParameter(SpeechConstant.IVW_THRESHOLD, "0:" + 1450);
+            int voiceSensitivity = SharePreferencesUtil.getVoiceSensitivity(context);
+            voiceWakeuper.setParameter(SpeechConstant.IVW_THRESHOLD, "0:" + voiceSensitivity);
             // 设置唤醒模式
             voiceWakeuper.setParameter(SpeechConstant.IVW_SST, "wakeup");
             // 设置持续进行唤醒
@@ -184,13 +186,20 @@ public class XunFeiVoiceControl {
 
     private WakeuperListener mWakeuperListener = new WakeuperListener() {
 
+        private boolean status = false;
+
         @Override
         public void onResult(WakeuperResult result) {
             // 唤醒模式，的回调
             try {
-                WakeUpBean bean = new Gson().fromJson(result.getResultString(), WakeUpBean.class);
+                WakeUpBean wakeUpBean = new Gson().fromJson(result.getResultString(), WakeUpBean.class);
+                if (wakeUpBean.id == 1) {
+                    status = false;
+                } else {
+                    status = true;
+                }
 
-                showLog(bean.toString());
+                showLog(wakeUpBean.toString());
             } catch (Exception e) {
                 showLog("结果解析出错");
                 e.printStackTrace();
@@ -200,6 +209,7 @@ public class XunFeiVoiceControl {
         @Override
         public void onError(SpeechError error) {
             showToast(error.getPlainDescription(true));
+            oneShot();
         }
 
         @Override
@@ -208,20 +218,13 @@ public class XunFeiVoiceControl {
 
         @Override
         public void onEvent(int eventType, int isLast, int arg2, Bundle obj) {
-//            switch (eventType) {
-//                // EVENT_RECORD_DATA 事件仅在 NOTIFY_RECORD_DATA 参数值为 真 时返回
-//                case SpeechEvent.EVENT_RECORD_DATA:
-//                    final byte[] audio = obj.getByteArray(SpeechEvent.KEY_EVENT_RECORD_DATA);
-//                    break;
-//            }
-//            showLog("eventType:"+eventType+ "arg1:"+isLast + "arg2:" + arg2);
             // 命令识别结果
             if (SpeechEvent.EVENT_IVW_RESULT == eventType) {
                 RecognizerResult reslut = ((RecognizerResult) obj.get(SpeechEvent.KEY_EVENT_IVW_RESULT));
                 String result = XunFeiUtil.getVoiceResult(reslut.getResultString());
                 showLog(result);
                 if (onOneShotResult != null) {
-                    onOneShotResult.onResult(result);
+                    onOneShotResult.onResult(status, result);
                 }
             }
         }
@@ -274,8 +277,11 @@ public class XunFeiVoiceControl {
              * 唤醒门限值，根据资源携带的唤醒词个数按照“id:门限;id:门限”的格式传入
              * 示例demo默认设置第一个唤醒词，建议开发者根据定制资源中唤醒词个数进行设置
              */
-            voiceWakeuper.setParameter(SpeechConstant.IVW_THRESHOLD, "0:"
-                    + 1450);
+            int voiceSensitivity = SharePreferencesUtil.getVoiceSensitivity(context);
+            voiceWakeuper.setParameter(SpeechConstant.IVW_THRESHOLD,
+                    "0:" + voiceSensitivity +
+                            ";1:" + voiceSensitivity +
+                            ";2:" + voiceSensitivity);
             // 设置唤醒+识别模式
             voiceWakeuper.setParameter(SpeechConstant.IVW_SST, "oneshot");
             // 设置返回结果格式
@@ -386,7 +392,7 @@ public class XunFeiVoiceControl {
     }
 
     public interface OnOneShotResult {
-        void onResult(String result);
+        void onResult(boolean status, String result);
     }
 
 
