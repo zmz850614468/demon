@@ -19,6 +19,14 @@ import java.util.List;
 public class AppDataControl {
 
     /**
+     * 欢迎界面选择进入的类型（3种类型）
+     * 服务器
+     * 客户端
+     * 直接控制设备
+     */
+    public static String selectedType;
+
+    /**
      * 全局WiFi服务
      */
     public static WifiService wifiService;
@@ -105,7 +113,7 @@ public class AppDataControl {
     /**
      * 重连wifiService 服务
      */
-    public static void reconnectWifiService(Context context){
+    public static void reconnectWifiService(Context context) {
         if (wifiService != null) {
             wifiService.close();
 

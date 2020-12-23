@@ -42,16 +42,18 @@ public class SoundControl {
         soundIdMap.put(R.raw.going_home, 0);                 //
         soundIdMap.put(R.raw.need_comfort, 0);                //
         soundIdMap.put(R.raw.pi_ka_qiu, 0);                //
+        soundIdMap.put(R.raw.how_long, 0);                //
+        soundIdMap.put(R.raw.ok_begin_timer, 0);                //
 
         soundPool = new SoundPool.Builder()
                 .setMaxStreams(5)
                 .build();
 
         for (Map.Entry<Integer, Integer> entry : soundIdMap.entrySet()) {
-        int soundId = soundPool.load(context, entry.getKey(), 0);
-        entry.setValue(soundId);
+            int soundId = soundPool.load(context, entry.getKey(), 0);
+            entry.setValue(soundId);
+        }
     }
-}
 
     /**
      * 播放声音

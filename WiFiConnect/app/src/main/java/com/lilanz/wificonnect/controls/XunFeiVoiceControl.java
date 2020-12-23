@@ -75,7 +75,7 @@ public class XunFeiVoiceControl {
             mIatDialog.setParameter(SpeechConstant.RESULT_TYPE, "json");
             //此处engineType为“cloud”SpeechConstant.TYPE_LOCAL
 //            mIatDialog.setParameter(SpeechConstant.ENGINE_TYPE, "cloud");
-            mIatDialog.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
+            mIatDialog.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
             //设置语音输入语言，zh_cn为简体中文
             mIatDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
             //设置结果返回语言

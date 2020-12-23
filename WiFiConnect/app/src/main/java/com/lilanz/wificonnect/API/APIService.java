@@ -68,8 +68,18 @@ public interface APIService {
      * @return
      */
     @GET("wifi")
-    //请求方法为POST，里面为你要上传的url
     Call<ResponseBody> wifiSetting(@QueryMap Map<String, String> map);
+
+    // =========================      Test        =======================
+
+    /**
+     * 测试：设置ip地址
+     *
+     * @param map
+     * @return
+     */
+    @GET("wifi")
+    Call<ResponseBody> wifiSettingTest(@QueryMap Map<String, String> map);
 
 //    /**
 //     * 获取ip地址

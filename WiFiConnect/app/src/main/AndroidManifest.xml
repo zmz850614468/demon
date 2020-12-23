@@ -66,8 +66,13 @@
         <activity
             android:name=".activitys.ServiceActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activitys.OperateActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activitys.ControlDeviceActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -102,8 +107,18 @@
             android:name=".activitys.SearchIpActivity"
             android:screenOrientation="portrait" />
 
-
         <service android:name=".threads.WifiService" />
+
+        <!--    Test    -->
+        <activity
+            android:name=".test.WifiTestActivity"
+            android:screenOrientation="portrait">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
+
     </application>
 
 </manifest>

@@ -5,4 +5,4 @@
 !start <callStart>;
 <callStart>:[<callCmd>]<callName>;
 <callCmd>:叮咚叮咚叮咚叮咚叮咚叮咚叮咚叮咚咚叮咚叮咚咚叮咚叮咚;
-<callName>:未识别|灯|热水器|音乐|歌曲|下一曲;
+<callName>:未识别|灯|热水器|音乐|歌曲|下一曲|定时;

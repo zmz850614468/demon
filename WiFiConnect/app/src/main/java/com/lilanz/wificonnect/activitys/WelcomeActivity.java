@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -26,34 +27,47 @@ public class WelcomeActivity extends Activity {
         ButterKnife.bind(this);
 
         String become = SharePreferencesUtil.getBecome(this);
-        showLog("信息：" + become);
-        if ("服务端".equals(become)) {
-            Intent intent = new Intent(this, ServiceActivity.class);
-            startActivity(intent);
-            finish();
-        } else if ("客户端".equals(become)) {
-            Intent intent = new Intent(this, OperateActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        toActivity(become);
         requestPermissions();
     }
 
-    @OnClick({R.id.tv_be_service, R.id.tv_be_operate})
+    @OnClick({R.id.tv_be_service, R.id.tv_be_operate, R.id.tv_control_device})
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.tv_be_service:
                 SharePreferencesUtil.saveBecome(this, "服务端");
-                Intent intent = new Intent(this, ServiceActivity.class);
-                startActivity(intent);
-                finish();
+                toActivity("服务端");
                 break;
             case R.id.tv_be_operate:
                 SharePreferencesUtil.saveBecome(this, "客户端");
-                intent = new Intent(this, OperateActivity.class);
-                startActivity(intent);
-                finish();
+                toActivity("客户端");
                 break;
+            case R.id.tv_control_device:
+                SharePreferencesUtil.saveBecome(this, "直接控制设备");
+                toActivity("直接控制设备");
+                break;
+        }
+    }
+
+    /**
+     * 跳转到对应的界面
+     *
+     * @param to
+     */
+    private void toActivity(String to) {
+        AppDataControl.selectedType = to;
+        if ("服务端".equals(to)) {
+            Intent intent = new Intent(this, ServiceActivity.class);
+            startActivity(intent);
+            finish();
+        } else if ("客户端".equals(to)) {
+            Intent intent = new Intent(this, OperateActivity.class);
+            startActivity(intent);
+            finish();
+        } else if ("直接控制设备".equals(to)) {
+            Intent intent = new Intent(this, ControlDeviceActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

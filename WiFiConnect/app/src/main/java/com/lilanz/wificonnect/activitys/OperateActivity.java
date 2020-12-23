@@ -13,12 +13,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
+import com.lilanz.wificonnect.beans.Bean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.ItemBean;
@@ -27,13 +29,16 @@ import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
+import com.lilanz.wificonnect.controls.SoundControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
+import com.lilanz.wificonnect.threads.FifoThread;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.StringUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
+import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,11 +84,6 @@ public class OperateActivity extends Activity {
         initService();
         handler.sendEmptyMessageDelayed(1, 1000);
 
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 1; i <= 60; i++) {
-            buffer.append("|").append(i);
-        }
-        showLog(buffer.toString());
     }
 
     @Override
@@ -112,16 +112,6 @@ public class OperateActivity extends Activity {
             }
         }, 1000);
     }
-
-//    private void byteTest(){
-//        MsgBean bean = new MsgBean();
-//        bean.type = 10;
-//        bean.content = "文件传输";
-//        bean.bytes = new byte[]{0x01,0x03, 0x17, (byte) 0xAB, (byte) 0xFF, (byte) 0xCD, (byte) 0x88, (byte) 0x90};
-//        String msg = bean.toString();
-//
-//        MsgBean newBean = new Gson().fromJson(msg, MsgBean.class);
-//    }
 
     private void initService() {
         Intent intent = new Intent(this, WifiService.class);
@@ -263,6 +253,27 @@ public class OperateActivity extends Activity {
                         MsgBean msgBean = new MsgBean(MsgBean.DEVICE_CONTROL, controlBean.toString());
                         AppDataControl.sendMsg(msgBean);
                     }
+                } else if ("定时".contains(result)) {
+                    if (status) {
+                        SoundControl.getInstance(OperateActivity.this).play(R.raw.how_long);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                XunFeiVoiceControl.getInstance(OperateActivity.this).voiceRecognizer(OperateActivity.this, new XunFeiVoiceControl.OnVoiceResult() {
+                                    @Override
+                                    public void onResult(String result) {
+                                        showLog("result:" + result);
+                                        SoundControl.getInstance(OperateActivity.this).play(R.raw.ok_begin_timer);
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+                                        showLog(error);
+                                    }
+                                });
+                            }
+                        }, 200);
+                    }
                 }
 
                 handler.sendEmptyMessageDelayed(1, 300);
@@ -270,7 +281,6 @@ public class OperateActivity extends Activity {
         });
         XunFeiVoiceControl.getInstance(OperateActivity.this).oneShot();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -282,7 +292,7 @@ public class OperateActivity extends Activity {
     }
 
     private void showMsg(String msg) {
-        if (tvMsg.length() > 200) {
+        if (tvMsg.length() > 150) {
             tvMsg.setText(msg + "\n");
         } else {
             tvMsg.append(msg + "\n");
@@ -291,12 +301,39 @@ public class OperateActivity extends Activity {
 
     private void showLog(String msg) {
         if (App.isDebug) {
-            Log.e("", msg);
+            Log.e("xunfei", msg);
         }
     }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+
+    // ===================== test =========================
+    private FifoThread fifoThread;
+
+    private void initTest() {
+
+    }
+
+    @OnClick({R.id.tv_address, R.id.tv_status})
+    public void onClicked(View v) {
+        showToast("点击事件");
+        if (fifoThread == null) {
+            fifoThread = new FifoThread(this);
+            fifoThread.start();
+        }
+        switch (v.getId()) {
+            case R.id.tv_address:
+                fifoThread.add(new Bean());
+                break;
+            case R.id.tv_status:
+                fifoThread.close();
+                fifoThread = null;
+                break;
+        }
+
     }
 
 }

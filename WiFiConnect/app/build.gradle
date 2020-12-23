@@ -75,6 +75,10 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:5.1'
     implementation 'com.j256.ormlite:ormlite-core:5.1'
 
+    // OkSocket
+    implementation 'com.tonystark.android:socket:4.2.3'
+    implementation 'com.tonystark.android:socket-server:4.2.3'
+
     // 图片加载 Glide
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
