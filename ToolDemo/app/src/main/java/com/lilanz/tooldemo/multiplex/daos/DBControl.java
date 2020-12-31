@@ -27,9 +27,14 @@ public class DBControl {
         return dao.queryAll();
     }
 
-
     public static void delete(Context context, Class clazz, Object obj) {
         BeanDao dao = BeanDao.getDaoOperate(context, clazz);
         dao.delete(obj);
+    }
+
+    public static void deleteByColumn(Context context, Class clazz, Map<String, Object> map) {
+        BeanDao dao = BeanDao.getDaoOperate(context, clazz);
+        List list = dao.queryWhereForList(map);
+        dao.delete(list);
     }
 }

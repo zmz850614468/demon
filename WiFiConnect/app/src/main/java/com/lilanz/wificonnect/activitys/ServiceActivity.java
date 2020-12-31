@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
+import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.MediaControl;
@@ -201,11 +203,16 @@ public class ServiceActivity extends AppCompatActivity {
                     map.put("device_type", result);
                     List<DeviceBean> list = DBControl.quaryByColumn(ServiceActivity.this, DeviceBean.class, map);
                     for (DeviceBean deviceBean : list) {
-                        DeviceControlBean deviceControlBean = new DeviceControlBean();
-                        deviceControlBean.ip = deviceBean.ip;
-                        deviceControlBean.port = deviceBean.port;
-                        deviceControlBean.control = operate;
-                        DeviceControl.getInstance(ServiceActivity.this).handleMsg(deviceControlBean);
+//                        DeviceControlBean deviceControlBean = new DeviceControlBean();
+//                        deviceControlBean.ip = deviceBean.ip;
+//                        deviceControlBean.port = deviceBean.port;
+//                        deviceControlBean.control = operate;
+//                        DeviceControl.getInstance(ServiceActivity.this).handleMsg(deviceControlBean);
+                        Esp8266ControlBean controlBean = new Esp8266ControlBean();
+                        controlBean.ip = deviceBean.ip;
+                        controlBean.port = deviceBean.port;
+                        controlBean.control = operate;
+                        DeviceOkSocketControl.getInstance(ServiceActivity.this).sendControlMsg(controlBean);
                     }
                 }
 

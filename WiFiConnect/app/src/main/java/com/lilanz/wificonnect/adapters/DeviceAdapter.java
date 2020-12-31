@@ -81,13 +81,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
             holder.btOpen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), "open");
+                    listener.onItemClick(beanList.get(i), "open\n\r");
                 }
             });
             holder.btClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), "close");
+                    listener.onItemClick(beanList.get(i), "close\n\r");
                 }
             });
         }

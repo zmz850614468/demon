@@ -26,20 +26,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".multiplex.API.APIActivity" />
         <activity android:name=".multiplex.daos.DaoExaActivity" />
         <activity android:name=".multiplex.camera2.Camera2ExaActivity">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
-        <activity android:name=".multiplex.qrcode.CodeScanExaActivity" /> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
+        <activity android:name=".multiplex.qrcode.CodeScanExaActivity"/> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
 
         <activity android:name=".multiplex.activitys.ReuseActivity" />
         <!--    蓝牙适配类    -->

@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +152,35 @@ public class FileUtil {
                 file.delete();
             }
         }
+    }
+
+    /**
+     * @param path   网络图片地址
+     * @param target 本地目标地址：文件夹必须存在
+     * @return
+     * @throws Exception
+     */
+    public String downFile(String path, File target) throws Exception {
+        // 从网络上获取图片
+        URL url = new URL(path);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(5000);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        if (conn.getResponseCode() == 200) {
+
+            InputStream is = conn.getInputStream();
+            FileOutputStream fos = new FileOutputStream(target);
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+            }
+            is.close();
+            fos.close();
+            return target.getAbsolutePath();
+        }
+        return null;
     }
 
 }

@@ -11,9 +11,7 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.multiplex.API.APIManager;
 import com.lilanz.tooldemo.multiplex.API.APIRequest;
-import com.lilanz.tooldemo.multiplex.API.APIService;
 import com.lilanz.tooldemo.multiplex.API.ParseListener;
 import com.lilanz.tooldemo.utils.BitmapUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
@@ -28,10 +26,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 佳博打印机
@@ -97,7 +91,7 @@ public class JiaBoActivity extends Activity {
                             //  当返回码为0时，请求才是上传成功的，其他情况都返回false
                             if (jsonObject.has("errcode") && jsonObject.getString("errcode").equals("0")) {
                                 String data = jsonObject.getString("data");
-                                bitmap = BitmapUtil.getBitmapByBase64(data);
+                                bitmap = BitmapUtil.base64ToBitmap(data);
 
                                 ivImage.setImageBitmap(bitmap);
                             }

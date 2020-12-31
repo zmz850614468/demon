@@ -1,43 +1,30 @@
-package com.lilanz.wificonnect.activitys;
+package com.lilanz.wificonnect.activity_new;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activitys.DeviceManagerActivity;
+import com.lilanz.wificonnect.activitys.SettingActivity;
+import com.lilanz.wificonnect.activitys.WifiSettingActivity;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
-import com.lilanz.wificonnect.beans.Bean;
-import com.lilanz.wificonnect.beans.DeviceBean;
-import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.ItemBean;
-import com.lilanz.wificonnect.beans.MsgBean;
-import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
-import com.lilanz.wificonnect.controls.SoundControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
-import com.lilanz.wificonnect.daos.DBControl;
-import com.lilanz.wificonnect.threads.FifoThread;
-import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +62,6 @@ public class ControlDeviceActivity extends Activity {
         initData();
         initAdapter();
         handler.sendEmptyMessageDelayed(1, 1000);
-
     }
 
     @Override
@@ -85,7 +71,7 @@ public class ControlDeviceActivity extends Activity {
 
     @OnClick(R.id.iv_setting)
     public void onSettingClicked() {
-        Intent intent = new Intent(this, SettingActivity.class);
+        Intent intent = new Intent(this, AppSettingActivity.class);
         startActivity(intent);
     }
 
@@ -100,11 +86,11 @@ public class ControlDeviceActivity extends Activity {
             public void onItemClick(ItemBean bean) {
                 switch (bean.name) {
                     case "设备控制":
-                        Intent intent = new Intent(ControlDeviceActivity.this, DeviceManagerActivity.class);
+                        Intent intent = new Intent(ControlDeviceActivity.this, DeviceListActivity.class);
                         startActivity(intent);
                         break;
                     case "WIFI设置":
-                        intent = new Intent(ControlDeviceActivity.this, WifiSettingActivity.class);
+                        intent = new Intent(ControlDeviceActivity.this, Esp8266SettingActivity.class);
                         startActivity(intent);
                         break;
                 }

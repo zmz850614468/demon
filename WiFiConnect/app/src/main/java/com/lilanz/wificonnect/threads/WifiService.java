@@ -13,11 +13,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.beans.SongBean;
 import com.lilanz.wificonnect.beans.StopBean;
+import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.InfoFileControl;
@@ -391,10 +393,12 @@ public class WifiService extends Service {
                 break;
             case MsgBean.DEVICE_CONTROL:    // 控制设备
                 try {
-                    DeviceControlBean deviceControlBean = new Gson().fromJson(bean.content, DeviceControlBean.class);
-                    DeviceControl.getInstance(this).handleMsg(deviceControlBean);
+                    Esp8266ControlBean controlBean = new Gson().fromJson(bean.content, Esp8266ControlBean.class);
+                    DeviceOkSocketControl.getInstance(this).sendControlMsg(controlBean);
+//                    DeviceControlBean deviceControlBean = new Gson().fromJson(bean.content, DeviceControlBean.class);
+//                    DeviceControl.getInstance(this).handleMsg(deviceControlBean);
                     // 回复客户端，服务器成功收的消息
-                    msgBean = new MsgBean(MsgBean.DEVICE_CONTROL_CALLBACK, deviceControlBean.toString());
+                    msgBean = new MsgBean(MsgBean.DEVICE_CONTROL_CALLBACK, controlBean.toString());
                     thread.sendMsg(msgBean.toString());
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();

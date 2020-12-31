@@ -15,6 +15,7 @@ import android.hardware.camera2.CaptureRequest;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -262,7 +263,7 @@ public class Camera2Helper {
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 
         if (videoPath == null) {    // 用户没有设置地址，则使用默认地址
-            videoPath = FileUtil.getVideoFile(activity).getAbsolutePath();
+            videoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/camera2/";
         }
         mediaRecorder.setOutputFile(videoPath);
         mediaRecorder.setVideoEncodingBitRate(10000000);
@@ -384,17 +385,6 @@ public class Camera2Helper {
     public void onPause() {
         closeCamera();
         deleteVideoFile(videoPath);
-    }
-
-    /**
-     * 设置视频文件名，返回整个视频路径
-     *
-     * @param videoName
-     * @return
-     */
-    public String setVideoName(String videoName) {
-        videoPath = FileUtil.getVideoFile(activity, videoName).getAbsolutePath();
-        return videoPath;
     }
 
     public void setOnCamera2CallBack(OnCamera2CallBack callBack) {

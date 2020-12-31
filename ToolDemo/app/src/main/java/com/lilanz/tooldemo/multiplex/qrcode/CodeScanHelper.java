@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
@@ -72,6 +73,8 @@ public class CodeScanHelper {
     private void initUI() {
         capture = new CaptureManager(activity, barcodeScannerView);
         Intent intent = new Intent(activity, activity.getClass());
+//        intent.setAction(Intents.Scan.ACTION);
+//        intent.putExtra(Intents.Scan.CAMERA_ID, 2);
         capture.initializeFromIntent(intent, null);
         capture.setOnScanResultListener(listener);
     }

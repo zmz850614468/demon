@@ -38,7 +38,6 @@ public class DeviceManagerActivity extends Activity {
     private DeviceAdapter deviceAdapter;
     private List<DeviceBean> deviceList;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

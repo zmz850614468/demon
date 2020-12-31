@@ -19,6 +19,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class BitmapUtil {
 
     /**
      * scrollView转为Bitmap ： 可以处理布局超出界面的情况
+     *
      * @param scrollView
      * @return
      */
@@ -70,10 +72,45 @@ public class BitmapUtil {
      * @param base64
      * @return
      */
-    public static Bitmap getBitmapByBase64(String base64) {
+    public static Bitmap base64ToBitmap(String base64) {
         byte[] decodeByte = Base64.decode(base64, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);
         return bitmap;
+    }
+
+    /**
+     * bitmap转为base64
+     *
+     * @param bitmap
+     * @return
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     /**
@@ -151,8 +188,8 @@ public class BitmapUtil {
      * 保存字节图片
      *
      * @param context
-     * @param imageBytes    字节图片数据
-     * @param path          保存的图片路径
+     * @param imageBytes 字节图片数据
+     * @param path       保存的图片路径
      */
     public static void saveImageByte(Context context, byte[] imageBytes, String path) {
         Bitmap temp = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
@@ -166,8 +203,8 @@ public class BitmapUtil {
      * @param bmp
      */
     public static void saveBitmap(Context context, Bitmap bmp) {
-        String path = FileUtil.getPictureFile(context).getAbsolutePath();
-        saveBitmap(context, bmp, path);
+//        String path = FileUtil.getPictureFile(context).getAbsolutePath();
+//        saveBitmap(context, bmp, path);
     }
 
     /**
@@ -194,5 +231,4 @@ public class BitmapUtil {
             }
         }
     }
-
 }

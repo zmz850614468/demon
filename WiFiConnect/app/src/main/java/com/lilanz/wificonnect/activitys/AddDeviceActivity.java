@@ -15,9 +15,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activity_new.DeviceListActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.utils.StringUtil;
 
@@ -53,12 +55,10 @@ public class AddDeviceActivity extends Activity {
     @BindView(R.id.layout_open_setting)
     LinearLayout layoutOpenSetting;
 
-
     private List<String> deviceTypeList;
     private List<String> deviceControlList;
 
     private DeviceBean newDevice;
-    private boolean isUpdate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,8 +77,15 @@ public class AddDeviceActivity extends Activity {
 
     @OnClick(R.id.bt_delete)
     public void onClicked(View v) {
-        MsgBean msgBean = new MsgBean(MsgBean.DEVICE_DELETE, newDevice.toString());
-        AppDataControl.sendMsg(msgBean);
+        if ("客户端".equals(AppDataControl.selectedType)) {
+            MsgBean msgBean = new MsgBean(MsgBean.DEVICE_DELETE, newDevice.toString());
+            AppDataControl.sendMsg(msgBean);
+        } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
+            DBControl.delete(this, DeviceBean.class, newDevice);
+            showToast("删除设备成功！");
+            DeviceListActivity.needUpdate = true;
+            finish();
+        }
     }
 
     @OnClick(R.id.bt_ok)
@@ -118,13 +125,26 @@ public class AddDeviceActivity extends Activity {
             newDevice.openSetting = deviceOpenSetting;
         }
 
-        if (AppDataControl.wifiService != null) {
-            MsgBean bean = new MsgBean(MsgBean.DEVICE_ADD_OR_UPDATE, newDevice.toString());
-            AppDataControl.wifiService.sendMsg(bean.toString());
+        if ("客户端".equals(AppDataControl.selectedType)) {
+            if (AppDataControl.wifiService != null) {
+                MsgBean bean = new MsgBean(MsgBean.DEVICE_ADD_OR_UPDATE, newDevice.toString());
+                AppDataControl.wifiService.sendMsg(bean.toString());
+            }
+        } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
+            DBControl.createOrUpdate(this, DeviceBean.class, newDevice);
+            showToast("添加或修改设备成功！");
+            DeviceListActivity.needUpdate = true;
+            finish();
         }
     }
 
     private void initUI() {
+        if ("客户端".equals(AppDataControl.selectedType)) {
+            etDevicePort.setText("80");
+        } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
+            etDevicePort.setText("81");
+        }
+
         btDelete.setVisibility(View.GONE);
         layoutOpenSetting.setVisibility(View.GONE);
         nsDeviceType.attachDataSource(deviceTypeList);
