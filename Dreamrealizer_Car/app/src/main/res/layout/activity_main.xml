@@ -4,8 +4,63 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/tv_agv"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/shape_box_white"
+        android:gravity="center"
+        android:text="D"
+        android:textColor="@color/red"
+        android:textSize="70sp" />
+
+    <Button
+        android:id="@+id/bt_left"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_agv"
+        android:background="@drawable/selector"
+        android:gravity="center_horizontal"
+        android:text="←"
+        android:textColor="@color/black"
+        android:textSize="@dimen/icon_size" />
+
+    <Button
+        android:id="@+id/bt_right"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_agv"
+        android:background="@drawable/selector"
+        android:gravity="center_horizontal"
+        android:text="→"
+        android:textColor="@color/black"
+        android:textSize="@dimen/icon_size" />
+
+    <Button
+        android:id="@+id/bt_up"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_above="@+id/tv_agv"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/selector"
+        android:gravity="center_horizontal"
+        android:text="↑"
+        android:textColor="@color/black"
+        android:textSize="@dimen/icon_size" />
+
+    <Button
+        android:id="@+id/bt_down"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_below="@+id/tv_agv"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/selector"
+        android:gravity="center_horizontal"
+        android:text="↓"
+        android:textColor="@color/black"
+        android:textSize="@dimen/icon_size" />
 
 </RelativeLayout>

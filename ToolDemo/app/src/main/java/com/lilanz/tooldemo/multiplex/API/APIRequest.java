@@ -117,6 +117,63 @@ public class APIRequest<T> {
     }
 
     /**
+     * 请求参数格式：Params; Body-FormUrlEncoded;
+     *
+     * @param object
+     * @param methodName
+     * @param parseType
+     */
+    public void requestNormalSame(@NonNull Object object, @NonNull String methodName, final int parseType) {
+        APIService apiService = APIManager.getService(requestBasePath, APIService.class);
+
+        Call<ResponseBody> call = null;
+        try {
+            Method[] methods = apiService.getClass().getMethods();
+            for (Method method : methods) {
+                String name = method.getName();
+                if (methodName.equals(name)) {
+                    call = (Call<ResponseBody>) method.invoke(apiService, new Object[]{object});
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrMsg(-1, "获取call方法异常");
+        }
+        if (call != null) {
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.body() != null) {
+                    parseJson(response.body().string(), parseType);
+                } else {
+                    showErrMsg(-1, "返回体为空");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                int code = -1;
+                String msg = null;
+                if (e instanceof UnknownHostException) {
+                    code = -10;
+                    msg = "无法连接服务器，请先检查网络状态";
+                } else if (e instanceof ConnectException) {
+                    code = -11;
+                    msg = "无法连接服务器，请先检查网络状态";
+                } else if (e instanceof SocketTimeoutException) {
+                    code = -12;
+                    msg = "网络请求超时，请联系服务端";
+                } else {
+                    code = -1;
+                    msg = "数据解析异常";
+                }
+
+                if (parseListener != null) {
+                    parseListener.onError(code, msg + ";\n" + e.toString());
+                }
+            }
+        }
+    }
+
+    /**
      * 请求参数格式：Body-raw-json 格式
      *
      * @param map        网络请求所需要的参数
