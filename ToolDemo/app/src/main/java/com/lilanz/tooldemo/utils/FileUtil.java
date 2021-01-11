@@ -160,7 +160,7 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public String downFile(String path, File target) throws Exception {
+    public static String downFile(String path, File target) throws Exception {
         // 从网络上获取图片
         URL url = new URL(path);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

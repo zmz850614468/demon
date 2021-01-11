@@ -100,6 +100,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 //    Glide.with(this).load(url).into(iv);
 
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 //    // MinIO 文件上传
 //    implementation ('io.minio:minio:3.0.10') {
 //        // 取消重复依赖
@@ -117,8 +120,6 @@ dependencies {
 //    // js 的桥接
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 
-    // gson
-    implementation 'com.google.code.gson:gson:2.8.6'
 //    List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {
 //    }.getType());
 

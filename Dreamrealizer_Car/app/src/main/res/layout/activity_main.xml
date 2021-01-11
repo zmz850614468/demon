@@ -3,64 +3,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_agv"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_centerInParent="true"
-        android:layout_margin="@dimen/margin"
-        android:background="@drawable/shape_box_white"
-        android:gravity="center"
-        android:text="D"
-        android:textColor="@color/red"
-        android:textSize="70sp" />
+    <com.demon.dream_realizer_car.view.TravelView
+        android:id="@+id/travel_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/bt_left"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/tv_agv"
-        android:background="@drawable/selector"
-        android:gravity="center_horizontal"
-        android:text="←"
-        android:textColor="@color/black"
-        android:textSize="@dimen/icon_size" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/bt_right"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/tv_agv"
-        android:background="@drawable/selector"
-        android:gravity="center_horizontal"
-        android:text="→"
-        android:textColor="@color/black"
-        android:textSize="@dimen/icon_size" />
+        <TextView
+            android:id="@+id/tv_agv"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:text="D"
+            android:textColor="@color/red"
+            android:textSize="70sp" />
 
-    <Button
-        android:id="@+id/bt_up"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_above="@+id/tv_agv"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/selector"
-        android:gravity="center_horizontal"
-        android:text="↑"
-        android:textColor="@color/black"
-        android:textSize="@dimen/icon_size" />
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_agv"
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal"
+            android:text="←"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
 
-    <Button
-        android:id="@+id/bt_down"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_below="@+id/tv_agv"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/selector"
-        android:gravity="center_horizontal"
-        android:text="↓"
-        android:textColor="@color/black"
-        android:textSize="@dimen/icon_size" />
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_agv"
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal"
+            android:text="→"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
 
+        <TextView
+            android:id="@+id/tv_up"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_above="@+id/tv_agv"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal"
+            android:text="↑"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+        <TextView
+            android:id="@+id/tv_down"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_below="@+id/tv_agv"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal"
+            android:text="↓"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/gray"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_travel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:text="轨迹图"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="3px"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_reset"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="重新绘制"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="3px"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="保存地图时"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 </RelativeLayout>
