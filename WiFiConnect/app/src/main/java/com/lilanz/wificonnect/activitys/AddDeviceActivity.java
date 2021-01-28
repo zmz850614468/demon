@@ -2,7 +2,6 @@ package com.lilanz.wificonnect.activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,10 +45,10 @@ public class AddDeviceActivity extends Activity {
     EditText etDevicePort;
     @BindView(R.id.ns_device_type)
     NiceSpinner nsDeviceType;
-    @BindView(R.id.ns_decice_control)
-    NiceSpinner nsDeciceControl;
-    @BindView(R.id.et_open_setting)
-    EditText etOpenSetting;
+    @BindView(R.id.ns_device_control)
+    NiceSpinner nsDeviceControl;
+    @BindView(R.id.ns_device_position)
+    NiceSpinner nsDevicePosition;
     @BindView(R.id.bt_delete)
     Button btDelete;
     @BindView(R.id.layout_open_setting)
@@ -57,6 +56,7 @@ public class AddDeviceActivity extends Activity {
 
     private List<String> deviceTypeList;
     private List<String> deviceControlList;
+    private List<String> devicePositionList;
 
     private DeviceBean newDevice;
 
@@ -104,26 +104,28 @@ public class AddDeviceActivity extends Activity {
         }
 
         String deviceType = nsDeviceType.getText().toString();
-        String controlType = nsDeciceControl.getText().toString();
-        String deviceOpenSetting = etOpenSetting.getText().toString();
-        if ("点击式".equals(controlType)) {
-            if (StringUtil.isEmpty(deviceOpenSetting)) {
-                showToast("打开设置不能为空");
-                return;
-            }
-        }
+        String controlType = nsDeviceControl.getText().toString();
+        String devicePosition = nsDevicePosition.getText().toString();
+//        String deviceOpenSetting = etOpenSetting.getText().toString();
+//        if ("点击式".equals(controlType)) {
+//            if (StringUtil.isEmpty(deviceOpenSetting)) {
+//                showToast("打开设置不能为空");
+//                return;
+//            }
+//        }
 
         if (newDevice == null) {
             newDevice = new DeviceBean();
         }
         newDevice.name = deviceName;
         newDevice.ip = deviceIp;
+        newDevice.devicePosition = devicePosition;
         newDevice.port = Integer.parseInt(devicePort);
         newDevice.deviceType = deviceType;
         newDevice.controlType = controlType;
-        if ("点击式".equals(controlType)) {
-            newDevice.openSetting = deviceOpenSetting;
-        }
+//        if ("点击式".equals(controlType)) {
+//            newDevice.openSetting = deviceOpenSetting;
+//        }
 
         if ("客户端".equals(AppDataControl.selectedType)) {
             if (AppDataControl.wifiService != null) {
@@ -146,30 +148,31 @@ public class AddDeviceActivity extends Activity {
         }
 
         btDelete.setVisibility(View.GONE);
-        layoutOpenSetting.setVisibility(View.GONE);
+//        layoutOpenSetting.setVisibility(View.GONE);
         nsDeviceType.attachDataSource(deviceTypeList);
-        nsDeciceControl.attachDataSource(deviceControlList);
+        nsDeviceControl.attachDataSource(deviceControlList);
+        nsDevicePosition.attachDataSource(devicePositionList);
 
-        nsDeciceControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (view instanceof TextView) {
-                    String name = ((TextView) view).getText().toString();
-                    switch (name) {
-                        case "开关式":
-                            layoutOpenSetting.setVisibility(View.GONE);
-                            break;
-                        case "点击式":
-                            layoutOpenSetting.setVisibility(View.VISIBLE);
-                            break;
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+//        nsDeviceControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (view instanceof TextView) {
+//                    String name = ((TextView) view).getText().toString();
+//                    switch (name) {
+//                        case "开关式":
+//                            layoutOpenSetting.setVisibility(View.GONE);
+//                            break;
+//                        case "点击式":
+//                            layoutOpenSetting.setVisibility(View.VISIBLE);
+//                            break;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
 
         nsDeviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -222,15 +225,22 @@ public class AddDeviceActivity extends Activity {
             for (int i = 1; i < deviceTypeList.size(); i++) {
                 if (newDevice.deviceType.equals(deviceTypeList.get(i))) {
                     nsDeviceType.setSelectedIndex(i);
-                    nsDeciceControl.setSelected(true);
+                    nsDeviceControl.setSelected(true);
                     break;
                 }
             }
             for (int i = 1; i < deviceControlList.size(); i++) {
                 if (newDevice.controlType.equals(deviceControlList.get(i))) {
-                    nsDeciceControl.setSelectedIndex(i);
-                    nsDeciceControl.setSelected(true);
+                    nsDeviceControl.setSelectedIndex(i);
+                    nsDeviceControl.setSelected(true);
                     break;
+                }
+            }
+
+            for (int i = 0; i < devicePositionList.size(); i++) {
+                if (newDevice.devicePosition.equals(devicePositionList.get(i))) {
+                    nsDevicePosition.setSelectedIndex(i);
+                    nsDevicePosition.setSelected(true);
                 }
             }
 //            nsDeviceType.setText(newDevice.deviceType);
@@ -238,18 +248,28 @@ public class AddDeviceActivity extends Activity {
 
             btDelete.setVisibility(View.VISIBLE);
         }
+
+
     }
 
     private void initData() {
         deviceTypeList = new ArrayList<>();
         deviceTypeList.add("灯");
-        deviceTypeList.add("热水器");
-        deviceTypeList.add("电饭锅");
-        deviceTypeList.add("风扇");
+//        deviceTypeList.add("热水器");
+//        deviceTypeList.add("电饭锅");
+//        deviceTypeList.add("风扇");
 
         deviceControlList = new ArrayList<>();
         deviceControlList.add("开关式");
-        deviceControlList.add("点击式");
+//        deviceControlList.add("点击式");
+
+        devicePositionList = new ArrayList<>();
+        devicePositionList.add("客厅");
+        devicePositionList.add("门口");
+        devicePositionList.add("主卧");
+        devicePositionList.add("侧卧");
+        devicePositionList.add("客卧");
+        devicePositionList.add("阳台");
     }
 
     private void initService() {

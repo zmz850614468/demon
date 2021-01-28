@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="添加新设备"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textColor="@color/app_title_color"
+            android:textSize="@dimen/app_title_size" />
 
     </RelativeLayout>
 
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/layout_title"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
@@ -52,8 +52,8 @@
                 android:gravity="center"
                 android:hint="设备名称"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/app_content_color"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,8 +72,8 @@
                     android:hint="ip"
                     android:singleLine="true"
                     android:text="192.168.1."
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textColor="@color/app_content_color"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/et_device_port"
@@ -87,8 +87,8 @@
                     android:inputType="number"
                     android:singleLine="true"
                     android:text="80"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textColor="@color/app_content_color"
+                    android:textSize="17sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -114,8 +114,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="设备类型："
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textColor="@color/app_content_color"
+                android:textSize="18sp" />
 
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/ns_device_type"
@@ -133,7 +133,8 @@
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -141,11 +142,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="控制方式："
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textColor="@color/app_content_color"
+                android:textSize="18sp" />
 
             <org.angmarch.views.NiceSpinner
-                android:id="@+id/ns_decice_control"
+                android:id="@+id/ns_device_control"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
@@ -167,20 +168,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="打开设置："
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:text="场景设置："
+                android:textColor="@color/app_content_color"
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_open_setting"
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_device_position"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
@@ -198,7 +194,7 @@
             android:background="@drawable/selector"
             android:text="确 认"
             android:textColor="@color/red"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/bt_delete"
@@ -207,8 +203,8 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/selector"
             android:text="删 除"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/app_title_color"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

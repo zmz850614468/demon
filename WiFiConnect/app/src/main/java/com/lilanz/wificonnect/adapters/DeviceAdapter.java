@@ -50,6 +50,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         // 3.设置界面数据
         DeviceBean bean = beanList.get(i);
         holder.tvName.setText(bean.name);
+        holder.tvPosition.setText(bean.devicePosition);
 
         if ("开关式".equals(bean.controlType)) {
             holder.ivStatus.setVisibility(View.VISIBLE);
@@ -118,11 +119,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         @BindView(R.id.tv_name)
         TextView tvName;
         @BindView(R.id.bt_open)
-        Button btOpen;
+        TextView btOpen;
         @BindView(R.id.bt_close)
-        Button btClose;
+        TextView btClose;
         @BindView(R.id.iv_status)
         ImageView ivStatus;
+        @BindView(R.id.tv_position)
+        TextView tvPosition;
 
         public DeviceHolder(@NonNull View view) {
             super(view);

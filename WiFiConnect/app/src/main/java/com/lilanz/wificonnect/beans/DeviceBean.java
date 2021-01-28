@@ -43,6 +43,9 @@ public class DeviceBean {
     @DatabaseField(columnName = "open_setting")
     public String openSetting;  // 打开设置,不同电器需要不同的操作才能打开设备
 
+    @DatabaseField(columnName = "device_position")
+    public String devicePosition;   // 设备所在位置
+
     public String status;       // 设备状态
 
     @NonNull

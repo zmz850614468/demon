@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activity_new.ControlDeviceActivity;
+import com.lilanz.wificonnect.activity_new.DeviceListActivity;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 
@@ -66,7 +67,8 @@ public class WelcomeActivity extends Activity {
             startActivity(intent);
             finish();
         } else if ("直接控制设备".equals(to)) {
-            Intent intent = new Intent(this, ControlDeviceActivity.class);
+//            Intent intent = new Intent(this, ControlDeviceActivity.class);
+            Intent intent = new Intent(this, DeviceListActivity.class);
             startActivity(intent);
             finish();
         }

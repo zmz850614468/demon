@@ -21,8 +21,19 @@ public class SharePreferencesUtil {
     private static final String LUYQ_NAME = "luYQName";   // 路由器名称
     private static final String LUYQ_PWD = "luYQPwd";   // 路由器密码
     private static final String VOICE_SENSITIVITY = "voiceSensitivity";   // 声音灵敏度
+    private static final String MY_ROOM = "myRoom";   //
 
     private static SharedPreferences instance = null;
+
+
+    // 获取
+    public static String getMyRoom(Context context) {
+        return getInstance(context).getString(MY_ROOM, "");
+    }
+
+    public static void saveMyRoom(Context context, String myRoom) {
+        setString(context, MY_ROOM, myRoom);
+    }
 
 
     // 获取 声音灵敏度

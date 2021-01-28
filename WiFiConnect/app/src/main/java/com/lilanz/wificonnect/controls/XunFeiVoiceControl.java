@@ -58,6 +58,7 @@ public class XunFeiVoiceControl {
     private RecognizerDialog mIatDialog;
 
     /**
+     * 实时语音转换
      * 讯飞语音转文字
      */
     public void voiceRecognizer(Context context, OnVoiceResult voiceResult) {
@@ -227,6 +228,7 @@ public class XunFeiVoiceControl {
                     onOneShotResult.onResult(status, result);
                 }
             }
+            showLog("eventType = " + eventType);
         }
 
         @Override
@@ -261,6 +263,9 @@ public class XunFeiVoiceControl {
         initGrammar();
     }
 
+    /**
+     * 语音唤醒 + 命令形式
+     */
     public void oneShot() {
         // 非空判断，防止因空指针使程序崩溃
         voiceWakeuper = VoiceWakeuper.getWakeuper();

@@ -12,8 +12,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="设 置"
-        android:textColor="@color/black"
-        android:textSize="25sp" />
+        android:textColor="@color/app_title_color"
+        android:textSize="@dimen/app_title_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -163,9 +163,36 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
+                android:text="我的房间："
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_my_room"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
                 android:text="语音灵敏度(0~3000)："
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
 
             <EditText
                 android:id="@+id/et_voice_sensitivity"
@@ -194,8 +221,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="更新检查"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_content_size" />
 
 
     </LinearLayout>
@@ -211,6 +238,6 @@
         android:gravity="center"
         android:text="退 出"
         android:textColor="@color/red"
-        android:textSize="25sp" />
+        android:textSize="@dimen/app_content_size" />
 
 </RelativeLayout>

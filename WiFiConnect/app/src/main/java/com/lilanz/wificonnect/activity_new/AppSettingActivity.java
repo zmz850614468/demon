@@ -14,7 +14,13 @@ import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.WelcomeActivity;
 import com.lilanz.wificonnect.utils.BuildUtil;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
+import com.lilanz.wificonnect.utils.StringUtil;
 import com.tencent.bugly.beta.Beta;
+
+import org.angmarch.views.NiceSpinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +47,10 @@ public class AppSettingActivity extends Activity {
     TextView tvUpdateCheck;
     @BindView(R.id.et_voice_sensitivity)
     EditText etVoiceSensitivity;
+    @BindView(R.id.ns_my_room)
+    NiceSpinner nsMyRoom;
+
+    private List<String> roomList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +58,7 @@ public class AppSettingActivity extends Activity {
         setContentView(R.layout.activity_app_setting);
         ButterKnife.bind(this);
 
+        initData();
         initUI();
     }
 
@@ -106,6 +117,25 @@ public class AppSettingActivity extends Activity {
         tvUpdateCheck.append("(" + BuildUtil.getVersionName(this) + "." + BuildUtil.getVersionCode(this) + ")");
     }
 
+    private void initData() {
+        roomList = new ArrayList<>();
+        roomList.add("主卧");
+        roomList.add("侧卧");
+        roomList.add("客卧");
+        nsMyRoom.attachDataSource(roomList);
+
+        String myRoom = SharePreferencesUtil.getMyRoom(this);
+        if (!StringUtil.isEmpty(myRoom)) {
+            for (int i = 1; i < roomList.size(); i++) {
+                if (myRoom.equals(roomList.get(i))) {
+                    nsMyRoom.setSelectedIndex(i);
+                    nsMyRoom.setSelected(true);
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         SharePreferencesUtil.saveServiceIp(this, etIp.getText().toString());
@@ -136,6 +166,9 @@ public class AppSettingActivity extends Activity {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
+        String myRoom = nsMyRoom.getText().toString();
+        SharePreferencesUtil.saveMyRoom(this, myRoom);
 
         super.onDestroy();
     }

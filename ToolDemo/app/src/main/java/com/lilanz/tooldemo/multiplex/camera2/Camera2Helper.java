@@ -7,7 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -181,6 +183,25 @@ public class Camera2Helper {
             }
         });
         sessionHelper.create();
+    }
+
+    /**
+     * 缩放摄像头
+     *
+     * @param zoom
+     */
+    public void zoom(int zoom) {
+        if (cameraSession != null) {
+            try {
+                Rect rect = new Rect(0, 0, 9216 * zoom / 10, 6912 * zoom / 10);
+                CaptureRequest.Builder builder = cameraDevie.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                builder.addTarget(cameraSurface.getHolder().getSurface());
+                builder.set(CaptureRequest.SCALER_CROP_REGION, rect);
+                cameraSession.setRepeatingRequest(builder.build(), null, null);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

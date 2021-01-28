@@ -5,13 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demon.dream_realizer_car.R;
+import com.demon.dream_realizer_car.bean.RouteBean;
 import com.demon.dream_realizer_car.bean.SocketBean;
 import com.demon.dream_realizer_car.bean.TravelBean;
+import com.demon.dream_realizer_car.daos.DBControl;
+import com.demon.dream_realizer_car.dialog.InputDialog;
 import com.demon.dream_realizer_car.util.StringUtil;
 import com.demon.dream_realizer_car.view.TravelView;
 import com.xuhao.didi.core.iocore.interfaces.ISendable;
@@ -20,6 +26,11 @@ import com.xuhao.didi.socket.client.sdk.OkSocket;
 import com.xuhao.didi.socket.client.sdk.client.ConnectionInfo;
 import com.xuhao.didi.socket.client.sdk.client.action.SocketActionAdapter;
 import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
+
+import org.angmarch.views.NiceSpinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,10 +44,21 @@ public class MainActivity extends AppCompatActivity {
     public static final int port = 81;
 
     private IConnectionManager socketManager;
-    private UDPThread udpThread;
 
     @BindView(R.id.travel_view)
     TravelView travelView;
+    @BindView(R.id.layout_control)
+    RelativeLayout controlLayout;
+    @BindView(R.id.layout_route)
+    LinearLayout routeLayout;
+    @BindView(R.id.spinner)
+    NiceSpinner routeSpinner;
+    @BindView(R.id.tv_start_or_stop)
+    TextView tvStartOrStop;
+
+    private InputDialog inputDialog;
+    private List<RouteBean> routeList;
+    private boolean isTravel = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initRouteData();
         initUI();
     }
 
@@ -55,22 +78,69 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnCheckedChanged(R.id.cb_travel)
+    @OnCheckedChanged({R.id.cb_travel, R.id.cb_route})
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            travelView.setVisibility(View.VISIBLE);
-        } else {
-            travelView.setVisibility(View.GONE);
+        if (buttonView.getId() == R.id.cb_travel) {
+            if (isChecked) {
+                travelView.setVisibility(View.VISIBLE);
+            } else {
+                travelView.setVisibility(View.GONE);
+            }
+        } else if (buttonView.getId() == R.id.cb_route) {
+            if (isChecked) {
+                controlLayout.setVisibility(View.GONE);
+                routeLayout.setVisibility(View.VISIBLE);
+            } else {
+                controlLayout.setVisibility(View.VISIBLE);
+                routeLayout.setVisibility(View.GONE);
+            }
         }
     }
 
-    @OnClick(R.id.tv_reset)
+    @OnClick({R.id.tv_reset, R.id.tv_save, R.id.tv_start_or_stop})
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.tv_reset:
                 travelView.reset();
                 break;
+            case R.id.tv_save:
+                showInputDialog();
+                break;
+            case R.id.tv_start_or_stop:
+                String text = tvStartOrStop.getText().toString();
+                if ("开始".equals(text)) {
+                    tvStartOrStop.setText("结束");
+                    isTravel = true;
+                    travelIndex = 0;
+                    nextTravel();
+                } else {
+                    tvStartOrStop.setText("开始");
+                    fly("stopTravel\n\r");
+                    isTravel = false;
+                }
+                break;
         }
+    }
+
+    /**
+     * 执行下一个寻迹路径
+     */
+    private int travelIndex = 0;
+
+    private void nextTravel() {
+        List<TravelBean> list = travelView.getRouteList();
+        if (list.size() > travelIndex) {
+            fly(list.get(travelIndex).getTravelData());
+            travelIndex++;
+        } else {
+            tvStartOrStop.setText("开始");
+            isTravel = false;
+        }
+    }
+
+    private void showInputDialog() {
+        inputDialog.reset();
+        inputDialog.show();
     }
 
     int upOrDown = 0;       // 1:up ; 0:stop ; -1:down
@@ -79,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
     @OnTouch({R.id.tv_left, R.id.tv_right, R.id.tv_up, R.id.tv_down})
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
+        if (isTravel) {
+            showToast("寻迹状态不能控制小车");
+            return true;
+        }
 
         // 上下 和 左右 键，只能按其中一个
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
@@ -119,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.tv_up:
                     upOrDown = 1;
                     fly("up\n\r");
+//                    fly("-1:-1:1024:travel\n\r");
                     break;
                 case R.id.tv_down:
                     upOrDown = -1;
@@ -148,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
      * @param order
      */
     private void fly(String order) {
-//        showLog(order);
         if (socketManager != null) {
             socketManager.send(new SocketBean(order));
         }
@@ -210,6 +284,8 @@ public class MainActivity extends AppCompatActivity {
         boolean isUpdate = false;
         if (data.contains(":update")) {
             isUpdate = true;
+        } else if (data.contains(":travelIsOver")) {
+            nextTravel();
         }
 
         String[] strArr = data.split(":");
@@ -229,6 +305,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        inputDialog = new InputDialog(this, R.style.DialogStyleOne);
+        inputDialog.show();
+        inputDialog.dismiss();
+        inputDialog.setListener(new InputDialog.OnClickListener() {
+            @Override
+            public void onConfirm(String str) {
+                if (StringUtil.isEmpty(str)) {
+                    showToast("输入名称不能为空!");
+                } else {
+                    RouteBean routeBean = new RouteBean();
+                    routeBean.name = str;
+                    routeBean.setTravelList(travelView.getTravelList());
+                    DBControl.createOrUpdate(MainActivity.this, RouteBean.class, routeBean);
+                    initRouteData();
+                    showToast("保存路线图成功!");
+                }
+            }
+        });
+    }
+
+    private void initRouteData() {
+        routeList = DBControl.quaryAll(this, RouteBean.class);
+
+        List<String> nameList = new ArrayList<>();
+        nameList.add("选择路线");
+        for (RouteBean routeBean : routeList) {
+            nameList.add(routeBean.name);
+        }
+        routeSpinner.attachDataSource(nameList);
+        routeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (view instanceof TextView) {
+                    String name = ((TextView) view).getText().toString();
+                    for (RouteBean routeBean : routeList) {
+                        if (name.equals(routeBean.name)) {
+                            travelView.setRouteList(routeBean.getTravelList());
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void showLog(String msg) {

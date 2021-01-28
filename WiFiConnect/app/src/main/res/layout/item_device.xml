@@ -1,104 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:layout_marginBottom="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="2dp"
     android:background="@drawable/shape_box_white"
-    android:gravity="center_horizontal"
-    android:orientation="horizontal"
-    android:padding="15dp">
+    android:paddingLeft="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:id="@+id/layout_name"
-        android:layout_width="120dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_pic"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@mipmap/lamp" />
 
         <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_box_gray"
             android:gravity="center"
-            android:text="name"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:paddingLeft="10dp"
+            android:paddingTop="3dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="3dp"
+            android:text="客厅"
+            android:textColor="@color/app_tip"
+            android:textSize="@dimen/app_tip_size" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/layout_name"
+        android:paddingTop="5dp"
+        android:text="灯"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
     <ImageView
         android:id="@+id/iv_status"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_margin="5dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_margin="3dp"
         android:background="@drawable/shape_circle_black" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/layout_name"
-        android:orientation="vertical"
-        android:paddingLeft="30dp">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/layout_name"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/bt_open"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:text="开" />
 
-            <Button
-                android:id="@+id/bt_open"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:background="@drawable/selector"
-                android:text="开" />
+        <TextView
+            android:id="@+id/bt_close"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/shape_box_gray"
+            android:gravity="center"
+            android:text="关" />
 
-            <Button
-                android:id="@+id/bt_close"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/selector"
-                android:text="关" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/layout_name"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/bt_control_1"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:background="@drawable/selector"
-                android:text="风速" />
-
-            <Button
-                android:id="@+id/bt_control_2"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/selector"
-                android:text="摇头" />
-
-        </LinearLayout>
     </LinearLayout>
 
 

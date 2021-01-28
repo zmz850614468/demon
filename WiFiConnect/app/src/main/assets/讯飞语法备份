@@ -1,0 +1,9 @@
+#BNF+IAT 1.0 UTF-8;
+!grammar wake;
+!slot <callCmd>;
+!slot <contact>;
+!start <callStart>;
+<callStart>:[<callCmd>]<callName>;
+<callCmd>:打开|关闭;
+<callName>:未识别|灯|热水器|音乐|歌曲|下一曲|定时;
+#<callName>:未识别|灯|热水器|音乐|歌曲|下一曲|定时;

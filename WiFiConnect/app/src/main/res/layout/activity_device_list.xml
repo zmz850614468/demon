@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray">
+    android:background="@color/app_bg">
 
     <RelativeLayout
         android:id="@+id/layout_title"
@@ -17,22 +17,30 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="+"
-            android:textColor="@color/black"
+            android:textColor="@color/app_title_color"
             android:textSize="30sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="设备控制"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:text="家庭设备"
+            android:textColor="@color/app_title_color"
+            android:textSize="@dimen/app_title_size" />
 
         <ImageView
             android:id="@+id/iv_refresh"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/icon_refresh" />
+            android:src="@mipmap/icon_refresh"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@mipmap/icon_setting" />
 
     </RelativeLayout>
 
@@ -41,7 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_title"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="25dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
 
     <TextView
         android:id="@+id/tv_msg"

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.bluetooth.BluetoothClass;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 
@@ -51,6 +55,7 @@ public class DeviceListActivity extends Activity {
 
         initData();
         initAdapter();
+        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @Override
@@ -85,9 +90,17 @@ public class DeviceListActivity extends Activity {
         }
     }
 
+    @OnClick(R.id.iv_setting)
+    public void onSettingClicked() {
+        Intent intent = new Intent(this, AppSettingActivity.class);
+        startActivity(intent);
+    }
+
     private void initAdapter() {
+        deviceList = DBControl.quaryAll(this, DeviceBean.class);
         deviceAdapter = new DeviceAdapter(this, deviceList);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        LinearLayoutManager manager = new LinearLayoutManager(this);
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         deviceRecycler.setLayoutManager(manager);
         deviceRecycler.setAdapter(deviceAdapter);
@@ -103,6 +116,39 @@ public class DeviceListActivity extends Activity {
                 DeviceOkSocketControl.getInstance(DeviceListActivity.this).sendControlMsg(controlBean);
             }
         });
+    }
+
+    /**
+     * 初始化讯飞语音
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:     // 打开讯飞语音监听
+                    XunFeiVoiceControl.getInstance(DeviceListActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
+                        @Override
+                        public void onResult(boolean status, String result) {
+                            dealVoiceControl(status, result);
+
+                            handler.sendEmptyMessageDelayed(1, 300);
+                        }
+                    });
+                    XunFeiVoiceControl.getInstance(DeviceListActivity.this).oneShot();
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 处理语音结果
+     *
+     * @param status
+     * @param voiceResult
+     */
+    private void dealVoiceControl(boolean status, String voiceResult) {
+        showLog("语音结果：" + status + " ; voiceResult: " + voiceResult);
     }
 
     private void initData() {

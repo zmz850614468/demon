@@ -7,10 +7,10 @@
         android:id="@+id/travel_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="gone" />
+        android:background="@color/white" />
 
     <RelativeLayout
+        android:id="@+id/layout_control"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_alignParentBottom="true">
@@ -33,7 +33,7 @@
             android:layout_height="@dimen/button_size"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/tv_agv"
-            android:background="@drawable/selector"
+            android:background="@drawable/shape_box_white"
             android:gravity="center_horizontal"
             android:text="←"
             android:textColor="@color/black"
@@ -45,7 +45,7 @@
             android:layout_height="@dimen/button_size"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/tv_agv"
-            android:background="@drawable/selector"
+            android:background="@drawable/shape_box_white"
             android:gravity="center_horizontal"
             android:text="→"
             android:textColor="@color/black"
@@ -57,7 +57,7 @@
             android:layout_height="@dimen/button_size"
             android:layout_above="@+id/tv_agv"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/selector"
+            android:background="@drawable/shape_box_white"
             android:gravity="center_horizontal"
             android:text="↑"
             android:textColor="@color/black"
@@ -69,13 +69,54 @@
             android:layout_height="@dimen/button_size"
             android:layout_below="@+id/tv_agv"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/selector"
+            android:background="@drawable/shape_box_white"
             android:gravity="center_horizontal"
             android:text="↓"
             android:textColor="@color/black"
             android:textSize="@dimen/icon_size" />
 
     </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/cb_route"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:background="@color/gray"
+        android:text="线路图"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/layout_route"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/cb_route"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_start_or_stop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="开始"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,6 +130,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_weight="1"
+            android:checked="true"
             android:text="轨迹图"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -114,6 +156,7 @@
             android:background="@color/white" />
 
         <TextView
+            android:id="@+id/tv_save"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

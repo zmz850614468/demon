@@ -122,7 +122,6 @@ public class Camera2Util {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             for (Surface surface : surfaces) {
                 builder.addTarget(surface);
-
             }
 
             // 对焦模式必须设置为AUTO

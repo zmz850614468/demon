@@ -152,4 +152,8 @@ dependencies {
 // implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 // implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
+// 注解注入
+//implementation 'com.jakewharton:butterknife:10.2.3'
+//annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
 

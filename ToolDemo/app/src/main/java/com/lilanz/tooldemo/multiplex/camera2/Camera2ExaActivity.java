@@ -3,6 +3,7 @@ package com.lilanz.tooldemo.multiplex.camera2;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
@@ -81,6 +82,7 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
+                zoom("2");
                 String id = etOpenCameraId.getText().toString();
                 camera2Helper.openCamera(id);
                 break;
@@ -96,6 +98,34 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
             case R.id.bt_stop_record:
                 camera2Helper.stopMediaRecord();
                 break;
+        }
+    }
+
+    int zoom = 10;
+
+    @OnClick(R.id.bt_zoom)
+    public void onClicked(View v) {
+        switch (v.getId()) {
+            case R.id.bt_zoom:
+                zoom--;
+                camera2Helper.zoom(zoom);
+                break;
+        }
+    }
+
+    /**
+     * 获取指定相机的缩放
+     *
+     * @param id
+     */
+    public void zoom(String id) {
+        try {
+            CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(id);
+            float maxZoom = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) * 10;
+            Rect cameraRect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+            float a = maxZoom;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 
