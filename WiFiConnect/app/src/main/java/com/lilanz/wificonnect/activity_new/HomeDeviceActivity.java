@@ -95,7 +95,7 @@ public class HomeDeviceActivity extends Activity {
         deviceList = DBControl.quaryAll(this, DeviceBean.class);
         deviceAdapter = new DeviceAdapter(this, deviceList);
 //        LinearLayoutManager manager = new LinearLayoutManager(this);
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
+        GridLayoutManager manager = new GridLayoutManager(this, 1);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         deviceRecycler.setLayoutManager(manager);
         deviceRecycler.setAdapter(deviceAdapter);

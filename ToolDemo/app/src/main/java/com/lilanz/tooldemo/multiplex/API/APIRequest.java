@@ -256,7 +256,7 @@ public class APIRequest<T> {
                 // 只有提示信息
             } else if (parseType == PARSE_TYPE_NULL) {
                 if (parseListener != null) {
-                    parseListener.onTip("请求成功");
+                    parseListener.onTip(object.getString("errmsg"));
                 }
             }
         } else if (object.has("errcode") && object.has("errmsg")) {
