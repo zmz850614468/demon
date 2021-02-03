@@ -1,7 +1,6 @@
 package com.lilanz.wificonnect.activity_new;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothClass;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,13 +20,9 @@ import com.lilanz.wificonnect.activitys.App;
 import com.lilanz.wificonnect.adapters.DeviceAdapter;
 import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
-import com.lilanz.wificonnect.beans.DeviceControlBean;
-import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
-import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
-import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 
 import java.util.List;
 
@@ -35,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DeviceListActivity extends Activity {
+public class HomeDeviceActivity extends Activity {
 
     public static boolean needUpdate = false;
 
@@ -113,7 +108,7 @@ public class DeviceListActivity extends Activity {
                 controlBean.port = bean.port;
                 controlBean.control = operate;
 
-                DeviceOkSocketControl.getInstance(DeviceListActivity.this).sendControlMsg(controlBean);
+                DeviceOkSocketControl.getInstance(HomeDeviceActivity.this).sendControlMsg(controlBean);
             }
         });
     }
@@ -127,7 +122,7 @@ public class DeviceListActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:     // 打开讯飞语音监听
-                    XunFeiVoiceControl.getInstance(DeviceListActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
+                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
                         @Override
                         public void onResult(boolean status, String result) {
                             dealVoiceControl(status, result);
@@ -135,7 +130,7 @@ public class DeviceListActivity extends Activity {
                             handler.sendEmptyMessageDelayed(1, 300);
                         }
                     });
-                    XunFeiVoiceControl.getInstance(DeviceListActivity.this).oneShot();
+                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).oneShot();
                     break;
             }
         }
@@ -198,7 +193,7 @@ public class DeviceListActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(DeviceListActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeDeviceActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
     }

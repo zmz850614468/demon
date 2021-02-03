@@ -20,6 +20,15 @@ public class Esp8266ControlBean {
      */
     public String control;      // 控制方式
 
+    public Esp8266ControlBean() {
+    }
+
+    public Esp8266ControlBean(String ip, int port, String control) {
+        this.ip = ip;
+        this.port = port;
+        this.control = control;
+    }
+
     @NonNull
     @Override
     public String toString() {

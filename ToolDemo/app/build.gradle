@@ -123,6 +123,10 @@ dependencies {
 //    List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {
 //    }.getType());
 
+    // OkSocket
+//    implementation 'com.tonystark.android:socket:4.2.3'
+//    implementation 'com.tonystark.android:socket-server:4.2.3'
+
 }
 
 // AndroidX      AndroidX      AndroidX

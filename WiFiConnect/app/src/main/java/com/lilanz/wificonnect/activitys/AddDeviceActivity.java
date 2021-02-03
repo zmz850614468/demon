@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activity_new.DeviceListActivity;
+import com.lilanz.wificonnect.activity_new.HomeDeviceActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
@@ -83,7 +83,7 @@ public class AddDeviceActivity extends Activity {
         } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
             DBControl.delete(this, DeviceBean.class, newDevice);
             showToast("删除设备成功！");
-            DeviceListActivity.needUpdate = true;
+            HomeDeviceActivity.needUpdate = true;
             finish();
         }
     }
@@ -135,7 +135,7 @@ public class AddDeviceActivity extends Activity {
         } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
             DBControl.createOrUpdate(this, DeviceBean.class, newDevice);
             showToast("添加或修改设备成功！");
-            DeviceListActivity.needUpdate = true;
+            HomeDeviceActivity.needUpdate = true;
             finish();
         }
     }

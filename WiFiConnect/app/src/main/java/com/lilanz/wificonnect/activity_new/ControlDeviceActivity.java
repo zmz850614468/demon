@@ -14,9 +14,6 @@ import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.App;
-import com.lilanz.wificonnect.activitys.DeviceManagerActivity;
-import com.lilanz.wificonnect.activitys.SettingActivity;
-import com.lilanz.wificonnect.activitys.WifiSettingActivity;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
 import com.lilanz.wificonnect.beans.ItemBean;
 import com.lilanz.wificonnect.controls.PermissionControl;
@@ -86,7 +83,7 @@ public class ControlDeviceActivity extends Activity {
             public void onItemClick(ItemBean bean) {
                 switch (bean.name) {
                     case "设备控制":
-                        Intent intent = new Intent(ControlDeviceActivity.this, DeviceListActivity.class);
+                        Intent intent = new Intent(ControlDeviceActivity.this, HomeDeviceActivity.class);
                         startActivity(intent);
                         break;
                     case "WIFI设置":

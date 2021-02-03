@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.AddDeviceActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
+import com.lilanz.wificonnect.dialogs.FanControlDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
     private Context context;
     private List<DeviceBean> beanList;
 
+    private FanControlDialog fanControlDialog;
+
     // 1.修改对象
     public DeviceAdapter(Context context, List<DeviceBean> list) {
         this.context = context;
@@ -33,6 +36,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         if (beanList == null) {
             beanList = new ArrayList<>();
         }
+        initUI();
     }
 
     @NonNull
@@ -78,6 +82,14 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
                 break;
         }
 
+        holder.ivControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fanControlDialog.update(beanList.get(i));
+                fanControlDialog.show();
+            }
+        });
+
         if (listener != null) {
             holder.btOpen.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,7 +117,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
                 lastClick = currTime;
             }
         });
+    }
 
+    private void initUI() {
+        fanControlDialog = new FanControlDialog(context, R.style.DialogStyleOne);
+        fanControlDialog.show();
+        fanControlDialog.dismiss();
     }
 
     @Override
@@ -126,6 +143,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         ImageView ivStatus;
         @BindView(R.id.tv_position)
         TextView tvPosition;
+        @BindView(R.id.iv_control)
+        ImageView ivControl;    // 设备控制界面
 
         public DeviceHolder(@NonNull View view) {
             super(view);

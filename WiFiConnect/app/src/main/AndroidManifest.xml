@@ -77,7 +77,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity_new.DeviceListActivity"
+            android:name=".activity_new.HomeDeviceActivity"
             android:screenOrientation="portrait" />
 
         <!--   新版本-结束     -->
