@@ -1,9 +1,8 @@
 package com.lilanz.wificonnect.controls;
 
-import android.os.Handler;
 import android.util.Log;
 
-import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.beans.StopBean;
 
 import java.util.Timer;

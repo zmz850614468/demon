@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.activity_new.HomeDeviceActivity;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;

@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.lilanz.wificonnect.data.myenum.BrandType;
+import com.lilanz.wificonnect.data.myenum.DeviceType;
 
 /**
  * 设备对象
@@ -31,7 +33,13 @@ public class DeviceBean {
      * 电饭锅
      */
     @DatabaseField(columnName = "device_type")
-    public String deviceType;   // 设备类型
+    public DeviceType deviceType;   // 设备类型
+
+    /**
+     * GREE
+     */
+    @DatabaseField(columnName = "brand")
+    public BrandType brand;    // 牌子
 
     /**
      * 开关式
@@ -53,4 +61,8 @@ public class DeviceBean {
     public String toString() {
         return new Gson().toJson(this);
     }
+
+    {
+    }
+
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
 import com.lilanz.wificonnect.beans.Bean;
 import com.lilanz.wificonnect.beans.DeviceBean;
@@ -26,19 +27,14 @@ import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.ItemBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
-import com.lilanz.wificonnect.controls.DeviceControl;
-import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
 import com.lilanz.wificonnect.controls.SoundControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.threads.FifoThread;
 import com.lilanz.wificonnect.threads.WifiService;
-import com.lilanz.wificonnect.utils.SharePreferencesUtil;
-import com.lilanz.wificonnect.utils.StringUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
-import java.nio.file.OpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

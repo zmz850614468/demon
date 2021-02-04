@@ -1,4 +1,4 @@
-package com.lilanz.wificonnect.activitys;
+package com.lilanz.wificonnect.activity_new;
 
 import android.app.Application;
 import android.content.Context;

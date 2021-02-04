@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activitys.App;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
 import com.lilanz.wificonnect.beans.ItemBean;
 import com.lilanz.wificonnect.controls.PermissionControl;

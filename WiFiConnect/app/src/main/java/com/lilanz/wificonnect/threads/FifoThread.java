@@ -3,14 +3,13 @@ package com.lilanz.wificonnect.threads;
 import android.content.Context;
 import android.util.Log;
 
-import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.beans.Bean;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Timer;
 
 public class FifoThread extends Thread {
 

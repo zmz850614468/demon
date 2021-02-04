@@ -1,9 +1,6 @@
 package com.lilanz.wificonnect.threads;
 
-import android.media.MediaPlayer;
-import android.os.Handler;
-
-import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.MediaControl;
@@ -14,7 +11,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * Wifi通讯的服务类

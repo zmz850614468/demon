@@ -1,4 +1,4 @@
-package com.lilanz.wificonnect.activitys;
+package com.lilanz.wificonnect.activity_new;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activity_new.HomeDeviceActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.daos.DBControl;
+import com.lilanz.wificonnect.data.myenum.BrandType;
+import com.lilanz.wificonnect.data.myenum.DeviceType;
+import com.lilanz.wificonnect.data.myenum.SceneType;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.utils.StringUtil;
 
@@ -49,12 +51,15 @@ public class AddDeviceActivity extends Activity {
     NiceSpinner nsDeviceControl;
     @BindView(R.id.ns_device_position)
     NiceSpinner nsDevicePosition;
+    @BindView(R.id.ns_brand_type)
+    NiceSpinner nsBrandType;
     @BindView(R.id.bt_delete)
     Button btDelete;
     @BindView(R.id.layout_open_setting)
     LinearLayout layoutOpenSetting;
 
     private List<String> deviceTypeList;
+    private List<String> brandTypeList;
     private List<String> deviceControlList;
     private List<String> devicePositionList;
 
@@ -121,7 +126,7 @@ public class AddDeviceActivity extends Activity {
         newDevice.ip = deviceIp;
         newDevice.devicePosition = devicePosition;
         newDevice.port = Integer.parseInt(devicePort);
-        newDevice.deviceType = deviceType;
+        newDevice.deviceType = DeviceType.getDeviceType(deviceType);
         newDevice.controlType = controlType;
 //        if ("点击式".equals(controlType)) {
 //            newDevice.openSetting = deviceOpenSetting;
@@ -152,6 +157,7 @@ public class AddDeviceActivity extends Activity {
         nsDeviceType.attachDataSource(deviceTypeList);
         nsDeviceControl.attachDataSource(deviceControlList);
         nsDevicePosition.attachDataSource(devicePositionList);
+        nsBrandType.attachDataSource(brandTypeList);
 
 //        nsDeviceControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
@@ -177,23 +183,42 @@ public class AddDeviceActivity extends Activity {
         nsDeviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (view instanceof TextView) {
-                    String name = ((TextView) view).getText().toString();
-                    switch (name) {
-                        case "灯":
-                            ivPic.setBackgroundResource(R.mipmap.lamp);
-                            break;
-                        case "热水器":
-                            ivPic.setBackgroundResource(R.mipmap.water_heater);
-                            break;
-                        case "风扇":
-                            ivPic.setBackgroundResource(R.mipmap.electric_fans);
-                            break;
-                        case "电饭锅":
-                            ivPic.setBackgroundResource(R.mipmap.electric_pot);
-                            break;
-                    }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        nsDeviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String name = ((TextView) view).getText().toString();
+                switch (DeviceType.getDeviceType(name)) {
+                    case LAMP:
+                        brandTypeList = BrandType.getLampBrand();
+                        ivPic.setBackgroundResource(R.mipmap.lamp);
+                        break;
+                    case ELECTRIC_FAN:
+                        brandTypeList = BrandType.getElectricFanBrand();
+                        ivPic.setBackgroundResource(R.mipmap.electric_fans);
+                        break;
                 }
+                nsBrandType.attachDataSource(brandTypeList);
+
+//                switch (name) {
+//                    case "灯":
+//                        break;
+//                    case "热水器":
+//                        ivPic.setBackgroundResource(R.mipmap.water_heater);
+//                        break;
+//                    case "风扇":
+//                        break;
+//                    case "电饭锅":
+//                        ivPic.setBackgroundResource(R.mipmap.electric_pot);
+//                        break;
+//                }
             }
 
             @Override
@@ -208,18 +233,18 @@ public class AddDeviceActivity extends Activity {
             etDevicePort.setText(newDevice.port + "");
 
             switch (newDevice.deviceType) {
-                case "灯":
+                case LAMP:
                     ivPic.setBackgroundResource(R.mipmap.lamp);
                     break;
-                case "热水器":
-                    ivPic.setBackgroundResource(R.mipmap.water_heater);
-                    break;
-                case "风扇":
+//                case "热水器":
+//                    ivPic.setBackgroundResource(R.mipmap.water_heater);
+//                    break;
+                case ELECTRIC_FAN:
                     ivPic.setBackgroundResource(R.mipmap.electric_fans);
                     break;
-                case "电饭锅":
-                    ivPic.setBackgroundResource(R.mipmap.electric_pot);
-                    break;
+//                case "电饭锅":
+//                    ivPic.setBackgroundResource(R.mipmap.electric_pot);
+//                    break;
             }
 
             for (int i = 1; i < deviceTypeList.size(); i++) {
@@ -253,23 +278,13 @@ public class AddDeviceActivity extends Activity {
     }
 
     private void initData() {
-        deviceTypeList = new ArrayList<>();
-        deviceTypeList.add("灯");
-//        deviceTypeList.add("热水器");
-//        deviceTypeList.add("电饭锅");
-//        deviceTypeList.add("风扇");
+        deviceTypeList = DeviceType.getDeviceName();
+        brandTypeList = BrandType.getLampBrand();
+        devicePositionList = SceneType.getSceneName();
+
 
         deviceControlList = new ArrayList<>();
         deviceControlList.add("开关式");
-//        deviceControlList.add("点击式");
-
-        devicePositionList = new ArrayList<>();
-        devicePositionList.add("客厅");
-        devicePositionList.add("门口");
-        devicePositionList.add("主卧");
-        devicePositionList.add("侧卧");
-        devicePositionList.add("客卧");
-        devicePositionList.add("阳台");
     }
 
     private void initService() {

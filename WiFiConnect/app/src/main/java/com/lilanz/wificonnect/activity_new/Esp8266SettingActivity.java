@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.lilanz.wificonnect.API.APIRequest;
 import com.lilanz.wificonnect.API.ParseListener;
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activitys.App;
 import com.lilanz.wificonnect.bean_new.Esp8266IpBean;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;

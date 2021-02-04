@@ -3,7 +3,7 @@ package com.lilanz.wificonnect.controls;
 import android.content.Context;
 import android.util.Log;
 
-import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;

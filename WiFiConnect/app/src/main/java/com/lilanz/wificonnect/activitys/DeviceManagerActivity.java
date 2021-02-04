@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activity_new.AddDeviceActivity;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.adapters.DeviceAdapter;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.beans.DeviceControlBean;

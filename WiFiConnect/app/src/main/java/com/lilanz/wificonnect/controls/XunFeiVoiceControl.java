@@ -21,7 +21,7 @@ import com.iflytek.cloud.WakeuperResult;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.iflytek.cloud.util.ResourceUtil;
-import com.lilanz.wificonnect.activitys.App;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.beans.WakeUpBean;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.XunFeiUtil;

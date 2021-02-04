@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activitys.AddDeviceActivity;
-import com.lilanz.wificonnect.activitys.App;
 import com.lilanz.wificonnect.adapters.DeviceAdapter;
 import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
@@ -51,6 +49,7 @@ public class HomeDeviceActivity extends Activity {
         initData();
         initAdapter();
         handler.sendEmptyMessageDelayed(1, 1000);
+//        showLog(DeviceType.LAMP.toString() + "");
     }
 
     @Override

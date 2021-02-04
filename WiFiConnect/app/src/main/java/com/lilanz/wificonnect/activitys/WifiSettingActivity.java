@@ -12,13 +12,10 @@ import android.widget.Toast;
 import com.lilanz.wificonnect.API.APIRequest;
 import com.lilanz.wificonnect.API.ParseListener;
 import com.lilanz.wificonnect.R;
+import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 

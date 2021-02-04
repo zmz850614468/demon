@@ -7,12 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activitys.AddDeviceActivity;
+import com.lilanz.wificonnect.activity_new.AddDeviceActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.dialogs.FanControlDialog;
 
@@ -68,18 +67,18 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         }
 
         switch (bean.deviceType) {
-            case "灯":
+            case LAMP:
                 holder.ivPic.setBackgroundResource(R.mipmap.lamp);
                 break;
-            case "风扇":
+            case ELECTRIC_FAN:
                 holder.ivPic.setBackgroundResource(R.mipmap.electric_fans);
                 break;
-            case "热水器":
-                holder.ivPic.setBackgroundResource(R.mipmap.water_heater);
-                break;
-            case "电饭锅":
-                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
-                break;
+//            case "热水器":
+//                holder.ivPic.setBackgroundResource(R.mipmap.water_heater);
+//                break;
+//            case "电饭锅":
+//                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
+//                break;
         }
 
         holder.ivControl.setOnClickListener(new View.OnClickListener() {

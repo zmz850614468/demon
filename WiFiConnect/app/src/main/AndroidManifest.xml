@@ -45,7 +45,7 @@
 
 
     <application
-        android:name=".activitys.App"
+        android:name=".activity_new.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -117,7 +117,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activitys.AddDeviceActivity"
+            android:name=".activity_new.AddDeviceActivity"
             android:screenOrientation="portrait" />
 
         <activity

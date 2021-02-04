@@ -12,19 +12,13 @@ import android.widget.Toast;
 import com.lilanz.wificonnect.API.APIRequest;
 import com.lilanz.wificonnect.API.ParseListener;
 import com.lilanz.wificonnect.R;
-import com.lilanz.wificonnect.activitys.App;
-import com.xuhao.didi.core.iocore.interfaces.IPulseSendable;
-import com.xuhao.didi.core.iocore.interfaces.ISendable;
+import com.lilanz.wificonnect.activity_new.App;
 import com.xuhao.didi.core.pojo.OriginalData;
-import com.xuhao.didi.core.protocol.IReaderProtocol;
 import com.xuhao.didi.socket.client.sdk.OkSocket;
 import com.xuhao.didi.socket.client.sdk.client.ConnectionInfo;
-import com.xuhao.didi.socket.client.sdk.client.OkSocketOptions;
 import com.xuhao.didi.socket.client.sdk.client.action.SocketActionAdapter;
 import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
 
