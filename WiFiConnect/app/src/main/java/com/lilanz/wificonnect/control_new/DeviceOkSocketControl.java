@@ -14,7 +14,9 @@ import com.xuhao.didi.socket.client.sdk.client.ConnectionInfo;
 import com.xuhao.didi.socket.client.sdk.client.action.SocketActionAdapter;
 import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,7 +80,7 @@ public class DeviceOkSocketControl {
                 connectionManager.disconnect();
             }
             showLog(info.getIp() + ":断开连接");
-            if (onStatusListener != null) {
+            for (OnSocketListener onStatusListener : listenerList) {
                 onStatusListener.onDisconnect(info.getIp());
             }
         }
@@ -96,8 +98,8 @@ public class DeviceOkSocketControl {
         public void onSocketReadResponse(ConnectionInfo info, String action, OriginalData data) {
             super.onSocketReadResponse(info, action, data);
             showLog(info.getIp() + ":读成功 : " + new String(data.getBodyBytes()));
-            if (onStatusListener != null) {
-                onStatusListener.onStatusCallback(info.getIp(), new String(data.getBodyBytes()));
+            for (OnSocketListener onStatusListener : listenerList) {
+                onStatusListener.onMsgCallback(info.getIp(), new String(data.getBodyBytes()));
             }
         }
 
@@ -119,14 +121,18 @@ public class DeviceOkSocketControl {
         }
     }
 
-    public OnStatusListener onStatusListener;
+    private List<OnSocketListener> listenerList = new ArrayList<>();
 
-    public void setOnStatusListener(OnStatusListener onStatusListener) {
-        this.onStatusListener = onStatusListener;
+    public void addListener(OnSocketListener listener) {
+        listenerList.add(listener);
     }
 
-    public interface OnStatusListener {
-        void onStatusCallback(String ip, String status);
+    public void removeListener(OnSocketListener listener) {
+        listenerList.remove(listener);
+    }
+
+    public interface OnSocketListener {
+        void onMsgCallback(String ip, String msg);
 
         void onDisconnect(String ip);
     }

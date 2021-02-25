@@ -49,4 +49,36 @@ public class NumberUtil {
         return count;
     }
 
+//    /**
+//     * @param number 屏幕端显示的10进制数据
+//     * @return 屏幕端显示的16进制数据
+//     */
+//    public static String int2Hex2(int number) {
+//        String result = null;
+//        switch (number) {
+//            case 10:
+//                result = "A";
+//                break;
+//            case 11:
+//                result = "B";
+//                break;
+//            case 12:
+//                result = "C";
+//                break;
+//            case 13:
+//                result = "D";
+//                break;
+//            case 14:
+//                result = "E";
+//                break;
+//            case 15:
+//                result = "F";
+//                break;
+//            default:
+//                result = number + "";
+//                break;
+//        }
+//
+//        return result;
+//    }
 }

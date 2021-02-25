@@ -1,12 +1,16 @@
 package com.lilanz.wificonnect.beans;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.lilanz.wificonnect.data.electricfan.ElectricFan_IRData;
+import com.lilanz.wificonnect.data.lamp.Lamp_OperateData;
 import com.lilanz.wificonnect.data.myenum.BrandType;
 import com.lilanz.wificonnect.data.myenum.DeviceType;
+import com.lilanz.wificonnect.data.waterheater.WaterHeater_OperateData;
 
 /**
  * 设备对象
@@ -62,7 +66,57 @@ public class DeviceBean {
         return new Gson().toJson(this);
     }
 
-    {
+
+    public static final String STATUS_OPEN = "open";
+    public static final String STATUS_CLOSE = "close";
+    public static final String STATUS_QUERY = "query";
+
+    public static final String CONTENT_SHAKE = "shake";
+
+    /**
+     * TODO 获取控制数据
+     *
+     * @param status  操作类型：打开、关闭、查询
+     * @param content 操作内容：null、摇头
+     * @return
+     */
+    public String getControlData(String status, String content) {
+        String controlData = "";
+
+        if (deviceType != null) {
+            switch (deviceType) {
+                case LAMP:
+                    if (STATUS_OPEN.equals(status)) {
+                        controlData = Lamp_OperateData.getOpenData();
+                    } else if (STATUS_CLOSE.equals(status)) {
+                        controlData = Lamp_OperateData.getCloseData();
+                    } else if (STATUS_QUERY.equals(status)) {
+                        controlData = Lamp_OperateData.getQueryData();
+                    }
+                    break;
+                case WATER_HEATER:
+                    if (STATUS_OPEN.equals(status)) {
+                        controlData = WaterHeater_OperateData.getOpenData();
+                    } else if (STATUS_CLOSE.equals(status)) {
+                        controlData = WaterHeater_OperateData.getCloseData();
+                    } else if (STATUS_QUERY.equals(status)) {
+                        controlData = WaterHeater_OperateData.getQueryData();
+                    }
+                    break;
+                case ELECTRIC_FAN:
+//                    if (CONTENT_SHAKE.equals(content)) {
+//                        controlData = ElectricFan_IRData.getInstance(brand).getShake() + "~";
+//                    } else
+                        if (STATUS_OPEN.equals(status)) {
+                        controlData = ElectricFan_IRData.getInstance(brand).getOpenOrExchange() + "~";
+                    } else if (STATUS_CLOSE.equals(status)) {
+                        controlData = ElectricFan_IRData.getInstance(brand).getCloseData() + "~";
+                    }
+                    break;
+            }
+        }
+
+        return controlData;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.lilanz.wificonnect.bean_new;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 

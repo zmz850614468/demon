@@ -3,19 +3,19 @@ package com.lilanz.wificonnect.activity_new;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activitys.WelcomeActivity;
 import com.lilanz.wificonnect.utils.BuildUtil;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.StringUtil;
-import com.tencent.bugly.beta.Beta;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -66,7 +66,7 @@ public class AppSettingActivity extends Activity {
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.tv_update_check:
-                Beta.checkUpgrade();
+//                Beta.checkUpgrade();
                 break;
             case R.id.tv_exit:
                 SharePreferencesUtil.saveBecome(this, "");

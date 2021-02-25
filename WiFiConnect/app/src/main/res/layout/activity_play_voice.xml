@@ -21,12 +21,18 @@
             android:textSize="25sp" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_voice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_title"
-        android:padding="3dp" />
+        android:layout_marginTop="10dp" />
+<!--    <android.support.v7.widget.RecyclerView-->
+<!--        android:id="@+id/rv_voice"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/layout_title"-->
+<!--        android:padding="3dp" />-->
 
     <LinearLayout
         android:layout_width="match_parent"

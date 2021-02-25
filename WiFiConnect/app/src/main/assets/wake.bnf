@@ -6,4 +6,4 @@
 <callStart>:<callCmd>[<callName>][<callName2>];
 <callCmd>:打开|关闭;
 <callName>:客厅|门口|卧室|主卧|侧卧|客卧|阳台;
-<callName2>:灯;
+<callName2>:灯|热水器|风扇;

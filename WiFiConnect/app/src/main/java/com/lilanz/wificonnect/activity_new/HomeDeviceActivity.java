@@ -5,20 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.DeviceAdapter;
 import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
+import com.lilanz.wificonnect.control_new.DeviceVoiceControl;
 import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
 
@@ -48,8 +50,14 @@ public class HomeDeviceActivity extends Activity {
 
         initData();
         initAdapter();
+        // 打开讯飞语音识别
         handler.sendEmptyMessageDelayed(1, 1000);
-//        showLog(DeviceType.LAMP.toString() + "");
+//        if (App.isDebug) {
+//            Esp8266ControlBean bean = DeviceVoiceControl.getInstance(this).parse(true, "打开灯");
+//            if (bean != null) {
+//                showLog(bean.toString());
+//            }
+//        }
     }
 
     @Override
@@ -79,7 +87,7 @@ public class HomeDeviceActivity extends Activity {
             Esp8266ControlBean controlBean = new Esp8266ControlBean();
             controlBean.ip = deviceBean.ip;
             controlBean.port = deviceBean.port;
-            controlBean.control = "query\n\r";
+            controlBean.control = deviceBean.getControlData(DeviceBean.STATUS_QUERY, null);
             DeviceOkSocketControl.getInstance(this).sendControlMsg(controlBean);
         }
     }
@@ -88,6 +96,16 @@ public class HomeDeviceActivity extends Activity {
     public void onSettingClicked() {
         Intent intent = new Intent(this, AppSettingActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_search)
+    public void onClicked(View v) {
+        switch (v.getId()) {
+            case R.id.tv_search:
+                Intent intent = new Intent(this, SearchDeviceActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     private void initAdapter() {
@@ -143,48 +161,59 @@ public class HomeDeviceActivity extends Activity {
      */
     private void dealVoiceControl(boolean status, String voiceResult) {
         showLog("语音结果：" + status + " ; voiceResult: " + voiceResult);
+        Esp8266ControlBean controlBean = DeviceVoiceControl.getInstance(this).parseVoiceResult(status, voiceResult);
+        if (controlBean != null) {
+            DeviceOkSocketControl.getInstance(this).sendControlMsg(controlBean);
+        } else {
+            // TODO 语音提示
+        }
     }
 
     private void initData() {
         deviceList = DBControl.quaryAll(this, DeviceBean.class);
         // 查询设备状态
-        DeviceOkSocketControl.getInstance(this).setOnStatusListener(new DeviceOkSocketControl.OnStatusListener() {
-            @Override
-            public void onStatusCallback(String ip, String status) {
-                for (DeviceBean deviceBean : deviceList) {
-                    if (deviceBean.ip.equals(ip)) {
-                        if ("open".equals(status) || "opened".equals(status)) {
-                            deviceBean.status = "open";
-                        } else if ("close".equals(status) || "closed".equals(status)) {
-                            deviceBean.status = "close";
-                        }
-                        break;
-                    }
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        deviceAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-
-            @Override
-            public void onDisconnect(String ip) {
-            }
-        });
+        DeviceOkSocketControl.getInstance(this).addListener(onStatusListener);
 
         for (DeviceBean deviceBean : deviceList) {
             Esp8266ControlBean controlBean = new Esp8266ControlBean();
             controlBean.ip = deviceBean.ip;
             controlBean.port = deviceBean.port;
-            controlBean.control = "query\n\r";
+            controlBean.control = deviceBean.getControlData(DeviceBean.STATUS_QUERY, null);
             DeviceOkSocketControl.getInstance(this).sendControlMsg(controlBean);
         }
     }
 
+    private DeviceOkSocketControl.OnSocketListener onStatusListener = new DeviceOkSocketControl.OnSocketListener() {
+        @Override
+        public void onMsgCallback(String ip, String status) {
+            for (DeviceBean deviceBean : deviceList) {
+                if (deviceBean.ip.equals(ip)) {
+                    if ("open".equals(status) || "opened".equals(status)) {
+                        deviceBean.status = DeviceBean.STATUS_OPEN;
+                    } else if ("close".equals(status) || "closed".equals(status)) {
+                        deviceBean.status = DeviceBean.STATUS_CLOSE;
+                    } else {
+                        return;
+                    }
+                    break;
+                }
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    deviceAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public void onDisconnect(String ip) {
+        }
+    };
+
     @Override
     protected void onDestroy() {
+        DeviceOkSocketControl.getInstance(this).removeListener(onStatusListener);
         super.onDestroy();
     }
 

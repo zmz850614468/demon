@@ -1,6 +1,7 @@
 package com.lilanz.wificonnect.beans;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.j256.ormlite.field.DatabaseField;

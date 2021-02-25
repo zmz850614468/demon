@@ -28,7 +28,7 @@ public class SharePreferencesUtil {
 
     // 获取
     public static String getMyRoom(Context context) {
-        return getInstance(context).getString(MY_ROOM, "");
+        return getInstance(context).getString(MY_ROOM, "主卧");
     }
 
     public static void saveMyRoom(Context context, String myRoom) {

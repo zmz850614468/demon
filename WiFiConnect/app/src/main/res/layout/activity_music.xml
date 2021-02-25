@@ -41,13 +41,18 @@
         android:layout_height="50dp"
         android:layout_below="@+id/layout_title" />
 
-
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_song"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layout_operate"
-        android:layout_below="@+id/layout_song_title" />
+        android:layout_below="@+id/layout_title"
+        android:layout_marginTop="10dp" />
+<!--    <android.support.v7.widget.RecyclerView-->
+<!--        android:id="@+id/rv_song"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/layout_operate"-->
+<!--        android:layout_below="@+id/layout_song_title" />-->
 
     <RelativeLayout
         android:id="@+id/layout_operate"

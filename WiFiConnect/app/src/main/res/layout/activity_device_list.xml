@@ -43,15 +43,30 @@
             android:src="@mipmap/icon_setting" />
 
     </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_device"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_title"
-        android:layout_marginTop="25dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" />
+        android:layout_marginTop="10dp" />
+<!--    <android.support.v7.widget.RecyclerView-->
+<!--        android:id="@+id/rv_device"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/layout_title"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:paddingLeft="8dp"-->
+<!--        android:paddingRight="8dp" />-->
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="查找设备"
+        android:textColor="@color/app_content_color" />
 
     <TextView
         android:id="@+id/tv_msg"

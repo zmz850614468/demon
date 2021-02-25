@@ -1,7 +1,8 @@
 package com.lilanz.wificonnect.threads;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.lilanz.wificonnect.utils.StringUtil;
 

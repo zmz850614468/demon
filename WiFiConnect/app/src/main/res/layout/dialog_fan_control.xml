@@ -64,7 +64,7 @@
         android:layout_toRightOf="@+id/tv_open_or_exchange"
         android:background="@drawable/shape_box_white"
         android:gravity="center"
-        android:text="风类"
+        android:text="摇头"
         android:textColor="@color/app_content_color"
         android:textSize="15sp" />
 

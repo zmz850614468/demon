@@ -2,17 +2,20 @@ package com.lilanz.wificonnect.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activity_new.AddDeviceActivity;
 import com.lilanz.wificonnect.beans.DeviceBean;
+import com.lilanz.wificonnect.data.myenum.DeviceType;
+import com.lilanz.wificonnect.dialogs.AirConditionDialog;
 import com.lilanz.wificonnect.dialogs.FanControlDialog;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
     private List<DeviceBean> beanList;
 
     private FanControlDialog fanControlDialog;
+    private AirConditionDialog airConditionDialog;
 
     // 1.修改对象
     public DeviceAdapter(Context context, List<DeviceBean> list) {
@@ -66,26 +70,38 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
             holder.ivStatus.setVisibility(View.GONE);
         }
 
-        switch (bean.deviceType) {
-            case LAMP:
-                holder.ivPic.setBackgroundResource(R.mipmap.lamp);
-                break;
-            case ELECTRIC_FAN:
-                holder.ivPic.setBackgroundResource(R.mipmap.electric_fans);
-                break;
-//            case "热水器":
+        holder.ivPic.setBackgroundResource(DeviceType.getImgResoure(bean.deviceType));
+        if (bean.deviceType == DeviceType.ELECTRIC_FAN || bean.deviceType == DeviceType.AIR_CONDITION) {
+            holder.ivControl.setVisibility(View.VISIBLE);
+        } else {
+            holder.ivControl.setVisibility(View.GONE);
+        }
+//        switch (bean.deviceType) {
+//            case LAMP:
+//                holder.ivPic.setBackgroundResource(R.mipmap.lamp);
+//                break;
+//            case ELECTRIC_FAN:
+//                holder.ivPic.setBackgroundResource(R.mipmap.electric_fans);
+//                holder.ivControl.setVisibility(View.VISIBLE);
+//                break;
+//            case HEAT_WATER:
 //                holder.ivPic.setBackgroundResource(R.mipmap.water_heater);
 //                break;
-//            case "电饭锅":
-//                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
-//                break;
-        }
+////            case "电饭锅":
+////                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
+////                break;
+//        }
 
         holder.ivControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fanControlDialog.update(beanList.get(i));
-                fanControlDialog.show();
+                if (beanList.get(i).deviceType == DeviceType.ELECTRIC_FAN) {
+                    fanControlDialog.update(beanList.get(i));
+                    fanControlDialog.show();
+                } else if (beanList.get(i).deviceType == DeviceType.AIR_CONDITION) {
+                    airConditionDialog.update(beanList.get(i));
+                    airConditionDialog.show();
+                }
             }
         });
 
@@ -93,13 +109,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
             holder.btOpen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), "open\n\r");
+                    listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_OPEN, null));
                 }
             });
             holder.btClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), "close\n\r");
+                    listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_CLOSE, null));
                 }
             });
         }
@@ -110,6 +126,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
                 long currTime = System.currentTimeMillis();
                 if (currTime - lastClick < 1000) {
                     Intent intent = new Intent(context, AddDeviceActivity.class);
+                    intent.putExtra("action", AddDeviceActivity.ACTION_UPDATE);
                     intent.putExtra("device", beanList.get(i).toString());
                     context.startActivity(intent);
                 }
@@ -122,6 +139,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         fanControlDialog = new FanControlDialog(context, R.style.DialogStyleOne);
         fanControlDialog.show();
         fanControlDialog.dismiss();
+
+        airConditionDialog = new AirConditionDialog(context, R.style.DialogStyleOne);
+        airConditionDialog.show();
+        airConditionDialog.dismiss();
     }
 
     @Override

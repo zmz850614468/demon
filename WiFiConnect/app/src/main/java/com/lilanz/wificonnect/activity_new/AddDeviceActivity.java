@@ -2,7 +2,6 @@ package com.lilanz.wificonnect.activity_new;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
@@ -24,6 +25,7 @@ import com.lilanz.wificonnect.data.myenum.SceneType;
 import com.lilanz.wificonnect.listeners.MsgCallbackListener;
 import com.lilanz.wificonnect.utils.StringUtil;
 
+
 import org.angmarch.views.NiceSpinner;
 
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddDeviceActivity extends Activity {
+
+    public static final String ACTION_UPDATE = "update";    // 更新设备信息
+    public static final String ACTION_ADD_NEW = "addNew";   // 添加新的设备
 
     @BindView(R.id.iv_pic)
     ImageView ivPic;
@@ -53,6 +58,15 @@ public class AddDeviceActivity extends Activity {
     NiceSpinner nsDevicePosition;
     @BindView(R.id.ns_brand_type)
     NiceSpinner nsBrandType;
+//    @BindView(R.id.ns_device_type)
+//    Spinner nsDeviceType;
+//    @BindView(R.id.ns_device_control)
+//    Spinner nsDeviceControl;
+//    @BindView(R.id.ns_device_position)
+//    Spinner nsDevicePosition;
+//    @BindView(R.id.ns_brand_type)
+//    Spinner nsBrandType;
+
     @BindView(R.id.bt_delete)
     Button btDelete;
     @BindView(R.id.layout_open_setting)
@@ -63,6 +77,7 @@ public class AddDeviceActivity extends Activity {
     private List<String> deviceControlList;
     private List<String> devicePositionList;
 
+    private String action;
     private DeviceBean newDevice;
 
     @Override
@@ -70,8 +85,9 @@ public class AddDeviceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
         ButterKnife.bind(this);
-        String json = getIntent().getStringExtra("device");
-        if (!StringUtil.isEmpty(json)) {
+        action = getIntent().getStringExtra("action");
+        if (!StringUtil.isEmpty(action)) {
+            String json = getIntent().getStringExtra("device");
             newDevice = new Gson().fromJson(json, DeviceBean.class);
         }
 
@@ -111,6 +127,7 @@ public class AddDeviceActivity extends Activity {
         String deviceType = nsDeviceType.getText().toString();
         String controlType = nsDeviceControl.getText().toString();
         String devicePosition = nsDevicePosition.getText().toString();
+        String brand = nsBrandType.getText().toString();
 //        String deviceOpenSetting = etOpenSetting.getText().toString();
 //        if ("点击式".equals(controlType)) {
 //            if (StringUtil.isEmpty(deviceOpenSetting)) {
@@ -128,6 +145,7 @@ public class AddDeviceActivity extends Activity {
         newDevice.port = Integer.parseInt(devicePort);
         newDevice.deviceType = DeviceType.getDeviceType(deviceType);
         newDevice.controlType = controlType;
+        newDevice.brand = BrandType.getBrandType(brand);
 //        if ("点击式".equals(controlType)) {
 //            newDevice.openSetting = deviceOpenSetting;
 //        }
@@ -141,11 +159,19 @@ public class AddDeviceActivity extends Activity {
             DBControl.createOrUpdate(this, DeviceBean.class, newDevice);
             showToast("添加或修改设备成功！");
             HomeDeviceActivity.needUpdate = true;
+            if (ACTION_ADD_NEW.equals(action)) {
+                SearchDeviceActivity.needUpdate = true;
+            }
             finish();
         }
     }
 
     private void initUI() {
+//        nsDeviceType = findViewById(R.id.ns_device_type);
+//        nsDeviceControl= findViewById(R.id.ns_device_control);
+//        nsDevicePosition= findViewById(R.id.ns_device_position);
+//        nsBrandType= findViewById(R.id.ns_brand_type);
+
         if ("客户端".equals(AppDataControl.selectedType)) {
             etDevicePort.setText("80");
         } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
@@ -194,31 +220,8 @@ public class AddDeviceActivity extends Activity {
         nsDeviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String name = ((TextView) view).getText().toString();
-                switch (DeviceType.getDeviceType(name)) {
-                    case LAMP:
-                        brandTypeList = BrandType.getLampBrand();
-                        ivPic.setBackgroundResource(R.mipmap.lamp);
-                        break;
-                    case ELECTRIC_FAN:
-                        brandTypeList = BrandType.getElectricFanBrand();
-                        ivPic.setBackgroundResource(R.mipmap.electric_fans);
-                        break;
-                }
-                nsBrandType.attachDataSource(brandTypeList);
-
-//                switch (name) {
-//                    case "灯":
-//                        break;
-//                    case "热水器":
-//                        ivPic.setBackgroundResource(R.mipmap.water_heater);
-//                        break;
-//                    case "风扇":
-//                        break;
-//                    case "电饭锅":
-//                        ivPic.setBackgroundResource(R.mipmap.electric_pot);
-//                        break;
-//                }
+                String deviceName = ((TextView) view).getText().toString();
+                updateBrandType(deviceName);
             }
 
             @Override
@@ -236,9 +239,9 @@ public class AddDeviceActivity extends Activity {
                 case LAMP:
                     ivPic.setBackgroundResource(R.mipmap.lamp);
                     break;
-//                case "热水器":
-//                    ivPic.setBackgroundResource(R.mipmap.water_heater);
-//                    break;
+                case WATER_HEATER:
+                    ivPic.setBackgroundResource(R.mipmap.water_heater);
+                    break;
                 case ELECTRIC_FAN:
                     ivPic.setBackgroundResource(R.mipmap.electric_fans);
                     break;
@@ -247,13 +250,17 @@ public class AddDeviceActivity extends Activity {
 //                    break;
             }
 
+            // 设备类型
             for (int i = 1; i < deviceTypeList.size(); i++) {
-                if (newDevice.deviceType.equals(deviceTypeList.get(i))) {
+                if (newDevice.deviceType.name.equals(deviceTypeList.get(i))) {
                     nsDeviceType.setSelectedIndex(i);
-                    nsDeviceControl.setSelected(true);
+                    nsDeviceType.setSelected(true);
+                    updateBrandType(newDevice.deviceType.name);
                     break;
                 }
             }
+
+            // 控制方式
             for (int i = 1; i < deviceControlList.size(); i++) {
                 if (newDevice.controlType.equals(deviceControlList.get(i))) {
                     nsDeviceControl.setSelectedIndex(i);
@@ -262,26 +269,74 @@ public class AddDeviceActivity extends Activity {
                 }
             }
 
+            // 场景
             for (int i = 0; i < devicePositionList.size(); i++) {
-                if (newDevice.devicePosition.equals(devicePositionList.get(i))) {
+                if (devicePositionList.get(i).equals(newDevice.devicePosition)) {
                     nsDevicePosition.setSelectedIndex(i);
                     nsDevicePosition.setSelected(true);
+                }
+            }
+
+            // 品牌
+            if (newDevice.brand != null) {
+                for (int i = 0; i < brandTypeList.size(); i++) {
+                    if (brandTypeList.get(i).equals(newDevice.brand.name)) {
+                        nsBrandType.setSelectedIndex(i);
+                        nsBrandType.setSelected(true);
+                    }
                 }
             }
 //            nsDeviceType.setText(newDevice.deviceType);
 //            nsDeciceControl.setText(newDevice.controlType);
 
-            btDelete.setVisibility(View.VISIBLE);
+            if (!StringUtil.isEmpty(action) && action.equals(ACTION_UPDATE)) {
+                btDelete.setVisibility(View.VISIBLE);
+            }
         }
+    }
 
+    /**
+     * 更新设备品牌
+     */
+    private void updateBrandType(String deviceName) {
+        switch (DeviceType.getDeviceType(deviceName)) {
+            case LAMP:
+                brandTypeList = BrandType.getLampBrand();
+                ivPic.setBackgroundResource(R.mipmap.lamp);
+                break;
+            case ELECTRIC_FAN:
+                brandTypeList = BrandType.getElectricFanBrand();
+                ivPic.setBackgroundResource(R.mipmap.electric_fans);
+                break;
+            case WATER_HEATER:
+                brandTypeList = BrandType.getHeatWaterBrand();
+                ivPic.setBackgroundResource(R.mipmap.water_heater);
+                break;
+            case AIR_CONDITION:
+                brandTypeList = BrandType.getAirConditionBrand();
+                ivPic.setBackgroundResource(R.mipmap.air_condition);
+                break;
+        }
+        nsBrandType.attachDataSource(brandTypeList);
 
+//                switch (name) {
+//                    case "灯":
+//                        break;
+//                    case "热水器":
+//                        ivPic.setBackgroundResource(R.mipmap.water_heater);
+//                        break;
+//                    case "风扇":
+//                        break;
+//                    case "电饭锅":
+//                        ivPic.setBackgroundResource(R.mipmap.electric_pot);
+//                        break;
+//                }
     }
 
     private void initData() {
         deviceTypeList = DeviceType.getDeviceName();
         brandTypeList = BrandType.getLampBrand();
         devicePositionList = SceneType.getSceneName();
-
 
         deviceControlList = new ArrayList<>();
         deviceControlList.add("开关式");

@@ -1,8 +1,8 @@
 package com.lilanz.wificonnect.controls;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.lilanz.wificonnect.beans.MsgBean;

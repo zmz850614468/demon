@@ -3,7 +3,9 @@ package com.lilanz.wificonnect.views;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class MarqueeTextView extends android.support.v7.widget.AppCompatTextView {
+import androidx.appcompat.widget.AppCompatTextView;
+
+public class MarqueeTextView extends AppCompatTextView {
     public MarqueeTextView(Context context) {
         super(context);
     }

@@ -1,6 +1,7 @@
 package com.lilanz.wificonnect.data.myenum;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +10,12 @@ import java.util.List;
  * 场景类型
  */
 public enum SceneType {
-    DOOR("门口"),
-    BALCONY("阳台"),
-    LIVING_ROOM("客厅"),
     MASTER_BEDROOM("主卧"),
     SECOND_BEDROOM("次卧"),
     GUEST_BEDROOM("客卧"),
+    LIVING_ROOM("客厅"),
+    BALCONY("阳台"),
+    DOOR("门口"),
     ;
 
     public String name;

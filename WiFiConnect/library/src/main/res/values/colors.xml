@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_gray">#fff5f5f5</color>
+
+
+    <color name="app_title_color">#2D3237</color>
+    <color name="app_content_color">#232323</color>
+    <color name="app_bg">#F0F1F5</color>
+    <color name="app_tip">#5C627A</color>
+
+</resources>
