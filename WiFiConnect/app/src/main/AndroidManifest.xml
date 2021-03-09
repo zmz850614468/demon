@@ -64,6 +64,15 @@
             </intent-filter>
         </activity>
 
+<!--        <activity-->
+<!--            android:name=".activity_new.VoiceRecognition"-->
+<!--            android:screenOrientation="portrait">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
         <activity
             android:name=".activity_new.ControlDeviceActivity"
             android:screenOrientation="portrait" />
@@ -80,10 +89,14 @@
             android:name=".activity_new.HomeDeviceActivity"
             android:screenOrientation="portrait" />
 
-        <!--   新版本-结束     -->
         <activity
             android:name=".activity_new.SearchDeviceActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity_new.ServerActivity"
+            android:screenOrientation="portrait" />
+        <!--   新版本-结束     -->
 
         <activity
             android:name=".activitys.ServiceActivity"

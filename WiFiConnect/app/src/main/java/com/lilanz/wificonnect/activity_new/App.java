@@ -26,13 +26,10 @@ public class App extends Application {
         SoundControl.getInstance(context).initData();
 
         // 讯飞语音识别
-        StringBuffer param = new StringBuffer();
-        param.append("appid=5fc9e265");
-//        param.append(",");
-//        // 设置使用v5+
-//        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
-        SpeechUtility.createUtility(context, param.toString());
-        XunFeiVoiceControl.getInstance(context);
+//        StringBuffer param = new StringBuffer();
+//        param.append("appid=604595a8");
+//        SpeechUtility.createUtility(context, param.toString());
+//        XunFeiVoiceControl.getInstance(context);
     }
 
 }

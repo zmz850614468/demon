@@ -19,6 +19,7 @@
     <color name="deepGreen">#006600</color>
     <!--   end:常用颜色值    -->
 
+    <color name="colorTran">#88000000</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>

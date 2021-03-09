@@ -50,9 +50,9 @@ public class XunFeiVoiceControl {
 
     private XunFeiVoiceControl(Context context) {
         this.context = context;
-        // 初始化唤醒对象
-        voiceWakeuper = VoiceWakeuper.createWakeuper(context, null);
-        initOneShot();
+//        // 初始化唤醒对象
+//        voiceWakeuper = VoiceWakeuper.createWakeuper(context, null);
+//        initOneShot();
     }
 
     private RecognizerDialog mIatDialog;

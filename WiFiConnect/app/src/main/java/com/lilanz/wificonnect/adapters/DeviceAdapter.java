@@ -1,10 +1,15 @@
 package com.lilanz.wificonnect.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -139,10 +144,15 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         fanControlDialog = new FanControlDialog(context, R.style.DialogStyleOne);
         fanControlDialog.show();
         fanControlDialog.dismiss();
+        Window window = fanControlDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
 
         airConditionDialog = new AirConditionDialog(context, R.style.DialogStyleOne);
         airConditionDialog.show();
         airConditionDialog.dismiss();
+        window = airConditionDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+
     }
 
     @Override

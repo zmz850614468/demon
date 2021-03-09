@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.activity_new.HomeDeviceActivity;
+import com.lilanz.wificonnect.activity_new.ServerActivity;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 
@@ -60,7 +61,8 @@ public class WelcomeActivity extends Activity {
     private void toActivity(String to) {
         AppDataControl.selectedType = to;
         if ("服务端".equals(to)) {
-            Intent intent = new Intent(this, ServiceActivity.class);
+//            Intent intent = new Intent(this, ServiceActivity.class);
+            Intent intent = new Intent(this, ServerActivity.class);
             startActivity(intent);
             finish();
         } else if ("客户端".equals(to)) {

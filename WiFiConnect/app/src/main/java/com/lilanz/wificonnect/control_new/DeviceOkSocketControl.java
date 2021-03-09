@@ -107,7 +107,6 @@ public class DeviceOkSocketControl {
         public void onSocketWriteResponse(ConnectionInfo info, String action, ISendable data) {
             super.onSocketWriteResponse(info, action, data);
             showLog(info.getIp() + ":写成功 : " + ((Esp8266IOBean) data).getMsg());
-
         }
     };
 

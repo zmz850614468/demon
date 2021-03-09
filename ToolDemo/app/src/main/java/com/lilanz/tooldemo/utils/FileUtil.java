@@ -4,11 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +25,80 @@ import java.util.List;
 public class FileUtil {
 
     private static final String PICTURE_FILE_NAME = "恶天使魔";
+
+    /**
+     * 保存数据到文件中
+     *
+     * @param context
+     * @param filePath
+     * @param list
+     */
+    public static void save2File(Context context, String filePath, List list) {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                FileWriter writer = null;
+                try {
+                    File file = new File(filePath);
+                    if (!file.exists()) {
+                        file.mkdirs();
+                    }
+                    file = new File(file, "peiFangDB.txt");
+                    file.createNewFile();
+
+                    writer = new FileWriter(file);
+                    writer.write(new Gson().toJson(list));
+                    writer.flush();
+                    writer.close();
+                    Log.e("fileUtil", "保存数据到文件 完成");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (writer != null) {
+                        try {
+                            writer.flush();
+                            writer.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 更新文件信息到数据库中去
+     *
+     * @param context
+     * @param path
+     */
+    public static void updateDBFromFile(Context context, String path) {
+        File file = new File(path);
+        if (file.exists() && file.canRead()) {
+            try {
+                char[] chArr = new char[2048];
+                StringBuffer buffer = new StringBuffer();
+                FileReader reader = new FileReader(file);
+                while (true) {
+                    int length = reader.read(chArr);
+                    if (length > 0) {
+                        buffer.append(chArr, 0, length);
+                    } else {
+                        break;
+                    }
+                }
+                if (buffer.length() > 0) {
+                    // TODO
+//                    List<> list = new Gson().fromJson(buffer.toString(), new TypeToken<List<>>() {
+//                    }.getType());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * 创建文件

@@ -251,26 +251,26 @@ public class OperateActivity extends Activity {
                         AppDataControl.sendMsg(msgBean);
                     }
                 } else if ("定时".contains(result)) {
-                    if (status) {
-                        SoundControl.getInstance(OperateActivity.this).play(R.raw.how_long);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                XunFeiVoiceControl.getInstance(OperateActivity.this).voiceRecognizer(OperateActivity.this, new XunFeiVoiceControl.OnVoiceResult() {
-                                    @Override
-                                    public void onResult(String result) {
-                                        showLog("result:" + result);
-                                        SoundControl.getInstance(OperateActivity.this).play(R.raw.ok_begin_timer);
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-                                        showLog(error);
-                                    }
-                                });
-                            }
-                        }, 200);
-                    }
+//                    if (status) {
+//                        SoundControl.getInstance(OperateActivity.this).play(R.raw.how_long);
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                XunFeiVoiceControl.getInstance(OperateActivity.this).voiceRecognizer(OperateActivity.this, new XunFeiVoiceControl.OnVoiceResult() {
+//                                    @Override
+//                                    public void onResult(String result) {
+//                                        showLog("result:" + result);
+//                                        SoundControl.getInstance(OperateActivity.this).play(R.raw.ok_begin_timer);
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(String error) {
+//                                        showLog(error);
+//                                    }
+//                                });
+//                            }
+//                        }, 200);
+//                    }
                 }
 
                 handler.sendEmptyMessageDelayed(1, 300);

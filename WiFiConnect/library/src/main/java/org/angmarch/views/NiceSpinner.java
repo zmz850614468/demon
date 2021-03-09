@@ -252,7 +252,6 @@ public class NiceSpinner extends AppCompatTextView {
         if (arrowDrawableResId == 0) return null;
         Drawable drawable = ContextCompat.getDrawable(getContext(), arrowDrawableResId);
         if (drawable != null) {
-            // Gets a copy of this drawable as this is going to be mutated by the animator
             drawable = DrawableCompat.wrap(drawable).mutate();
             if (drawableTint != Integer.MAX_VALUE && drawableTint != 0) {
                 DrawableCompat.setTint(drawable, drawableTint);

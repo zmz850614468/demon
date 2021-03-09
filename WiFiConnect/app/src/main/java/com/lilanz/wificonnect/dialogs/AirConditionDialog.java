@@ -14,10 +14,13 @@ import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.data.aircondition.AirCondition_IRData;
-import com.lilanz.wificonnect.data.aircondition.Media_AirCondition_IRData;
-import com.lilanz.wificonnect.data.electricfan.ElectricFan_IRData;
 import com.lilanz.wificonnect.utils.StringUtil;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,6 +28,17 @@ import butterknife.OnClick;
  * 风扇控制面板
  */
 public class AirConditionDialog extends Dialog implements DialogInterface.OnClickListener {
+
+    @BindView(R.id.ns_temperature)
+    NiceSpinner nsTemperature;
+    @BindView(R.id.ns_mode)
+    NiceSpinner nsMode;
+    @BindView(R.id.ns_wind_speed)
+    NiceSpinner nsWindSpeed;
+
+    private List<String> temperatureList;
+    private List<String> modeList;
+    private List<String> windSpeedList;
 
     private Context context;
     private DeviceBean deviceBean;
@@ -42,8 +56,6 @@ public class AirConditionDialog extends Dialog implements DialogInterface.OnClic
         setContentView(R.layout.dialog_air_condition);
         ButterKnife.bind(this);
         setCanceledOnTouchOutside(true);
-
-        initUI();
     }
 
     @Override
@@ -53,17 +65,24 @@ public class AirConditionDialog extends Dialog implements DialogInterface.OnClic
     public void update(DeviceBean deviceBean) {
         this.deviceBean = deviceBean;
         // 风扇的品牌
-//        this.electricFanIrData = new GREE_ElectricFan_IRData();
-        this.airConditionIrData = new Media_AirCondition_IRData();
+        this.airConditionIrData = AirCondition_IRData.getInstance(deviceBean.brand);
+        updateUI();
     }
 
-    private void initUI() {
+    private void updateUI() {
+        temperatureList = airConditionIrData.getTemperatureList();
+        modeList = airConditionIrData.getModeList();
+        windSpeedList = airConditionIrData.getWindSpeedList();
+
+        nsTemperature.attachDataSource(temperatureList);
+        nsMode.attachDataSource(modeList);
+        nsWindSpeed.attachDataSource(windSpeedList);
     }
 
     @OnClick({R.id.tv_open, R.id.tv_close})
     public void onClicked(View v) {
         String controlMsg = null;
-         switch (v.getId()) {
+        switch (v.getId()) {
             case R.id.tv_open:
                 controlMsg = airConditionIrData.getOpenData() + "~";
                 break;

@@ -2,6 +2,9 @@ package com.lilanz.wificonnect.data.aircondition;
 
 import com.lilanz.wificonnect.data.myenum.ProtocolType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 美的_空调接口类
  */
@@ -172,5 +175,36 @@ public class Media_AirCondition_IRData extends AirCondition_IRData {
                 break;
         }
         return result;
+    }
+
+    @Override
+    public List<String> getTemperatureList() {
+        List<String> list = new ArrayList<>();
+        for (int i = 17; i <= 30; i++) {
+            list.add(i + "");
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> getModeList() {
+        List<String> list = new ArrayList<>();
+        list.add("自动");
+        list.add("制冷");
+        list.add("抽湿");
+        list.add("制热");
+        list.add("送风");
+        return list;
+    }
+
+    @Override
+    public List<String> getWindSpeedList() {
+        List<String> list = new ArrayList<>();
+        list.add("静音");
+        list.add("强度1");
+        list.add("强度2");
+        list.add("强度3");
+        list.add("自动");
+        return list;
     }
 }

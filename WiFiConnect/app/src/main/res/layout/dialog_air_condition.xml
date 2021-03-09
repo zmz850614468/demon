@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_box_gray"
-    android:gravity="center"
-    android:padding="10dp">
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@drawable/shape_box_gray"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -54,12 +57,14 @@
             android:orientation="horizontal">
 
             <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_temperature"
                 android:layout_width="@dimen/dialog_air_width_1_3"
                 android:layout_height="@dimen/dialog_air_height"
                 android:background="@drawable/shape_box_white"
                 android:textSize="@dimen/app_content_size" />
 
             <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_mode"
                 android:layout_width="@dimen/dialog_air_width_1_3"
                 android:layout_height="@dimen/dialog_air_height"
                 android:layout_marginLeft="@dimen/dialog_air_margin_left"
@@ -67,6 +72,7 @@
                 android:textSize="@dimen/app_content_size" />
 
             <org.angmarch.views.NiceSpinner
+                android:id="@+id/ns_wind_speed"
                 android:layout_width="@dimen/dialog_air_width_1_3"
                 android:layout_height="@dimen/dialog_air_height"
                 android:layout_marginLeft="@dimen/dialog_air_margin_left"

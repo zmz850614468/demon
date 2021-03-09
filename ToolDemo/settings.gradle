@@ -1,2 +1,2 @@
 rootProject.name='ToolDemo'
-include ':app', ':library'
+include ':app', ':library','library_slidingmenu'
