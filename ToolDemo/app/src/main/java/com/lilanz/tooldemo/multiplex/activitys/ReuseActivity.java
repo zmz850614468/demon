@@ -17,6 +17,7 @@ import com.lilanz.tooldemo.multiplex.download.DownloadActivity;
 import com.lilanz.tooldemo.multiplex.qrcode.CodeScanExaActivity;
 import com.lilanz.tooldemo.multiplex.scanhelper.ScanActivity;
 import com.lilanz.tooldemo.multiplex.web.WebActivity;
+import com.lilanz.tooldemo.multiplex.websocket.WebSocketActivity;
 import com.lilanz.tooldemo.multiplex.wificonnect.WifiConnectActivity;
 
 import butterknife.ButterKnife;
@@ -39,7 +40,7 @@ public class ReuseActivity extends Activity {
 
     @OnClick({R.id.bt_ble, R.id.bt_scan_code, R.id.bt_dao_test, R.id.bt_camera2,
             R.id.bt_api_request, R.id.bt_wifi_connect, R.id.bt_webview,
-            R.id.bt_scan, R.id.bt_down})
+            R.id.bt_scan, R.id.bt_down, R.id.bt_web_socket})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ble:           // 蓝牙例子
@@ -76,6 +77,10 @@ public class ReuseActivity extends Activity {
                 break;
             case R.id.bt_down:
                 intent = new Intent(this, DownloadActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_web_socket:
+                intent = new Intent(this, WebSocketActivity.class);
                 startActivity(intent);
                 break;
         }

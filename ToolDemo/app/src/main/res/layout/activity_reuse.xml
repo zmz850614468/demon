@@ -77,4 +77,12 @@
         android:background="@drawable/selector"
         android:text="文件下载" />
 
+    <Button
+        android:id="@+id/bt_web_socket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="webSocket通信" />
+
 </LinearLayout>

@@ -46,7 +46,14 @@ android {
             abortOnError false
         }
     }
-
+//    signingConfigs {
+//        debug {
+//            storeFile file("lilanz.jks")
+//            storePassword "asd123456"
+//            keyAlias "lilanz"
+//            keyPassword "asd123456"
+//        }
+//    }
 }
 
 dependencies {

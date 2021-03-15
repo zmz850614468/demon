@@ -28,6 +28,79 @@ import java.util.Hashtable;
 public class BitmapUtil {
 
     /**
+     * 压缩图片获取小图
+     *
+     * @param filePath 图片地址
+     * @param width    目标图片宽
+     * @param height   目标图片高
+     * @param quality  压缩质量
+     * @return
+     */
+    public static Bitmap getSmallBitmap(String filePath, int width, int height, int quality) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, width, height);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        Bitmap bm = BitmapFactory.decodeFile(filePath, options);
+        if (bm == null) {
+            return null;
+        }
+        ByteArrayOutputStream baos = null;
+        try {
+            baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+
+        } finally {
+            try {
+                if (baos != null)
+                    baos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bm;
+    }
+
+    /**
+     * 获取小图片大小
+     *
+     * @param options
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
+    private static int calculateInSampleSize(BitmapFactory.Options options,
+                                             int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and
+            // width
+            final int heightRatio = Math.round((float) height
+                    / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will
+            // guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? widthRatio : heightRatio;
+        }
+
+        return inSampleSize;
+    }
+
+    /**
      * scrollView转为Bitmap ： 可以处理布局超出界面的情况
      *
      * @param scrollView
