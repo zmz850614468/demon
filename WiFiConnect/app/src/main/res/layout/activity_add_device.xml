@@ -94,6 +94,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_base_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_basic_info"
@@ -115,14 +116,8 @@
                 android:gravity="center"
                 android:text="设备："
                 android:textColor="@color/app_content_color"
-                android:textSize="18sp" />
+                android:textSize="@dimen/app_content_size" />
 
-<!--            <org.angmarch.views.NiceSpinner-->
-<!--                android:id="@+id/ns_device_type"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1" />-->
-<!--            <Spinner-->
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/ns_device_type"
                 android:layout_width="0dp"
@@ -147,9 +142,8 @@
                 android:gravity="center"
                 android:text="品牌："
                 android:textColor="@color/app_content_color"
-                android:textSize="18sp" />
+                android:textSize="@dimen/app_content_size" />
 
-<!--            <Spinner-->
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/ns_brand_type"
                 android:layout_width="0dp"
@@ -203,15 +197,141 @@
                 android:gravity="center"
                 android:text="场景："
                 android:textColor="@color/app_content_color"
-                android:textSize="18sp" />
+                android:textSize="@dimen/app_content_size" />
 
-<!--            <Spinner-->
+            <!--            <Spinner-->
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/ns_device_position"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_base_info"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/layout_basic_info"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="煮饭："
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
+
+            <EditText
+                android:id="@+id/et_cook_rice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_box_white"
+                android:inputType="number"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/layout_basic_info"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="煲粥："
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
+
+            <EditText
+                android:id="@+id/et_cook_porridge"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_box_white"
+                android:inputType="number"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/layout_basic_info"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="煲汤："
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
+
+            <EditText
+                android:id="@+id/et_cook_soup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_box_white"
+                android:inputType="number"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/layout_basic_info"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="关闭："
+                android:textColor="@color/app_content_color"
+                android:textSize="@dimen/app_content_size" />
+
+            <EditText
+                android:id="@+id/et_close"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_box_white"
+                android:inputType="number"
+                android:singleLine="true" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -228,7 +348,7 @@
             android:background="@drawable/selector"
             android:text="确 认"
             android:textColor="@color/red"
-            android:textSize="18sp" />
+            android:textSize="@dimen/app_content_size" />
 
         <Button
             android:id="@+id/bt_delete"
@@ -238,7 +358,7 @@
             android:background="@drawable/selector"
             android:text="删 除"
             android:textColor="@color/app_title_color"
-            android:textSize="18sp" />
+            android:textSize="@dimen/app_content_size" />
     </LinearLayout>
 
 </RelativeLayout>

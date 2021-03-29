@@ -104,10 +104,7 @@ public class DeviceBean {
                     }
                     break;
                 case ELECTRIC_FAN:
-//                    if (CONTENT_SHAKE.equals(content)) {
-//                        controlData = ElectricFan_IRData.getInstance(brand).getShake() + "~";
-//                    } else
-                        if (STATUS_OPEN.equals(status)) {
+                    if (STATUS_OPEN.equals(status)) {
                         controlData = ElectricFan_IRData.getInstance(brand).getOpenOrExchange() + "~";
                     } else if (STATUS_CLOSE.equals(status)) {
                         controlData = ElectricFan_IRData.getInstance(brand).getCloseData() + "~";

@@ -52,25 +52,24 @@ public class AddDeviceActivity extends Activity {
     EditText etDevicePort;
     @BindView(R.id.ns_device_type)
     NiceSpinner nsDeviceType;
-    @BindView(R.id.ns_device_control)
-    NiceSpinner nsDeviceControl;
     @BindView(R.id.ns_device_position)
     NiceSpinner nsDevicePosition;
     @BindView(R.id.ns_brand_type)
     NiceSpinner nsBrandType;
-//    @BindView(R.id.ns_device_type)
-//    Spinner nsDeviceType;
-//    @BindView(R.id.ns_device_control)
-//    Spinner nsDeviceControl;
-//    @BindView(R.id.ns_device_position)
-//    Spinner nsDevicePosition;
-//    @BindView(R.id.ns_brand_type)
-//    Spinner nsBrandType;
-
     @BindView(R.id.bt_delete)
     Button btDelete;
     @BindView(R.id.layout_open_setting)
     LinearLayout layoutOpenSetting;
+
+    @BindView(R.id.layout_control)
+    LinearLayout layoutControl;
+    @BindView(R.id.et_cook_rice)
+    EditText etCookRice;
+    @BindView(R.id.et_cook_porridge)
+    EditText etCookPorridge;
+    @BindView(R.id.et_cook_soup)
+    EditText etCookSoup;
+
 
     private List<String> deviceTypeList;
     private List<String> brandTypeList;
@@ -125,16 +124,8 @@ public class AddDeviceActivity extends Activity {
         }
 
         String deviceType = nsDeviceType.getText().toString();
-        String controlType = nsDeviceControl.getText().toString();
         String devicePosition = nsDevicePosition.getText().toString();
         String brand = nsBrandType.getText().toString();
-//        String deviceOpenSetting = etOpenSetting.getText().toString();
-//        if ("点击式".equals(controlType)) {
-//            if (StringUtil.isEmpty(deviceOpenSetting)) {
-//                showToast("打开设置不能为空");
-//                return;
-//            }
-//        }
 
         if (newDevice == null) {
             newDevice = new DeviceBean();
@@ -144,11 +135,7 @@ public class AddDeviceActivity extends Activity {
         newDevice.devicePosition = devicePosition;
         newDevice.port = Integer.parseInt(devicePort);
         newDevice.deviceType = DeviceType.getDeviceType(deviceType);
-        newDevice.controlType = controlType;
         newDevice.brand = BrandType.getBrandType(brand);
-//        if ("点击式".equals(controlType)) {
-//            newDevice.openSetting = deviceOpenSetting;
-//        }
 
         if ("客户端".equals(AppDataControl.selectedType)) {
             if (AppDataControl.wifiService != null) {
@@ -167,11 +154,6 @@ public class AddDeviceActivity extends Activity {
     }
 
     private void initUI() {
-//        nsDeviceType = findViewById(R.id.ns_device_type);
-//        nsDeviceControl= findViewById(R.id.ns_device_control);
-//        nsDevicePosition= findViewById(R.id.ns_device_position);
-//        nsBrandType= findViewById(R.id.ns_brand_type);
-
         if ("客户端".equals(AppDataControl.selectedType)) {
             etDevicePort.setText("80");
         } else if ("直接控制设备".equals(AppDataControl.selectedType)) {
@@ -179,32 +161,9 @@ public class AddDeviceActivity extends Activity {
         }
 
         btDelete.setVisibility(View.GONE);
-//        layoutOpenSetting.setVisibility(View.GONE);
         nsDeviceType.attachDataSource(deviceTypeList);
-        nsDeviceControl.attachDataSource(deviceControlList);
         nsDevicePosition.attachDataSource(devicePositionList);
         nsBrandType.attachDataSource(brandTypeList);
-
-//        nsDeviceControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (view instanceof TextView) {
-//                    String name = ((TextView) view).getText().toString();
-//                    switch (name) {
-//                        case "开关式":
-//                            layoutOpenSetting.setVisibility(View.GONE);
-//                            break;
-//                        case "点击式":
-//                            layoutOpenSetting.setVisibility(View.VISIBLE);
-//                            break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
 
         nsDeviceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -245,9 +204,9 @@ public class AddDeviceActivity extends Activity {
                 case ELECTRIC_FAN:
                     ivPic.setBackgroundResource(R.mipmap.electric_fans);
                     break;
-//                case "电饭锅":
-//                    ivPic.setBackgroundResource(R.mipmap.electric_pot);
-//                    break;
+                case ELECTRIC_POT:
+                    ivPic.setBackgroundResource(R.mipmap.electric_pot);
+                    break;
             }
 
             // 设备类型
@@ -256,15 +215,6 @@ public class AddDeviceActivity extends Activity {
                     nsDeviceType.setSelectedIndex(i);
                     nsDeviceType.setSelected(true);
                     updateBrandType(newDevice.deviceType.name);
-                    break;
-                }
-            }
-
-            // 控制方式
-            for (int i = 1; i < deviceControlList.size(); i++) {
-                if (newDevice.controlType.equals(deviceControlList.get(i))) {
-                    nsDeviceControl.setSelectedIndex(i);
-                    nsDeviceControl.setSelected(true);
                     break;
                 }
             }
@@ -286,8 +236,6 @@ public class AddDeviceActivity extends Activity {
                     }
                 }
             }
-//            nsDeviceType.setText(newDevice.deviceType);
-//            nsDeciceControl.setText(newDevice.controlType);
 
             if (!StringUtil.isEmpty(action) && action.equals(ACTION_UPDATE)) {
                 btDelete.setVisibility(View.VISIBLE);
@@ -299,6 +247,7 @@ public class AddDeviceActivity extends Activity {
      * 更新设备品牌
      */
     private void updateBrandType(String deviceName) {
+        layoutControl.setVisibility(View.GONE);
         switch (DeviceType.getDeviceType(deviceName)) {
             case LAMP:
                 brandTypeList = BrandType.getLampBrand();
@@ -316,21 +265,13 @@ public class AddDeviceActivity extends Activity {
                 brandTypeList = BrandType.getAirConditionBrand();
                 ivPic.setBackgroundResource(R.mipmap.air_condition);
                 break;
+            case ELECTRIC_POT:
+                brandTypeList = BrandType.getElectricPotBrang();
+                ivPic.setBackgroundResource(R.mipmap.electric_pot);
+                layoutControl.setVisibility(View.VISIBLE);
+                break;
         }
         nsBrandType.attachDataSource(brandTypeList);
-
-//                switch (name) {
-//                    case "灯":
-//                        break;
-//                    case "热水器":
-//                        ivPic.setBackgroundResource(R.mipmap.water_heater);
-//                        break;
-//                    case "风扇":
-//                        break;
-//                    case "电饭锅":
-//                        ivPic.setBackgroundResource(R.mipmap.electric_pot);
-//                        break;
-//                }
     }
 
     private void initData() {

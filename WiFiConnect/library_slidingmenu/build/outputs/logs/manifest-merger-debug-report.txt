@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:1-9:12
+	package
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:3:5-50
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:5:5-30
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:4:5-28
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+uses-sdk
+ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+	android:targetSdkVersion
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:15-44
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml
+		ADDED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+		INJECTED from E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml

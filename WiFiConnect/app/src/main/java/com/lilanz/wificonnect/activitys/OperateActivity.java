@@ -30,7 +30,6 @@ import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.controls.AppDataControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
 import com.lilanz.wificonnect.controls.SoundControl;
-import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.threads.FifoThread;
 import com.lilanz.wificonnect.threads.WifiService;
@@ -79,7 +78,6 @@ public class OperateActivity extends Activity {
         initData();
         initAdapter();
         initService();
-        handler.sendEmptyMessageDelayed(1, 1000);
 
     }
 
@@ -211,73 +209,11 @@ public class OperateActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:     // 打开讯飞语音监听
-                    initXunFei();
+//                    initXunFei();
                     break;
             }
         }
     };
-
-    private void initXunFei() {
-        XunFeiVoiceControl.getInstance(OperateActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
-            @Override
-            public void onResult(boolean status, String result) {
-                if ("音乐|歌曲".contains(result)) {
-                    if (status) {   // 播放歌曲
-                        AppDataControl.sendMsg(new MsgBean(MsgBean.PLAY_MUSIC, AppDataControl.playingPath));
-                    } else {         // 关闭歌曲
-                        if (AppDataControl.isPlaying) {
-                            AppDataControl.sendMsg(new MsgBean(MsgBean.MUSIC_PAUSE_OR_START, AppDataControl.playingPath));
-                        }
-                    }
-                } else if ("下一曲".contains(result)) {
-                    if (status) {
-                    }
-                } else if ("灯|热水器".contains(result)) {
-                    if (result.equals("灯")) {   // 点灯是反接线的，所以控制反向了
-                        status = !status;
-                    }
-                    String operate = status ? "open" : "close";
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("device_type", result);
-                    List<DeviceBean> list = DBControl.quaryByColumn(OperateActivity.this, DeviceBean.class, map);
-
-                    for (DeviceBean deviceBean : list) {
-                        DeviceControlBean controlBean = new DeviceControlBean();
-                        controlBean.ip = deviceBean.ip;
-                        controlBean.port = deviceBean.port;
-                        controlBean.control = operate;
-                        MsgBean msgBean = new MsgBean(MsgBean.DEVICE_CONTROL, controlBean.toString());
-                        AppDataControl.sendMsg(msgBean);
-                    }
-                } else if ("定时".contains(result)) {
-//                    if (status) {
-//                        SoundControl.getInstance(OperateActivity.this).play(R.raw.how_long);
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                XunFeiVoiceControl.getInstance(OperateActivity.this).voiceRecognizer(OperateActivity.this, new XunFeiVoiceControl.OnVoiceResult() {
-//                                    @Override
-//                                    public void onResult(String result) {
-//                                        showLog("result:" + result);
-//                                        SoundControl.getInstance(OperateActivity.this).play(R.raw.ok_begin_timer);
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(String error) {
-//                                        showLog(error);
-//                                    }
-//                                });
-//                            }
-//                        }, 200);
-//                    }
-                }
-
-                handler.sendEmptyMessageDelayed(1, 300);
-            }
-        });
-        XunFeiVoiceControl.getInstance(OperateActivity.this).oneShot();
-    }
 
     @Override
     protected void onDestroy() {

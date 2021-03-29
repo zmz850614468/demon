@@ -16,6 +16,7 @@ import com.lilanz.wificonnect.activitys.WelcomeActivity;
 import com.lilanz.wificonnect.utils.BuildUtil;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 import com.lilanz.wificonnect.utils.StringUtil;
+import com.tencent.bugly.beta.Beta;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -45,8 +46,6 @@ public class AppSettingActivity extends Activity {
     RadioButton rbInsideIp;
     @BindView(R.id.tv_update_check)
     TextView tvUpdateCheck;
-    @BindView(R.id.et_voice_sensitivity)
-    EditText etVoiceSensitivity;
     @BindView(R.id.ns_my_room)
     NiceSpinner nsMyRoom;
 
@@ -66,7 +65,7 @@ public class AppSettingActivity extends Activity {
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.tv_update_check:
-//                Beta.checkUpgrade();
+                Beta.checkUpgrade();
                 break;
             case R.id.tv_exit:
                 SharePreferencesUtil.saveBecome(this, "");
@@ -112,7 +111,6 @@ public class AppSettingActivity extends Activity {
         });
 
         int voiceSensitivity = SharePreferencesUtil.getVoiceSensitivity(this);
-        etVoiceSensitivity.setText(voiceSensitivity + "");
 
         tvUpdateCheck.append("(" + BuildUtil.getVersionName(this) + "." + BuildUtil.getVersionCode(this) + ")");
     }
@@ -150,20 +148,6 @@ public class AppSettingActivity extends Activity {
             int port = Integer.parseInt(etPort.getText().toString());
             SharePreferencesUtil.saveServicePort(this, port);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String voiceStr = etVoiceSensitivity.getText().toString();
-
-        try {
-            int voiceSensitivity = Integer.parseInt(voiceStr);
-            if (voiceSensitivity < 1) {
-                voiceSensitivity = 1;
-            } else if (voiceSensitivity > 3000) {
-                voiceSensitivity = 3000;
-            }
-            SharePreferencesUtil.saveVoiceSensitivity(this, voiceSensitivity);
-        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 

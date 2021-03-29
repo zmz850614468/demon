@@ -11,16 +11,6 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/tv_add_device"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="+"
-            android:textColor="@color/app_title_color"
-            android:textSize="30sp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -35,38 +25,14 @@
             android:src="@mipmap/icon_refresh"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/iv_setting"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:src="@mipmap/icon_setting" />
-
     </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_device"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_title"
         android:layout_marginTop="10dp" />
-<!--    <android.support.v7.widget.RecyclerView-->
-<!--        android:id="@+id/rv_device"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_below="@+id/layout_title"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:paddingLeft="8dp"-->
-<!--        android:paddingRight="8dp" />-->
-
-    <TextView
-        android:id="@+id/tv_search"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="查找设备"
-        android:textColor="@color/app_content_color" />
 
     <TextView
         android:id="@+id/tv_msg"

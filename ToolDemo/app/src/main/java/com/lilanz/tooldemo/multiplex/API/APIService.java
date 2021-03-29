@@ -58,4 +58,13 @@ public interface APIService {
     @POST("printerTemplate/setTemplateDetails")
     //请求方法为POST，里面为你要上传的url
     Call<ResponseBody> getBitmapStr(@FieldMap Map<String, String> map);
+
+    /**
+     * 应用更新检测
+     *
+     * @param map Params请求方法
+     * @return
+     */
+    @POST("")
+    Call<ResponseBody> checkAppUpdate(@QueryMap Map<String, Object> map);
 }

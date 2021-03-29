@@ -17,6 +17,7 @@ import com.lilanz.wificonnect.activity_new.App;
 import com.lilanz.wificonnect.activity_new.HomeDeviceActivity;
 import com.lilanz.wificonnect.activity_new.ServerActivity;
 import com.lilanz.wificonnect.controls.AppDataControl;
+import com.lilanz.wificonnect.controls.PermissionControl;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -78,21 +79,9 @@ public class WelcomeActivity extends Activity {
     }
 
     private void requestPermissions() {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                int permission = ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.RECORD_AUDIO);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.LOCATION_HARDWARE, Manifest.permission.READ_PHONE_STATE,
-                            Manifest.permission.WRITE_SETTINGS, Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_CONTACTS}, 0x0010);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        PermissionControl permissionControl = new PermissionControl(this);
+        permissionControl.locationPermission();
+        permissionControl.storagePermission();
     }
 
     private void showLog(String msg) {

@@ -1,0 +1,14 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.jeremyfeinstein.slidingmenu.lib"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+7-->E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+8        android:minSdkVersion="7"
+8-->E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:5-47
+9        android:targetSdkVersion="16" />
+9-->E:\demon\WiFiConnect\library_slidingmenu\AndroidManifest.xml:7:15-44
+10
+11</manifest>

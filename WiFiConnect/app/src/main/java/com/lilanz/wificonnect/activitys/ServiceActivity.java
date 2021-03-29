@@ -21,14 +21,11 @@ import com.google.gson.Gson;
 import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
-import com.lilanz.wificonnect.beans.DeviceControlBean;
 import com.lilanz.wificonnect.beans.MsgBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.controls.AppDataControl;
-import com.lilanz.wificonnect.controls.DeviceControl;
 import com.lilanz.wificonnect.controls.MediaControl;
 import com.lilanz.wificonnect.controls.PermissionControl;
-import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
 import com.lilanz.wificonnect.threads.WifiService;
 import com.lilanz.wificonnect.utils.SharePreferencesUtil;
@@ -69,7 +66,6 @@ public class ServiceActivity extends AppCompatActivity {
         permissionControl.storagePermission();
 
         initService();
-        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @OnClick(R.id.iv_setting)
@@ -160,66 +156,6 @@ public class ServiceActivity extends AppCompatActivity {
     private void initUI() {
         String ipAddr = WiFiUtil.getIpAddr(this);
         tvAddress.setText("ip:" + ipAddr);
-    }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:     // 打开讯飞语音监听
-                    initXunFei();
-                    break;
-            }
-        }
-    };
-
-    private void initXunFei() {
-        XunFeiVoiceControl.getInstance(ServiceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
-            @Override
-            public void onResult(boolean status, String result) {
-                if ("音乐|歌曲".contains(result)) {
-                    if (status) {   // 播放歌曲
-                        if (!MediaControl.getInstance(ServiceActivity.this).isPlaying()) {
-                            if (StringUtil.isEmpty(AppDataControl.playingPath)) {
-                                MediaControl.getInstance(ServiceActivity.this).playNext();
-                            } else {
-                                MediaControl.getInstance(ServiceActivity.this).switchPlay(AppDataControl.playingPath);
-                            }
-                        }
-                    } else {         // 关闭歌曲
-                        MediaControl.getInstance(ServiceActivity.this).stopPlay();
-                    }
-                } else if ("下一曲".contains(result)) {
-                    if (status) {
-                        MediaControl.getInstance(ServiceActivity.this).playNext();
-                    }
-                } else if ("灯|热水器".contains(result)) {
-                    if (result.equals("灯")) {   // 点灯是反接线的，所以控制反向了
-                        status = !status;
-                    }
-                    String operate = status ? "open" : "close";
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("device_type", result);
-                    List<DeviceBean> list = DBControl.quaryByColumn(ServiceActivity.this, DeviceBean.class, map);
-                    for (DeviceBean deviceBean : list) {
-//                        DeviceControlBean deviceControlBean = new DeviceControlBean();
-//                        deviceControlBean.ip = deviceBean.ip;
-//                        deviceControlBean.port = deviceBean.port;
-//                        deviceControlBean.control = operate;
-//                        DeviceControl.getInstance(ServiceActivity.this).handleMsg(deviceControlBean);
-                        Esp8266ControlBean controlBean = new Esp8266ControlBean();
-                        controlBean.ip = deviceBean.ip;
-                        controlBean.port = deviceBean.port;
-                        controlBean.control = operate;
-                        DeviceOkSocketControl.getInstance(ServiceActivity.this).sendControlMsg(controlBean);
-                    }
-                }
-
-                handler.sendEmptyMessageDelayed(1, 300);
-            }
-        });
-        XunFeiVoiceControl.getInstance(ServiceActivity.this).oneShot();
     }
 
     @Override

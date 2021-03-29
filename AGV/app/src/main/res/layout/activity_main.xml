@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_control"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_box_gray">
+
+        <TextView
+            android:id="@+id/tv_agv"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:text="D"
+            android:textColor="@color/red"
+            android:textSize="70sp" />
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_agv"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center_horizontal"
+            android:text="←"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_agv"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center_horizontal"
+            android:text="→"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+        <TextView
+            android:id="@+id/tv_up"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_above="@+id/tv_agv"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center_horizontal"
+            android:text="↑"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+        <TextView
+            android:id="@+id/tv_down"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_below="@+id/tv_agv"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center_horizontal"
+            android:text="↓"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_size" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

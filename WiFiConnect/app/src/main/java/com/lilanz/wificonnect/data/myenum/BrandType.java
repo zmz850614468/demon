@@ -45,6 +45,12 @@ public enum BrandType {
         return list;
     }
 
+    public static List<String> getElectricPotBrang() {
+        List<String> list = new ArrayList<>();
+        list.add(OTHER.name);
+        return list;
+    }
+
     /**
      * 灯的品牌 名称
      *

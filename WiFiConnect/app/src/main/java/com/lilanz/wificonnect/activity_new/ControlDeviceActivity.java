@@ -17,7 +17,6 @@ import com.lilanz.wificonnect.R;
 import com.lilanz.wificonnect.adapters.ItemBeanAdapter;
 import com.lilanz.wificonnect.beans.ItemBean;
 import com.lilanz.wificonnect.controls.PermissionControl;
-import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.utils.WiFiUtil;
 
 import java.util.ArrayList;
@@ -58,7 +57,6 @@ public class ControlDeviceActivity extends Activity {
         initUI();
         initData();
         initAdapter();
-        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @Override
@@ -103,32 +101,6 @@ public class ControlDeviceActivity extends Activity {
 
     private void initUI() {
         tvAddress.setText("ip：" + WiFiUtil.getIpAddr(this));
-    }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:     // 打开讯飞语音监听
-                    initXunFei();
-                    break;
-            }
-        }
-    };
-
-    private void initXunFei() {
-        XunFeiVoiceControl.getInstance(ControlDeviceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
-            @Override
-            public void onResult(boolean status, String result) {
-                if ("灯|热水器".contains(result)) {
-                    // TODO
-                }
-
-                handler.sendEmptyMessageDelayed(1, 300);
-            }
-        });
-        XunFeiVoiceControl.getInstance(ControlDeviceActivity.this).oneShot();
     }
 
     @Override

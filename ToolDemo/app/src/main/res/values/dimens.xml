@@ -4,7 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <dimen name="app_content_size">20sp</dimen>
+    <dimen name="app_content_size">17sp</dimen>
+    <dimen name="app_title_size">19sp</dimen>
 
     <!--  slidingMenu  -->
     <dimen name="slidingmenu_offset">100dp</dimen>

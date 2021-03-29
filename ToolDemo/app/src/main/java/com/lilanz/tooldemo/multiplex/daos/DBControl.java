@@ -35,6 +35,9 @@ public class DBControl {
     public static void deleteByColumn(Context context, Class clazz, Map<String, Object> map) {
         BeanDao dao = BeanDao.getDaoOperate(context, clazz);
         List list = dao.queryWhereForList(map);
-        dao.delete(list);
+        for (Object o : list) {
+            dao.delete(o);
+        }
     }
+
 }

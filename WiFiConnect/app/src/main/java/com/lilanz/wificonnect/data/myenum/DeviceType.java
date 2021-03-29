@@ -16,7 +16,7 @@ public enum DeviceType {
     ELECTRIC_FAN("电风扇"),     // 电风扇
     WATER_HEATER("热水器"),     // 热水器
     AIR_CONDITION("空调"),      // 空调
-//    ELECTRIC_POT("电饭锅"),         // 电饭锅
+    ELECTRIC_POT("电饭锅"),     // 电饭锅
     ;
     public String name;
 
@@ -68,9 +68,9 @@ public enum DeviceType {
             case AIR_CONDITION:
                 resouce = R.mipmap.air_condition;
                 break;
-//            case "电饭锅":
-//                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
-//                break;
+            case ELECTRIC_POT:
+                resouce = R.mipmap.electric_pot;
+                break;
         }
         return resouce;
     }

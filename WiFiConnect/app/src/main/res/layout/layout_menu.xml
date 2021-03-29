@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="菜单"
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_title_size" />
+
+        <TextView
+            android:id="@+id/tv_smart_config_menu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="1.自动配置wifi"
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_content_size" />
+
+        <TextView
+            android:id="@+id/tv_search_device_menu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="2.自动查找设备"
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_content_size" />
+
+        <TextView
+            android:id="@+id/tv_add_device_menu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="3.手动添加设备"
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_content_size" />
+
+        <TextView
+            android:id="@+id/tv_setting_menu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="设置"
+            android:textColor="@color/app_content_color"
+            android:textSize="@dimen/app_content_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>

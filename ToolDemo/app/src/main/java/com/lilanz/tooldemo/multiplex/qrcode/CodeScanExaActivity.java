@@ -10,10 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.lilanz.tooldemo.MainActivity;
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.utils.SoftKeyboardUtil;
-import com.lilanz.tooldemo.utils.StringUtil;
 
 public class CodeScanExaActivity extends Activity implements View.OnClickListener {
 

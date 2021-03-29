@@ -21,8 +21,8 @@ import com.lilanz.wificonnect.bean_new.Esp8266ControlBean;
 import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.control_new.DeviceOkSocketControl;
 import com.lilanz.wificonnect.control_new.DeviceVoiceControl;
-import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.daos.DBControl;
+import com.lilanz.wificonnect.menu.HomeDeviceMenu;
 
 import java.util.List;
 
@@ -50,14 +50,10 @@ public class HomeDeviceActivity extends Activity {
 
         initData();
         initAdapter();
+
+        HomeDeviceMenu.add(this);
         // 打开讯飞语音识别
-        handler.sendEmptyMessageDelayed(1, 1000);
-//        if (App.isDebug) {
-//            Esp8266ControlBean bean = DeviceVoiceControl.getInstance(this).parse(true, "打开灯");
-//            if (bean != null) {
-//                showLog(bean.toString());
-//            }
-//        }
+//        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     @Override
@@ -67,12 +63,6 @@ public class HomeDeviceActivity extends Activity {
             onRefreshClicked(null);
             needUpdate = false;
         }
-    }
-
-    @OnClick(R.id.tv_add_device)
-    public void onAddDeviceClicked(View v) {
-        Intent intent = new Intent(this, AddDeviceActivity.class);
-        startActivity(intent);
     }
 
     @OnClick(R.id.iv_refresh)
@@ -92,27 +82,11 @@ public class HomeDeviceActivity extends Activity {
         }
     }
 
-    @OnClick(R.id.iv_setting)
-    public void onSettingClicked() {
-        Intent intent = new Intent(this, AppSettingActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.tv_search)
-    public void onClicked(View v) {
-        switch (v.getId()) {
-            case R.id.tv_search:
-                Intent intent = new Intent(this, SearchDeviceActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
-
     private void initAdapter() {
         deviceList = DBControl.quaryAll(this, DeviceBean.class);
         deviceAdapter = new DeviceAdapter(this, deviceList);
-//        LinearLayoutManager manager = new LinearLayoutManager(this);
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        GridLayoutManager manager = new GridLayoutManager(this, 1);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         deviceRecycler.setLayoutManager(manager);
         deviceRecycler.setAdapter(deviceAdapter);
@@ -133,25 +107,25 @@ public class HomeDeviceActivity extends Activity {
     /**
      * 初始化讯飞语音
      */
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:     // 打开讯飞语音监听
-                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
-                        @Override
-                        public void onResult(boolean status, String result) {
-                            dealVoiceControl(status, result);
-
-                            handler.sendEmptyMessageDelayed(1, 300);
-                        }
-                    });
-                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).oneShot();
-                    break;
-            }
-        }
-    };
+//    private Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what) {
+//                case 1:     // 打开讯飞语音监听
+//                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).setOnOneShotResult(new XunFeiVoiceControl.OnOneShotResult() {
+//                        @Override
+//                        public void onResult(boolean status, String result) {
+//                            dealVoiceControl(status, result);
+//
+//                            handler.sendEmptyMessageDelayed(1, 300);
+//                        }
+//                    });
+//                    XunFeiVoiceControl.getInstance(HomeDeviceActivity.this).oneShot();
+//                    break;
+//            }
+//        }
+//    };
 
     /**
      * 处理语音结果

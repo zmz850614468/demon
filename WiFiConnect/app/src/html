@@ -1,0 +1,1 @@
+HTTP/1.1 200 OK\nServer:Apache Tomcat/5.0.12\nDate:Mon,6Oct2003 13:23:42 GMT\nContent-Length:112\n<html><head><title>HTTP响应示例<title></head><body>Hello HTTP!</body></html>

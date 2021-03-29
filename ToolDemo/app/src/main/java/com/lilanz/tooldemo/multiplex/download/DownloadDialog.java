@@ -18,12 +18,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lilanz.tooldemo.App;
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.dialogs.AccountAdapter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +116,10 @@ public class DownloadDialog extends Dialog implements DialogInterface.OnClickLis
             }
             if (downloadCount == urlList.size()) {
                 dismiss();
-                showToast("文件下载完成");
+//                showToast("文件下载完成");
+                if (onDownloadCompleteListener != null) {
+                    onDownloadCompleteListener.onAllComplete();
+                }
             }
         }
 
@@ -140,16 +140,22 @@ public class DownloadDialog extends Dialog implements DialogInterface.OnClickLis
                 localContentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, localContentValues);
             }
 
-
             DownloadBean bean = getBean(url);
             if (bean != null) {
                 downloadList.remove(bean);
                 adapter.notifyDataSetChanged();
             }
 
+            if (onDownloadCompleteListener != null) {
+                onDownloadCompleteListener.onComplete(url, savePath);
+            }
+
             if (downloadCount == urlList.size()) {
                 dismiss();
-                showToast("文件下载完成");
+//                showToast("文件下载完成");
+                if (onDownloadCompleteListener != null) {
+                    onDownloadCompleteListener.onAllComplete();
+                }
             }
         }
     });
@@ -195,5 +201,17 @@ public class DownloadDialog extends Dialog implements DialogInterface.OnClickLis
 
     private void showLog(String msg) {
         Log.e("download", msg);
+    }
+
+    private OnDownloadCompleteListener onDownloadCompleteListener;
+
+    public void setOnDownloadCompleteListener(OnDownloadCompleteListener onDownloadCompleteListener) {
+        this.onDownloadCompleteListener = onDownloadCompleteListener;
+    }
+
+    public interface OnDownloadCompleteListener {
+        void onComplete(String url, String disPath);
+
+        void onAllComplete();
     }
 }

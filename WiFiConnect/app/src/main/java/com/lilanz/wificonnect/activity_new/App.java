@@ -3,10 +3,9 @@ package com.lilanz.wificonnect.activity_new;
 import android.app.Application;
 import android.content.Context;
 
-import com.iflytek.cloud.SpeechUtility;
 import com.lilanz.wificonnect.controls.SoundControl;
-import com.lilanz.wificonnect.controls.XunFeiVoiceControl;
 import com.lilanz.wificonnect.utils.BuildUtil;
+import com.tencent.bugly.Bugly;
 
 public class App extends Application {
 
@@ -20,7 +19,7 @@ public class App extends Application {
         context = this;
         isDebug = BuildUtil.isApkInDebug(this);
 
-//        Bugly.init(context, "1fa246be97", true);
+        Bugly.init(context, "1fa246be97", true);
 //        Bugly.setUserId(this, DeviceUtils.getPhoneName() + "_" + DeviceUtils.getSystemModel() + "--" + DeviceUtils.getSystemVersion());
 
         SoundControl.getInstance(context).initData();
