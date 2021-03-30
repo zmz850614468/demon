@@ -1,9 +1,11 @@
 package com.lilanz.tooldemo.multiplex.download;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -360,4 +362,58 @@ public class DownloadControl {
         return requestBody;
     }
 
+    /**
+     * 获取网络图片转bitmap
+     *
+     * @param downUrl 下载网络地址
+     */
+    public void getBitmapDownRequest(final String downUrl, final DownloadListener listener) {
+        mSign = 1;
+        mDownUrl = downUrl;
+        mHttpDownListener = listener;
+        mAlreadyDownLength = 0;
+        Request request = new Request.Builder()
+                .url(mDownUrl)
+                .get()
+                .build();
+        mCall = OkHttpClientCreate.createClient().newCall(request);//构建了一个完整的http请求
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (mHttpDownListener != null) {
+                    mHttpDownListener.onFailure(call, e, downUrl);
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ResponseBody responseBody = response.body();
+                mTotalLength = responseBody.contentLength();//下载文件的总长度
+                InputStream inp = responseBody.byteStream();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                try {
+                    byte[] bytes = new byte[2048];
+                    int len = 0;
+                    while ((len = inp.read(bytes)) != -1) {
+                        mAlreadyDownLength = mAlreadyDownLength + len;
+                        byteArrayOutputStream.write(bytes, 0, len);
+                        if (mHttpDownListener != null) {
+                            mHttpDownListener.onResponse(call, response, downUrl, mTotalLength, mAlreadyDownLength);
+                        }
+                    }
+                    if (mHttpDownListener != null) {
+                        mHttpDownListener.onComplete(BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size()));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (mHttpDownListener != null) {
+                        mHttpDownListener.onFailure(call, e, downUrl);
+                    }
+                } finally {
+                    byteArrayOutputStream.close();
+                    inp.close();
+                }
+            }
+        });
+    }
 }

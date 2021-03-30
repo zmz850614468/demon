@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.utils;
+package com.demon.tool.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,5 +26,4 @@ public class StringUtil {
         Date date = new Date(System.currentTimeMillis());
         return format.format(date);
     }
-
 }

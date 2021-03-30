@@ -111,6 +111,8 @@ dependencies {
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'
+//    List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {
+//    }.getType());
 
     // OkSocket
     implementation 'com.tonystark.android:socket:4.2.3'
@@ -136,8 +138,7 @@ dependencies {
 //    // js 的桥接
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 
-//    List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {
-//    }.getType());
+
 
 
 
