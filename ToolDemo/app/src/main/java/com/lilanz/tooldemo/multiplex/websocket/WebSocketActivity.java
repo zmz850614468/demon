@@ -16,7 +16,8 @@ import okhttp3.WebSocketListener;
 
 public class WebSocketActivity extends AppCompatActivity {
 
-    private static final String WS = "ws://192.168.1.102:8899";
+//    private static final String WS = "ws://192.168.1.102:8899";
+    private static final String WS = "http://192.168.37.43:9092?mac=5";
 //    private static final String WS = "192.168.1.136:8899";
 
     private WebSocket webSocket;

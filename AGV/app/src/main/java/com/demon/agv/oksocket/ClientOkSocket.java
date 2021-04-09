@@ -106,8 +106,11 @@ public class ClientOkSocket {
                     connectionManagerMap.get(info.getIp()).send(new OkSocketBean(bytes));
                 }
                 list.clear();
-//                byte[] msg = msgMap.remove(info.getIp());
             }
+            for (OnSocketListener onStatusListener : listenerList) {
+                onStatusListener.onConnected(info.getIp());
+            }
+
             showLog(info.getIp() + ":连接成功");
         }
 
@@ -120,7 +123,7 @@ public class ClientOkSocket {
             }
             showLog(info.getIp() + ":断开连接");
             for (OnSocketListener onStatusListener : listenerList) {
-                onStatusListener.onDisconnect(info.getIp());
+                onStatusListener.onDisconnected(info.getIp());
             }
 
             Message msg = new Message();

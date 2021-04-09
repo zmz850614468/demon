@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.lilanz.tooldemo">
 
 
@@ -32,35 +33,29 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".multiplex.websocket.WebSocketActivity">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+
+        <activity android:name=".multiplex.doublecamera.CameraActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-        <activity android:name=".multiplex.esptouch.EsptouchActivity">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
+
+        <activity android:name=".multiplex.websocket.WebSocketActivity" />
+        <activity android:name=".multiplex.esptouch.EsptouchActivity" />
 
         <activity android:name=".multiplex.download.DownloadActivity" />
         <activity android:name=".multiplex.API.APIActivity" />
         <activity android:name=".multiplex.daos.DaoExaActivity" />
-        <activity android:name=".multiplex.camera2.Camera2ExaActivity">
-            <!--                        <intent-filter>-->
-            <!--                            <action android:name="android.intent.action.MAIN" />-->
-            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--                        </intent-filter>-->
-        </activity>
+        <activity android:name=".multiplex.camera2.Camera2ExaActivity" />
         <activity android:name=".multiplex.qrcode.CodeScanExaActivity" /> <!-- 允许系统7.0以上的拍照，视频录制存储 -->
 
         <activity android:name=".multiplex.activitys.ReuseActivity" />

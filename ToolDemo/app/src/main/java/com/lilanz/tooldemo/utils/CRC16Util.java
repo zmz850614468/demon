@@ -18,6 +18,17 @@ public class CRC16Util {
     /**
      * 计算CRC16校验  对外的接口
      *
+     * @param data 需要计算的字符串
+     * @return CRC16校验值
+     */
+    public static String calcCrc16(String data) {
+        int crc = calcCrc16(SerialPortUtil.hexStr2Byte(data));
+        return getCrc(crc);
+    }
+
+    /**
+     * 计算CRC16校验  对外的接口
+     *
      * @param data 需要计算的数组
      * @return CRC16校验值
      */
@@ -60,6 +71,7 @@ public class CRC16Util {
 
     /**
      * 将计算的CRC值 转换为加空格的  比如  ： crc值为 A30A -> A3 0A
+     *
      * @param res
      * @return
      */
@@ -67,7 +79,6 @@ public class CRC16Util {
         String format = String.format("%04x", res);
         String substring = format.substring(0, 2);
         String substring1 = format.substring(2, 4);
-        Log.i("BLUEDATA", "crc ---- : " + substring + "  " + substring1);
         return substring1 + substring;
     }
 }

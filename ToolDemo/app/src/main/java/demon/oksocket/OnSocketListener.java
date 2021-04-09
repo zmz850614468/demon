@@ -5,9 +5,11 @@ package demon.oksocket;
  */
 public abstract class OnSocketListener {
 
-    abstract void onMsgCallback(String ip, String msg);
+    protected abstract void onMsgCallback(String ip, String msg);
 
-    void onDisconnect(String ip) {
+    protected void onConnected(String ip) {
     }
 
+    protected void onDisconnected(String ip) {
+    }
 }

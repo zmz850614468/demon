@@ -9,8 +9,11 @@ import androidx.annotation.NonNull;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,10 @@ public class BeanDao<T> {
 
     private BeanDao(Context context, Class<T> clazz) {
         dao = OrmLiteHelter.getInstance(context).getDao(clazz);
+        //得到clzz=Employee.class
+//        Class clzz = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+//        Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+//        type.getClass();
     }
 
     // 查询所有数据

@@ -119,7 +119,7 @@ public class ServerOkSocket {
                 client.removeAllIOCallback();
             }
             for (OnSocketListener listener : listenerList) {
-                listener.onDisconnect(client.getHostIp());
+                listener.onDisconnected(client.getHostIp());
             }
         }
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.view.View;
@@ -345,5 +346,30 @@ public class BitmapUtil {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 对图片进行旋转处理
+     *
+     * @param bitmap
+     * @param degree
+     * @return
+     */
+    public static Bitmap rotate(Bitmap bitmap, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    /**
+     * 对图片进行镜像处理
+     *
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap mirror(Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1f, 1f);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }
