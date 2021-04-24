@@ -12,6 +12,8 @@ import com.lilanz.wificonnect.data.myenum.BrandType;
 import com.lilanz.wificonnect.data.myenum.DeviceType;
 import com.lilanz.wificonnect.data.waterheater.WaterHeater_OperateData;
 
+import java.util.Map;
+
 /**
  * 设备对象
  */
@@ -57,6 +59,9 @@ public class DeviceBean {
 
     @DatabaseField(columnName = "device_position")
     public String devicePosition;   // 设备所在位置
+
+    @DatabaseField(columnName = "control_map")
+    public String controlMap;  // 多继电器时， 控制映射值
 
     public String status;       // 设备状态
 

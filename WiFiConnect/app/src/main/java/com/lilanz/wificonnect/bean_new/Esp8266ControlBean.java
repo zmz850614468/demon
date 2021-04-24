@@ -20,6 +20,7 @@ public class Esp8266ControlBean {
      * query:
      */
     public String control;      // 控制方式
+    public byte[] controlBytes;
 
     public Esp8266ControlBean() {
     }
@@ -28,6 +29,12 @@ public class Esp8266ControlBean {
         this.ip = ip;
         this.port = port;
         this.control = control;
+    }
+
+    public Esp8266ControlBean(String ip, int port, byte[] controlBytes) {
+        this.ip = ip;
+        this.port = port;
+        this.controlBytes = controlBytes;
     }
 
     @NonNull

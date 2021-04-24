@@ -7,6 +7,9 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 音乐播放控制类
+ */
 public class MediaControl {
 
     private Context context;

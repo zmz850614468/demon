@@ -13,6 +13,7 @@ import com.lilanz.tooldemo.multiplex.camera2.Camera2ExaActivity;
 import com.lilanz.tooldemo.multiplex.API.APIActivity;
 import com.lilanz.tooldemo.multiplex.bleModel.BleActivity;
 import com.lilanz.tooldemo.multiplex.daos.DaoExaActivity;
+import com.lilanz.tooldemo.multiplex.doublecamera.CameraActivity;
 import com.lilanz.tooldemo.multiplex.download.DownloadActivity;
 import com.lilanz.tooldemo.multiplex.qrcode.CodeScanExaActivity;
 import com.lilanz.tooldemo.multiplex.scanhelper.ScanActivity;
@@ -40,7 +41,7 @@ public class ReuseActivity extends Activity {
 
     @OnClick({R.id.bt_ble, R.id.bt_scan_code, R.id.bt_dao_test, R.id.bt_camera2,
             R.id.bt_api_request, R.id.bt_wifi_connect, R.id.bt_webview,
-            R.id.bt_scan, R.id.bt_down, R.id.bt_web_socket})
+            R.id.bt_scan, R.id.bt_down, R.id.bt_web_socket, R.id.bt_camera1})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ble:           // 蓝牙例子
@@ -57,6 +58,10 @@ public class ReuseActivity extends Activity {
                 break;
             case R.id.bt_camera2:       // 相机例子
                 intent = new Intent(this, Camera2ExaActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_camera1:
+                intent = new Intent(this, CameraActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_api_request:

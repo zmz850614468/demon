@@ -29,7 +29,9 @@ import com.lilanz.wificonnect.utils.StringUtil;
 import org.angmarch.views.NiceSpinner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,12 +65,23 @@ public class AddDeviceActivity extends Activity {
 
     @BindView(R.id.layout_control)
     LinearLayout layoutControl;
-    @BindView(R.id.et_cook_rice)
-    EditText etCookRice;
-    @BindView(R.id.et_cook_porridge)
-    EditText etCookPorridge;
-    @BindView(R.id.et_cook_soup)
-    EditText etCookSoup;
+
+    @BindView(R.id.tv_function_1)
+    TextView tvFunction1;
+    @BindView(R.id.tv_function_2)
+    TextView tvFunction2;
+    @BindView(R.id.tv_function_3)
+    TextView tvFunction3;
+    @BindView(R.id.tv_function_4)
+    TextView tvFunction4;
+    @BindView(R.id.et_function_1)
+    EditText etFunction1;
+    @BindView(R.id.et_function_2)
+    EditText etFunction2;
+    @BindView(R.id.et_function_3)
+    EditText etFunction3;
+    @BindView(R.id.et_function_4)
+    EditText etFunction4;
 
 
     private List<String> deviceTypeList;
@@ -136,6 +149,12 @@ public class AddDeviceActivity extends Activity {
         newDevice.port = Integer.parseInt(devicePort);
         newDevice.deviceType = DeviceType.getDeviceType(deviceType);
         newDevice.brand = BrandType.getBrandType(brand);
+        Map<String, String> controlMap = new HashMap<>();
+        controlMap.put(tvFunction1.getText().toString(), etFunction1.getText().toString());
+        controlMap.put(tvFunction2.getText().toString(), etFunction2.getText().toString());
+        controlMap.put(tvFunction3.getText().toString(), etFunction3.getText().toString());
+        controlMap.put(tvFunction4.getText().toString(), etFunction4.getText().toString());
+        newDevice.controlMap = new Gson().toJson(controlMap);
 
         if ("客户端".equals(AppDataControl.selectedType)) {
             if (AppDataControl.wifiService != null) {
@@ -239,6 +258,15 @@ public class AddDeviceActivity extends Activity {
 
             if (!StringUtil.isEmpty(action) && action.equals(ACTION_UPDATE)) {
                 btDelete.setVisibility(View.VISIBLE);
+            }
+
+            // 控制映射对 TODO 之后可能需要修改
+            if (newDevice.controlMap != null) {
+                Map<String, String> controlMap = new Gson().fromJson(newDevice.controlMap, Map.class);
+                etFunction1.setText(controlMap.get(tvFunction1.getText().toString()));
+                etFunction2.setText(controlMap.get(tvFunction2.getText().toString()));
+                etFunction3.setText(controlMap.get(tvFunction3.getText().toString()));
+                etFunction4.setText(controlMap.get(tvFunction4.getText().toString()));
             }
         }
     }

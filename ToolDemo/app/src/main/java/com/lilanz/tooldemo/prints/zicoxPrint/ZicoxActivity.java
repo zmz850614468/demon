@@ -3,12 +3,15 @@ package com.lilanz.tooldemo.prints.zicoxPrint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.lilanz.tooldemo.App;
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.multiplex.bleModel.BleActivity;
 import com.lilanz.tooldemo.utils.BitmapUtil;
@@ -54,9 +57,17 @@ public class ZicoxActivity extends Activity {
                 if (address.contains("=")) {
                     address = address.substring(address.lastIndexOf("=") + 1, address.length());
                 }
+
+                bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.printtest);
+                showLog("bitmap width = " + bitmap.getWidth());
+                showLog("bitmap height = " + bitmap.getHeight());
                 PrintUtil.bitmapPrint(address, bitmap);
                 break;
         }
+    }
+
+    private void showLog(String msg) {
+        Log.e("zicox", msg);
     }
 
     private void showToast(String msg) {

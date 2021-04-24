@@ -227,6 +227,7 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_function_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -236,11 +237,12 @@
                 android:textSize="@dimen/app_content_size" />
 
             <EditText
-                android:id="@+id/et_cook_rice"
+                android:id="@+id/et_function_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/shape_box_white"
+                android:gravity="center"
                 android:inputType="number"
                 android:singleLine="true" />
         </LinearLayout>
@@ -256,6 +258,7 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_function_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -265,11 +268,12 @@
                 android:textSize="@dimen/app_content_size" />
 
             <EditText
-                android:id="@+id/et_cook_porridge"
+                android:id="@+id/et_function_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/shape_box_white"
+                android:gravity="center"
                 android:inputType="number"
                 android:singleLine="true" />
         </LinearLayout>
@@ -285,6 +289,7 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_function_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -294,11 +299,12 @@
                 android:textSize="@dimen/app_content_size" />
 
             <EditText
-                android:id="@+id/et_cook_soup"
+                android:id="@+id/et_function_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/shape_box_white"
+                android:gravity="center"
                 android:inputType="number"
                 android:singleLine="true" />
         </LinearLayout>
@@ -314,6 +320,7 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_function_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -323,11 +330,12 @@
                 android:textSize="@dimen/app_content_size" />
 
             <EditText
-                android:id="@+id/et_close"
+                android:id="@+id/et_function_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/shape_box_white"
+                android:gravity="center"
                 android:inputType="number"
                 android:singleLine="true" />
         </LinearLayout>

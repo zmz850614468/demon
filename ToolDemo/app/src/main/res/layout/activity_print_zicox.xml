@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/layout_1"
-        android:layout_width="576px"
-        android:layout_height="500px"
+        android:layout_width="299px"
+        android:layout_height="300px"
         android:gravity="center_horizontal">
 
         <ImageView
@@ -17,16 +17,17 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20px"
-            android:src="@drawable/shape_box_red" />
+            android:src="@drawable/shape_box_red"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_above="@+id/iv_photo"
+            android:layout_centerHorizontal="true"
+            android:text="华为自有开源操作系统鸿蒙OS，鸿蒙OS凭借多终端开发IDE"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="15sp"/>
 
     </RelativeLayout>
 

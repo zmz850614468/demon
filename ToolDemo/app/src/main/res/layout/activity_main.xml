@@ -13,7 +13,6 @@
         android:background="@drawable/selector"
         android:text="可复用的例子" />
 
-
     <Button
         android:id="@+id/bt_prints"
         android:layout_width="match_parent"
@@ -44,6 +43,10 @@
         android:background="@drawable/selector"
         android:text="demon：整理可复用例子，有简单demo" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textVisiblePassword" />
 
     <TextView
         android:id="@+id/tv_msg"

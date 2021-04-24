@@ -53,6 +53,14 @@
         android:text="摄像头" />
 
     <Button
+        android:id="@+id/bt_camera1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="camera1摄像头" />
+
+    <Button
         android:id="@+id/bt_webview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

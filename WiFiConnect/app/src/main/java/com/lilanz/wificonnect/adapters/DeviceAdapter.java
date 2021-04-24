@@ -1,17 +1,15 @@
 package com.lilanz.wificonnect.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +20,7 @@ import com.lilanz.wificonnect.beans.DeviceBean;
 import com.lilanz.wificonnect.data.myenum.DeviceType;
 import com.lilanz.wificonnect.dialogs.AirConditionDialog;
 import com.lilanz.wificonnect.dialogs.FanControlDialog;
+import com.lilanz.wificonnect.dialogs.PotControlDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +35,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
 
     private FanControlDialog fanControlDialog;
     private AirConditionDialog airConditionDialog;
+    private PotControlDialog potControlDialog;
 
     // 1.修改对象
     public DeviceAdapter(Context context, List<DeviceBean> list) {
@@ -76,26 +76,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         }
 
         holder.ivPic.setBackgroundResource(DeviceType.getImgResoure(bean.deviceType));
-        if (bean.deviceType == DeviceType.ELECTRIC_FAN || bean.deviceType == DeviceType.AIR_CONDITION) {
+        if (bean.deviceType == DeviceType.ELECTRIC_FAN || bean.deviceType == DeviceType.AIR_CONDITION
+                || bean.deviceType == DeviceType.ELECTRIC_POT) {
             holder.ivControl.setVisibility(View.VISIBLE);
         } else {
             holder.ivControl.setVisibility(View.GONE);
         }
-//        switch (bean.deviceType) {
-//            case LAMP:
-//                holder.ivPic.setBackgroundResource(R.mipmap.lamp);
-//                break;
-//            case ELECTRIC_FAN:
-//                holder.ivPic.setBackgroundResource(R.mipmap.electric_fans);
-//                holder.ivControl.setVisibility(View.VISIBLE);
-//                break;
-//            case HEAT_WATER:
-//                holder.ivPic.setBackgroundResource(R.mipmap.water_heater);
-//                break;
-////            case "电饭锅":
-////                holder.ivPic.setBackgroundResource(R.mipmap.electric_pot);
-////                break;
-//        }
 
         holder.ivControl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,21 +92,52 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
                 } else if (beanList.get(i).deviceType == DeviceType.AIR_CONDITION) {
                     airConditionDialog.update(beanList.get(i));
                     airConditionDialog.show();
+                } else if (beanList.get(i).deviceType == DeviceType.ELECTRIC_POT) {
+                    potControlDialog.update(beanList.get(i));
+                    potControlDialog.show();
                 }
             }
         });
 
         if (listener != null) {
             holder.btOpen.setOnClickListener(new View.OnClickListener() {
+                long lastClickTime;
+
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_OPEN, null));
+                    if (beanList.get(i).deviceType == DeviceType.ELECTRIC_POT) {
+                        long currentTime = System.currentTimeMillis();
+                        if (currentTime - lastClickTime < 2000) {
+                            showToast("请不要连续点击，稍后再尝试!");
+                            return;
+                        }
+                        lastClickTime = currentTime;
+
+                        potControlDialog.update(beanList.get(i));
+                        potControlDialog.onClicked(R.id.tv_function_1);
+                    } else {
+                        listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_OPEN, null));
+                    }
                 }
             });
             holder.btClose.setOnClickListener(new View.OnClickListener() {
+                long lastClickTime;
+
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_CLOSE, null));
+                    if (beanList.get(i).deviceType == DeviceType.ELECTRIC_POT) {
+                        long currentTime = System.currentTimeMillis();
+                        if (currentTime - lastClickTime < 2000) {
+                            showToast("请不要连续点击，稍后再尝试!");
+                            return;
+                        }
+                        lastClickTime = currentTime;
+
+                        potControlDialog.update(beanList.get(i));
+                        potControlDialog.onClicked(R.id.tv_function_4);
+                    } else {
+                        listener.onItemClick(beanList.get(i), beanList.get(i).getControlData(DeviceBean.STATUS_CLOSE, null));
+                    }
                 }
             });
         }
@@ -146,13 +163,21 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         fanControlDialog.dismiss();
         Window window = fanControlDialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
+        window.setBackgroundDrawableResource(R.color.transparent);
 
         airConditionDialog = new AirConditionDialog(context, R.style.DialogStyleOne);
         airConditionDialog.show();
         airConditionDialog.dismiss();
         window = airConditionDialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
+        window.setBackgroundDrawableResource(R.color.transparent);
 
+        potControlDialog = new PotControlDialog(context, R.style.DialogStyleOne);
+        potControlDialog.show();
+        potControlDialog.dismiss();
+        window = potControlDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setBackgroundDrawableResource(R.color.transparent);
     }
 
     @Override
@@ -191,6 +216,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
 
     public interface OnItemClickListener {
         public void onItemClick(DeviceBean bean, String operate);
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }
 

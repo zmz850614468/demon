@@ -9,18 +9,20 @@ import com.xuhao.didi.core.iocore.interfaces.ISendable;
 public class Esp8266IOBean implements ISendable {
 
     private String msg;
+    private byte[] bytes;
 
     public Esp8266IOBean() {
     }
 
-    public Esp8266IOBean(String msg) {
+    public Esp8266IOBean(String msg, byte[] bytes) {
         this.msg = msg;
+        this.bytes = bytes;
     }
 
     @Override
     public byte[] parse() {
         if (StringUtil.isEmpty(msg)) {
-            return "".getBytes();
+            return bytes == null ? "".getBytes() : bytes;
         }
         return msg.getBytes();
     }

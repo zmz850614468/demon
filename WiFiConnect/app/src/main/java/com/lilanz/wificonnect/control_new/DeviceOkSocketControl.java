@@ -51,7 +51,7 @@ public class DeviceOkSocketControl {
         IConnectionManager connectionManager;
         if (connectionManagerMap.containsKey(controlBean.ip)) {
             connectionManager = connectionManagerMap.get(controlBean.ip);
-            connectionManager.send(new Esp8266IOBean(controlBean.control));
+            connectionManager.send(new Esp8266IOBean(controlBean.control, controlBean.controlBytes));
         } else {
             esp8266ControlMap.put(controlBean.ip, controlBean);
             connectionManager = OkSocket.open(controlBean.ip, controlBean.port);
@@ -67,7 +67,7 @@ public class DeviceOkSocketControl {
             super.onSocketConnectionSuccess(info, action);
             if (esp8266ControlMap.containsKey(info.getIp())) {
                 Esp8266ControlBean controlBean = esp8266ControlMap.remove(info.getIp());
-                connectionManagerMap.get(controlBean.ip).send(new Esp8266IOBean(controlBean.control));
+                connectionManagerMap.get(controlBean.ip).send(new Esp8266IOBean(controlBean.control, controlBean.controlBytes));
             }
             showLog(info.getIp() + ":连接成功");
         }

@@ -1,35 +1,18 @@
 package com.lilanz.tooldemo.multiplex.doublecamera;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
-import android.hardware.Camera;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.journeyapps.barcodescanner.camera.CameraInstance;
 import com.lilanz.tooldemo.R;
-import com.lilanz.tooldemo.utils.BitmapUtil;
-import com.lilanz.tooldemo.utils.FileUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

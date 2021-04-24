@@ -3,6 +3,8 @@ package com.lilanz.tooldemo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,9 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
+
+import java.net.Socket;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +35,7 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
 
         initMenu();
+
     }
 
     @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints, R.id.bt_copy_use})

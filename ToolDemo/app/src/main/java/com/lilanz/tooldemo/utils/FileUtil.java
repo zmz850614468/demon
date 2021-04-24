@@ -24,8 +24,6 @@ import java.util.List;
 
 public class FileUtil {
 
-    private static final String PICTURE_FILE_NAME = "恶天使魔";
-
     /**
      * 保存数据到文件中
      *
