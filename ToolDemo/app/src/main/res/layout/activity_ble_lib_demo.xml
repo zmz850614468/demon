@@ -29,16 +29,16 @@
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/et_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:background="@drawable/shape_box_white"
-            android:inputType="number"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+        android:id="@+id/et_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="@drawable/shape_box_white"
+        android:inputType="number"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_send"

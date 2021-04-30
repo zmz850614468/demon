@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ScrollView;
@@ -319,8 +320,9 @@ public class BitmapUtil {
      * @param bmp
      */
     public static void saveBitmap(Context context, Bitmap bmp) {
-//        String path = FileUtil.getPictureFile(context).getAbsolutePath();
-//        saveBitmap(context, bmp, path);
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        path = path + File.separator + "test.jpg";
+        saveBitmap(context, bmp, path);
     }
 
     /**

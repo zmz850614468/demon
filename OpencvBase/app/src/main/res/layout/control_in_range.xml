@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_in_range"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="HSV-min:"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_r_min"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="110"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_g_min"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="50"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_b_min"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="50"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="HSV-max:"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_r_max"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="130"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_g_max"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="255"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_b_max"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="255"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/sb_in_range"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:max="255"
+        android:min="0"
+        android:progress="0" />
+
+</LinearLayout>

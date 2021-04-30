@@ -108,7 +108,7 @@ public class CameraControl {
             List<Camera.Size> list = CameraUtil.getPreviewSize(camera);
             showLog(new Gson().toJson(list));
             if (!list.isEmpty()) {
-                Camera.Size size = CameraUtil.getBestSize(list, surfaceView.getWidth(), surfaceView.getHeight());
+                Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标预览大小：" + new Gson().toJson(size));
 
                 parameters.setPreviewSize(size.width, size.height);
@@ -119,7 +119,7 @@ public class CameraControl {
             list = CameraUtil.getPictureSize(camera);
             showLog(new Gson().toJson(list));
             if (!list.isEmpty()) {
-                Camera.Size size = CameraUtil.getBestSize(list, surfaceView.getWidth(), surfaceView.getHeight());
+                Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标图片大小：" + new Gson().toJson(size));
 
                 parameters.setPictureSize(size.width, size.height);
@@ -171,6 +171,28 @@ public class CameraControl {
                             showLog("保存图片完成!");
                         }
                     }.start();
+                }
+            });
+        }
+    }
+
+    /**
+     * 拍照
+     */
+    public void capturePic() {
+        if (camera != null) {
+            camera.takePicture(new Camera.ShutterCallback() {
+                @Override
+                public void onShutter() {
+                }
+            }, null, new Camera.PictureCallback() {
+                @Override
+                public void onPictureTaken(byte[] data, Camera camera) {
+                    camera.startPreview();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    if (cameraListener != null) {
+                        cameraListener.onPictureBack(bitmap);
+                    }
                 }
             });
         }
@@ -253,6 +275,20 @@ public class CameraControl {
             isRecordOpen = false;
         }
         showLog("关闭摄像头:" + cameraId);
+    }
+
+
+    private OnCameraListener cameraListener;
+
+    public void setCameraListener(OnCameraListener cameraListener) {
+        this.cameraListener = cameraListener;
+    }
+
+    /**
+     * 摄像头监听类
+     */
+    public interface OnCameraListener {
+        void onPictureBack(Bitmap bitmap);
     }
 
     private void showLog(String msg) {

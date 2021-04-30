@@ -57,12 +57,12 @@ public class CameraUtil {
     public static Camera.Size getBestSize(List<Camera.Size> sizeList, int targetWidth, int targetHeight) {
         Camera.Size bestSize = null;
 
-        float targetRatio = (targetHeight * 1.0f) / targetWidth;    // 目标大小的宽高比
+        float targetRatio = (targetWidth * 1.0f) / targetHeight;    // 目标大小的宽高比
         float minDiff = targetRatio;
 
         for (Camera.Size size : sizeList) {
             // 1.如果找到一致的大小，则返回对应数据
-            if (size.width == targetHeight && size.height == targetWidth) {
+            if (size.width == targetWidth && size.height == targetHeight) {
                 bestSize = size;
                 break;
             }
