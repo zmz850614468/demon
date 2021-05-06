@@ -24,6 +24,59 @@ public class BitmapNative {
     public static native void bitmap2gray2(Bitmap bitmap, Bitmap grayBitmap);
 
     /**
+     * 图片模板匹配
+     *
+     * @param bitmap    源图片
+     * @param temp      模板图片
+     * @param type      匹配类型
+     *                  0-cv::TM_SQDIFF:使用平方差进行匹配，因此最佳的匹配结果在结果为0处，值越大匹配结果越差。
+     *                  1-cv::TM_SQDIFF_NORMED:使用归一化的平方差进行匹配，最佳匹配也在结果为0处。
+     *                  2-cv::TM_CCORR:相关性匹配方法，该方法使用源图像与模板图像的卷积结果进行匹配，因此，最佳匹配位置在值最大处，值越小匹配结果越差。
+     *                  3-cv::TM_CCORR_NORMED:归一化的相关性匹配方法，与相关性匹配方法类似，最佳匹配位置也是在值最大处。
+     *                  4-cv::TM_CCOEFF:相关性系数匹配方法，该方法使用源图像与其均值的差、模板与其均值的差二者之间的相关性进行匹配，最佳匹配结果在值等于1处，最差匹配结果在值等于-1处，值等于0直接表示二者不相关。
+     *                  5-cv::TM_CCOEFF_NORMED:归一化的相关性系数匹配方法，正值表示匹配的结果较好，负值则表示匹配的效果较差，也是值越大，匹配效果也好。
+     * @param desBitmap 输出匹配结果
+     */
+    public static native void bitmapMatchTemplate(Bitmap bitmap, Bitmap temp, int type, Bitmap desBitmap);
+
+    /**
+     * 图片直线检测
+     *
+     * @param bitmap
+     * @param threshold 阈值
+     * @param type      1: HoughLines ; 2: HoughLinesP
+     * @param desBitmap
+     */
+    public static native void bitmapHoughLines(Bitmap bitmap, int threshold, int min, int type, Bitmap desBitmap);
+
+    /**
+     * 图片圆形检测
+     *
+     * @param bitmap
+     * @param min
+     * @param max
+     * @param desBitmap
+     */
+    public static native void bitmapHoughCircles(Bitmap bitmap, int min, int max, Bitmap desBitmap);
+
+    /**
+     * 图片边缘检测
+     *
+     * @param bitmap
+     * @param lowThreshold
+     * @param desBitmap
+     */
+    public static native void bitmapCanny(Bitmap bitmap, int lowThreshold, Bitmap desBitmap);
+
+    /**
+     * 轮廓查找和绘制
+     *
+     * @param bitmap
+     * @param desBitmap
+     */
+    public static native void bitmapContours(Bitmap bitmap, Bitmap desBitmap);
+
+    /**
      * 图片查表处理，减少像素种类
      *
      * @param bitmap

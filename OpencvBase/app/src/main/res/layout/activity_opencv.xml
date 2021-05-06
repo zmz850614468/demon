@@ -38,6 +38,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:padding="5dp">
@@ -101,6 +102,14 @@
             <include layout="@layout/control_gauss_blur" />
 
             <include layout="@layout/control_in_range" />
+
+            <include layout="@layout/control_canny" />
+
+            <include layout="@layout/control_hough_line" />
+
+            <include layout="@layout/control_hough_circle" />
+
+            <include layout="@layout/control_match_template" />
         </RelativeLayout>
 
         <Button

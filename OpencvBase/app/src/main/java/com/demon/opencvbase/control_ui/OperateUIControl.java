@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -34,14 +36,20 @@ public class OperateUIControl {
     public static final String DILATE = "扩张";               // 亮度颜色范围变大
     public static final String THRESHOLD = "二值化操作";       // 图像二值处理
     public static final String GAUSSIAN_BLUR = "高斯模糊";
-    public static final String IN_RANGE = "inRange操作";
+    public static final String IN_RANGE = "inRange操作";      // 图片转HSV，通过HSV值二值化图片
     public static final String BLUR = "归一化模糊";
     public static final String MEDIA_BLUR = "中值模糊";
 
-    public static final String AND = "bitwise_and";           // 图片位图操作
+    public static final String AND = "bitwise_and";           // 图片位图操作：原图片和二值化图片操作
     public static final String OR = "bitwise_or";
     public static final String XOR = "bitwise_xor";
     public static final String NOT = "bitwise_not";
+
+    public static final String CANNY = "canny边缘检测";         // 一下四个操作，都先要处理边缘检测
+    public static final String LINE = "直线检测";
+    public static final String CIRCLE = "圆形检测";
+    public static final String MATCH = "模板匹配";
+    public static final String CONTOURS = "轮廓查找和绘制";
 
     @BindView(R.id.layout_control)
     ViewGroup layoutControl;
@@ -62,6 +70,7 @@ public class OperateUIControl {
 
     private Activity activity;
     private Bitmap originalBitmap;
+    private Bitmap templateBitmap;
     private Bitmap lastPreBitmap;
     private Bitmap preBitmap;
 
@@ -76,6 +85,7 @@ public class OperateUIControl {
     }
 
     public void resetBitmap() {
+        templateBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.temp);
         originalBitmap = BitmapFactory.decodeResource(activity.getResources(), resId);
         preBitmap = originalBitmap;
         lastPreBitmap = originalBitmap;
@@ -103,6 +113,11 @@ public class OperateUIControl {
         operateList.add(OR);
         operateList.add(XOR);
         operateList.add(NOT);
+        operateList.add(CANNY);
+        operateList.add(LINE);
+        operateList.add(CIRCLE);
+        operateList.add(MATCH);
+        operateList.add(CONTOURS);
 
         operateAdapter = new OperateAdapter(activity, operateList);
         LinearLayoutManager manager = new LinearLayoutManager(activity);
@@ -148,6 +163,9 @@ public class OperateUIControl {
                 case NOT:
                     ((OpencvActivity) activity).bitwiseOperate(originalBitmap, lastPreBitmap, 4);
                     return;
+                case CONTOURS:
+                    ((OpencvActivity) activity).contoursOperate(lastPreBitmap);
+                    break;
             }
         }
 
@@ -184,6 +202,18 @@ public class OperateUIControl {
             case IN_RANGE:
                 layoutInRange.setVisibility(View.VISIBLE);
                 break;
+            case CANNY:
+                layoutCanny.setVisibility(View.VISIBLE);
+                break;
+            case LINE:
+                layoutHoughLine.setVisibility(View.VISIBLE);
+                break;
+            case CIRCLE:
+                layoutHoughCircle.setVisibility(View.VISIBLE);
+                break;
+            case MATCH:
+                layoutMatchTemplate.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -191,7 +221,6 @@ public class OperateUIControl {
      * 隐藏所有控制板
      */
     private void hideControls() {
-//        layoutControl.setVisibility(View.GONE);
         layoutLut.setVisibility(View.GONE);
         layoutConvertTo.setVisibility(View.GONE);
         layoutThreshold.setVisibility(View.GONE);
@@ -199,7 +228,10 @@ public class OperateUIControl {
         layoutMediaBlur.setVisibility(View.GONE);
         layoutGaussBlur.setVisibility(View.GONE);
         layoutInRange.setVisibility(View.GONE);
-//        btOk.setVisibility(View.GONE);
+        layoutCanny.setVisibility(View.GONE);
+        layoutHoughLine.setVisibility(View.GONE);
+        layoutHoughCircle.setVisibility(View.GONE);
+        layoutMatchTemplate.setVisibility(View.GONE);
     }
 
     /**
@@ -226,6 +258,10 @@ public class OperateUIControl {
         initMediaBlur();
         initGaussBlur();
         initInRange();
+        initCanny();
+        initHoughLine();
+        initHoughCircle();
+        initMatchTemplate();
         hideControls();
         initAdapter();
         resetBitmap();
@@ -449,6 +485,189 @@ public class OperateUIControl {
                 tvGaussBlur.setText(String.format("核大小(%d):", kSize));
                 if (activity instanceof OpencvActivity) {
                     ((OpencvActivity) activity).gaussBlurOperate(lastPreBitmap, kSize);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    @BindView(R.id.layout_canny)
+    ViewGroup layoutCanny;
+    @BindView(R.id.tv_canny)
+    TextView tvCanny;
+    @BindView(R.id.sb_canny)
+    SeekBar sbCanny;
+
+    /**
+     * 边缘查找
+     */
+    private void initCanny() {
+        sbCanny.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvCanny.setText(String.format("最小阈值(%d):", progress));
+                if (activity instanceof OpencvActivity) {
+                    ((OpencvActivity) activity).cannyOperate(lastPreBitmap, progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    @BindView(R.id.cb_line)
+    CheckBox cbLine;
+    @BindView(R.id.layout_hough_line)
+    ViewGroup layoutHoughLine;
+    @BindView(R.id.tv_hough_line)
+    TextView tvHoughLine;
+    @BindView(R.id.sb_hough_line)
+    SeekBar sbHoughLine;
+    @BindView(R.id.tv_min_line)
+    TextView tvMinLine;
+    @BindView(R.id.sb_min_line)
+    SeekBar sbMinLine;
+
+    /**
+     * 直线检测
+     */
+    private void initHoughLine() {
+        sbHoughLine.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvHoughLine.setText(String.format("阈值(%d):", progress));
+                updateLine();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        sbMinLine.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvMinLine.setText(String.format("最小值(%d):", progress));
+                updateLine();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        cbLine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateLine();
+            }
+        });
+    }
+
+    private void updateLine() {
+        if (activity instanceof OpencvActivity) {
+            int type = cbLine.isChecked() ? 2 : 1;
+            int threshold = sbHoughLine.getProgress();
+            int min = sbMinLine.getProgress();
+
+            ((OpencvActivity) activity).lineOperate(lastPreBitmap, threshold, min, type);
+        }
+    }
+
+    @BindView(R.id.layout_hough_circle)
+    ViewGroup layoutHoughCircle;
+    @BindView(R.id.tv_max_circle)
+    TextView tvMaxCircle;
+    @BindView(R.id.sb_max_circle)
+    SeekBar sbMaxCircle;
+    @BindView(R.id.tv_min_circle)
+    TextView tvMinCircle;
+    @BindView(R.id.sb_min_circle)
+    SeekBar sbMinCircle;
+
+    /**
+     * 圆形检测
+     */
+    private void initHoughCircle() {
+        sbMaxCircle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvMaxCircle.setText(String.format("最大值(%d):", progress));
+                updateCircle(1);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        sbMinCircle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvMinCircle.setText(String.format("最小值(%d):", progress));
+                updateCircle(-1);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    private void updateCircle(int type) {
+        if (activity instanceof OpencvActivity) {
+            int min = sbMinCircle.getProgress();
+            int max = sbMaxCircle.getProgress();
+            if (type == -1 && max < min) {
+                sbMaxCircle.setProgress(min);
+            } else if (type == 1 && max < min) {
+                sbMinCircle.setProgress(max);
+            } else {
+                ((OpencvActivity) activity).circleOperate(lastPreBitmap, min, max, originalBitmap);
+            }
+        }
+    }
+
+    @BindView(R.id.layout_match_template)
+    ViewGroup layoutMatchTemplate;
+    @BindView(R.id.tv_match_template)
+    TextView tvMatchTemplate;
+    @BindView(R.id.sb_match_template)
+    SeekBar sbMatchTemplate;
+
+    private void initMatchTemplate() {
+        sbMatchTemplate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvMatchTemplate.setText(String.format("匹配模式(%d):", progress));
+                if (activity instanceof OpencvActivity) {
+                    ((OpencvActivity) activity).templateOperate(lastPreBitmap, templateBitmap, progress, originalBitmap);
                 }
             }
 

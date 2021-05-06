@@ -58,6 +58,155 @@ Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmap2gray2(JNIEnv *env,
 
 extern "C"
 JNIEXPORT void JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapContours(JNIEnv *env, jclass clazz,
+                                                                      jobject bitmap,
+                                                                      jobject des_bitmap) {
+    cv::RNG rng(12345);
+    cv::Mat src = bitmap2Mat(env, bitmap);
+    cv::Mat des = bitmap2Mat(env, des_bitmap);
+    cv::Mat temp;
+    cv::cvtColor(src, temp, CV_BGRA2GRAY);
+
+    std::vector<std::vector<cv::Point> > contours;
+    std::vector<cv::Vec4i> hierarchy;
+    findContours(temp, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE,
+                 cv::Point(0, 0));
+    for (size_t i = 0; i < contours.size(); i++) {
+        cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255),
+                                      rng.uniform(0, 255), 255);
+        drawContours(des, contours, (int) i, color, 2, 8, hierarchy, 0, cv::Point());
+    }
+
+    src.release();
+    des.release();
+    temp.release();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapMatchTemplate(JNIEnv *env,
+                                                                           jclass clazz,
+                                                                           jobject bitmap,
+                                                                           jobject temp, jint type,
+                                                                           jobject des_bitmap) {
+    cv::Mat src = bitmap2Mat(env, bitmap);
+    cv::Mat templat = bitmap2Mat(env, temp);
+    cv::Mat des = bitmap2Mat(env, des_bitmap);
+    cv::Mat ftemp;
+
+    double minVal;
+    double maxVal;
+    cv::Point minLoc;
+    cv::Point maxLoc;
+    cv::matchTemplate(src, templat, ftemp, type);
+    cv::normalize(ftemp, ftemp, 1, 0, cv::NORM_MINMAX);
+    cv::minMaxLoc(ftemp, &minVal, &maxVal, &minLoc, &maxLoc); // 查找最佳匹配点
+
+    if (type == 0 || type == 1) {    // 最小值匹配
+        rectangle(des, cv::Rect(minLoc.x, minLoc.y, templat.cols, templat.rows), 1, 3, 0);
+    } else {     // 最大值匹配
+        rectangle(des, cv::Rect(maxLoc.x, maxLoc.y, templat.cols, templat.rows), 1, 3, 0);
+    }
+
+    src.release();
+    templat.release();
+    des.release();
+    ftemp.release();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapHoughCircles(JNIEnv *env, jclass clazz,
+                                                                          jobject bitmap,
+                                                                          jint min, jint max,
+                                                                          jobject des_bitmap) {
+    cv::Mat src = bitmap2Mat(env, bitmap);
+    cv::Mat des(src.size(), src.type());
+    cv::Mat res = bitmap2Mat(env, des_bitmap);
+    cv::cvtColor(src, des, CV_BGRA2GRAY);
+
+    std::vector<cv::Vec3f> circles;
+    cv::HoughCircles(des, circles, cv::HOUGH_GRADIENT, 1,
+                     des.rows /
+                     16, // change this value to detect circles with different distances to each other
+                     100, 30, min, max // change the last two parameters
+            // (min_radius & max_radius) to detect larger circles
+    );
+    for (size_t i = 0; i < circles.size(); i++) {
+        cv::Vec3i c = circles[i];
+        cv::circle(res, cv::Point(c[0], c[1]), c[2], cv::Scalar(0, 0, 0, 255), 3, cv::LINE_AA);
+        cv::circle(res, cv::Point(c[0], c[1]), 2, cv::Scalar(0, 0, 0, 255), 3, cv::LINE_AA);
+    }
+
+//    mat2Bitmap(env, res, des_bitmap);
+    src.release();
+    des.release();
+    res.release();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapHoughLines(JNIEnv *env, jclass clazz,
+                                                                        jobject bitmap,
+                                                                        jint threshold, jint min,
+                                                                        jint type,
+                                                                        jobject des_bitmap) {
+    cv::Mat src = bitmap2Mat(env, bitmap);
+    cv::Mat outp = src.clone();
+    cv::Mat des(src.size(), src.type());
+
+    cv::cvtColor(src, des, CV_BGRA2GRAY);
+    if (type == 1) {
+        std::vector<cv::Vec2f> lines;
+        cv::HoughLines(des, lines, 1, CV_PI / 180, threshold, 0, 0);
+        for (size_t i = 0; i < lines.size(); i++) {
+            float rho = lines[i][0], theta = lines[i][1];
+            cv::Point pt1, pt2;
+            double a = cos(theta), b = sin(theta);
+            double x0 = a * rho, y0 = b * rho;
+            pt1.x = cvRound(x0 + 1000 * (-b));
+            pt1.y = cvRound(y0 + 1000 * (a));
+            pt2.x = cvRound(x0 - 1000 * (-b));
+            pt2.y = cvRound(y0 - 1000 * (a));
+            cv::line(outp, pt1, pt2, cv::Scalar(0, 0, 255, 255), 3, CV_AA);
+        }
+    } else if (type == 2) {
+        std::vector<cv::Vec4i> lines;
+        cv::HoughLinesP(des, lines, 1, CV_PI / 180, threshold, min, 10);
+        for (size_t i = 0; i < lines.size(); i++) {
+            cv::Vec4i l = lines[i];
+            cv::line(outp, cv::Point(l[0], l[1]), cv::Point(l[2], l[3]), cv::Scalar(0, 0, 255), 3,
+                     cv::LINE_AA);
+        }
+    }
+//    cv::Canny(src, des, low_threshold, low_threshold * 3);
+
+//    cv::bitwise_and(src, des, des);
+
+    mat2Bitmap(env, outp, des_bitmap);
+    src.release();
+    des.release();
+    outp.release();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapCanny(JNIEnv *env, jclass clazz,
+                                                                   jobject bitmap,
+                                                                   jint low_threshold,
+                                                                   jobject des_bitmap) {
+    cv::Mat src = bitmap2Mat(env, bitmap);
+    cv::Mat des(src.size(), src.type());
+//    cv::cvtColor(src, des, CV_BGRA2GRAY);
+    cv::Canny(src, des, low_threshold, low_threshold * 3);
+
+    mat2Bitmap(env, des, des_bitmap);
+    src.release();
+    des.release();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
 Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapBitwise(JNIEnv *env, jclass clazz,
                                                                      jobject src1, jobject src2,
                                                                      jint type,

@@ -163,11 +163,71 @@ public class OpencvActivity extends AppCompatActivity {
      *
      * @param src1
      * @param src2
-     * @param type
+     * @param type 1:and ; 2:or ; 3:nor ; 4:not
      */
     public void bitwiseOperate(Bitmap src1, Bitmap src2, int type) {
         Bitmap des = src1.copy(src1.getConfig(), src1.isMutable());
         BitmapNative.bitmapBitwise(src1, src2, type, des);
+        operateUIControl.setPreview(des);
+    }
+
+    /**
+     * 图片边缘检测
+     *
+     * @param src
+     * @param lowThreshold
+     */
+    public void cannyOperate(Bitmap src, int lowThreshold) {
+        Bitmap des = src.copy(src.getConfig(), src.isMutable());
+        BitmapNative.bitmapCanny(src, lowThreshold, des);
+        operateUIControl.setPreview(des);
+    }
+
+    /**
+     * @param src
+     * @param threshold
+     * @param min
+     * @param type
+     */
+    public void lineOperate(Bitmap src, int threshold, int min, int type) {
+        Bitmap des = src.copy(src.getConfig(), src.isMutable());
+        BitmapNative.bitmapHoughLines(src, threshold, min, type, des);
+        operateUIControl.setPreview(des);
+    }
+
+    /**
+     * @param src
+     * @param min
+     * @param max
+     */
+    public void circleOperate(Bitmap src, int min, int max, Bitmap originalBitmap) {
+        Bitmap des = originalBitmap.copy(originalBitmap.getConfig(), originalBitmap.isMutable());
+        BitmapNative.bitmapHoughCircles(src, min, max, des);
+        operateUIControl.setPreview(des);
+    }
+
+    /**
+     * 模板查找
+     *
+     * @param src
+     * @param template
+     * @param type
+     * @param originalBitmap
+     */
+    public void templateOperate(Bitmap src, Bitmap template, int type, Bitmap originalBitmap) {
+        Bitmap des = originalBitmap.copy(originalBitmap.getConfig(), originalBitmap.isMutable());
+        BitmapNative.bitmapMatchTemplate(src, template, type, des);
+        operateUIControl.setPreview(des);
+    }
+
+    /**
+     * 轮廓查找和绘制
+     *
+     * @param src
+     */
+    public void contoursOperate(Bitmap src) {
+        Bitmap des = src.copy(src.getConfig(), src.isMutable());
+        BitmapNative.bitmapContours(src, des);
         operateUIControl.setPreview(des);
     }
 
