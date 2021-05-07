@@ -64,7 +64,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceHold
         holder.tvName.setText(bean.name);
         holder.tvPosition.setText(bean.devicePosition);
 
-        if ("开关式".equals(bean.controlType)) {
+//        if ("开关式".equals(bean.controlType)) {
+        if (bean.deviceType == DeviceType.LAMP || bean.deviceType == DeviceType.WATER_HEATER) {
             holder.ivStatus.setVisibility(View.VISIBLE);
             if ("open".equals(bean.status)) {
                 holder.ivStatus.setBackgroundResource(R.drawable.shape_circle_green);

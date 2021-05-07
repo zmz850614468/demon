@@ -93,6 +93,9 @@ public class ServerOkSocketControl {
                     public void onClientRead(OriginalData originalData, IClient client, IClientPool<IClient, String> clientPool) {
                         showLog("read:" + new String(originalData.getBodyBytes()));
 //                        client.send(new OkSocketBean("received"));
+                        for (OnSocketListener onSocketListener : listenerList) {
+                            onSocketListener.onMsgCallback(client, client.getHostIp(), originalData.getBodyBytes());
+                        }
                     }
 
                     @Override
@@ -149,9 +152,9 @@ public class ServerOkSocketControl {
     }
 
     public interface OnSocketListener {
-        void onMsgCallback(String ip, String msg);
+        void onMsgCallback(IClient client, String ip, byte[] msg);
 
-        void onDisconnect(String ip);
+        void onDisconnect(IClient client, String ip);
     }
 
 }

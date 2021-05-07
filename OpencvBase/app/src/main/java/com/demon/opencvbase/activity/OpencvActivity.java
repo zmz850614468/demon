@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demon.opencvbase.R;
-import com.demon.opencvbase.control_ui.OperateUIControl;
+import com.demon.opencvbase.control_ui.OpencvUIControl;
 import com.demon.opencvbase.jni_opencv.jni.BitmapNative;
 
 import butterknife.ButterKnife;
@@ -22,7 +22,7 @@ public class OpencvActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    private OperateUIControl operateUIControl;
+    private OpencvUIControl opencvUIControl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class OpencvActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opencv);
         ButterKnife.bind(this);
 
-        operateUIControl = new OperateUIControl(this);
+        opencvUIControl = new OpencvUIControl(this);
     }
 
     /**
@@ -42,7 +42,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void grayOperate(Bitmap src) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmap2gray2(src, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -54,7 +54,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void lutOperate(Bitmap src, int divideValue) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapLut(src, divideValue, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -67,7 +67,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void convertToOperate(Bitmap src, double alpha, int beta) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapConverTo(src, alpha, beta, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -78,7 +78,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void erodeOperate(Bitmap src) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapErode(src, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -89,7 +89,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void dilateOperate(Bitmap src) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapDilate(src, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -102,7 +102,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void thresholdOperate(Bitmap src, double threshold, int type) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapThreshold(src, threshold, type, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -114,7 +114,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void blurOperate(Bitmap src, int kSize) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapBlur(src, kSize, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -126,7 +126,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void mediaBlurOperate(Bitmap src, int kSize) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapMediaBlur(src, kSize, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -138,7 +138,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void gaussBlurOperate(Bitmap src, int kSize) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapGaussBlur(src, kSize, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -155,7 +155,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void inRangeOperate(Bitmap src, int rMin, int gMin, int bMin, int rMax, int gMax, int bMax) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapInRange(src, rMin, gMin, bMin, rMax, gMax, bMax, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -168,7 +168,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void bitwiseOperate(Bitmap src1, Bitmap src2, int type) {
         Bitmap des = src1.copy(src1.getConfig(), src1.isMutable());
         BitmapNative.bitmapBitwise(src1, src2, type, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -180,7 +180,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void cannyOperate(Bitmap src, int lowThreshold) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapCanny(src, lowThreshold, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -192,7 +192,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void lineOperate(Bitmap src, int threshold, int min, int type) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapHoughLines(src, threshold, min, type, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -203,7 +203,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void circleOperate(Bitmap src, int min, int max, Bitmap originalBitmap) {
         Bitmap des = originalBitmap.copy(originalBitmap.getConfig(), originalBitmap.isMutable());
         BitmapNative.bitmapHoughCircles(src, min, max, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -217,7 +217,7 @@ public class OpencvActivity extends AppCompatActivity {
     public void templateOperate(Bitmap src, Bitmap template, int type, Bitmap originalBitmap) {
         Bitmap des = originalBitmap.copy(originalBitmap.getConfig(), originalBitmap.isMutable());
         BitmapNative.bitmapMatchTemplate(src, template, type, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     /**
@@ -228,17 +228,17 @@ public class OpencvActivity extends AppCompatActivity {
     public void contoursOperate(Bitmap src) {
         Bitmap des = src.copy(src.getConfig(), src.isMutable());
         BitmapNative.bitmapContours(src, des);
-        operateUIControl.setPreview(des);
+        opencvUIControl.setPreview(des);
     }
 
     @OnClick({R.id.bt_reset_bitmap, R.id.bt_save_bitmap})
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.bt_reset_bitmap:
-                operateUIControl.resetBitmap();
+                opencvUIControl.resetBitmap();
                 break;
             case R.id.bt_save_bitmap:
-                operateUIControl.updateBitmap();
+                opencvUIControl.updateBitmap();
                 break;
         }
     }

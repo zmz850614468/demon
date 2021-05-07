@@ -44,16 +44,12 @@ Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmap2gray2(JNIEnv *env,
                                                                     jobject bitmap,
                                                                     jobject gray_bitmap) {
     cv::Mat rgb = bitmap2Mat(env, bitmap);
+    cv::Mat des = bitmap2Mat(env, gray_bitmap);
 
-//    cv::cvtColor(rgb, rgb, CV_RGBA2RGB);
-//    cv::cvtColor(rgb, rgb, CV_RGB2HSV);
-//    cv::inRange(rgb, cv::Scalar(110, 50, 50), cv::Scalar(130, 255, 255), rgb);
-
-//    cv::Mat des = lut(rgb, 10);
-
-    cv::cvtColor(rgb, rgb, CV_BGRA2GRAY);
-    mat2Bitmap(env, rgb, gray_bitmap);
+    cv::cvtColor(rgb, des, CV_BGRA2GRAY);
+    mat2Bitmap(env, des, gray_bitmap);
     rgb.release();
+    des.release();
 }
 
 extern "C"
