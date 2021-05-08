@@ -44,7 +44,7 @@ public class BitmapNative {
      *
      * @param bitmap
      * @param threshold 阈值
-     * @param type      1: HoughLines ; 2: HoughLinesP
+     * @param type      1: HoughLines(直线) ; 2: HoughLinesP(线段)
      * @param desBitmap
      */
     public static native void bitmapHoughLines(Bitmap bitmap, int threshold, int min, int type, Bitmap desBitmap);
