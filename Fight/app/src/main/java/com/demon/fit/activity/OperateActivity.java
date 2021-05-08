@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.demon.fit.R;
 
-public class MoneyTargetActivity extends AppCompatActivity {
+/**
+ * 操作说明界面
+ */
+public class OperateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_target_2021);
+        setContentView(R.layout.activity_operate);
     }
 }

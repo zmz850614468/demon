@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,6 +17,16 @@
             android:background="@drawable/selector"
             android:padding="5dp"
             android:text="目标"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_operate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/selector"
+            android:padding="5dp"
+            android:text="操作"
             android:textSize="17sp" />
 
     </LinearLayout>

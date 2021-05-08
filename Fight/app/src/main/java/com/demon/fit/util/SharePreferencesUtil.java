@@ -11,6 +11,28 @@ public class SharePreferencesUtil {
 
     private static final String FU_LI = "fuLi";   //
 
+    private static final String FU_LI_BASE = "fuLiBase";   //
+
+    private static final String FU_LI_TIMES = "fuLTimes";   //
+
+    // 获取
+    public static int getFuLTimes(Context context) {
+        return getInstance(context).getInt(FU_LI_TIMES, 12);
+    }
+
+    public static void saveFuLTimes(Context context, int fuLTimes) {
+        setInteger(context, FU_LI_TIMES, fuLTimes);
+    }
+
+    // 获取
+    public static float getFuLBase(Context context) {
+        return getInstance(context).getFloat(FU_LI_BASE, 1);
+    }
+
+    public static void saveFuLBase(Context context, float fuLBase) {
+        setFloat(context, FU_LI_BASE, fuLBase);
+    }
+
     // 获取
     public static int getFuLi(Context context) {
         return getInstance(context).getInt(FU_LI, 1);

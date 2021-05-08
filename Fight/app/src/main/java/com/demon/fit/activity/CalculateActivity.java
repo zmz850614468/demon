@@ -20,6 +20,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 复利计算界面
+ */
 public class CalculateActivity extends AppCompatActivity {
 
     @BindView(R.id.et_base)
@@ -64,7 +67,7 @@ public class CalculateActivity extends AppCompatActivity {
 
             fuLiList.clear();
             fl -= 0.03;
-            if (fl < 1) {
+            if (fl < 1.01f) {
                 fl = 1.01f;
             }
 
@@ -79,25 +82,26 @@ public class CalculateActivity extends AppCompatActivity {
                 fuLiList.add(bean);
             }
             fuLiAdapter.notifyDataSetChanged();
-
         } catch (NumberFormatException e) {
             tvResult.setText("0");
             e.printStackTrace();
         }
-
     }
 
     private void initUI() {
+        float base = SharePreferencesUtil.getFuLBase(this);
+        etBase.setText(base + "");
+
         int fl = SharePreferencesUtil.getFuLi(this);
         sbFl.setProgress(fl);
-        sbTimes.setProgress(12);
+        int times = SharePreferencesUtil.getFuLTimes(this);
+        sbTimes.setProgress(times);
     }
 
     private void initSeekBar() {
         sbFl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                SharePreferencesUtil.saveFuLi(CalculateActivity.this, progress);
                 tvFl.setText((1 + progress / 100.0f) + "");
                 calculate();
             }
@@ -144,5 +148,16 @@ public class CalculateActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        SharePreferencesUtil.saveFuLi(this, sbFl.getProgress());
+        SharePreferencesUtil.saveFuLTimes(this, sbTimes.getProgress());
+        try {
+            float base = Float.parseFloat(etBase.getText().toString());
+            SharePreferencesUtil.saveFuLBase(this, base);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
+    }
 }
