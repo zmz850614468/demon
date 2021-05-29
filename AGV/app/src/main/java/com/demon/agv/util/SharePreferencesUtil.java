@@ -10,6 +10,16 @@ public class SharePreferencesUtil {
     private static SharedPreferences instance = null;
 
 
+    private static final String SERVICE_IP = "serviceIp";   //
+
+    // 获取
+    public static String getServiceIp(Context context) {
+        return getInstance(context).getString(SERVICE_IP, "");
+    }
+
+    public static void saveServiceIp(Context context, String serviceIp) {
+        setString(context, SERVICE_IP, serviceIp);
+    }
 
     //============================      以下为固定模式        =============================
 

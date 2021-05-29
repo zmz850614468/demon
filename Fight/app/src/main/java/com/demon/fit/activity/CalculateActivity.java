@@ -96,6 +96,7 @@ public class CalculateActivity extends AppCompatActivity {
         sbFl.setProgress(fl);
         int times = SharePreferencesUtil.getFuLTimes(this);
         sbTimes.setProgress(times);
+        calculate();
     }
 
     private void initSeekBar() {

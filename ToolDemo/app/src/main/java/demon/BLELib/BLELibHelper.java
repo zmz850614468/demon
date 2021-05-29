@@ -290,16 +290,16 @@ public class BLELibHelper {
         public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
             //处理通知返回的数据
             activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if (bleListener != null) {
-                            bleListener.onDataBack(new String(characteristic.getValue(), "gbk"));
+                    @Override
+                    public void run() {
+                        try {
+                            if (bleListener != null) {
+                                bleListener.onDataBack(new String(characteristic.getValue(), "gbk"));
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
                         }
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     }
-                }
             });
         }
 

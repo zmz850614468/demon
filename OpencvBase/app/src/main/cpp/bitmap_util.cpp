@@ -119,7 +119,7 @@ Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapHoughCircles(JNIEnv
     cv::Mat src = bitmap2Mat(env, bitmap);
     cv::Mat des(src.size(), src.type());
     cv::Mat res = bitmap2Mat(env, des_bitmap);
-    cv::cvtColor(src, des, CV_BGRA2GRAY);
+    cv::cvtColor(src, des, CV_BGR2GRAY);
 
     std::vector<cv::Vec3f> circles;
     cv::HoughCircles(des, circles, cv::HOUGH_GRADIENT, 1,
@@ -160,10 +160,10 @@ Java_com_demon_opencvbase_jni_1opencv_jni_BitmapNative_bitmapHoughLines(JNIEnv *
             cv::Point pt1, pt2;
             double a = cos(theta), b = sin(theta);
             double x0 = a * rho, y0 = b * rho;
-            pt1.x = cvRound(x0 + 1000 * (-b));
-            pt1.y = cvRound(y0 + 1000 * (a));
-            pt2.x = cvRound(x0 - 1000 * (-b));
-            pt2.y = cvRound(y0 - 1000 * (a));
+            pt1.x = cvRound(x0 + 2000 * (-b));
+            pt1.y = cvRound(y0 + 2000 * (a));
+            pt2.x = cvRound(x0 - 2000 * (-b));
+            pt2.y = cvRound(y0 - 2000 * (a));
             cv::line(outp, pt1, pt2, cv::Scalar(0, 0, 255, 255), 3, CV_AA);
         }
     } else if (type == 2) {

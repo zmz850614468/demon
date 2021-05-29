@@ -74,5 +74,46 @@ public class MainDataControl {
         return buffer.toString().trim();
     }
 
+    /**
+     * 获取运动的方向
+     *
+     * @param directionList 方向数组
+     * @return
+     */
+    public static String getDirection(List<String> directionList) {
+        String direction = "stop";
+        if (directionList.contains(MainActivity.DIRECTION_LEFT)) {
+            // 原地左转
+            if (!directionList.contains(MainActivity.DIRECTION_UP) && !directionList.contains(MainActivity.DIRECTION_DOWN)) {
+                direction = "originLeft";
+                // 左前方移动
+            } else if (directionList.contains(MainActivity.DIRECTION_UP)) {
+                direction = "left";
+                // 左后方移动
+            } else if (directionList.contains(MainActivity.DIRECTION_DOWN)) {
+                direction = "";
+            }
+        } else if (directionList.contains(MainActivity.DIRECTION_RIGHT)) {
+            // 原地右转
+            if (!directionList.contains(MainActivity.DIRECTION_UP) && !directionList.contains(MainActivity.DIRECTION_DOWN)) {
+                direction = "originRight";
+                // 右前方移动
+            } else if (directionList.contains(MainActivity.DIRECTION_UP)) {
+                direction = "right";
+                // 右后方移动
+            } else if (directionList.contains(MainActivity.DIRECTION_DOWN)) {
+                direction = "";
+            }
+        } else {
+            // 前进
+            if (directionList.contains(MainActivity.DIRECTION_UP)) {
+                direction = "front";
+                // 后退
+            } else if (directionList.contains(MainActivity.DIRECTION_DOWN)) {
+                direction = "back";
+            }
+        }
 
+        return direction;
+    }
 }

@@ -40,7 +40,7 @@
             android:background="@drawable/shape_box_white"
             android:gravity="center"
             android:inputType="number"
-            android:text="50"
+            android:text="43"
             android:textSize="17sp" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:background="@drawable/shape_box_white"
             android:gravity="center"
             android:inputType="number"
-            android:text="50"
+            android:text="46"
             android:textSize="17sp" />
 
     </LinearLayout>

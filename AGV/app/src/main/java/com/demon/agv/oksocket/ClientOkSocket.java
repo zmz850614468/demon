@@ -142,12 +142,23 @@ public class ClientOkSocket {
             }
         }
 
+        StringBuffer buffer = new StringBuffer();
+
         @Override
         public void onSocketReadResponse(ConnectionInfo info, String action, OriginalData data) {
             super.onSocketReadResponse(info, action, data);
-            showLog(info.getIp() + ":读成功 : " + SerialPortUtil.byte2hexStr(data.getBodyBytes()));
-            for (OnSocketListener onStatusListener : listenerList) {
-                onStatusListener.onMsgCallback(info.getIp(), new String(data.getBodyBytes()));
+            showLog(info.getIp() + ":读成功 : " + data.getBodyBytes());
+            buffer.append(new String(data.getBodyBytes()));
+
+            String content = buffer.toString();
+            while (content.contains("~")) {
+                int index = content.indexOf("~");
+                String msg = content.substring(0, index);
+                content = content.replace(msg + "~", "");
+                buffer.replace(0, buffer.length(), content);
+                for (OnSocketListener onStatusListener : listenerList) {
+                    onStatusListener.onMsgCallback(info.getIp(), msg);
+                }
             }
         }
 

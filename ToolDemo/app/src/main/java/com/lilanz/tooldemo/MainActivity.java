@@ -1,7 +1,9 @@
 package com.lilanz.tooldemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +61,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void initMenu(){
+    private void initMenu() {
         SlidingMenu menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -68,7 +70,11 @@ public class MainActivity extends Activity {
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.layout_menu);;
+        menu.setMenu(R.layout.layout_menu);
+    }
+    
+    private void initUSB(){
+        UsbManager manager = (UsbManager) getSystemService(USB_SERVICE);
     }
 
     private void showToast(String msg) {
