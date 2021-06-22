@@ -23,6 +23,14 @@
         android:background="@drawable/selector"
         android:text="手机与蓝牙模块间通信" />
 
+    <Button
+        android:id="@+id/bt_web_socket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="webSocket通信"/>
+
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="match_parent"

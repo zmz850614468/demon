@@ -26,10 +26,14 @@ public class PrintUtil {
         /* 清除打印缓冲区 */
         tsc.addCls();
         /* 设置标签尺寸，按照实际尺寸设置 */
-        tsc.addSize(100, 100);
+//        tsc.addSize(100, 100);
+//        tsc.addHome();
+//        tsc.addHome();
+        tsc.addSize(bitmap.getWidth()/8, bitmap.getHeight()/8);
 
         /* 设置标签间隙，按照实际尺寸设置，如果为无间隙纸则设置为0 */
-        tsc.addGap(0);
+        tsc.addGap(3);
+//        tsc.addSpeed(LabelCommand.SPEED.SPEED4);
         /* 设置打印方向 */
         tsc.addDirection(LabelCommand.DIRECTION.FORWARD, LabelCommand.MIRROR.NORMAL);
         /* 开启带Response的打印，用于连续打印 */
@@ -37,12 +41,12 @@ public class PrintUtil {
         /* 设置原点坐标 */
         tsc.addReference(0, 0);
         /* 撕纸模式开启 */
-        tsc.addTear(EscCommand.ENABLE.ON);
+//        tsc.addTear(EscCommand.ENABLE.ON);
         // 切纸模式
-        tsc.addCutter(EscCommand.ENABLE.ON);
+//        tsc.addCutter(EscCommand.ENABLE.ON);
 
         // 打印图片
-        tsc.addBitmap(0, 0, LabelCommand.BITMAP_MODE.OVERWRITE, 800, bitmap);
+        tsc.addBitmap(0, 0, LabelCommand.BITMAP_MODE.OVERWRITE, bitmap.getWidth(), bitmap);
 
         tsc.addPrint(1);
         /* 打印标签后 蜂鸣器响 */
@@ -57,7 +61,6 @@ public class PrintUtil {
             e.printStackTrace();
         }
     }
-
 
     /**
      * 获取usb佳博打印设备

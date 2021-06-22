@@ -6,7 +6,6 @@ import android.hardware.usb.UsbDevice;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.lilanz.tooldemo.multiplex.API.APIRequest;
 import com.lilanz.tooldemo.multiplex.API.ParseListener;
 import com.lilanz.tooldemo.utils.BitmapUtil;
 import com.lilanz.tooldemo.utils.StringUtil;
+import com.tools.io.BluetoothPort;
 import com.tools.io.PortManager;
 import com.tools.io.UsbPort;
 
@@ -31,10 +31,8 @@ import butterknife.OnClick;
 /**
  * 佳博打印机
  */
-public class JiaBoActivity extends Activity {
+public class JiaBoBluetoothActivity extends Activity {
 
-    @BindView(R.id.et_id)
-    EditText etId;
     @BindView(R.id.iv_image)
     protected ImageView ivImage;
     private Bitmap bitmap;
@@ -49,7 +47,8 @@ public class JiaBoActivity extends Activity {
         ButterKnife.bind(this);
 
         initUI();
-        initUsbManager();
+        initBluetoothManager();
+//        initUsbManager();
     }
 
     @OnClick({R.id.bt_request_image, R.id.bt_print, R.id.bt_creqte_qrcode})
@@ -58,7 +57,7 @@ public class JiaBoActivity extends Activity {
             case R.id.bt_creqte_qrcode:
                 try {
 //                    bitmap = BitmapUtil.createOneDCode("gs:101458$2020-05-15$18$605$1945570$27256", 800, 50);
-                    bitmap = BitmapUtil.createOneDCode("9", 800, 50);
+                    bitmap = BitmapUtil.createOneDCode("9", 300, 80);
                     ivImage.setImageBitmap(bitmap);
                 } catch (WriterException e) {
                     e.printStackTrace();
@@ -75,6 +74,7 @@ public class JiaBoActivity extends Activity {
         }
     }
 
+
     private APIRequest<String> requestImage;
 
     /**
@@ -83,8 +83,7 @@ public class JiaBoActivity extends Activity {
     private void requestImgage() {
         if (requestImage == null) {
             requestImage = new APIRequest<>(String.class);
-//            requestImage.setRequestBasePath("http://192.168.36.178:15005/");
-            requestImage.setRequestBasePath("http://192.168.37.43:15002/");
+            requestImage.setRequestBasePath("http://192.168.36.178:15005/");
             requestImage.setParseListener(new ParseListener<String>() {
                 @Override
                 public void jsonResult(String jsonStr) {
@@ -115,29 +114,41 @@ public class JiaBoActivity extends Activity {
 
 
         Map<String, String> values = new HashMap<>();
-//        values.put("bodyJsonStr", "{\"bm\":\"M82002845\",\"ys\":\"黑\",\"mc\":\"OX/2016吊牌-4.5X20.3cm-黑-铜板线\",\"kh\":\"20QXF32\",\"sl\":\"-14.00个\",\"ph\":\"\",\n" +
-//                ",\"zl\":\"\",\"dw\":\"个\",\"rq\":\"2020-7-4\",\"fk\":\"\",\"bz\":\"101629\",\"barCode\":\"20070400369\"}");
-        values.put("bodyJsonStr","{\"qrCode\":\"12312329\"}");
-        String id = etId.getText().toString();
-        values.put("templateId", id);
+        values.put("bodyJsonStr", "{\"bm\":\"M82002845\",\"ys\":\"黑\",\"mc\":\"OX/2016吊牌-4.5X20.3cm-黑-铜板线\",\"kh\":\"20QXF32\",\"sl\":\"-14.00个\",\"ph\":\"\",\n" +
+                ",\"zl\":\"\",\"dw\":\"个\",\"rq\":\"2020-7-4\",\"fk\":\"\",\"bz\":\"101629\",\"barCode\":\"20070400369\"}");
+        values.put("templateId", "2");
 
         requestImage.requestNormal(values, "getBitmapStr", APIRequest.PARSE_TYPE_JSON);
     }
 
-    private void initUsbManager() {
+    private void initBluetoothManager(){
         if (usbManager == null) {
-            UsbDevice usbDevice = PrintUtil.getUsbPrintDevice(this);
-            if (usbDevice != null) {
-                usbManager = new UsbPort(this, usbDevice);
+                usbManager = new BluetoothPort("DC:1D:30:BD:9A:93");
                 boolean isOpenUsbPort = usbManager.openPort();
                 if (isOpenUsbPort) {
-                    showToast("usb打印端口开启");
+                    showToast("蓝牙打印机连接成功");
                 } else {
-                    showToast("usb打印端口没有开启");
+                    showToast("蓝牙打印机连接失败");
+                    usbManager.closePort();
+                    usbManager = null;
                 }
-            }
         }
     }
+
+//    private void initUsbManager() {
+//        if (usbManager == null) {
+//            UsbDevice usbDevice = PrintUtil.getUsbPrintDevice(this);
+//            if (usbDevice != null) {
+//                usbManager = new UsbPort(this, usbDevice);
+//                boolean isOpenUsbPort = usbManager.openPort();
+//                if (isOpenUsbPort) {
+//                    showToast("usb打印端口开启");
+//                } else {
+//                    showToast("usb打印端口没有开启");
+//                }
+//            }
+//        }
+//    }
 
     private void initUI() {
         ;
@@ -146,22 +157,12 @@ public class JiaBoActivity extends Activity {
     @Override
     public void onDestroy() {
 
-//        if (lengthSerialPort != null) {
-//            lengthSerialPort.closeSerialPort();
-//        }
-//        if (weightSerialPort != null) {
-//            weightSerialPort.closeSerialPort();
-//        }
-//        if (printPort != null) {
-//            printPort.closePort();
-//        }
-
 // TODO 验布机这款打印机，无法正常关闭usb打印，所以不关闭打印机设备
-//        if (usbManager != null) {
-//            usbManager.closePort();
-//            usbManager = null;
-//            showToast("关闭usb打印端口");
-//        }
+        if (usbManager != null) {
+            usbManager.closePort();
+            usbManager = null;
+            showToast("关闭usb打印端口");
+        }
         super.onDestroy();
     }
 

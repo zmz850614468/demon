@@ -13,6 +13,7 @@ import demon.blecommunicate.BleDemoActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import demon.websocket.WebSocketActivity;
 
 public class CopyUseActivity extends Activity {
 
@@ -23,7 +24,7 @@ public class CopyUseActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_ble_communicate, R.id.bt_ble})
+    @OnClick({R.id.bt_ble_communicate, R.id.bt_ble, R.id.bt_web_socket})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.bt_ble_communicate:
@@ -32,6 +33,10 @@ public class CopyUseActivity extends Activity {
                 break;
             case R.id.bt_ble:
                 intent = new Intent(this, BLELibDemoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_web_socket:
+                intent = new Intent(this, WebSocketActivity.class);
                 startActivity(intent);
                 break;
         }

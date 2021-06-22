@@ -122,6 +122,9 @@ dependencies {
     implementation 'com.tonystark.android:socket:4.2.3'
     implementation 'com.tonystark.android:socket-server:4.2.3'
 
+    // webSocket
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
+
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 

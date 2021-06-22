@@ -10,6 +10,15 @@
         android:layout_height="wrap_content"
         android:text="生成二维码图片" />
 
+    <EditText
+        android:id="@+id/et_id"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="1"
+        android:selectAllOnFocus="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/bt_request_image"
         android:layout_width="match_parent"

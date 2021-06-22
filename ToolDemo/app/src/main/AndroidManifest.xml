@@ -48,6 +48,7 @@
 <!--            </intent-filter>-->
         </activity>
 
+        <activity android:name="demon.websocket.WebSocketActivity"/>
         <activity android:name=".multiplex.websocket.WebSocketActivity" />
         <activity android:name=".multiplex.esptouch.EsptouchActivity" />
 
@@ -73,6 +74,7 @@
         <activity android:name=".prints.PrintsActivity" />
         <activity android:name=".prints.zicoxPrint.ZicoxActivity" />
         <activity android:name=".prints.jiabo.JiaBoActivity" />
+        <activity android:name=".prints.jiabo.JiaBoBluetoothActivity"/>
         <activity android:name=".prints.hanYin.HanYinActivity" />
 
         <activity android:name=".multiplex.scanhelper.ScanActivity" />

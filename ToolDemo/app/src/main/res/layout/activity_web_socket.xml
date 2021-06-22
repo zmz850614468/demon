@@ -4,4 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/bt_open_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="连接webSocketServer" />
+
+    <Button
+        android:id="@+id/bt_close_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开webSocketServer" />
+
+    <Button
+        android:id="@+id/bt_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="连接webSocket" />
+
+    <Button
+        android:id="@+id/bt_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开webSocket" />
+
+    <Button
+        android:id="@+id/bt_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送信息" />
+
 </LinearLayout>
