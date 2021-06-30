@@ -61,7 +61,7 @@ android {
 dependencies {
     implementation project(":library")
     implementation project(':esptouch')
-    implementation project(":library_slidingmenu")
+//    implementation project(":library_slidingmenu")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'

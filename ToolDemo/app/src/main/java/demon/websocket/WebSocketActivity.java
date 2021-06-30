@@ -24,10 +24,10 @@ public class WebSocketActivity extends AppCompatActivity {
     private static final int DELAY_TIME = 10000;
 
     private WSocketClient wSocketClient;
-    private static final String url = "ws://192.168.1.118:8899";
+    private static final String url = "ws://192.168.1.118:18899";
 
     private WSocketServer wSocketServer;
-    private static final int port = 8899;
+    private static final int port = 18899;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +48,7 @@ public class WebSocketActivity extends AppCompatActivity {
             case R.id.bt_close_server:
                 try {
                     wSocketServer.stop();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -114,7 +112,7 @@ public class WebSocketActivity extends AppCompatActivity {
                 showLog("发送心跳包:" + ++count);
                 if (wSocketClient != null) {
                     if (wSocketClient.isClosed()) {
-                        wSocketClient.reconnect();
+                       reconnectWs();
                     }
                 } else {
                     //如果client已为空，重新初始化websocket

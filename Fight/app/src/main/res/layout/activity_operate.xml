@@ -18,12 +18,11 @@
             android:text="操作模式"
             android:textSize="20sp"
             android:textStyle="bold" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="1、跳空低开或是高开"
+            android:text="1、时K线：标准锤子线和上吊线"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -31,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="2、日K线：标准锤子线和上吊线"
+            android:text="2、时K线：boll上限小阴，boll下限小阳;短影线"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -39,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="3、日K线：30日线有长下阴线"
+            android:text="3、日K线：跳空低开或是高开"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -47,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="4、周K线：超过boll上线8%以上，且有5份资金"
+            android:text="4、日K线：标准锤子线和上吊线"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -55,7 +54,23 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="5、周K线：标准的锤子线和上吊线，且有5份资金"
+            android:text="5、日K线：30日线有长下阴线"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="6、周K线：超过boll上线8%以上，且有5份资金"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="7、周K线：标准的锤子线和上吊线，且有5份资金"
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>

@@ -1,25 +1,19 @@
 package com.lilanz.tooldemo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import demon.CopyUseActivity;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
-import java.net.Socket;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +30,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        initMenu();
+//        initMenu();
 
     }
 
@@ -61,17 +55,17 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void initMenu() {
-        SlidingMenu menu = new SlidingMenu(this);
-        menu.setMode(SlidingMenu.LEFT);
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.layout_menu);
-    }
+//    private void initMenu() {
+//        SlidingMenu menu = new SlidingMenu(this);
+//        menu.setMode(SlidingMenu.LEFT);
+//        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        menu.setShadowWidthRes(R.dimen.shadow_width);
+//        menu.setShadowDrawable(R.drawable.shadow);
+//        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+//        menu.setFadeDegree(0.35f);
+//        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+//        menu.setMenu(R.layout.layout_menu);
+//    }
     
     private void initUSB(){
         UsbManager manager = (UsbManager) getSystemService(USB_SERVICE);
