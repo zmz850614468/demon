@@ -73,6 +73,14 @@
             android:text="7、周K线：标准的锤子线和上吊线，且有5份资金"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="8、5分K线：在满足日K线前提，在5分K线低点买入"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView

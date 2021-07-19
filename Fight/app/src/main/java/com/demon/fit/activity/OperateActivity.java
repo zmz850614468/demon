@@ -14,6 +14,14 @@ public class OperateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_operate);
+        String type = null;
+        if (getIntent().hasExtra("type")) {
+            type = getIntent().getStringExtra("type");
+        }
+        if (type == null) {
+            setContentView(R.layout.activity_operate);
+        }else if ("k-test".equals(type)) {
+            setContentView(R.layout.activity_operate_test);
+        }
     }
 }

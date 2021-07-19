@@ -1,10 +1,11 @@
-package com.lilanz.tooldemo.multiplex.doublecamera;
+package com.demon.tool.camera1;
 
 import android.app.Activity;
 import android.hardware.Camera;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
+
+import androidx.annotation.NonNull;
 
 import java.util.List;
 

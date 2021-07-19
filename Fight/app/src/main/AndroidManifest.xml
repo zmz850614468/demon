@@ -21,6 +21,8 @@
         <activity android:name=".activity.MoneyTargetActivity" />
 
         <activity android:name=".activity.OperateActivity" />
+
+        <activity android:name=".activity.JingDianActivity"/>
     </application>
 
 </manifest>

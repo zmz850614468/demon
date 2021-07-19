@@ -12,12 +12,12 @@
         android:text="芝柯编写打印机" />
 
     <Button
-    android:id="@+id/bt_jia_bo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@drawable/selector"
-    android:text="佳博打印机-usb" />
+        android:id="@+id/bt_jia_bo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="佳博打印机-usb" />
 
     <Button
         android:id="@+id/bt_jia_bo_bluetooth"
@@ -34,6 +34,14 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/selector"
         android:text="汉印打印机" />
+
+    <Button
+        android:id="@+id/bt_fu_liao_cang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="辅料仓打印机" />
 
 
 </LinearLayout>

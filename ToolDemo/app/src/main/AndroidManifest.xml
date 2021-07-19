@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".multiplex.doublecamera.CameraActivity">
+        <activity android:name=".multiplex.camera1.CameraActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -76,6 +76,7 @@
         <activity android:name=".prints.jiabo.JiaBoActivity" />
         <activity android:name=".prints.jiabo.JiaBoBluetoothActivity"/>
         <activity android:name=".prints.hanYin.HanYinActivity" />
+        <activity android:name=".prints.fuliaocang.FuLiaoCangActivity"/>
 
         <activity android:name=".multiplex.scanhelper.ScanActivity" />
 

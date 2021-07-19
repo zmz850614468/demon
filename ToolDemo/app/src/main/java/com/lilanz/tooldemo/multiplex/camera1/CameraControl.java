@@ -1,4 +1,4 @@
-package com.lilanz.tooldemo.multiplex.doublecamera;
+package com.lilanz.tooldemo.multiplex.camera1;
 
 import android.app.Activity;
 import android.content.Context;

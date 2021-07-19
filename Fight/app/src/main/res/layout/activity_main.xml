@@ -4,41 +4,9 @@
     android:layout_height="match_parent"
     android:background="@color/gray">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="5dp">
-
-        <Button
-            android:id="@+id/bt_target"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector"
-            android:padding="5dp"
-            android:text="目标"
-            android:textSize="17sp" />
-
-        <Button
-            android:id="@+id/bt_operate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/selector"
-            android:padding="5dp"
-            android:text="操作"
-            android:textSize="17sp" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/bt_ful"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="3dp"
-        android:background="@drawable/selector"
-        android:text="复利"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

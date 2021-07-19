@@ -26,7 +26,7 @@ public class PrintUtil {
      * 打印图片
      *
      * @param bleAddress
-     * @param bitmap 芝柯打印机，最大宽度:576px
+     * @param bitmap     芝柯打印机，最大宽度:576px
      */
     public static void bitmapPrint(String bleAddress, Bitmap bitmap) {
         if (!BtSPP.OpenPrinter(bleAddress)) {

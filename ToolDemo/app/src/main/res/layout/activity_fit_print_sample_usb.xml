@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnUsbAuthentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USB Authentication" />
+
+        <Button
+            android:id="@+id/btnUsbConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USB Connect" />
+        
+        <Button
+            android:id="@+id/btnUsbDisconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USB Disconnect" />
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/textText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="1234567890abcdefg" />
+
+    </LinearLayout>    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/textImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Image File Path"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editImagePath"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" 
+ 			android:text="/mnt/sdcard/FIT/S1.jpg" />
+ 
+    </LinearLayout>    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/textBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Barcode（JAN13)"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" 
+ 			android:text="123456789012" />
+    </LinearLayout>  
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView
+            android:id="@+id/textQrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="QR-CODE"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" 
+ 			android:text="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" />
+    </LinearLayout>  
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnPrint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print the contents above" />
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnPageMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print PageMode" />
+
+        <Button
+            android:id="@+id/btnGetStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Status" />
+                
+    </LinearLayout>    
+
+	    
+</LinearLayout>

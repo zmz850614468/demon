@@ -13,7 +13,7 @@ import com.lilanz.tooldemo.multiplex.camera2.Camera2ExaActivity;
 import com.lilanz.tooldemo.multiplex.API.APIActivity;
 import com.lilanz.tooldemo.multiplex.bleModel.BleActivity;
 import com.lilanz.tooldemo.multiplex.daos.DaoExaActivity;
-import com.lilanz.tooldemo.multiplex.doublecamera.CameraActivity;
+import com.lilanz.tooldemo.multiplex.camera1.CameraActivity;
 import com.lilanz.tooldemo.multiplex.download.DownloadActivity;
 import com.lilanz.tooldemo.multiplex.qrcode.CodeScanExaActivity;
 import com.lilanz.tooldemo.multiplex.scanhelper.ScanActivity;
