@@ -4,6 +4,7 @@ package com.demon.tool.API;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.ConnectException;
+import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -93,13 +95,16 @@ public class APIRequest<T> {
                     String msg = null;
                     if (t instanceof UnknownHostException) {
                         code = -10;
-                        msg = "无法连接服务器，请先检查网络状态";
+                        msg = "未知的服务器地址";
                     } else if (t instanceof ConnectException) {
                         code = -11;
-                        msg = "无法连接服务器，请先检查网络状态";
+                        msg = "连接接服务器异常";
                     } else if (t instanceof SocketTimeoutException) {
                         code = -12;
-                        msg = "网络请求超时，请联系服务端";
+                        msg = "连接接服务器超时";
+                    } else if (t instanceof NoRouteToHostException) {
+                        code = -13;
+                        msg = "找不到路径连接服务器";
                     }
 
                     if (parseListener != null) {
@@ -150,13 +155,16 @@ public class APIRequest<T> {
                 String msg = null;
                 if (e instanceof UnknownHostException) {
                     code = -10;
-                    msg = "无法连接服务器，请先检查网络状态";
+                    msg = "未知的服务器地址";
                 } else if (e instanceof ConnectException) {
                     code = -11;
-                    msg = "无法连接服务器，请先检查网络状态";
+                    msg = "连接接服务器异常";
                 } else if (e instanceof SocketTimeoutException) {
                     code = -12;
-                    msg = "网络请求超时，请联系服务端";
+                    msg = "连接接服务器超时";
+                } else if (e instanceof NoRouteToHostException) {
+                    code = -13;
+                    msg = "找不到路径连接服务器";
                 } else {
                     code = -1;
                     msg = "数据解析异常";
@@ -228,12 +236,17 @@ public class APIRequest<T> {
             // 解析数据对象
             if (parseType == PARSE_TYPE_LIST) {
                 JSONArray jsonArray = object.getJSONArray("data");
-                ArrayList<T> beanList = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    String tempObj = jsonArray.getJSONObject(i).toString();
-                    T t = (T) new Gson().fromJson(tempObj, clazz);
-                    beanList.add(t);
-                }
+//                ArrayList<T> beanList = new Gson().fromJson(jsonArray.toString(), new TypeToken<ArrayList<T>>() {
+//                }.getType());
+
+                ArrayList<T> beanList = new Gson().fromJson(jsonArray.toString(), new ParameterizedTypeImpl(clazz));
+
+//                ArrayList<T> beanList = new ArrayList<>();
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    String tempObj = jsonArray.getJSONObject(i).toString();
+//                    T t = (T) new Gson().fromJson(tempObj, clazz);
+//                    beanList.add(t);
+//                }
 //                ArrayList<T> beanList = new Gson().fromJson(jsonArray.toString(),
 //                        new TypeToken<ArrayList<T>>() {}.getType());
                 if (parseListener != null) {

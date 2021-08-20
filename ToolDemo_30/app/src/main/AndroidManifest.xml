@@ -9,12 +9,15 @@
     <!--  文件读写权限  -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!--  使用摄像头  -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name=".activity.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,14 +26,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".doublecamera.CameraActivity" />
+        <activity android:name=".download.DownloadActivity" />
+        <activity android:name=".camera1.CameraActivity" />
+        <activity android:name=".documentviewer.DocumentViewerActivity" />
+
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt"></service>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -40,6 +51,16 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
+        </provider>
+
+        <provider
+            android:name="com.tencent.smtt.utils.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/x5webview_file_paths" />
         </provider>
 
         <receiver

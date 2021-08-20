@@ -10,4 +10,20 @@
         android:layout_height="wrap_content"
         android:text="摄像头" />
 
+    <Button
+        android:id="@+id/bt_download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="文件下载" />
+
+    <Button
+        android:id="@+id/bt_document_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="腾讯文档阅读器" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

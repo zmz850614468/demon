@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
-    tools:context=".activity.MainActivity">
+    android:background="@color/gray">
 
     <EditText
         android:id="@+id/et_ip"
@@ -146,5 +144,14 @@
             android:text="开始/停止" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_box_white"
+        android:text="扫描界面" />
 
 </RelativeLayout>

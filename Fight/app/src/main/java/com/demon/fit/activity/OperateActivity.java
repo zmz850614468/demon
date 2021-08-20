@@ -20,7 +20,7 @@ public class OperateActivity extends AppCompatActivity {
         }
         if (type == null) {
             setContentView(R.layout.activity_operate);
-        }else if ("k-test".equals(type)) {
+        } else if ("k-test".equals(type)) {
             setContentView(R.layout.activity_operate_test);
         }
     }

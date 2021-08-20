@@ -18,6 +18,24 @@
             android:text="操作模式"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="注：日K线、时K线同方向，参考5K线买卖"
+            android:textColor="@color/red"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="1、时K线：标准锤子线和上吊线"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"

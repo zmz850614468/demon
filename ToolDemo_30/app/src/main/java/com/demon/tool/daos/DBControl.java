@@ -2,6 +2,7 @@ package com.demon.tool.daos;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,13 @@ public class DBControl {
     public static void createOrUpdate(Context context, Class clazz, Object obj) {
         BeanDao dao = BeanDao.getDaoOperate(context, clazz);
         dao.update(obj);
+    }
+
+    public static void createOrUpdate(Context context, Class clazz, ArrayList list) {
+        BeanDao dao = BeanDao.getDaoOperate(context, clazz);
+        for (Object o : list) {
+            dao.update(o);
+        }
     }
 
     public static List quaryByColumn(Context context, Class clazz, Map<String, Object> map) {

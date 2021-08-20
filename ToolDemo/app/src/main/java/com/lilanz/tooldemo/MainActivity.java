@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import demon.CopyUseActivity;
 
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
+import com.lilanz.tooldemo.multiplex.documentviewer.DocumentViewerUtil;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
@@ -31,7 +33,9 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
 
 //        initMenu();
-
+        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        base += "/file11.pdf";
+        DocumentViewerUtil.openDocumentViewer(this, base);
     }
 
     @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints, R.id.bt_copy_use})
@@ -66,8 +70,8 @@ public class MainActivity extends Activity {
 //        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 //        menu.setMenu(R.layout.layout_menu);
 //    }
-    
-    private void initUSB(){
+
+    private void initUSB() {
         UsbManager manager = (UsbManager) getSystemService(USB_SERVICE);
     }
 

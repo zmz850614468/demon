@@ -24,4 +24,7 @@
     <color name="deepGreen">#006600</color>
     <!--   end:常用颜色值    -->
 
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
 </resources>

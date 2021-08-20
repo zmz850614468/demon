@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AGV.iml" filepath="$PROJECT_DIR$/AGV.iml" group="AGV" />
+      <module fileurl="file://$PROJECT_DIR$/app/AGV-app.iml" filepath="$PROJECT_DIR$/app/AGV-app.iml" group="AGV/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="AGV/app" />
     </modules>
   </component>

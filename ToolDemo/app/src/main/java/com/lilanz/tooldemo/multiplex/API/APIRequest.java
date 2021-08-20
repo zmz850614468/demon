@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lilanz.tooldemo.R;
 import com.lilanz.tooldemo.multiplex.bleModel.BleAdapter;
 
@@ -232,14 +233,17 @@ public class APIRequest<T> {
             // 解析数据对象
             if (parseType == PARSE_TYPE_LIST) {
                 JSONArray jsonArray = object.getJSONArray("data");
-                ArrayList<T> beanList = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    String tempObj = jsonArray.getJSONObject(i).toString();
-                    T t = (T) new Gson().fromJson(tempObj, clazz);
-                    beanList.add(t);
-                }
+                ArrayList<T> beanList = new Gson().fromJson(jsonArray.toString(), new ParameterizedTypeImpl(clazz));
+
+//                ArrayList<T> beanList = new ArrayList<>();
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    String tempObj = jsonArray.getJSONObject(i).toString();
+//                    T t = (T) new Gson().fromJson(tempObj, clazz);
+//                    beanList.add(t);
+//                }
 //                ArrayList<T> beanList = new Gson().fromJson(jsonArray.toString(),
 //                        new TypeToken<ArrayList<T>>() {}.getType());
+
                 if (parseListener != null) {
                     if (beanList == null) {
                         beanList = new ArrayList<>();

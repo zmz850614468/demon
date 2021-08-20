@@ -2,10 +2,13 @@ package com.demon.agv.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ClientOkSocket clientOkSocket;
 
+    String DIALOG_USB_PERMISSION = "com.example.usbtest.GRANT_USB";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 PermissionControl.LOCATION});
 
         initUI();
-        initOkSocket();
-        initTest();
+//        initOkSocket();
+//        initTest();
+
+//        //弹出权限申请窗口
+//        PendingIntent usbPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(DIALOG_USB_PERMISSION), 0);
+//        usbManager.requestPermission(usbDevice, usbPermissionIntent);
+
+//        int a = -8 % 5;
+//        int b = 8 % 5;
     }
 
     @OnTouch({R.id.tv_up, R.id.tv_down, R.id.tv_left, R.id.tv_right})
@@ -100,8 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     changeSpeed(pressedDirection);
                 }
             }
-        }
-        else if (action == MotionEvent.ACTION_MOVE) {
+        } else if (action == MotionEvent.ACTION_MOVE) {
             changeSpeed(pressedDirection);
         }
 
@@ -337,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> directionList = new ArrayList<>();
 
-    @OnClick({R.id.bt_step_front, R.id.bt_start_or_stop})
+    @OnClick({R.id.bt_step_front, R.id.bt_start_or_stop, R.id.bt_scan})
     public void onClicked(View v) {
         switch (v.getId()) {
             case R.id.bt_step_front:
@@ -357,6 +368,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_start_or_stop:
                 isContinue = !isContinue;
+                break;
+            case R.id.bt_scan:
+                Intent intent = new Intent(this, ScanAcrtivity.class);
+                startActivity(intent);
                 break;
         }
     }

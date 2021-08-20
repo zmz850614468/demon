@@ -1,8 +1,10 @@
 package com.demon.tool.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,7 +13,10 @@ import android.view.View;
 import com.demon.tool.R;
 import com.demon.tool.controls.PermissionControl;
 import com.demon.tool.controls.ScanKeyManager;
-import com.demon.tool.view.CustomToast;
+import com.demon.tool.documentviewer.DocumentViewerActivity;
+import com.demon.tool.download.DownloadActivity;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,22 +34,41 @@ public class MainActivity extends AppCompatActivity {
 
         initPermission();
         initScanCode();
+
+//        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+//        base += "/file11.pdf";
+//        base += "/file11.docx";
+//        base += "/file11.xlsx";
+//        showLog("path:" + base);
+//        openDocumentViewer(base);
     }
 
-    @OnClick(R.id.bt_camera)
+    @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download})
     public void onClicked(View v) {
+        Intent intent = null;
         switch (v.getId()) {
+            case R.id.bt_document_viewer:
+                intent = new Intent(this, DocumentViewerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_download:
+                intent = new Intent(this, DownloadActivity.class);
+                startActivity(intent);
+                break;
         }
+//        startActivity(intent);
     }
 
     /**
      * 处理设备输入问题
+     *
      * @param event
      * @return
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         // deviceId>0 的是设备 ； ==-1的是平板输入
+        showLog("device:" + event.getDeviceId() + " ; key:" + event.getKeyCode());
         if (event.getDeviceId() > 0 && event.getKeyCode() != KeyEvent.KEYCODE_BACK) {
             scanKeyManager.analysisKeyEvent(event);
             return true;
@@ -52,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchKeyEvent(event);
     }
 
-    private void initScanCode(){
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        showLog("down device:" + event.getDeviceId() + " ; key:" + event.getKeyCode());
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void initScanCode() {
         //拦截扫码器回调,获取扫码内容
         scanKeyManager = new ScanKeyManager(new ScanKeyManager.OnScanValueListener() {
             @Override
@@ -62,14 +92,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 打开文档浏览器
+     *
+     * @param path
+     */
+    private void openDocumentViewer(@NonNull String path) {
+
+//        Uri uri = Uri.parse(path);
+//        showLog("path:" + path);
+//        Uri uri = Uri.fromFile(new File(path));
+//        if (uri != null) {
+//            Intent intent = new Intent(this, DocumentActivity.class);
+//            intent.setAction(Intent.ACTION_VIEW);
+//            intent.setData(uri);
+//            startActivity(intent);
+//        }
+
+    }
 
     private void initPermission() {
         PermissionControl control = new PermissionControl(this);
-        control.storagePermission();
-        control.cameraPermission();
+        control.requestPermissions(new String[]{PermissionControl.STORAGE, PermissionControl.CAMERA});
+//        control.storagePermission();
+//        control.cameraPermission();
     }
 
-    private void showLog(String msg){
-            Log.e("MainActivity", msg);
+    private void showLog(String msg) {
+        Log.e("MainActivity", msg);
     }
 }
