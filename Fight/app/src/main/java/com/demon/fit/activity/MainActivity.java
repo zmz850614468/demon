@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         list.add(new ItemBean(R.drawable.zxl, "执行力"));
         list.add(new ItemBean(R.drawable.fl, "复利"));
         list.add(new ItemBean(R.drawable.jd, "经典语录"));
-        list.add(new ItemBean(R.drawable.ic_launcher_foreground, "测试"));
+        list.add(new ItemBean(R.drawable.jg, "执行结果"));
+//        list.add(new ItemBean(R.drawable.ic_launcher_foreground, "测试"));
 
         adapter = new ItemAdapter(this, list);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setListener(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ItemBean bean) {
-                switch (bean.name){
+                switch (bean.name) {
                     case "目标":
                         Intent intent = new Intent(MainActivity.this, MoneyTargetActivity.class);
                         startActivity(intent);
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "经典语录":
                         intent = new Intent(MainActivity.this, JingDianActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "执行结果":
+                        intent = new Intent(MainActivity.this, ResultActivity.class);
                         startActivity(intent);
                         break;
                 }

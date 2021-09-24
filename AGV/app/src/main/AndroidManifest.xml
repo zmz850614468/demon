@@ -29,29 +29,30 @@
             </intent-filter>
         </activity>
 
-                <activity android:name=".activity.ScanAcrtivity">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN" />
-                        <category android:name="android.intent.category.IOT_LAUNCHER" />
-                        <category android:name="android.intent.category.DEFAULT" />
-                    </intent-filter>
-                    <intent-filter>
-                        <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-                    </intent-filter>
+        <activity android:name=".activity.ScanAcrtivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                    <meta-data
-                        android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                        android:resource="@xml/device_filter" />
-                </activity>
-<!--        <activity android:name=".activity.ScanActivity2">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.IOT_LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
 
-<!--            <meta-data-->
-<!--                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
-<!--                android:resource="@xml/device_filter" />-->
-<!--        </activity>-->
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+        <!--        <activity android:name=".activity.ScanActivity2">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+        <!--            </intent-filter>-->
+
+        <!--            <meta-data-->
+        <!--                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
+        <!--                android:resource="@xml/device_filter" />-->
+        <!--        </activity>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"

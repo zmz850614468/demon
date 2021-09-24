@@ -60,6 +60,7 @@ public class ScanAcrtivity extends AppCompatActivity {
         UsbManager usbManager = (UsbManager) this.getSystemService(Context.USB_SERVICE);
         usbSerial = new UsbSerial(this, msgHsndle);
         usbSerial.setOnSerialListener((data) -> {
+            showLog(SerialPortUtil.byte2hexStr(data));
             if (data != null) {
                 for (byte b : data) {
                     byteDeque.add(b);
@@ -121,11 +122,13 @@ public class ScanAcrtivity extends AppCompatActivity {
             }
 
         });
-        usbSerial.initSerial(usbManager, 115200, 0x10c4, 0xea60);
+//        usbSerial.initSerial(usbManager, 115200, 0x10c4, 0xea60);
+        usbSerial.initSerial(usbManager, 230400, 0x10c4, 0xea60);
 
         isReset = true;
-        usbSerial.startMotor(50);
-        usbSerial.writeSerial(new byte[]{(byte) 0xA5, 0x20});
+        usbSerial.writeSerial(SerialPortUtil.hexStr2Byte("AA 08 00 10 01 01 00 01 C5 00"));
+//        usbSerial.startMotor(50);
+//        usbSerial.writeSerial(new byte[]{(byte) 0xA5, 0x20});
     }
 
     private Handler msgHsndle = new Handler(Objects.requireNonNull(Looper.myLooper()), (msg) -> {

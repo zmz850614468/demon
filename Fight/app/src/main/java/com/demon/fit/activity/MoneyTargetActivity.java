@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.demon.fit.R;
 
 /**
- * 目标界面
+ * 目标计划界面
  */
 public class MoneyTargetActivity extends AppCompatActivity {
 

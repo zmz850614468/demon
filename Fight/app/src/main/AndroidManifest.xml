@@ -16,13 +16,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.CalculateActivity"/>
+        <activity android:name=".activity.CalculateActivity" />
 
         <activity android:name=".activity.MoneyTargetActivity" />
 
         <activity android:name=".activity.OperateActivity" />
 
-        <activity android:name=".activity.JingDianActivity"/>
+        <activity android:name=".activity.JingDianActivity" />
+
+        <activity android:name=".activity.ResultActivity" />
     </application>
 
 </manifest>

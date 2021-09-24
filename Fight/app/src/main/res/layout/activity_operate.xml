@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
         <TextView
@@ -32,8 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="1、时K线：标准锤子线和上吊线"
-            android:textSize="15sp"
+            android:text="注：日K、时K下跌时，5K-Boll上线是买点"
+            android:textColor="@color/red"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -68,37 +70,37 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="5、日K线：30日线有长下阴线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="5、日K线：30日线有长下阴线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="6、周K线：超过boll上线8%以上，且有5份资金"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="6、周K线：超过boll上线8%以上，且有5份资金"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="7、周K线：标准的锤子线和上吊线，且有5份资金"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="7、周K线：标准的锤子线和上吊线，且有5份资金"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="8、5分K线：在满足日K线前提，在5分K线低点买入"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="5、5分K线：在满足日K线前提，在5分K线低点买入"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textStyle="bold" />-->
     </LinearLayout>
 
     <TextView
@@ -106,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="1、保护好本金和利润\n2、耐心等待，减少操作次数\n3、下跌反弹后，优先选择卖出"
+        android:text="侥幸心理可能导致毁灭性的结果!!"
         android:textColor="@color/red"
         android:textSize="15sp" />
 

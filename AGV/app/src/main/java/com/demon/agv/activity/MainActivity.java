@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ClientOkSocket clientOkSocket;
 
-    String DIALOG_USB_PERMISSION = "com.example.usbtest.GRANT_USB";
+//    String DIALOG_USB_PERMISSION = "com.example.usbtest.GRANT_USB";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

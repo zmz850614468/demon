@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
 import demon.CopyUseActivity;
 
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
@@ -16,9 +17,7 @@ import com.lilanz.tooldemo.multiplex.documentviewer.DocumentViewerUtil;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends Activity {
@@ -33,9 +32,9 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
 
 //        initMenu();
-        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-        base += "/file11.pdf";
-        DocumentViewerUtil.openDocumentViewer(this, base);
+//        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+//        base += "/file11.pdf";
+//        DocumentViewerUtil.openDocumentViewer(this, base);
     }
 
     @OnClick({R.id.bt_internal_check, R.id.bt_reuse, R.id.bt_prints, R.id.bt_copy_use})

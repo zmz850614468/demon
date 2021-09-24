@@ -16,6 +16,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 经典语录记录界面
+ */
 public class JingDianActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_jing_dian)
@@ -23,8 +26,6 @@ public class JingDianActivity extends AppCompatActivity {
     private StringAdapter adapter;
 
     private List<String> list;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +38,11 @@ public class JingDianActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
-        list.add("期货交易能够稳定获利的三个要素是技能、执行力和心态。");
-        list.add("止损时，迅速止损，不用抱有侥幸心理。");
+        list.add("执行力很重要，侥幸心理可能导致毁灭性结果");
+        list.add("期货交易能够稳定获利的三个要素是技能、执行力和心态");
+//        list.add("宣贯的密度+力度=执行的深度+高度");
+//        list.add("执行力没有如果，只有结果");
+//        list.add("止损时，迅速止损，不用抱有侥幸心理");
 
         adapter = new StringAdapter(this, list);
         LinearLayoutManager manager = new LinearLayoutManager(this);

@@ -76,9 +76,12 @@ public class ClientOkSocket {
 
         // 2.存在连接，则发送信息
         if (connectionManagerMap.containsKey(ip)) {
-            connectionManager = connectionManagerMap.get(ip);
-            connectionManager.send(new OkSocketBean(msg));
-
+            if (connectionManagerMap.get(ip).isConnect()) {
+                connectionManager = connectionManagerMap.get(ip);
+                connectionManager.send(new OkSocketBean(msg));
+            }else {
+                msgListMap.get(ip).add(msg);
+            }
             // 3.不存在连接，则先发起连接
         } else {
             if (!msgListMap.containsKey(ip)) {
@@ -92,6 +95,8 @@ public class ClientOkSocket {
 
             connectionManager.connect();
             connectionManagerMap.put(ip, connectionManager);
+
+//            connectionManager.op
         }
     }
 
