@@ -19,4 +19,15 @@ public class AnalyseBean {
 
     public int totalResult;
 
+
+    public int resultTime;  // 结果次数，操作次数的一半（两次操作一个结果）
+
+    public int negTimes;
+
+    public int negResult;
+
+    public int posTimes;
+
+    public int posResult;
+
 }

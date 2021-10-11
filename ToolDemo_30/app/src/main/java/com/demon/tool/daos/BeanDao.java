@@ -7,6 +7,7 @@ import android.util.ArrayMap;
 import androidx.annotation.NonNull;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
@@ -58,14 +59,37 @@ public class BeanDao<T> {
     }
 
     // 删除数据对象
-    public void delete(T t) {
+    public int delete(T t) {
         try {
             synchronized (OrmLiteHelter.DATA_LOCK) {
-                dao.delete(t);
+                return dao.delete(t);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return 0;
+    }
+
+    public int deleteWhere(T t, Map<String, Object> map) {
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                DeleteBuilder builder = dao.deleteBuilder();
+                Where<T, Integer> where = builder.where();
+                int index = 0;
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    if (index == 0) {
+                        where = where.eq(entry.getKey(), entry.getValue());
+                    } else {
+                        where = where.and().eq(entry.getKey(), entry.getValue());
+                    }
+                    index++;
+                }
+                return builder.delete();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public void deleteById(int id) {
@@ -158,11 +182,10 @@ public class BeanDao<T> {
     }
 
     /**
-     *
      * @param columnName
      * @return
      */
-    public List<T> getDistinctList(String columnName){
+    public List<T> getDistinctList(String columnName) {
         List<T> list = null;
         try {
             synchronized (OrmLiteHelter.DATA_LOCK) {
@@ -172,6 +195,34 @@ public class BeanDao<T> {
             ex.printStackTrace();
         }
         return list == null ? new ArrayList<T>() : list;
+    }
+
+    /**
+     * 查找对应数据的条数
+     *
+     * @param map
+     * @return
+     */
+    public long getCount(@NonNull Map<String, Object> map) {
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                Where<T, Integer> where = dao.queryBuilder().where();
+                int index = 0;
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    if (index == 0) {
+                        where = where.eq(entry.getKey(), entry.getValue());
+                    } else {
+                        where = where.and().eq(entry.getKey(), entry.getValue());
+                    }
+                    index++;
+                }
+                return where.countOf();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return 0;
     }
 
 }

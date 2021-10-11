@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_box_gray">
+
+    <LinearLayout
+        android:id="@+id/layout_do"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_box_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="执行次数"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="执行结果"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="执行占比"
+                android:textSize="@dimen/title_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:gravity="center"
+                android:text="好"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/tv_good_times"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_good_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="2600"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_good_rate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="50.0%"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:gravity="center"
+                android:text="坏"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/tv_bad_times"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_bad_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="2600"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_bad_rate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="50.0%"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+        </LinearLayout>
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/title_height"-->
+        <!--            android:orientation="horizontal">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="@dimen/weight_1"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="总"-->
+        <!--                android:textSize="@dimen/title_size" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv_"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="@dimen/weight_2"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="28"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/content_size" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="@dimen/weight_3"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="5200"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/content_size" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="@dimen/weight_4"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/title_size" />-->
+        <!--        </LinearLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_do"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/shape_box_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="操作次数"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="操作结果"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="操作占比"
+                android:textSize="@dimen/title_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:gravity="center"
+                android:text="正"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/tv_pos_times"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_pos_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="2600"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_pos_rate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="50.0%"
+                android:textColor="@color/deepRed"
+                android:textSize="@dimen/content_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_1"
+                android:gravity="center"
+                android:text="负"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/tv_neg_times"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_2"
+                android:gravity="center"
+                android:text="14"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_neg_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_3"
+                android:gravity="center"
+                android:text="-2600"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_neg_rate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="@dimen/weight_4"
+                android:gravity="center"
+                android:text="50.0%"
+                android:textColor="@color/deepGreen"
+                android:textSize="@dimen/content_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_below="@id/layout_result"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/shape_box_red"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_1"
+            android:gravity="center"
+            android:text="总"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_total_times"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_2"
+            android:gravity="center"
+            android:text="28"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_total_result"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_3"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_4"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:text="9月"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

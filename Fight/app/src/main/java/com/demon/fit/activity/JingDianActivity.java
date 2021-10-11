@@ -38,7 +38,7 @@ public class JingDianActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
-        list.add("执行力很重要，侥幸心理可能导致毁灭性结果");
+        list.add("侥幸心理可能导致毁灭性的结果");
         list.add("期货交易能够稳定获利的三个要素是技能、执行力和心态");
 //        list.add("宣贯的密度+力度=执行的深度+高度");
 //        list.add("执行力没有如果，只有结果");

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.demon.fit.R;
 import com.demon.fit.activity.ResultActivity;
 import com.demon.fit.adapter.AnalyseAdapter;
+import com.demon.fit.adapter.AnalyseV2Adapter;
 import com.demon.fit.adapter.ResultAdapter;
 import com.demon.fit.bean.AnalyseBean;
 import com.demon.fit.bean.ResultBean;
@@ -31,11 +32,11 @@ public class ResultUiControl {
 
     @BindView(R.id.layout_detail)
     ViewGroup layoutDetail;
-    @BindView(R.id.tv_type)
+    @BindView(R.id.tv_type_input)
     TextView tvType;
     @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.tv_is_right)
+    @BindView(R.id.tv_is_right_input)
     TextView tvIsRight;
     @BindView(R.id.et_result)
     EditText etResult;
@@ -47,7 +48,8 @@ public class ResultUiControl {
 
     @BindView(R.id.rv_analyse)
     protected RecyclerView analyseRecycler;
-    private AnalyseAdapter analyseAdapter;
+    //    private AnalyseAdapter analyseAdapter;
+    private AnalyseV2Adapter analyseAdapter;
     private List<AnalyseBean> analyseList;
 
     private boolean isShowDetail;
@@ -142,18 +144,18 @@ public class ResultUiControl {
         analyseList = new ArrayList<>();
         initAnalyseData();
 
-        analyseAdapter = new AnalyseAdapter(activity, analyseList);
+        analyseAdapter = new AnalyseV2Adapter(activity, analyseList);
         LinearLayoutManager manager = new LinearLayoutManager(activity);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         analyseRecycler.setLayoutManager(manager);
         analyseRecycler.setAdapter(analyseAdapter);
 
-        analyseAdapter.setListener(new AnalyseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(AnalyseBean bean) {
-
-            }
-        });
+//        analyseAdapter.setListener(new AnalyseAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AnalyseBean bean) {
+//
+//            }
+//        });
     }
 
     private void initAnalyseData() {
@@ -175,6 +177,18 @@ public class ResultUiControl {
                 analyseBean.badTimes++;
                 analyseBean.badResult += resultBean.result;
             }
+
+            if ("出手".equals(resultBean.type)) {
+                analyseBean.resultTime++;
+                if (resultBean.result > 0) {
+                    analyseBean.posTimes++;
+                    analyseBean.posResult += resultBean.result;
+                } else if (resultBean.result < 0) {
+                    analyseBean.negTimes++;
+                    analyseBean.negResult += resultBean.result;
+                }
+            }
+
             analyseBean.totalResult += resultBean.result;
         }
     }

@@ -17,18 +17,25 @@ import java.util.List;
  */
 public class TouchControl<T> extends ItemTouchHelper {
 
+    //    private RecyclerView recyclerView;
+//    private RecyclerView.Adapter adapter;
+//    private List<T> list;
+
     public TouchControl(RecyclerView recyclerView, final RecyclerView.Adapter adapter, final List<T> list, final OnUpdateListener<T> listener) {
         super(new ItemTouchHelper.Callback() {
 
+            private boolean isDelete;
+
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                isDelete = false;
                 int dragFrlg = 0;
                 if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
                     dragFrlg = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
                 } else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-                    dragFrlg = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                    dragFrlg = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
                 }
-                return makeMovementFlags(dragFrlg, 0);
+                return makeMovementFlags(dragFrlg, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -52,6 +59,10 @@ public class TouchControl<T> extends ItemTouchHelper {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑删除可以使用；
+                if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT) {
+                    listener.onDelete(viewHolder.getAdapterPosition());
+                }
+                isDelete = true;
             }
 
             @Override
@@ -86,16 +97,21 @@ public class TouchControl<T> extends ItemTouchHelper {
                 super.clearView(recyclerView, viewHolder);
                 viewHolder.itemView.setBackgroundColor(0);
 
-                if (listener != null) {
+                if (listener != null && !isDelete) {
                     listener.onUpdate(list);
                 }
-                adapter.notifyDataSetChanged();  //完成拖动后刷新适配器，这样拖动后删除就不会错乱
+//                adapter.notifyDataSetChanged();  //完成拖动后刷新适配器，这样拖动后删除就不会错乱
             }
         });
+//        this.recyclerView = recyclerView;
+//        this.adapter = adapter;
+//        this.list = list;
     }
 
     public interface OnUpdateListener<T> {
         void onUpdate(List<T> list);
+
+        void onDelete(int position);
     }
 
 }

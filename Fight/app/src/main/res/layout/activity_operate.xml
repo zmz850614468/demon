@@ -22,18 +22,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="注：日K线、时K线同方向，参考5K线买卖"
-            android:textColor="@color/red"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="注：日K、时K下跌时，5K-Boll上线是买点"
+            android:padding="5dp"
+            android:text="注：参考分K线买卖，5K与20K交点为买点，5K与10K交点为卖点"
             android:textColor="@color/red"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -50,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="2、时K线：boll上限小阴，boll下限小阳;短影线"
+            android:text="2、时K线：20K为支点，小阳或锤子线"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -58,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="3、日K线：跳空低开或是高开"
+            android:text="3、时K线：20K为压点，小阴或上吊线"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -69,6 +61,81 @@
             android:text="4、日K线：标准锤子线和上吊线"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="5、日K线：20K为支点，小阳或锤子线"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="6、日K线：20K为压点，小阴或上吊线"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="7、日K线：boll上限小阴，boll下限小阳;短影线"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="注：日K线、时K线同方向，参考5K线买卖"-->
+        <!--            android:textColor="@color/red"-->
+        <!--            android:textSize="17sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="注：日K、时K下跌时，5K-Boll上线是买点"-->
+        <!--            android:textColor="@color/red"-->
+        <!--            android:textSize="17sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="1、时K线：标准锤子线和上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="2、时K线：boll上限小阴，boll下限小阳;短影线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="3、日K线：跳空低开或是高开"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="4、日K线：标准锤子线和上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
+
 
         <!--        <TextView-->
         <!--            android:layout_width="wrap_content"-->
@@ -94,13 +161,13 @@
         <!--            android:textSize="15sp"-->
         <!--            android:textStyle="bold" />-->
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="5、5分K线：在满足日K线前提，在5分K线低点买入"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textStyle="bold" />-->
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="5、5分K线：在满足日K线前提，在5分K线低点买入"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
     </LinearLayout>
 
     <TextView
