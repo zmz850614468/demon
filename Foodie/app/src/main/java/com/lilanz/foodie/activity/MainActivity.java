@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mainUi = new MainUi(this);
+        mainUi.register();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainUi.unRegister();
     }
 
 }

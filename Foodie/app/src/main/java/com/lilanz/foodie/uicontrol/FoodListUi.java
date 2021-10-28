@@ -1,8 +1,11 @@
 package com.lilanz.foodie.uicontrol;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +37,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FoodListUi {
+
+    public static final String ACTION_UPDATE_DATA = "FoodListUi.updateData";
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -134,6 +139,9 @@ public class FoodListUi {
                         Map<String, Object> map = new HashMap<>();
                         map.put("food_name", bean.name);
                         DBControl.deleteByColumn(activity, MaterialBean.class, map);
+
+                        Intent intent = new Intent(MainUi.ACTION_UPDATE_DATA);
+                        activity.sendBroadcast(intent);
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -176,12 +184,7 @@ public class FoodListUi {
                     showToast("菜单已经存在");
                     return;
                 }
-//                for (FoodBean bean : list) {
-//                    if (str.equals(bean.name)) {
-//                        showToast("菜单已经存在");
-//                        return;
-//                    }
-//                }
+
                 FoodBean bean = new FoodBean();
                 bean.name = str;
                 bean.foodType = foodType;
@@ -189,9 +192,45 @@ public class FoodListUi {
                 list.add(bean);
                 adapter.notifyDataSetChanged();
                 DBControl.createOrUpdate(activity, FoodBean.class, bean);
+
+                Intent intent = new Intent(MainUi.ACTION_UPDATE_DATA);
+                activity.sendBroadcast(intent);
             }
         });
     }
+
+    private void updateListData() {
+        list.clear();
+        Map<String, Object> map = new HashMap<>();
+        map.put("food_type", foodType);
+        list.addAll(DBControl.queryByColumn(activity, FoodBean.class, map));
+        Collections.sort(list, new Comparator<FoodBean>() {
+            @Override
+            public int compare(FoodBean o1, FoodBean o2) {
+                return o1.order - o2.order;
+            }
+        });
+    }
+
+    public void register() {
+        IntentFilter filter = new IntentFilter(ACTION_UPDATE_DATA);
+        activity.registerReceiver(receiver, filter);
+    }
+
+    public void unRegister() {
+        activity.unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case ACTION_UPDATE_DATA:
+                    updateListData();
+                    break;
+            }
+        }
+    };
 
     private void showToast(String msg) {
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();

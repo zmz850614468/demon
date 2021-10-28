@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,8 +14,6 @@ import com.demon.tool.controls.PermissionControl;
 import com.demon.tool.controls.ScanKeyManager;
 import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
-
-import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        openDocumentViewer(base);
     }
 
-    @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download})
+    @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download, R.id.bt_data_save})
     public void onClicked(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -65,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_download:
                 intent = new Intent(this, DownloadActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_data_save:
+                intent = new Intent(this, SaveDataActivity.class);
                 startActivity(intent);
                 break;
         }

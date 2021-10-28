@@ -51,6 +51,7 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
     private List<String> list;
 
     private String desType = MaterialBean.DES_TYPE_MATERIAL;
+    private MaterialBean updateMaterialBean;
 
     public DetailDialog(Context context, int inputType) {
         super(context, inputType);
@@ -70,6 +71,33 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
     @Override
     public void onClick(DialogInterface dialog, int which) {
     }
+
+    public void updateData(MaterialBean bean) {
+        desType = bean.desType;
+        switch (desType) {
+            case MaterialBean.DES_TYPE_MATERIAL:
+                onTypeClicked(tvMaterial);
+                etMaterialName.setText(bean.name);
+                etMaterialCount.setText(String.format("%.1f", bean.number));
+                for (int i = 0; i < list.size(); i++) {
+                    String str = (String) nsDanWei.getItemAtPosition(i);
+                    if (bean.unit.equals(str)) {
+                        nsDanWei.setSelectedIndex(i);
+                    }
+                }
+                break;
+            case MaterialBean.DES_TYPE_STEP:
+                onTypeClicked(tvStep);
+                etStep.setText(bean.des);
+                break;
+            case MaterialBean.DES_TYPE_MEMO:
+                etMemo.setText(bean.des);
+                onTypeClicked(tvMemo);
+                break;
+        }
+        updateMaterialBean = bean;
+    }
+
 
     @OnClick(R.id.bt_ok)
     public void onClicked(View v) {
@@ -98,13 +126,21 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
                 return;
             }
 
-            MaterialBean bean = new MaterialBean();
-            bean.desType = MaterialBean.DES_TYPE_MATERIAL;
-            bean.name = name;
-            bean.number = count;
-            bean.unit = danWei;
-            if (listener != null) {
-                listener.onConfirm(bean);
+            if (updateMaterialBean == null) {
+                MaterialBean bean = new MaterialBean();
+                bean.desType = MaterialBean.DES_TYPE_MATERIAL;
+                bean.name = name;
+                bean.number = count;
+                bean.unit = danWei;
+                if (listener != null) {
+                    listener.onConfirm(false, bean);
+                }
+            } else {
+                updateMaterialBean.name = name;
+                updateMaterialBean.number = count;
+                updateMaterialBean.unit = danWei;
+                listener.onConfirm(true, updateMaterialBean);
+//                updateMaterialBean = null;
             }
             etMaterialCount.setText("");
             etMaterialName.setText("");
@@ -122,11 +158,17 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
             return;
         }
 
-        MaterialBean bean = new MaterialBean();
-        bean.desType = MaterialBean.DES_TYPE_STEP;
-        bean.des = stepDes;
-        if (listener != null) {
-            listener.onConfirm(bean);
+        if (updateMaterialBean == null) {
+            MaterialBean bean = new MaterialBean();
+            bean.desType = MaterialBean.DES_TYPE_STEP;
+            bean.des = stepDes;
+            if (listener != null) {
+                listener.onConfirm(false, bean);
+            }
+        } else {
+            updateMaterialBean.des = stepDes;
+            listener.onConfirm(true, updateMaterialBean);
+//            updateMaterialBean = null;
         }
         etStep.setText("");
     }
@@ -138,17 +180,38 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
             return;
         }
 
-        MaterialBean bean = new MaterialBean();
-        bean.desType = MaterialBean.DES_TYPE_MEMO;
-        bean.des = memoDes;
-        if (listener != null) {
-            listener.onConfirm(bean);
+        if (updateMaterialBean == null) {
+            MaterialBean bean = new MaterialBean();
+            bean.desType = MaterialBean.DES_TYPE_MEMO;
+            bean.des = memoDes;
+            if (listener != null) {
+                listener.onConfirm(false, bean);
+            }
+        } else {
+            updateMaterialBean.des = memoDes;
+            listener.onConfirm(true, updateMaterialBean);
+//            updateMaterialBean = null;
         }
         etMemo.setText("");
     }
 
+    public void dismiss() {
+        super.dismiss();
+        if (updateMaterialBean != null) {
+            etMaterialName.setText("");
+            etMaterialCount.setText("");
+            etStep.setText("");
+            etMemo.setText("");
+            updateMaterialBean = null;
+        }
+    }
+
     @OnClick({R.id.tv_material, R.id.tv_step, R.id.tv_memo})
     public void onTypeClicked(View v) {
+        if (updateMaterialBean != null) {
+            showToast("修改内容不允许选择类型");
+            return;
+        }
         switch (v.getId()) {
             case R.id.tv_material:
                 desType = MaterialBean.DES_TYPE_MATERIAL;
@@ -185,6 +248,7 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
         list.add("g");
         list.add("ml");
         list.add("个");
+        list.add("勺");
         nsDanWei.attachDataSource(list);
     }
 
@@ -198,7 +262,7 @@ public class DetailDialog extends Dialog implements DialogInterface.OnClickListe
 
     public interface OnClickListener {
 
-        void onConfirm(MaterialBean bean);
+        void onConfirm(boolean isUpdate, MaterialBean bean);
     }
 
     private void showToast(String msg) {

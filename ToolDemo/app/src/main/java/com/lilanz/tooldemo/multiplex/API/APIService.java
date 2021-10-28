@@ -56,6 +56,7 @@ public interface APIService {
      */
     @FormUrlEncoded
     @POST("printerTemplate/setTemplateDetails")
+//    @POST("printerTemplate/setTemplateDetailsForErp")
     //请求方法为POST，里面为你要上传的url
     Call<ResponseBody> getBitmapStr(@FieldMap Map<String, String> map);
 

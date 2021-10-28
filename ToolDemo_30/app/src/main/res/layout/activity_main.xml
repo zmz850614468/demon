@@ -22,6 +22,12 @@
         android:layout_height="wrap_content"
         android:text="腾讯文档阅读器" />
 
+    <Button
+        android:id="@+id/bt_data_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="数据保存到文件中" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -20,7 +20,9 @@ import com.lilanz.foodie.dialog.DetailDialog;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,11 +66,16 @@ public class FoodDetailUi {
         detailDialog.dismiss();
         detailDialog.setListener(new DetailDialog.OnClickListener() {
             @Override
-            public void onConfirm(MaterialBean bean) {
-                bean.foodName = foodName;
-                bean.orderId = list.size() + 1;
-                DBControl.createOrUpdate(activity, MaterialBean.class, bean);
-                updateList();
+            public void onConfirm(boolean isUpdate, MaterialBean bean) {
+                if (isUpdate) {
+                    DBControl.createOrUpdate(activity, MaterialBean.class, bean);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    bean.foodName = foodName;
+                    bean.orderId = list.size() + 1;
+                    DBControl.createOrUpdate(activity, MaterialBean.class, bean);
+                    updateList();
+                }
             }
         });
     }
@@ -85,7 +92,8 @@ public class FoodDetailUi {
         adapter.setListener(new FoodDetailAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MaterialBean bean) {
-
+                detailDialog.updateData(bean);
+                detailDialog.show();
             }
         });
 
@@ -150,7 +158,10 @@ public class FoodDetailUi {
 
     private void updateList() {
         list.clear();
-        List<MaterialBean> temList = DBControl.queryAll(activity, MaterialBean.class);
+        Map<String, Object> map = new HashMap<>();
+        map.put("food_name", foodName);
+//        List<MaterialBean> temList = DBControl.queryAll(activity, MaterialBean.class);
+        List<MaterialBean> temList = DBControl.queryByColumn(activity, MaterialBean.class, map);
         list.addAll(temList);
         Collections.sort(list, new Comparator<MaterialBean>() {
             @Override

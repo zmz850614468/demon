@@ -46,7 +46,6 @@ public class JiaBoBluetoothActivity extends Activity {
         setContentView(R.layout.activity_jia_bo);
         ButterKnife.bind(this);
 
-        initUI();
         initBluetoothManager();
 //        initUsbManager();
     }
@@ -123,7 +122,8 @@ public class JiaBoBluetoothActivity extends Activity {
 
     private void initBluetoothManager(){
         if (usbManager == null) {
-                usbManager = new BluetoothPort("DC:1D:30:BD:9A:93");
+//            usbManager = new BluetoothPort("DC:1D:30:BD:9A:93");
+            usbManager = new BluetoothPort("DC:1D:30:BD:9A:93");
                 boolean isOpenUsbPort = usbManager.openPort();
                 if (isOpenUsbPort) {
                     showToast("蓝牙打印机连接成功");

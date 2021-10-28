@@ -20,10 +20,12 @@ public class FoodListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         foodListUi = new FoodListUi(this);
+        foodListUi.register();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        foodListUi.unRegister();
     }
 }

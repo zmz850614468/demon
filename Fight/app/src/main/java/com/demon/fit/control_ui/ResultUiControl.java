@@ -110,17 +110,17 @@ public class ResultUiControl {
         }
     }
 
-    @OnClick({R.id.tv_type, R.id.tv_is_right})
+    @OnClick({R.id.tv_type_input, R.id.tv_is_right_input})
     public void onClicked(View v) {
         switch (v.getId()) {
-            case R.id.tv_type:
+            case R.id.tv_type_input:
                 if ("入手".equals(getText(v))) {
                     setText(v, "出手");
                 } else {
                     setText(v, "入手");
                 }
                 break;
-            case R.id.tv_is_right:
+            case R.id.tv_is_right_input:
                 if ("好".equals(getText(v))) {
                     setText(v, "坏");
                 } else {

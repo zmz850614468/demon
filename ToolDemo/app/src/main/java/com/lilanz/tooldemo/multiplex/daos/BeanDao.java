@@ -2,9 +2,8 @@ package com.lilanz.tooldemo.multiplex.daos;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.ArrayMap;
-
-import androidx.annotation.NonNull;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;

@@ -38,6 +38,7 @@
         <activity android:name=".download.DownloadActivity" />
         <activity android:name=".camera1.CameraActivity" />
         <activity android:name=".documentviewer.DocumentViewerActivity" />
+        <activity android:name=".activity.SaveDataActivity" />
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"

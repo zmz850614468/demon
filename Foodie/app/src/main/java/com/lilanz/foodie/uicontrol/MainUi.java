@@ -1,8 +1,11 @@
 package com.lilanz.foodie.uicontrol;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +36,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainUi {
+
+    public static final String ACTION_UPDATE_DATA = "MainUi.updateData";
 
     @BindView(R.id.rv_file)
     RecyclerView rvFile;
@@ -68,7 +73,6 @@ public class MainUi {
         fileAdapter.setListener(new FileAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(FoodTypeBean bean) {
-//                        showToast("跳转界面");
                 Intent intent = new Intent(activity, FoodListActivity.class);
                 intent.putExtra("foodType", bean.name);
                 activity.startActivity(intent);
@@ -76,33 +80,6 @@ public class MainUi {
 
             @Override
             public void onDoubleClick(FoodTypeBean bean) {
-//                if (bean.count > 0) {
-//                    activity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            showToast("文件夹不为空，无法进行删除操作");
-//                        }
-//                    });
-//                    return;
-//                }
-//                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//                builder.setTitle("注意：");
-//                builder.setMessage("请确定是否要删除数据。");
-//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        foodTypeBeanList.remove(bean);
-//                        DBControl.delete(activity, FoodTypeBean.class, bean);
-//                        updateList(foodTypeBeanList);
-//                        fileAdapter.notifyDataSetChanged();
-//                    }
-//                });
-//                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                });
-//                builder.create().show();
             }
         });
 
@@ -169,7 +146,12 @@ public class MainUi {
     }
 
     private void initData() {
-        foodTypeBeanList = DBControl.queryAll(activity, FoodTypeBean.class);
+        if (foodTypeBeanList == null) {
+            foodTypeBeanList = new ArrayList<>();
+        }
+        foodTypeBeanList.clear();
+        List tempList = DBControl.queryAll(activity, FoodTypeBean.class);
+        foodTypeBeanList.addAll(tempList);
         Map<String, Object> map = new HashMap<>();
         for (FoodTypeBean bean : foodTypeBeanList) {
             map.put("food_type", bean.name);
@@ -205,6 +187,27 @@ public class MainUi {
             }
         });
     }
+
+    public void register() {
+        IntentFilter filter = new IntentFilter(ACTION_UPDATE_DATA);
+        activity.registerReceiver(receiver, filter);
+    }
+
+    public void unRegister() {
+        activity.unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case ACTION_UPDATE_DATA:
+                    initData();
+                    fileAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
     private void showToast(String msg) {
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
