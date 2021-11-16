@@ -83,6 +83,7 @@ public class JiaBoBluetoothActivity extends Activity {
         if (requestImage == null) {
             requestImage = new APIRequest<>(String.class);
             requestImage.setRequestBasePath("http://192.168.36.178:15005/");
+//            requestImage.setRequestBasePath("http://192.168.35.136:15005/");
             requestImage.setParseListener(new ParseListener<String>() {
                 @Override
                 public void jsonResult(String jsonStr) {

@@ -4,14 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.demon.tool.R;
 import com.demon.tool.controls.PermissionControl;
 import com.demon.tool.controls.ScanKeyManager;
+import com.demon.tool.controls.UsbControl;
 import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ScanKeyManager scanKeyManager;
+    private UsbControl usbControl;
 
     // 去除底部导航栏
     @Override
@@ -44,12 +48,31 @@ public class MainActivity extends AppCompatActivity {
         initPermission();
         initScanCode();
 
+        usbControl = new UsbControl(this);
+
 //        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 //        base += "/file11.pdf";
 //        base += "/file11.docx";
 //        base += "/file11.xlsx";
 //        showLog("path:" + base);
 //        openDocumentViewer(base);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showToast("onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showToast("onRestart");
     }
 
     @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download, R.id.bt_data_save})
@@ -101,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScanValue(String value) {
                 showLog("code:" + value);
+                showToast(value);
             }
         });
     }
@@ -124,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        usbControl.close();
+    }
+
     private void initPermission() {
         PermissionControl control = new PermissionControl(this);
         control.requestPermissions(new String[]{PermissionControl.STORAGE, PermissionControl.CAMERA});
@@ -133,5 +163,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLog(String msg) {
         Log.e("MainActivity", msg);
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

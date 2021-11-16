@@ -133,6 +133,9 @@ public class SaveDataThread extends Thread {
         File file = new File(Environment.getExternalStoragePublicDirectory(BASE_FILE), childFile);
         if (file.exists()) {
             File[] files = file.listFiles();
+            if (files == null) {
+                return;
+            }
             long curTime = System.currentTimeMillis();
             for (File f : files) {
 //                showLog(f.getName() + " : " + StringUtil.getDate(f.lastModified()));
