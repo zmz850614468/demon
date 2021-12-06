@@ -38,9 +38,10 @@ public class JingDianActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
-        list.add("侥幸心理可能导致毁灭性的结果");
         list.add("期货交易能够稳定获利的三个要素是技能、执行力和心态");
+        list.add("侥幸心理可能导致毁灭性的结果");
         list.add("警防重大损失，这将会带来一系列的变形操作");
+        list.add("趋势交易：看好日K趋势，前一天日K线趋势良好，看5分K线顺势，最后看分时MACD也顺势");
 //        list.add("宣贯的密度+力度=执行的深度+高度");
 //        list.add("执行力没有如果，只有结果");
 //        list.add("止损时，迅速止损，不用抱有侥幸心理");

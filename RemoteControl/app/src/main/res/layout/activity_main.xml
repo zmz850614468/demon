@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/bt_get_all_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取说有应用" />
+
+        <Button
+            android:id="@+id/bt_fiel_viewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="文件浏览" />
+
+        <Button
+            android:id="@+id/bt_delete_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除应用" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_all_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selector"
+        android:padding="3dp"
+        android:text="远程设备"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_remote_app"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector"
+            android:padding="3dp"
+            android:text="远程设备应用管理--卸载应用"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_remote_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector"
+            android:padding="3dp"
+            android:text="远程设备文件管理--上传、安装"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_local_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/selector"
+            android:padding="3dp"
+            android:text="本地设备文件管理--下发文件"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_box_white">
+
+        <TextView
+            android:id="@+id/tv_socket_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="socket连接状态"
+            android:textColor="@color/red"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_progress"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/tranGray"
+        android:text="进度"
+        android:textSize="15sp" />
+
+</RelativeLayout>

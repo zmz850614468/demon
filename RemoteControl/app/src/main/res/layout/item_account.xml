@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_ble_device"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/shape_box_white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/tv_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dialog"
+        android:textColor="@color/colorBlack"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:text="未备注"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp" />
+</RelativeLayout>

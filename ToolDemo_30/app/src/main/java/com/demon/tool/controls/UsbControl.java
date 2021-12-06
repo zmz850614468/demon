@@ -47,10 +47,16 @@ public class UsbControl {
                 case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                     showLog("ACTION_USB_DEVICE_ATTACHED");
                     showToast("ACTION_USB_DEVICE_ATTACHED");
+                    if (onUsbConnectListener != null) {
+                        onUsbConnectListener.onUsbAttached();
+                    }
                     break;
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
                     showLog("ACTION_USB_DEVICE_DETACHED");
                     showToast("ACTION_USB_DEVICE_DETACHED");
+                    if (onUsbConnectListener != null) {
+                        onUsbConnectListener.onUsbDetached();
+                    }
                     break;
                 case UsbManager.ACTION_USB_ACCESSORY_ATTACHED:
                     showLog("ACTION_USB_ACCESSORY_ATTACHED");
@@ -66,6 +72,18 @@ public class UsbControl {
 
     public void close() {
         unregister();
+    }
+
+    public OnUsbConnectListener onUsbConnectListener;
+
+    public interface OnUsbConnectListener {
+        void onUsbAttached();
+
+        void onUsbDetached();
+    }
+
+    public void setOnUsbConnectListener(OnUsbConnectListener onUsbConnectListener) {
+        this.onUsbConnectListener = onUsbConnectListener;
     }
 
     private void showToast(String msg) {

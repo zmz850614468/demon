@@ -41,7 +41,6 @@
             android:paddingLeft="15dp"
             android:singleLine="true" />
 
-
         <Button
             android:id="@+id/bt_start_scan"
             android:layout_width="match_parent"

@@ -209,7 +209,7 @@ public class FileUtil {
      * @param file
      */
     public static void deleteFile(File file) {
-        if (file.exists() == false) {
+        if (!file.exists()) {
             return;
         } else {
             if (file.isFile()) {

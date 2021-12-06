@@ -1,5 +1,8 @@
 package com.demon.tool.util;
 
+import android.content.Context;
+import android.provider.Settings;
+
 /**
  * 设备相关帮助类
  */
@@ -19,6 +22,16 @@ public class DeviceUtils {
      */
     public static String getSerialNumber() {
         return android.os.Build.SERIAL;
+    }
+
+    /**
+     * 获取安卓 id号
+     *
+     * @param context
+     * @return
+     */
+    public static String getAndroidId(Context context) {
+        return Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
     }
 
     /**

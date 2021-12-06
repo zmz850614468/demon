@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/shape_box_white"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_order"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="序号"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/iv_file_type"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical" />
+0
+    <TextView
+        android:id="@+id/tv_file_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:text="应用名"
+        android:textColor="@color/black" />
+
+
+</LinearLayout>

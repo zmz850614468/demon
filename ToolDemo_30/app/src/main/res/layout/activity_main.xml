@@ -28,6 +28,18 @@
         android:layout_height="wrap_content"
         android:text="数据保存到文件中" />
 
+    <Button
+        android:id="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫码" />
+
+    <Button
+        android:id="@+id/bt_ble"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="蓝牙数据传输" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

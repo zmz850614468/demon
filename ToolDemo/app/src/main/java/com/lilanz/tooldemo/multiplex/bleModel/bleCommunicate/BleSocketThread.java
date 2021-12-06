@@ -17,7 +17,7 @@ public class BleSocketThread extends Thread {
 //    private static UUID uuid = UUID.fromString("00001124-0000-1000-8000-00805f9b34fb");
 //    private static UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private BluetoothServerSocket serverSocket;     // 服务器socket
-    private BluetoothSocket bluetoothSocket;        // 蓝夜连接socket
+    private BluetoothSocket bluetoothSocket;        // 蓝牙连接socket
     private BluetoothDevice bluetoothDevice;        // 蓝牙设备
     private BluetoothAdapter bluetoothAdapter;      // 蓝牙适配器
     private Handler handler;
