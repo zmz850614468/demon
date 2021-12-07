@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
             deviceDialog.updateData(deviceNoList, App.selectedDevice);
             deviceDialog.show();
-            showLog("获取所有设备信息：" + new Gson().toJson(deviceNoList));
+//            showLog("获取所有设备信息：" + new Gson().toJson(deviceNoList));
         });
         socketMsgControl.setOnSocketStatusListener(new OnSocketStatusListener() {
             @Override

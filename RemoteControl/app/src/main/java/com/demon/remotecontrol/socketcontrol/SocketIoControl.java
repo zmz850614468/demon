@@ -38,19 +38,16 @@ public class SocketIoControl {
         }
 
         if (socketIoClient != null) {
-            socketIoClient.io().on(Manager.EVENT_TRANSPORT, new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    Transport transport = (Transport) args[0];
-                    transport.on(Transport.EVENT_REQUEST_HEADERS, new Emitter.Listener() {
-                        @Override
-                        public void call(Object... args) {
-                            Map<String, List<String>> mHeaders = (Map<String, List<String>>) args[0];
-                            mHeaders.put("Authorization", Arrays.asList("Basic bXl1c2VyOm15cGFzczEyMw=="));
-                        }
-                    });
-                }
-            });
+//            socketIoClient.io().on(Manager.EVENT_TRANSPORT, args -> {
+//                Transport transport = (Transport) args[0];
+//                transport.on(Transport.EVENT_REQUEST_HEADERS, new Emitter.Listener() {
+//                    @Override
+//                    public void call(Object... args) {
+//                        Map<String, List<String>> mHeaders = (Map<String, List<String>>) args[0];
+//                        mHeaders.put("Authorization", Arrays.asList("Basic bXl1c2VyOm15cGFzczEyMw=="));
+//                    }
+//                });
+//            });
             socketIoClient.on(Socket.EVENT_CONNECT, args -> {
                 if (onSocketIoListener != null) {
                     onSocketIoListener.onConnected();

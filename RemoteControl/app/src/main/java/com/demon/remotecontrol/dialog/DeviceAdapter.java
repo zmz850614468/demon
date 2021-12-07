@@ -35,7 +35,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.AccountHol
         selectedInde = -1;
         if (bean != null) {
             for (int i = 0; i < beanList.size(); i++) {
-                if (beanList.get(i).equals(bean)) {
+                if (beanList.get(i).deviceId.equals(bean)) {
                     selectedInde = i;
                     break;
                 }

@@ -79,7 +79,7 @@ public class DeviceDialog extends Dialog implements DialogInterface.OnClickListe
             bleDeviceList.add(bean);
         }
 
-        bleDeviceAdapter.selectedName(selectedName);
+        bleDeviceAdapter.selectedName(selectedDevice);
         bleDeviceAdapter.notifyDataSetChanged();
     }
 

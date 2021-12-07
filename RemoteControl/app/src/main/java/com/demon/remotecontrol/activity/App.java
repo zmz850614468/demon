@@ -23,6 +23,6 @@ public class App extends Application {
 //        deviceId = DeviceUtils.getSerialNumber(this);
         deviceId = DeviceUtils.getAndroidId(this).toUpperCase();
 
-        Bugly.init(this, "", false);
+        Bugly.init(this, "7bd05b63d8", false);
     }
 }

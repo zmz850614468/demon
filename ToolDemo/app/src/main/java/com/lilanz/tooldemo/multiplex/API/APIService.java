@@ -19,6 +19,16 @@ import retrofit2.http.QueryMap;
 public interface APIService {
 
     /**
+     * 请求网络打印资源bytes
+     *
+     * @param body
+     * @return
+     */
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    @POST("getmdbyorderno")
+    Call<ResponseBody> getPrintData(@Body RequestBody body);
+
+    /**
      * 判断是否有登录权限
      *
      * @param map Params请求方法

@@ -5,6 +5,12 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/bt_request_print_byte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请求打印数据bytes" />
+
+    <Button
         android:id="@+id/bt_creqte_qrcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,12 +18,12 @@
 
     <EditText
         android:id="@+id/et_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:inputType="number"
-        android:text="1"
         android:selectAllOnFocus="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="1" />
 
     <Button
         android:id="@+id/bt_request_image"

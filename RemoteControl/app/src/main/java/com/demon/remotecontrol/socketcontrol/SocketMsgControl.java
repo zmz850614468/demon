@@ -70,15 +70,6 @@ public class SocketMsgControl {
         issueProgressList = new ArrayList<>();
     }
 
-    private Handler reConnectHandle = new Handler(Looper.myLooper(), msg -> {
-        switch (msg.what) {
-            case 1:
-                initSocketIo(host, deviceNo);
-                break;
-        }
-        return true;
-    });
-
     /**
      * 更新下发进度
      *
@@ -164,6 +155,11 @@ public class SocketMsgControl {
     }
 
     private void initSocketIo(String host, String deviceNo) {
+        if (socketIoControl != null) {
+            socketIoControl.close();
+            socketIoControl = null;
+        }
+
         socketIoControl = new SocketIoControl();
         socketIoControl.setOnSocketIoListener(new SocketIoControl.OnSocketIoListener() {
             @Override
@@ -179,8 +175,6 @@ public class SocketMsgControl {
             @Override
             public void onDisconnected() {
                 showLog("socket断开连接");
-                reConnectHandle.removeMessages(1);
-                reConnectHandle.sendEmptyMessageDelayed(1, 3000);
                 if (onSocketStatusListener != null && context instanceof Activity) {
                     ((Activity) context).runOnUiThread(() -> {
                         onSocketStatusListener.onDisconnected();
@@ -191,8 +185,6 @@ public class SocketMsgControl {
             @Override
             public void onError(String msg) {
                 showLog("socket出现错误:" + msg);
-                reConnectHandle.removeMessages(1);
-                reConnectHandle.sendEmptyMessageDelayed(1, 3000);
                 if (onSocketStatusListener != null && context instanceof Activity) {
                     ((Activity) context).runOnUiThread(() -> {
                         onSocketStatusListener.onError("socket出现错误");
