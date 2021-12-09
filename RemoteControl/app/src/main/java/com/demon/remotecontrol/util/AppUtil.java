@@ -6,7 +6,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 
+
+import androidx.core.content.FileProvider;
 
 import com.demon.remotecontrol.bean.AppInfoBean;
 
@@ -27,10 +30,22 @@ public class AppUtil {
      * @param file
      */
     public static void install(Context context, File file) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            String ss = "com.demon.remotecontrol.provider";
+            Uri uri = FileProvider.getUriForFile(context, ss, file);
+
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
     }
 
     /**
