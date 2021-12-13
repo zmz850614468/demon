@@ -1,7 +1,5 @@
 package com.demon.remotecontrol.bean;
 
-import android.graphics.drawable.Drawable;
-
 public class AppInfoBean {
 
     public String appName;           // 应用名称

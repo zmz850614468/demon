@@ -87,7 +87,13 @@ public class FileWriteControl {
      * @param bean
      */
     public void writeFile(FileDataBean bean) {
-        FileWriteThread fileWriteThread;
+        FileWriteThread fileWriteThread = get(bean.fileName);
+        if (fileWriteThread != null && bean.index == 1) {   // 如果从新开始传文件则，关闭之前的线程
+            fileWriteThread.close();
+            fileWriteThread = null;
+            remove(bean.fileName);
+        }
+
         if (!fileWriteMap.containsKey(bean.fileName)) {
             String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
             path += File.separator + bean.fileName;
@@ -117,10 +123,11 @@ public class FileWriteControl {
             put(bean.fileName, fileWriteThread);
             updateFileWriteProgress(bean.fileName, 0, bean.packageSize);
 //            fileWriteMap.put(bean.fileName, fileWriteThread);
-        } else {
-            fileWriteThread = get(bean.fileName);
-//            fileWriteThread = fileWriteMap.get(bean.fileName);
         }
+//        else {
+//            fileWriteThread = get(bean.fileName);
+////            fileWriteThread = fileWriteMap.get(bean.fileName);
+//        }
 
         fileWriteThread.addBean(bean);
     }

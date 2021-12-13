@@ -14,6 +14,7 @@ public class FileWriteThread extends Thread {
 
     private Context context;
     private String filePath;
+    private boolean isContinue;
 
     private List<FileDataBean> fileDataList;
 
@@ -21,6 +22,7 @@ public class FileWriteThread extends Thread {
         this.context = context;
         this.filePath = filePath;
         fileDataList = new ArrayList<>();
+        isContinue = true;
     }
 
     public synchronized void addBean(FileDataBean bean) {
@@ -41,6 +43,7 @@ public class FileWriteThread extends Thread {
 
         File file = new File(filePath);
         if (!file.exists()) {
+            file.delete();
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -70,8 +73,8 @@ public class FileWriteThread extends Thread {
             return;
         }
 
-        FileDataBean bean = null;
-        while (true) {
+        FileDataBean bean;
+        while (isContinue) {
             bean = getBean();
             if (bean != null) {
                 try {
@@ -126,6 +129,11 @@ public class FileWriteThread extends Thread {
         void onProgress(String fileName, int index);
 
         void onWriteComplete(String filePath);
+    }
+
+    public void close() {
+        isContinue = false;
+        interrupt();
     }
 
     private void showLog(String msg) {
