@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * Socket 消息管理类
  */
-public class SocketMsgControl {
+public class SocketMsgControl extends Thread {
 
     private static SocketMsgControl instance;
 
@@ -51,6 +51,7 @@ public class SocketMsgControl {
             synchronized (context) {
                 if (instance == null) {
                     instance = new SocketMsgControl(context);
+                    instance.start();
                 }
             }
         }
@@ -68,6 +69,42 @@ public class SocketMsgControl {
     private SocketMsgControl(Context context) {
         this.context = context;
         issueProgressList = new ArrayList<>();
+        isContinue = true;
+    }
+
+    private boolean isContinue;
+    private List<String> sendMsgList;
+
+    private synchronized void addMsg(String msg) {
+        sendMsgList.add(msg);
+    }
+
+    private synchronized String getMsg() {
+        if (!sendMsgList.isEmpty()) {
+            return sendMsgList.get(0);
+        }
+        return "";
+    }
+
+    @Override
+    public void run() {
+        super.run();
+
+        while (isContinue) {
+
+            String msg = getMsg();
+            while (!StringUtil.isEmpty(msg)) {
+
+                msg = getMsg();
+            }
+
+
+            try {
+                sleep(3600000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
