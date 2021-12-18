@@ -28,8 +28,10 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             bitmap_util.cpp
-#             SVM_Demo.cpp
+#        image_deal.cpp
+        bitmap_util.cpp
+        SerialPort.c
+        #             SVM_Demo.cpp
 #             src/main/cpp/native-lib.cpp
         )
 

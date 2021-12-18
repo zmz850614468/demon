@@ -19,7 +19,6 @@ import butterknife.OnClick;
 public class OpencvActivity extends AppCompatActivity {
 
     static {
-//        System.loadLibrary("libopencv_java3");
         System.loadLibrary("native-lib");
     }
 

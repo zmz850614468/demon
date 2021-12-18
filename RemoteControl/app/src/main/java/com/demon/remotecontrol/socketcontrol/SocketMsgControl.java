@@ -70,6 +70,7 @@ public class SocketMsgControl extends Thread {
         this.context = context;
         issueProgressList = new ArrayList<>();
         isContinue = true;
+        sendMsgList = new ArrayList<>();
     }
 
     private boolean isContinue;

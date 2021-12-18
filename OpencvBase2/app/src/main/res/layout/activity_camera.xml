@@ -5,14 +5,14 @@
 
     <SurfaceView
         android:id="@+id/surface_view"
-        android:layout_width="640px"
-        android:layout_height="480px"
+        android:layout_width="480px"
+        android:layout_height="640px"
         android:layout_alignParentRight="true" />
 
     <SurfaceView
         android:id="@+id/surface_view_o"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="48px"
+        android:layout_height="64px"
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/surface_view"
         android:visibility="gone" />
@@ -51,18 +51,18 @@
 
         <ImageView
             android:id="@+id/iv_pic1"
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
         <ImageView
             android:id="@+id/iv_pic2"
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
         <ImageView
             android:id="@+id/iv_pic3"
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
     </LinearLayout>
 

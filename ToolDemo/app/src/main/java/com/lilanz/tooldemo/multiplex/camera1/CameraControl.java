@@ -135,7 +135,7 @@ public class CameraControl {
             camera.setPreviewDisplay(surfaceHolder);
             camera.startPreview();
             isCameraOpen = true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

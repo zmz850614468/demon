@@ -19,6 +19,7 @@ public class PermissionControl {
 
     public static final String STORAGE = "storage";         // 读写权限
     public static final String CAMERA = "camera";           // 相机权限
+    public static final String BLE = "ble";                 // 蓝牙权限
     public static final String MICROPHONE = "microphone";   // 麦克风权限
     public static final String LOCATION = "location";       // 位置权限
     public static final String CONTACTS = "contacts";       // 联系人权限
@@ -37,6 +38,7 @@ public class PermissionControl {
     public static final int SENSORS_RESULT_CODE = 8;        // 传感器权限返回结果
     public static final int SMS_RESULT_CODE = 9;            // SMS权限返回结果
     public static final int RESULT_CODE = 10;               // 多个权限返回结果
+    public static final int BLE_RESULT_CODE = 11;           // 蓝牙权限返回结果
 
 
     private Activity activity;
@@ -69,6 +71,20 @@ public class PermissionControl {
     public boolean cameraPermission() {
         if (!checkPermission(Manifest.permission.CAMERA)) {
             ActivityCompat.requestPermissions(activity, requestPermission(new String[]{CAMERA}), CAMERA_RESULT_CODE);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 蓝牙权限
+     *
+     * @return
+     */
+    public boolean blePermission() {
+        if (!checkPermission(Manifest.permission.BLUETOOTH)) {
+            ActivityCompat.requestPermissions(activity, requestPermission(new String[]{CAMERA}), BLE_RESULT_CODE);
             return false;
         }
 
@@ -214,7 +230,11 @@ public class PermissionControl {
                             Manifest.permission.READ_EXTERNAL_STORAGE));
                     break;
                 case CAMERA:
-                    permissionList.addAll(Arrays.asList(Manifest.permission.CAMERA));
+                    permissionList.addAll(Arrays.asList(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO));
+                    break;
+                case BLE:
+                    permissionList.addAll(Arrays.asList(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
+                            Manifest.permission.BLUETOOTH_PRIVILEGED));
                     break;
                 case MICROPHONE:
                     permissionList.addAll(Arrays.asList(Manifest.permission.RECORD_AUDIO));

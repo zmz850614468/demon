@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.demon.opencvbase.R;
 import com.demon.opencvbase.util.BitmapUtil;
 import com.demon.opencvbase.util.FileUtil;
 import com.demon.opencvbase.util.StringUtil;
@@ -24,6 +26,8 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * 摄像头控制类
@@ -41,6 +45,8 @@ public class CameraControl {
     private MediaRecorder mediaRecorder;
     private int videoWidth = 1280;  // 视频输出的默认尺寸
     private int videoHeight = 960;
+//    private int videoWidth = 320;  // 视频输出的默认尺寸
+//    private int videoHeight = 240;
 
     private boolean isSurfaceCreate = false;
     private boolean isCameraOpen;   // 判断摄像头是否开启
@@ -100,6 +106,7 @@ public class CameraControl {
 
         try {
             camera = Camera.open(cameraId);
+//            camera = Camera.open();
             Camera.Parameters parameters = camera.getParameters();
 
             // 1. 预览界面，顺时针旋转90度
@@ -107,7 +114,7 @@ public class CameraControl {
 
             // 2.设置预览大小
             List<Camera.Size> list = CameraUtil.getPreviewSize(camera);
-            showLog(new Gson().toJson(list));
+            showLog("预览尺寸：" + new Gson().toJson(list));
             if (!list.isEmpty()) {
                 Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标预览大小：" + new Gson().toJson(size));
@@ -118,7 +125,7 @@ public class CameraControl {
 
             // 3.设置图片大小
             list = CameraUtil.getPictureSize(camera);
-            showLog(new Gson().toJson(list));
+            showLog("图片尺寸：" + new Gson().toJson(list));
             if (!list.isEmpty()) {
                 Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标图片大小：" + new Gson().toJson(size));
@@ -182,18 +189,12 @@ public class CameraControl {
      */
     public void capturePic() {
         if (camera != null) {
-            camera.takePicture(new Camera.ShutterCallback() {
-                @Override
-                public void onShutter() {
-                }
-            }, null, new Camera.PictureCallback() {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera) {
-                    camera.startPreview();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    if (cameraListener != null) {
-                        cameraListener.onPictureBack(bitmap);
-                    }
+            camera.takePicture(() -> {
+            }, null, (data, camera) -> {
+                camera.startPreview();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                if (cameraListener != null) {
+                    cameraListener.onPictureBack(bitmap);
                 }
             });
         }
@@ -278,6 +279,13 @@ public class CameraControl {
         showLog("关闭摄像头:" + cameraId);
     }
 
+    public boolean isCameraOpen() {
+        if (camera != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private OnCameraListener cameraListener;
 
@@ -299,4 +307,6 @@ public class CameraControl {
     private void showToast(String msg) {
         Toast.makeText(((Activity) context), msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }

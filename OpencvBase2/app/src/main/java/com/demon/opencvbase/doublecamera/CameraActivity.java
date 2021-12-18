@@ -16,6 +16,7 @@ import com.demon.opencvbase.R;
 import com.demon.opencvbase.control.PermissionControl;
 import com.demon.opencvbase.jni_opencv.jni.BitmapNative;
 import com.demon.opencvbase.jni_opencv.util.JniBitmapUtil;
+import com.demon.opencvbase.util.BitmapUtil;
 import com.demon.opencvbase.util.StringUtil;
 
 import java.io.File;
@@ -65,24 +66,30 @@ public class CameraActivity extends AppCompatActivity {
                 PermissionControl.CAMERA, PermissionControl.MICROPHONE});
 
         cameraControl = new CameraControl(this, surfaceView);
-        cameraControl.setVideoSize(1280, 960);
-        cameraControl.openCamera(1);
-        cameraControl.setCameraListener(new CameraControl.OnCameraListener() {
-            @Override
-            public void onPictureBack(Bitmap bitmap) {
-                ivPic1.setImageBitmap(bitmap);
-                ivPic2.setImageBitmap(JniBitmapUtil.bitmapToGray(bitmap));
+//        cameraControl.setVideoSize(1280, 960);
+        cameraControl.setVideoSize(320, 240);
+//        cameraControl.setVideoSize(1600, 1200);
+        cameraControl.openCamera(0);
+        cameraControl.setCameraListener(bitmap -> {
+            ivPic1.setImageBitmap(bitmap);
+            ivPic2.setImageBitmap(JniBitmapUtil.bitmapToGray(bitmap));
+
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+            path = path + File.separator + StringUtil.getDataStr() + ".jpg";
+            BitmapUtil.saveBitmap(CameraActivity.this, bitmap, path);
+            showLog("imgPath:" + path);
+            showToast("保存图片完成");
+
 //                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);
-                Bitmap rBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-                Bitmap gBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-                Bitmap bBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-                BitmapNative.bitmapSplit(bitmap, rBitmap, gBitmap, bBitmap);
-                ivPic4.setImageBitmap(rBitmap);
-                ivPic5.setImageBitmap(gBitmap);
-                ivPic6.setImageBitmap(bBitmap);
+//                Bitmap rBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+//                Bitmap gBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+//                Bitmap bBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+//                BitmapNative.bitmapSplit(bitmap, rBitmap, gBitmap, bBitmap);
+//                ivPic4.setImageBitmap(rBitmap);
+//                ivPic5.setImageBitmap(gBitmap);
+//                ivPic6.setImageBitmap(bBitmap);
 
 
-            }
         });
 
 //        cameraControl2 = new CameraControl(this, surfaceView2);
@@ -97,12 +104,12 @@ public class CameraActivity extends AppCompatActivity {
                 cameraControl.capturePic();
                 break;
             case R.id.bt_open_camera:
-//                cameraControl.openCamera(1);
+                cameraControl.openCamera(0);
                 break;
             case R.id.bt_record_video:
-                String basePath = Environment.getExternalStorageDirectory() + File.separator + "doubleVideo";
-                String fileName = StringUtil.getDataStr() + ".mp4";
-                cameraControl.startRecord(basePath, fileName);
+//                String basePath = Environment.getExternalStorageDirectory() + File.separator + "doubleVideo";
+//                String fileName = StringUtil.getDataStr() + ".mp4";
+//                cameraControl.startRecord(basePath, fileName);
                 break;
         }
     }

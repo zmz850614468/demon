@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ScrollView;
@@ -19,6 +20,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BitmapUtil {
+
+//    /**
+//     * 保存bitmap图片到本地内存
+//     *
+//     * @param context
+//     * @param bmp
+//     */
+//    public static void saveBitmap(Context context, Bitmap bmp) {
+//        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+//        path = path + File.separator + "test.jpg";
+//        saveBitmap(context, bmp, path);
+//    }
 
     /**
      * 压缩图片获取小图
