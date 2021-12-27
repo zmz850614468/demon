@@ -59,6 +59,12 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Accoun
         holder.tvFileName.setText((bean.isIssue ? "(下发)" : "(上传)") + bean.fileName);
         holder.tvIssueProgress.setText(bean.issueProgress);
         holder.tvReceiverProgress.setText(bean.receiverProgress);
+
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> {
+                listener.onItemClick(bean);
+            });
+        }
     }
 
     @Override
@@ -93,6 +99,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Accoun
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(String bean);
+        void onItemClick(ProgressBean bean);
     }
 }

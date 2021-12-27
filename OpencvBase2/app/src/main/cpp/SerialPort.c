@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <jni.h>
 #include <string.h>
 #include <fcntl.h>

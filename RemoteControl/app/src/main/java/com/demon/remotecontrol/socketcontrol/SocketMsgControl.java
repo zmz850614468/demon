@@ -3,8 +3,6 @@ package com.demon.remotecontrol.socketcontrol;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -78,14 +76,19 @@ public class SocketMsgControl extends Thread {
 
     private synchronized void addMsg(String msg) {
         sendMsgList.add(msg);
+        if (isSleeping) {
+            interrupt();
+        }
     }
 
     private synchronized String getMsg() {
         if (!sendMsgList.isEmpty()) {
-            return sendMsgList.get(0);
+            return sendMsgList.remove(0);
         }
         return "";
     }
+
+    private boolean isSleeping;
 
     @Override
     public void run() {
@@ -96,15 +99,33 @@ public class SocketMsgControl extends Thread {
             String msg = getMsg();
             while (!StringUtil.isEmpty(msg)) {
 
+                if (!socketIoControl.isConnected()) {
+                    showToast("socket 处于断开状态");
+
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
+                }
+                socketIoControl.sendMsg(msg);
+
+                try {
+                    sleep(9);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 msg = getMsg();
             }
 
-
             try {
+                isSleeping = true;
                 sleep(3600000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            isSleeping = false;
         }
     }
 
@@ -160,11 +181,14 @@ public class SocketMsgControl extends Thread {
             showToast("数据不能为空");
             return;
         }
-        if (!socketIoControl.isConnected()) {
-            showToast("socket 处于断开状态");
-            return;
-        }
-        socketIoControl.sendMsg(msg);
+
+        addMsg(msg);
+
+//        if (!socketIoControl.isConnected()) {
+//            showToast("socket 处于断开状态");
+//            return;
+//        }
+//        socketIoControl.sendMsg(msg);
     }
 
     public void sendBean(SocketBean bean) {
@@ -173,11 +197,13 @@ public class SocketMsgControl extends Thread {
             return;
         }
 
-        if (!socketIoControl.isConnected()) {
-            showToast("socket 处于断开状态");
-            return;
-        }
-        socketIoControl.sendMsg(new Gson().toJson(bean));
+        addMsg(new Gson().toJson(bean));
+
+//        if (!socketIoControl.isConnected()) {
+//            showToast("socket 处于断开状态");
+//            return;
+//        }
+//        socketIoControl.sendMsg(new Gson().toJson(bean));
     }
 
     /**
@@ -261,11 +287,11 @@ public class SocketMsgControl extends Thread {
 
         switch (socketBean.status) {
             case SocketBean.SOCKET_TYPE_NOT_FIND_DEVICE:   // 没有对应编号
-                if (context instanceof Activity) {
-                    ((Activity) context).runOnUiThread(() -> {
-                        showToast("没有对应的编号设备");
-                    });
-                }
+//                if (context instanceof Activity) {
+//                    ((Activity) context).runOnUiThread(() -> {
+                showToast("没有对应的编号设备");
+//                    });
+//                }
                 break;
 
 //            case SocketBean.SOCKET_TYPE_DEVICE_ID:         // 服务器分配设备编号
@@ -526,20 +552,20 @@ public class SocketMsgControl extends Thread {
         fileSendThread.setOnSendFileListener(new FileReadThread.OnSendFileListener() {
             @Override
             public void onFileNoFind(String filePath) {
-                if (context instanceof Activity) {
-                    ((Activity) context).runOnUiThread(() -> {
-                        showToast("没有找到要下发的文件");
-                    });
-                }
+//                if (context instanceof Activity) {
+//                    ((Activity) context).runOnUiThread(() -> {
+                showToast("没有找到要下发的文件");
+//                    });
+//                }
             }
 
             @Override
             public void onError(int code, String msg) {
-                if (context instanceof Activity) {
-                    ((Activity) context).runOnUiThread(() -> {
-                        showToast("下发文件异常：" + code + " - " + msg);
-                    });
-                }
+//                if (context instanceof Activity) {
+//                    ((Activity) context).runOnUiThread(() -> {
+                showToast("下发文件异常：" + code + " - " + msg);
+//                    });
+//                }
             }
 
             @Override
@@ -555,11 +581,11 @@ public class SocketMsgControl extends Thread {
 
             @Override
             public void onSendFileFinish(String filePath) {
-                if (context instanceof Activity) {
-                    ((Activity) context).runOnUiThread(() -> {
-                        showToast("下发文件完成");
-                    });
-                }
+//                if (context instanceof Activity) {
+//                    ((Activity) context).runOnUiThread(() -> {
+                showToast("下发文件完成");
+//                    });
+//                }
             }
         });
         fileSendThread.start();
@@ -636,6 +662,7 @@ public class SocketMsgControl extends Thread {
             progressBean.createTime = bean.createTime;
             progressBean.fileName = bean.fileName;
             progressBean.isIssue = true;
+            progressBean.isFinish = bean.totalSize == bean.issueProgress;
             progressBean.issueProgress = bean.issueProgress + "/" + bean.totalSize;
             progressBean.receiverProgress = bean.receiverProgress + "/" + bean.totalSize;
             list.add(progressBean);
@@ -644,6 +671,8 @@ public class SocketMsgControl extends Thread {
     }
 
     public void close() {
+        isContinue = false;
+        interrupt();
         if (socketIoControl != null) {
             socketIoControl.close();
             socketIoControl = null;
@@ -713,6 +742,11 @@ public class SocketMsgControl extends Thread {
     }
 
     private void showToast(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        if (context instanceof Activity) {
+            ((Activity) context).runOnUiThread(() -> {
+//                showToast("下发文件异常：" + code + " - " + msg);
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 }

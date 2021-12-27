@@ -119,7 +119,8 @@ public class CameraControl {
                 Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标预览大小：" + new Gson().toJson(size));
 
-                parameters.setPreviewSize(size.width, size.height);
+//                parameters.setPreviewSize(size.width, size.height);
+                parameters.setPreviewSize(videoWidth, videoHeight);
             }
             parameters.setPreviewFormat(ImageFormat.NV21);  // 预览格式
 
@@ -130,7 +131,8 @@ public class CameraControl {
                 Camera.Size size = CameraUtil.getBestSize(list, videoWidth, videoHeight);
                 showLog("目标图片大小：" + new Gson().toJson(size));
 
-                parameters.setPictureSize(size.width, size.height);
+//                parameters.setPictureSize(size.width, size.height);
+                parameters.setPictureSize(videoWidth, videoHeight);
             }
 
             // 4.设置对焦模式(设置对焦时，会报错)

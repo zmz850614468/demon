@@ -8,7 +8,7 @@ android {
         applicationId "com.demon.fit"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 6
+        versionCode 7
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -20,11 +20,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
 
+    signingConfigs {
+//        release {
+//        storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+//        storePassword "18060477245"
+//        keyAlias "key"
+//        keyPassword "18060477245"
+//        }
+        debug {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+    }
 }
 
 dependencies {

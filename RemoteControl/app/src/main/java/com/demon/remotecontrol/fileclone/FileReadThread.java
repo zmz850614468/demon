@@ -70,12 +70,11 @@ public class FileReadThread extends Thread {
                 if (onSendFileListener != null) {
                     onSendFileListener.onSendData(bean);
                 }
-            }
-
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
         } catch (FileNotFoundException e) {

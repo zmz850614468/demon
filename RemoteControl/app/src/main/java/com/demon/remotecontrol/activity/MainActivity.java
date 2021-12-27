@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSocket() {
         SocketMsgControl socketMsgControl = SocketMsgControl.getInstance(this);
-        socketMsgControl.autoConnectSocket(App.host, App.deviceId);
         socketMsgControl.setOnDeviceNoCallback(deviceNo -> {
             showToast("没有找到对应设备：" + deviceNo);
         });
@@ -140,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 tvSocketStatus.setText("socket连接异常");
             }
         });
+
+        socketMsgControl.autoConnectSocket(App.host, App.deviceId);
     }
 
     /**

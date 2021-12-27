@@ -19,6 +19,7 @@ import com.demon.opencvbase.control_ui.AgvTestUi;
 import com.demon.opencvbase.doublecamera.CameraActivity;
 import com.demon.opencvbase.doublecamera.CameraControl;
 import com.demon.opencvbase.jni_opencv.jni.AgvDealNative;
+import com.demon.opencvbase.jni_opencv.jni.BitmapNative;
 import com.demon.opencvbase.util.BitmapUtil;
 import com.demon.opencvbase.util.RootUtil;
 import com.demon.opencvbase.util.SerialPortUtil;
@@ -74,11 +75,18 @@ public class AgvImgDealActivity extends AppCompatActivity {
         initCamera();
         initUI();
 
-//        if (RootUtil.isRoot(this)) {
-//            initSerialPort();
-//        }
+        if (RootUtil.isRoot(this)) {
+            initSerialPort();
+        }
 
-        initTest();
+//        initTest();
+
+//        tvMsg.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                takePic(true);
+//            }
+//        }, 500);
     }
 
     @OnClick({R.id.bt_take_picture, R.id.bt_start, R.id.bt_stop})
@@ -116,7 +124,7 @@ public class AgvImgDealActivity extends AppCompatActivity {
                             cameraControl.capturePic();
                         }
                     }
-                }, 100, 300);
+                }, 100, 1000);
             }
         } else {
             if (takePicTimer != null) {
@@ -138,11 +146,11 @@ public class AgvImgDealActivity extends AppCompatActivity {
         index++;
         if (!StringUtil.isEmpty(result) && result.contains("&")) {
             String str[] = result.split("&");
-            sendMsg(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
-            showMsg("(" + str[0] + "," + str[1] + ") : " + index);
+            sendMsg(Double.parseDouble(str[0]), Double.parseDouble(str[1]));
+            saveBitmap(src);
         } else {
             showMsg("没有找到垂点:" + result + " ; " + index);
-            saveBitmap(src);
+//            saveBitmap(src);
         }
 
         showLog("center: " + result);
@@ -153,8 +161,8 @@ public class AgvImgDealActivity extends AppCompatActivity {
         cameraControl.setVideoSize(320, 240);
         cameraControl.openCamera(0);
         cameraControl.setCameraListener(bitmap -> {
-            isTakingPic = false;
             agvDeal(bitmap);
+            isTakingPic = false;
         });
     }
 
@@ -169,23 +177,38 @@ public class AgvImgDealActivity extends AppCompatActivity {
      */
     private void initTest() {
 //        agvTestUi = new AgvTestUi(this);
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.type_4);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.gray_1);
 //        agvTestUi.testBitmap(bitmap);
 
-//        ivPic1.setImageBitmap(bitmap);
-//        agvDeal(bitmap.copy(bitmap.getConfig(), bitmap.isMutable()));
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.test_104);
+        agvDeal(bitmap.copy(bitmap.getConfig(), bitmap.isMutable()));
+
+//        Bitmap des = bitmap.copy(bitmap.getConfig(), bitmap.isMutable());
+//        BitmapNative.bitmap2gray2(bitmap, des);
+//        saveBitmap(des);
+
     }
 
-    private void sendMsg(int x, int y) {
+    private void sendMsg(double x, double y) {
+        double rr = x * x + y * y;
+        int r = (int) (rr / (Math.sqrt(rr) - x));
         StringBuffer buffer = new StringBuffer();
         buffer.append("AA 21");
-        buffer.append(String.format(" %08x", x));
-        buffer.append(String.format(" %08x", y));
-        buffer.append(" 55 55 55 55 55 2F");
+        buffer.append(String.format(" %08x", ((int) (x * 100))));
+        buffer.append(String.format(" %08x", ((int) (y * 100))));
+        if (y == 0) {
+            buffer.append(" ffffffff");
+        } else {
+            buffer.append(String.format(" %08x", r));
+        }
+        buffer.append(" 55 2F");
 
         if (serialPort != null) {
             serialPort.sendSerialPort(SerialPortUtil.hexStr2Byte(buffer.toString()));
         }
+//        showMsg("serial : " + buffer.toString());
+
+        showMsg("(" + x + "," + y + ")  -- " + r + "   ; " + index);
     }
 
     private void initSerialPort() {

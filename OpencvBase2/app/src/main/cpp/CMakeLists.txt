@@ -31,6 +31,7 @@ add_library( # Sets the name of the library.
 #        image_deal.cpp
         bitmap_util.cpp
         SerialPort.c
+        jni_base.cpp
         #             SVM_Demo.cpp
 #             src/main/cpp/native-lib.cpp
         )

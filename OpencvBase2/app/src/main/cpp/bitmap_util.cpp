@@ -14,6 +14,12 @@
 #include <android/bitmap.h>
 #include <map>
 #include <string>
+#include <android/log.h>
+#include <stdio.h>
+#include <sstream>
+
+#define TAG    "jni-log" // 这个是自定义的LOG的标识
+#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__) // 定义LOGD类型
 
 #define ASSERT(status, ret)     if (!(status)) { return ret; }
 #define ASSERT_FALSE(status)    ASSERT(status, false)
@@ -35,8 +41,8 @@ LinePoint calculateLine(int arr[][2], int rows, int clos);
 
 jstring stoJstring(JNIEnv *env, const char *pat);
 
-#define MIN_VALID_COUNT 30  // 最小有效个数
-#define MAX_VALID_COUNT 70  // 最大有效个数
+#define MIN_VALID_COUNT 40  // 最小有效个数
+#define MAX_VALID_COUNT 100  // 最大有效个数
 
 /**
  * Agv小车图片处理
@@ -48,8 +54,13 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapDeal(JNIEnv *env, jclass clazz,
                                                                    jobject bitmap) {
     // 保留的灰度值区间
-    uchar minGray = 30;
-    uchar maxGray = 70;
+//    uchar minGray = 27;
+//    uchar maxGray = 67;
+
+    // 灯光比较亮时
+    uchar minGray = 53;
+    uchar maxGray = 108;
+
 
     int maxWhiteCount = 5;  // 最大无效点个数
     int blackCount = 0;
@@ -111,20 +122,38 @@ Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapDeal(JNIEnv *env, 
         return env->NewStringUTF(str.c_str());
     }
 
+
+    // 绘制直线
     cv::Scalar scalar(255, 0, 0, 255);
     cv::line(rgb, cv::Point(linePoint.x1, linePoint.y1), cv::Point(linePoint.x2, linePoint.y2),
              scalar);
 
-    // 计算过中心点 的 垂点
+//    std::cout << linePoint.x1 << "," << linePoint.y1 << "  ;  " << linePoint.x2  << ","<< linePoint.y2;
+
     int centerX = rgb.cols / 2;
     int centerY = rgb.rows / 2;
+    double x = 0;   // 垂点坐标位置
+    double y = 0;   // 垂点坐标位置
     double x1 = linePoint.x1 - centerX;
     double y1 = centerY - linePoint.y1;
     double x2 = linePoint.x2 - centerX;
     double y2 = centerY - linePoint.y2;
-    double k1 = (y2 - y1) / (x2 - x1);
-    double x = (k1 * k1 * x1 + k1 * (-y1)) / (k1 * k1 + 1);
-    double y = k1 * (x - x1) + y1;
+
+//    LOGD("(%d , %d) ; ((%d , %d)", linePoint.x1, linePoint.y1, linePoint.x2, linePoint.y2);
+//    LOGD("center(%d , %d)", centerX, centerY);
+//    LOGD("(%f , %f) ; ((%f , %f)", x1, y1, x2, y2);
+    // 如果是锤直X轴的线
+    if (x1 == x2) {
+        x = x1;
+        y = 0;
+    } else {
+        // 计算过中心点 的 垂点
+        double k1 = (y2 - y1) / (x2 - x1);
+        x = (k1 * k1 * x1 + k1 * (-y1)) / (k1 * k1 + 1);
+        y = k1 * (x - x1) + y1;
+    }
+
+//    LOGD("垂线点：(%.2f , %f)", x, y);
 
     int pointX = static_cast<int>(x + centerX);
     int pointY = static_cast<int>(-y + centerY);
@@ -134,9 +163,14 @@ Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapDeal(JNIEnv *env, 
     mat2Bitmap(env, rgb, bitmap);
     rgb.release();
 
-    std::string str =
-            std::to_string(static_cast<int>(x)) + "&" + std::to_string(static_cast<int>(y));
-    return env->NewStringUTF(str.c_str());
+    std::ostringstream oss;
+    oss << std::setprecision(2) << x << "&";
+    oss << std::setprecision(2) << y;
+
+    return env->NewStringUTF(oss.str().c_str());
+//    std::string str =
+//            std::to_string(static_cast<int>(x)) + "&" + std::to_string(static_cast<int>(y));
+//    return env->NewStringUTF(str.c_str());
 }
 
 /**
@@ -251,8 +285,12 @@ Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapTest(JNIEnv *env, 
                                                                    jobject bitmap,
                                                                    jobject des_bitmap) {
     // 保留的灰度值区间
-    uchar minGray = 27;
-    uchar maxGray = 67;
+//    uchar minGray = 27;
+//    uchar maxGray = 67;
+
+    // 灯光比较亮时
+    uchar minGray = 53;
+    uchar maxGray = 108;
 
     int maxWhiteCount = 5;  // 最大无效点个数
     int blackCount = 0;
@@ -263,7 +301,15 @@ Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapTest(JNIEnv *env, 
 
     cv::cvtColor(rgb, des, CV_BGRA2GRAY);   // 灰度处理
 
-//    std::map<int, int> centerMap;
+
+    std::map<int, int> grayMap;
+    for (int i = 0; i < des.rows; ++i) {
+        for (int j = 0; j < des.cols; ++j) {
+            uchar &ch = des.at<uchar>(i, j);
+            grayMap[ch]++;
+        }
+    }
+
     int centerArr[320][2];        // 每行的有效数据:[中点下标][有效个数]
 
     for (int i = 0; i < des.rows; ++i) {

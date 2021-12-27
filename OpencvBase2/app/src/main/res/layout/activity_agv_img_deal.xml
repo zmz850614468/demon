@@ -3,58 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/layout_1"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="vertical">-->
+        <LinearLayout
+            android:id="@+id/layout_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <!--        <ImageView-->
-    <!--            android:id="@+id/iv_pic1"-->
-    <!--            android:layout_width="80dp"-->
-    <!--            android:layout_height="80dp" />-->
+            <ImageView
+                android:id="@+id/iv_pic1"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
 
-    <!--        <ImageView-->
-    <!--            android:id="@+id/iv_pic2"-->
-    <!--            android:layout_width="80dp"-->
-    <!--            android:layout_height="80dp" />-->
+            <ImageView
+                android:id="@+id/iv_pic2"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
 
-    <!--        <ImageView-->
-    <!--            android:id="@+id/iv_pic3"-->
-    <!--            android:layout_width="80dp"-->
-    <!--            android:layout_height="80dp" />-->
+            <ImageView
+                android:id="@+id/iv_pic3"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
 
-    <!--    </LinearLayout>-->
+        </LinearLayout>
 
     <SurfaceView
         android:id="@+id/surface_view"
-        android:layout_width="230px"
-        android:layout_height="320px"
+        android:layout_width="120px"
+        android:layout_height="160px"
         android:layout_alignParentRight="true" />
 
 
-    <LinearLayout
-        android:id="@+id/layout_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout_1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-        <ImageView
-            android:id="@+id/iv_pic1"
-            android:layout_width="300dp"
-            android:layout_height="300dp" />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_pic1"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp" />-->
 
-        <ImageView
-            android:id="@+id/iv_pic2"
-            android:layout_width="300dp"
-            android:layout_height="300dp" />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_pic2"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp" />-->
 
-        <ImageView
-            android:id="@+id/iv_pic3"
-            android:layout_width="300dp"
-            android:layout_height="300dp" />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_pic3"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <TextView
         android:id="@+id/tv_msg"

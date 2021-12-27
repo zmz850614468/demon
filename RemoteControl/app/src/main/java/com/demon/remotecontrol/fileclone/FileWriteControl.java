@@ -145,6 +145,7 @@ public class FileWriteControl {
             progressBean.fileName = bean.fileName;
             progressBean.isIssue = false;
             progressBean.issueProgress = "--";
+            progressBean.isFinish = bean.totalSize == bean.progress;
             progressBean.receiverProgress = bean.progress + "/" + bean.totalSize;
             list.add(progressBean);
         }
