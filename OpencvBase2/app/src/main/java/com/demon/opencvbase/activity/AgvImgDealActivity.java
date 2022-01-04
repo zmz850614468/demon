@@ -191,24 +191,46 @@ public class AgvImgDealActivity extends AppCompatActivity {
 
     private void sendMsg(double x, double y) {
         double rr = x * x + y * y;
-        int r = (int) (rr / (Math.sqrt(rr) - x));
+        int r = (int) (rr / (Math.sqrt(rr) - Math.abs(x)));
         StringBuffer buffer = new StringBuffer();
         buffer.append("AA 21");
-        buffer.append(String.format(" %08x", ((int) (x * 100))));
-        buffer.append(String.format(" %08x", ((int) (y * 100))));
+        String temp = String.format(" %08x", ((int) (x * 100)));
+        buffer.append(reverseStr(temp));
+        temp = String.format(" %08x", ((int) (y * 100)));
+        buffer.append(reverseStr(temp));
         if (y == 0) {
-            buffer.append(" ffffffff");
+            temp = " ffffffff";
         } else {
-            buffer.append(String.format(" %08x", r));
+            temp = String.format(" %08x", r);
         }
+        buffer.append(reverseStr(temp));
         buffer.append(" 55 2F");
 
         if (serialPort != null) {
             serialPort.sendSerialPort(SerialPortUtil.hexStr2Byte(buffer.toString()));
         }
-//        showMsg("serial : " + buffer.toString());
+        showLog("serial : " + buffer.toString());
 
         showMsg("(" + x + "," + y + ")  -- " + r + "   ; " + index);
+    }
+
+    /**
+     * 对字符串反向输出
+     *
+     * @param str
+     * @return
+     */
+    private String reverseStr(String str) {
+        if (str.length() > 8) {
+            str = str.substring(str.length() - 8);
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        for (int i = str.length() - 2; i >= 0; i = i - 2) {
+            buffer.append(str.substring(i, i + 2));
+        }
+
+        return buffer.toString();
     }
 
     private void initSerialPort() {

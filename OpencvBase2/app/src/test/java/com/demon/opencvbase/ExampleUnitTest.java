@@ -1,7 +1,9 @@
 package com.demon.opencvbase;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.demon.opencvbase.jni_opencv.jni.LearningNative;
 import com.demon.opencvbase.util.StringUtil;
 
 import org.junit.Test;
@@ -14,8 +16,16 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+    private void showLog(String msg) {
+        Log.e("ExampleUnitTest", msg);
+    }
+
     @Test
     public void addition_isCorrect() {
+        boolean is = LearningNative.svmBase();
+        showLog("建模结果：" + is);
+
         int weight = 20000;
 
 //        String hexWeight = StringUtil.int2HexString(weight);
@@ -23,15 +33,16 @@ public class ExampleUnitTest {
 //        for (int i = 0; i < 6 - count; i++) {
 //            hexWeight = "0" + hexWeight;
 //        }
-        String hexWeight = String.format("%06x", weight);
-        hexWeight = "00 63 25 " + hexWeight;
 
-        String lcr = LCR(hexWeight);
-        for (int i = 0; i < 2 - lcr.length(); i++) {
-            lcr = "0" + lcr;
-        }
-
-        hexWeight += lcr;
+//        String hexWeight = String.format("%06x", weight);
+//        hexWeight = "00 63 25 " + hexWeight;
+//
+//        String lcr = LCR(hexWeight);
+//        for (int i = 0; i < 2 - lcr.length(); i++) {
+//            lcr = "0" + lcr;
+//        }
+//
+//        hexWeight += lcr;
 
     }
 

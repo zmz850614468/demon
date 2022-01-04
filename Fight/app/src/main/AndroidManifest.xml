@@ -18,7 +18,7 @@
 
         <activity android:name=".activity.CalculateActivity" />
 
-        <activity android:name=".activity.MoneyTargetActivity" />
+        <activity android:name=".activity.TargetActivity" />
 
         <activity android:name=".activity.OperateActivity" />
 

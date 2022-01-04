@@ -21,17 +21,23 @@ import java.io.IOException;
 
 public class BitmapUtil {
 
-//    /**
-//     * 保存bitmap图片到本地内存
-//     *
-//     * @param context
-//     * @param bmp
-//     */
-//    public static void saveBitmap(Context context, Bitmap bmp) {
-//        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-//        path = path + File.separator + "test.jpg";
-//        saveBitmap(context, bmp, path);
-//    }
+    /**
+     * 缩放图片到目标大小
+     *
+     * @param bitmap
+     * @param disWid
+     * @param disHei
+     * @return
+     */
+    public static Bitmap scaleBitmap(Bitmap bitmap, int disWid, int disHei) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        float scaleW = disWid * 1.0f / w;
+        float scaleH = disWid * 1.0f / h;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleW, scaleW);
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+    }
 
     /**
      * 压缩图片获取小图
@@ -263,11 +269,17 @@ public class BitmapUtil {
      * @param path：可以为空，默认到本地DCIM文件加中
      */
     public static void saveBitmap(Context context, Bitmap bmp, String path) {
+        if (StringUtil.isEmpty(path)) {
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    .getAbsolutePath();
+            path += File.separator + StringUtil.getDataStr() + ".jpg";
+        }
+
         File outFile = new File(path);
         BufferedOutputStream outStream = null;
         try {
             outStream = new BufferedOutputStream(new FileOutputStream(outFile));
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
             outStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

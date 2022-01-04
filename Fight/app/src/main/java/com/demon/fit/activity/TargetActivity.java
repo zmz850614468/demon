@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * 目标计划界面
  */
-public class MoneyTargetActivity extends AppCompatActivity {
+public class TargetActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -91,9 +91,9 @@ public class MoneyTargetActivity extends AppCompatActivity {
         target.add("");
         target.add("第一阶段目标");
         target.add("时间范围：1个月 -- 2022-1-1~2022-1-31");
-        target.add("初始资金：1.3");
+        target.add("初始资金：1.21");
         target.add("每月目标：10%");
-        target.add("目标资金：1.43");
+        target.add("目标资金：1.33");
         return target;
     }
 
@@ -105,6 +105,9 @@ public class MoneyTargetActivity extends AppCompatActivity {
         target.add("目标范围：2.01~2.53");
         target.add("每月目标：4% (636~872)");
         target.add("每月范围：3%~6% (477~1518)");
+        target.add("");
+        target.add("操作结果：没有完成计划，一次侥幸心理亏损了所有本金");
+        target.add("操作教训：侥幸心理可能导致毁灭性的结果");
         return target;
     }
 

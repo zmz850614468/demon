@@ -44,7 +44,6 @@ public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetHold
     public void onBindViewHolder(@NonNull TargetHolder holder, final int i) {
         // 3.设置界面数据
         String bean = beanList.get(i);
-
         holder.tvTarget.setText(bean);
     }
 

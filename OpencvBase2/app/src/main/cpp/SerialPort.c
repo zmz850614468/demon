@@ -193,7 +193,3 @@ JNIEXPORT void JNICALL Java_android_1serialport_1api_SerialPort_close
     LOGD("close(fd = %d)", descriptor);
     close(descriptor);
 }
-
-
-
-

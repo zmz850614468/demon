@@ -26,6 +26,9 @@ public class FileWriteThread extends Thread {
     }
 
     public synchronized void addBean(FileDataBean bean) {
+        if (bean.index % 50 == 0) {
+            showLog("收：" + bean.index);
+        }
         fileDataList.add(bean);
     }
 
@@ -78,6 +81,9 @@ public class FileWriteThread extends Thread {
             bean = getBean();
             if (bean != null) {
                 try {
+                    if (bean.index % 50 == 0) {
+                        showLog("写：" + bean.index);
+                    }
                     outputStream.write(bean.data, 0, bean.size);
                 } catch (IOException e) {
                     e.printStackTrace();

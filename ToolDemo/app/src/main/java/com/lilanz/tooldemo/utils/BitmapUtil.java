@@ -31,6 +31,24 @@ import java.util.Hashtable;
 public class BitmapUtil {
 
     /**
+     * 缩放图片到目标大小
+     *
+     * @param bitmap
+     * @param disWid
+     * @param disHei
+     * @return
+     */
+    public static Bitmap scaleBitmap(Bitmap bitmap, int disWid, int disHei) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        float scaleW = disWid * 1.0f / w;
+        float scaleH = disWid * 1.0f / h;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleW, scaleW);
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+    }
+
+    /**
      * 压缩图片获取小图
      *
      * @param filePath 图片地址

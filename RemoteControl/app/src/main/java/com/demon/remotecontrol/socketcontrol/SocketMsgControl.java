@@ -113,6 +113,7 @@ public class SocketMsgControl extends Thread {
 
                 try {
                     sleep(9);
+//                    sleep(7);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -529,12 +530,14 @@ public class SocketMsgControl extends Thread {
             retransmissionMsg(from, new Gson().toJson(msgTypeBean));
         }
         if (bean.isLast) {
+//            showLog("last");
             MsgTypeBean msgTypeBean = new MsgTypeBean(MsgTypeBean.MSG_TYPE_ISSUE_FILE_COMPLETE, "完成下发文件的接收：" + bean.fileName);
             retransmissionMsg(from, new Gson().toJson(msgTypeBean));
 
             MsgTypeBean msgTypeBean2 = new MsgTypeBean(MsgTypeBean.MSG_TYPE_ISSUE_FILE_RECEIVER_PROGRESS, bean.fileName + "-" + bean.index);
             retransmissionMsg(from, new Gson().toJson(msgTypeBean2));
         } else if (bean.index % 100 == 0) {
+//            showLog("index:" + bean.index);
             MsgTypeBean msgTypeBean = new MsgTypeBean(MsgTypeBean.MSG_TYPE_ISSUE_FILE_RECEIVER_PROGRESS, bean.fileName + "-" + bean.index);
             retransmissionMsg(from, new Gson().toJson(msgTypeBean));
         }

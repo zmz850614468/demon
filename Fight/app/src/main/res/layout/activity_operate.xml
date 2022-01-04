@@ -20,71 +20,76 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="注：参考分K线买卖，5K与20K交点为买点，5K与10K交点为卖点"
-            android:textColor="@color/red"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_operate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="1、时K线：标准锤子线和上吊线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="5dp"-->
+        <!--            android:text="注：参考分K线买卖，5K与20K交点为买点，5K与10K交点为卖点"-->
+        <!--            android:textColor="@color/red"-->
+        <!--            android:textSize="17sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="2、时K线：20K为支点，小阳或锤子线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="1、时K线：标准锤子线和上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="3、时K线：20K为压点，小阴或上吊线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="2、时K线：20K为支点，小阳或锤子线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="4、日K线：标准锤子线和上吊线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="3、时K线：20K为压点，小阴或上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="5、日K线：20K为支点，小阳或锤子线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="4、日K线：标准锤子线和上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="6、日K线：20K为压点，小阴或上吊线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="5、日K线：20K为支点，小阳或锤子线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="7、日K线：boll上限小阴，boll下限小阳;短影线"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="6、日K线：20K为压点，小阴或上吊线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="7、日K线：boll上限小阴，boll下限小阳;短影线"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textStyle="bold" />-->
 
         <!--        <TextView-->
         <!--            android:layout_width="wrap_content"-->

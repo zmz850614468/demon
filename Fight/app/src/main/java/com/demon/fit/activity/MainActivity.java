@@ -6,13 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.demon.fit.R;
-import com.demon.fit.activity.CalculateActivity;
-import com.demon.fit.activity.MoneyTargetActivity;
-import com.demon.fit.activity.OperateActivity;
 import com.demon.fit.adapter.ItemAdapter;
 import com.demon.fit.bean.ItemBean;
 
@@ -21,7 +16,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(ItemBean bean) {
                 switch (bean.name) {
                     case "目标":
-                        Intent intent = new Intent(MainActivity.this, MoneyTargetActivity.class);
+                        Intent intent = new Intent(MainActivity.this, TargetActivity.class);
                         startActivity(intent);
                         break;
                     case "复利":

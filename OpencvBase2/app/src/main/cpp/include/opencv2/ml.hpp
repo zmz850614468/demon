@@ -794,7 +794,7 @@ public:
     /** Creates empty model.
     Use StatModel::train to train the model. Since %SVM has several parameters, you may want to
     find the best parameters for your problem, it can be done with SVM::trainAuto. */
-    CV_WRAP static Ptr<SVM> create();
+    CV_WRAP static Ptr <cv::ml::SVM> create();
 
     /** @brief Loads and creates a serialized svm from a file
      *

@@ -17,6 +17,7 @@
 #include <android/log.h>
 #include <stdio.h>
 #include <sstream>
+#include "bitmap_util.h"
 
 #define TAG    "jni-log" // 这个是自定义的LOG的标识
 #define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__) // 定义LOGD类型
@@ -24,22 +25,22 @@
 #define ASSERT(status, ret)     if (!(status)) { return ret; }
 #define ASSERT_FALSE(status)    ASSERT(status, false)
 
-struct LinePoint {
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-};
+//struct LinePoint {
+//    int x1;
+//    int y1;
+//    int x2;
+//    int y2;
+//};
+//
+//cv::Mat lut(cv::Mat src, uchar divideWidth);
+//
+//cv::Mat bitmap2Mat(JNIEnv *env, jobject bitmap);
+//
+//bool mat2Bitmap(JNIEnv *env, cv::Mat &matrix, jobject obj_bitmap);
+//
+//LinePoint calculateLine(int arr[][2], int rows, int clos);
 
-cv::Mat lut(cv::Mat src, uchar divideWidth);
-
-cv::Mat bitmap2Mat(JNIEnv *env, jobject bitmap);
-
-bool mat2Bitmap(JNIEnv *env, cv::Mat &matrix, jobject obj_bitmap);
-
-LinePoint calculateLine(int arr[][2], int rows, int clos);
-
-jstring stoJstring(JNIEnv *env, const char *pat);
+//jstring stoJstring(JNIEnv *env, const char *pat);
 
 #define MIN_VALID_COUNT 40  // 最小有效个数
 #define MAX_VALID_COUNT 100  // 最大有效个数
@@ -53,6 +54,10 @@ jstring stoJstring(JNIEnv *env, const char *pat);
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapDeal(JNIEnv *env, jclass clazz,
                                                                    jobject bitmap) {
+
+//    cv::Ptr<cv::ml::SVM> svm;
+//    svm->pre
+
     // 保留的灰度值区间
 //    uchar minGray = 27;
 //    uchar maxGray = 67;

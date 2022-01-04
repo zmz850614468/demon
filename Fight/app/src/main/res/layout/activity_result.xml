@@ -17,13 +17,15 @@
     <TextView
         android:id="@+id/bt_detail"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="44dp"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:background="@drawable/shape_box_white"
         android:gravity="center"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginRight="8dp"
         android:text="详 情"
         android:textSize="17sp" />
 
@@ -33,13 +35,6 @@
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="60dp"-->
     <!--        android:layout_below="@id/tv_title" />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_analyse"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tv_title"
-        android:background="@color/gray" />
 
     <!--    <LinearLayout-->
     <!--        android:id="@+id/layot_operate"-->
@@ -120,6 +115,16 @@
 
     <!--        </LinearLayout>-->
     <!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_analyse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/gray" />
 
     <LinearLayout
         android:id="@+id/layout_detail"

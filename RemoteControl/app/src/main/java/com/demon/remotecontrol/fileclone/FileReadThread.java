@@ -72,6 +72,7 @@ public class FileReadThread extends Thread {
                 }
                 try {
                     Thread.sleep(10);
+//                    Thread.sleep(6);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
