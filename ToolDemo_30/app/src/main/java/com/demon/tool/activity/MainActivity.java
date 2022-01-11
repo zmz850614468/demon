@@ -113,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // deviceId>0 的是设备 ； ==-1的是平板输入
+        // deviceId>0 的是硬件设备 ； ==-1的是平板软件输入
         showLog("device:" + event.getDeviceId() + " ; key:" + event.getKeyCode());
         if (event.getDeviceId() > 0 && event.getKeyCode() != KeyEvent.KEYCODE_BACK) {
             scanKeyManager.analysisKeyEvent(event);
             return true;
         }
+        String name = event.getDevice().getName();
+        showLog("deviceName: " + name);
         return super.dispatchKeyEvent(event);
     }
 

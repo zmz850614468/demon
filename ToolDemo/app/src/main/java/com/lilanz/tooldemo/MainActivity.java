@@ -13,12 +13,12 @@ import butterknife.ButterKnife;
 import demon.CopyUseActivity;
 
 import com.lilanz.tooldemo.multiplex.activitys.ReuseActivity;
-import com.lilanz.tooldemo.multiplex.documentviewer.DocumentViewerUtil;
 import com.lilanz.tooldemo.prints.PrintsActivity;
 import com.lilanz.tooldemo.utils.internetcheck.InternetCheckUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import demon.controls.PermissionControl;
 
 public class MainActivity extends Activity {
 
@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        new PermissionControl(this).cameraPermission();
 //        initMenu();
 //        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 //        base += "/file11.pdf";
