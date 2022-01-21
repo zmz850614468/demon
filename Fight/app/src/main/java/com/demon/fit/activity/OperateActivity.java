@@ -61,5 +61,6 @@ public class OperateActivity extends AppCompatActivity {
         operatetList.add("");
         operatetList.add("4.在日K趋势上，可以关注时K线趋势");
         operatetList.add("5.把周K线趋势加入观察集合");
+        operatetList.add("6.反趋势下跌或上涨，次日不要急于操作");
     }
 }
