@@ -25,6 +25,8 @@
         <activity android:name=".activity.JingDianActivity" />
 
         <activity android:name=".activity.ResultActivity" />
+
+        <activity android:name=".activity.CostActivity" />
     </application>
 
 </manifest>

@@ -60,7 +60,7 @@ public class TouchControl<T> extends ItemTouchHelper {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑删除可以使用；
                 if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT) {
-                    listener.onDelete(viewHolder.getAdapterPosition());
+                    listener.onDelete(list.get(viewHolder.getAdapterPosition()));
                 }
                 isDelete = true;
             }
@@ -111,7 +111,7 @@ public class TouchControl<T> extends ItemTouchHelper {
     public interface OnUpdateListener<T> {
         void onUpdate(List<T> list);
 
-        void onDelete(int position);
+        void onDelete(T t);
     }
 
 }

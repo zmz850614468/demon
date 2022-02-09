@@ -35,10 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
-        list.add(new ItemBean(R.drawable.mb, "目标"));
-        list.add(new ItemBean(R.drawable.zxl, "执行力"));
         list.add(new ItemBean(R.drawable.fl, "复利"));
+        list.add(new ItemBean(R.drawable.zxl, "执行力"));
         list.add(new ItemBean(R.drawable.jd, "经典语录"));
+        list.add(new ItemBean(R.drawable.fy, "交易费用"));
+        list.add(new ItemBean(R.drawable.mb, "目标"));
         list.add(new ItemBean(R.drawable.jg, "执行结果"));
 //        list.add(new ItemBean(R.drawable.ic_launcher_foreground, "测试"));
 
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "执行结果":
                         intent = new Intent(MainActivity.this, ResultActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "交易费用":
+                        intent = new Intent(MainActivity.this, CostActivity.class);
                         startActivity(intent);
                         break;
                 }

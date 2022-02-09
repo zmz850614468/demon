@@ -26,7 +26,8 @@ public class DownloadThread extends Thread {
     public static final int MSG_FAILURE = 3;    // 下载失败
 
     // 文件保存的根地址;默认目录：Download
-    private static String BASE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator;
+    public static String BASE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
+            + File.separator + "Lilanz" + File.separator;
     private static final int MAX_DOWNLOAD = 5;      // 同时最大下载个数
     private static final int SLEET_TIME = 2000;    // 睡眠时间
 

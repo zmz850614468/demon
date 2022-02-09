@@ -95,7 +95,7 @@ dependencies {
 
     // 腾讯文档阅读器
 //    api 'com.tencent.tbs:tbssdk:44085'
-    //腾讯X5浏览器内核
+    //腾讯X5浏览器内核 工程中用来jar包
 //    implementation 'com.tencent.tbs.tbssdk:sdk:43967'
 
     testImplementation 'junit:junit:4.12'

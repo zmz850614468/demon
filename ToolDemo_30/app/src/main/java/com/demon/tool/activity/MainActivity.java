@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.demon.tool.controls.UsbControl;
 import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
 import com.demon.tool.zxingscan.ScanActivity;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         usbControl = new UsbControl(this);
 
-//        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-//        base += "/file11.pdf";
-//        base += "/file11.docx";
-//        base += "/file11.xlsx";
-//        showLog("path:" + base);
-//        openDocumentViewer(base);
+        String base = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        base += "/file11.pdf";
+        base += "/file11.docx";
+        base += "/file11.xlsx";
+        showLog("path:" + base);
+        openDocumentViewer(base);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.demon.tool.activity;
 
 import android.app.Application;
 
-import com.demon.tool.documentviewer.DocumentHelp;
+import com.demon.tool.documentviewer.DocumentControl;
 import com.demon.tool.thread.SaveDataThread;
 
 public class App extends Application {
@@ -11,7 +11,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        new DocumentHelp().init(this);
+        DocumentControl.init(this);
 
         SaveDataThread.getInstance().start();
     }

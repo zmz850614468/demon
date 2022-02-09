@@ -83,7 +83,7 @@ public class TargetActivity extends AppCompatActivity {
         target.add("每月目标：10%");
         target.add("目标资金：8.56");
         target.add("");
-        target.add("第二阶段目标--未确定");
+        target.add("第二阶段目标");
         target.add("时间范围：5个月 -- 2022-2-1~2022-6-30");
         target.add("初始资金：3");
         target.add("每月目标：10%");
@@ -94,6 +94,7 @@ public class TargetActivity extends AppCompatActivity {
         target.add("初始资金：1.21");
         target.add("每月目标：10%");
         target.add("目标资金：1.33");
+        target.add("操作结果：8.35% - 只做胜率高的操作，控制内心波动");
         return target;
     }
 

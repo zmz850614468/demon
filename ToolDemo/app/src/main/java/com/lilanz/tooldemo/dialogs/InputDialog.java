@@ -32,13 +32,11 @@ public class InputDialog extends Dialog implements DialogInterface.OnClickListen
         setContentView(R.layout.dialog_input);
         ButterKnife.bind(this);
         setCanceledOnTouchOutside(true);
-
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
     }
-
 
     @OnClick(R.id.bt_ok)
     public void onClicked(View v) {
