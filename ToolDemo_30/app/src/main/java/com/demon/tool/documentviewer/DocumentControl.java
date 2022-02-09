@@ -1,16 +1,27 @@
 package com.demon.tool.documentviewer;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import androidx.core.content.ContextCompat;
+
+import com.demon.tool.R;
 import com.demon.tool.activity.App;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
+import com.tencent.smtt.sdk.TbsReaderView;
 
 import java.util.HashMap;
 
-public class DocumentHelp {
+/**
+ * 应用内文件浏览控制类
+ */
+public class DocumentControl {
 
     public static boolean isX5InitSucceed;
 
@@ -19,7 +30,7 @@ public class DocumentHelp {
      *
      * @param context
      */
-    public void init(Context context) {
+    public static void init(Context context) {
         // 在调用TBS初始化、创建WebView之前进行如下配置
         HashMap map = new HashMap();
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
@@ -67,7 +78,47 @@ public class DocumentHelp {
         QbSdk.initX5Environment(context, cb);
     }
 
-    private void showLog(String msg) {
+    private TbsReaderView readerView;
+
+    public void onCreate(Context context, ViewGroup layoutRoot) {
+        readerView = new TbsReaderView(context, null);
+        readerView.setBackgroundColor(
+                ContextCompat.getColor(context, R.color.white));
+        layoutRoot.addView(
+                readerView,
+                new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        RelativeLayout.LayoutParams.MATCH_PARENT));
+    }
+
+    /**
+     * 通过tbs 在应用内打开文档
+     *
+     * @param path 必须是本地文件
+     */
+    public void fileViewer(String path) {
+//        String extensionName = FileUtils.getFileType(mReaderFile.getPath());
+        Bundle bundle = new Bundle();
+        bundle.putString(TbsReaderView.KEY_FILE_PATH, path);
+        bundle.putString(TbsReaderView.KEY_TEMP_PATH, Environment.getExternalStorageDirectory().getPath());
+        boolean result = readerView.preOpen(parseFormat(path), false);
+        if (result) {
+            readerView.openFile(bundle);
+            showLog("打开文档");
+        } else {
+            showLog("打开文档失败");
+        }
+    }
+
+    public void onDestroy() {
+        readerView.onStop();
+    }
+
+    private String parseFormat(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    private static void showLog(String msg) {
         Log.e("documentHelp", msg);
     }
 }
