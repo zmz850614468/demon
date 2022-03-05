@@ -13,7 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class InputDialog extends Dialog implements DialogInterface.OnClickListener {
 
     @BindView(R.id.et_input)

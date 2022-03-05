@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,9 +82,6 @@ public class MainActivity extends Activity {
         tvMsg.append(msg + "\n");
     }
 
-    private void test() {
-        boolean b = false;
-    }
 }
 
 
