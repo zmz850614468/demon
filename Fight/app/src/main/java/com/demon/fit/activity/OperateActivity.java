@@ -55,9 +55,16 @@ public class OperateActivity extends AppCompatActivity {
         operatetList = new ArrayList<>();
         operatetList.add("注：控制回撤，才是稳定盈利的基准");
         operatetList.add("注：先确认操作方式：趋势操作 或 反趋势操作");
-        operatetList.add("1.确认日K线的趋势方向");
-        operatetList.add("2.确认5K线的趋势方向-趋势要清晰、明朗");
-        operatetList.add("3.确认分时MACD的趋势方向");
+        operatetList.add("1-1.多日K线组合，存在趋势机会");
+        operatetList.add("1-2.时K线趋势与日K线相同，鼓励操作");
+        operatetList.add("1-3.时K线趋势与日K线不同，谨慎操作");
+
+//        operatetList.add("1.时K机会，日K趋势，5分K线择机买入");
+//        operatetList.add("2.日K机会，时K趋势，5分K线择机买入");
+//        operatetList.add("3.日K趋势，时K趋势，5分K线择机尝试");
+//        operatetList.add("1.确认日K线的趋势方向");
+//        operatetList.add("2.确认5K线的趋势方向-趋势要清晰、明朗");
+//        operatetList.add("3.确认分时MACD的趋势方向");
         operatetList.add("");
         operatetList.add("4.在日K趋势上，可以关注时K线趋势");
         operatetList.add("5.把周K线趋势加入观察集合");

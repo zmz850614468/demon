@@ -1,8 +1,9 @@
 package com.demon.tool.util;
 
 import android.content.Context;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 
 public class WebViewUtil {
 

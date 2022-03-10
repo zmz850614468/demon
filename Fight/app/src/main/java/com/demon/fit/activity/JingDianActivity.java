@@ -38,6 +38,11 @@ public class JingDianActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
+//        list.add("管好自己的心，心乱了，操作偏离了，以后心的压力就会越大");
+        list.add("强制压下躁动的心，无需任何理由");
+        list.add("控制好自己的手，不要做计划外的操作");
+        list.add("强制执行以上两点，不然以后内心压力会越来越大");
+        list.add("");
         list.add("宁愿错过，也不要去试错");
         list.add("侥幸心理可能导致毁灭性的结果");
         list.add("控制回撤，才是稳定盈利的基准");

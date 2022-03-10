@@ -18,6 +18,7 @@
     <!--  使用摄像头  -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -53,6 +54,8 @@
         <activity android:name=".zxingscan.ScanActivity" />
 
         <activity android:name=".ble.BleActivity"/>
+
+        <activity android:name=".webrtc.WebRtcActivity"/>
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"

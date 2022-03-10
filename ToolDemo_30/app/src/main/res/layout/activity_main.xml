@@ -40,6 +40,12 @@
         android:layout_height="wrap_content"
         android:text="蓝牙数据传输" />
 
+    <Button
+        android:id="@+id/bt_webrtc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="webRtc测试" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
