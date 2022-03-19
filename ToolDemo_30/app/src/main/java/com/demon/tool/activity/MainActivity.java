@@ -18,6 +18,7 @@ import com.demon.tool.ble.BleActivity;
 import com.demon.tool.controls.PermissionControl;
 import com.demon.tool.controls.ScanKeyManager;
 import com.demon.tool.controls.UsbControl;
+import com.demon.tool.databind_demo.activity.DataBindActivity;
 import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
 import com.demon.tool.webrtc.WebRtcActivity;
@@ -82,10 +83,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download, R.id.bt_data_save,
-            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc})
+            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc, R.id.bt_data_bind})
     public void onClicked(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.bt_data_bind:
+                intent = new Intent(this, DataBindActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_document_viewer:
                 intent = new Intent(this, DocumentViewerActivity.class);
                 startActivity(intent);

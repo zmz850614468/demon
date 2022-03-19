@@ -46,6 +46,12 @@
         android:layout_height="wrap_content"
         android:text="webRtc测试" />
 
+    <Button
+        android:id="@+id/bt_data_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DataBind使用例子" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

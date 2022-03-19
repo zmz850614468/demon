@@ -53,9 +53,12 @@
 
         <activity android:name=".zxingscan.ScanActivity" />
 
-        <activity android:name=".ble.BleActivity"/>
+        <activity android:name=".ble.BleActivity" />
 
-        <activity android:name=".webrtc.WebRtcActivity"/>
+        <activity android:name=".webrtc.WebRtcActivity" />
+
+        <!--   dataBind     -->
+        <activity android:name=".databind_demo.activity.DataBindActivity"/>
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
