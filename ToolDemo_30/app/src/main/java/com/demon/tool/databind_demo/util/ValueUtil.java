@@ -1,6 +1,7 @@
 package com.demon.tool.databind_demo.util;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
@@ -18,9 +19,31 @@ public class ValueUtil {
      * @param imageView
      * @param url
      */
-    @BindingAdapter("imageUrl")
+    @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext()).load(url).into(imageView);
+    }
+
+    /**
+     * 转字符串输出
+     *
+     * @param textView
+     * @param value
+     */
+    @BindingAdapter({"toStr"})
+    public static void showInt(TextView textView, int value) {
+        textView.setText(String.valueOf(value));
+    }
+
+    /**
+     * 转字符串输出
+     *
+     * @param textView
+     * @param value
+     */
+    @BindingAdapter({"toStr"})
+    public static void showInt(TextView textView, float value) {
+        textView.setText(String.valueOf(value));
     }
 
 }

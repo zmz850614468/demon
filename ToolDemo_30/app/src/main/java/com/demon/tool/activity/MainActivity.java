@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.demon.tool.API_2.test.RequestActivity;
 import com.demon.tool.R;
 import com.demon.tool.ble.BleActivity;
 import com.demon.tool.controls.PermissionControl;
@@ -23,8 +23,6 @@ import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
 import com.demon.tool.webrtc.WebRtcActivity;
 import com.demon.tool.zxingscan.ScanActivity;
-
-import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,10 +81,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download, R.id.bt_data_save,
-            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc, R.id.bt_data_bind})
+            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc, R.id.bt_data_bind, R.id.bt_request})
     public void onClicked(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.bt_request:
+                intent = new Intent(this, RequestActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_data_bind:
                 intent = new Intent(this, DataBindActivity.class);
                 startActivity(intent);

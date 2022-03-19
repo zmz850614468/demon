@@ -58,7 +58,9 @@
         <activity android:name=".webrtc.WebRtcActivity" />
 
         <!--   dataBind     -->
-        <activity android:name=".databind_demo.activity.DataBindActivity"/>
+        <activity android:name=".databind_demo.activity.DataBindActivity" />
+
+        <activity android:name=".API_2.test.RequestActivity" />
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"

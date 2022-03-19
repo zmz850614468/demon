@@ -42,8 +42,12 @@ public class DataBindViewModel {
         mapType.put("key-2", "value-2");
     }
 
-    public String getIntType() {
-        return intType.get() + "";
+//    public String getIntType() {
+//        return intType.get() + "";
+//    }
+
+    public ObservableInt getIntType() {
+        return intType;
     }
 
     public void onClicked(View v) {

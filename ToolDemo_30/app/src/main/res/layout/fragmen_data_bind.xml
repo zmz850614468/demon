@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -20,7 +21,8 @@
             android:layout_height="30dp"
             android:background="@drawable/shape_box_gray"
             android:gravity="center"
-            android:text="@{String.valueOf(vModel.intType)}" />
+            app:toStr="@{vModel.intType}"/>
+<!--            android:text="@{String.valueOf(vModel.intType)}" />-->
 
         <TextView
             android:layout_width="match_parent"
@@ -38,6 +40,7 @@
             android:gravity="center"
             android:text="@{vModel.listType.get(0) }" />
 
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -45,6 +48,13 @@
             android:background="@drawable/shape_box_gray"
             android:gravity="center"
             android:text="@={vModel.edtType}" />
+
+        <Button
+            android:id="@+id/bt_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{(View)->vModel.onClicked(View)}"
+            android:text="按钮事件" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data_test"
@@ -54,4 +64,3 @@
 
     </LinearLayout>
 </layout>
-
