@@ -58,8 +58,10 @@ public class ReqMethod<T> {
         if (observable != null) {
             // 判断异步处理，还是同步处理数据
             if (isSynchrony) {
-                observable.subscribeOn(Schedulers.io())   // 异步处理
+                observable = observable.subscribeOn(Schedulers.io())   // 异步处理
                         .observeOn(AndroidSchedulers.mainThread());  // 返回结果，在主线程处理
+//                        .subscribe(reqResponse -> dealResult(reqResponse)
+//                                , throwable -> onReqListener.onError(-3, "请求结果异常 - " + throwable.toString()));
             }
 
             observable.subscribe(reqResponse -> dealResult(reqResponse)
