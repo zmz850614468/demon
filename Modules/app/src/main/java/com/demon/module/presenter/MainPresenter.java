@@ -5,19 +5,19 @@ import android.util.Log;
 import com.demon.module.base.App;
 import com.demon.module.contract.MainContract;
 import com.demon.module.base.BaseMvpPresenter;
+import com.demon.module.di.component.DaggerMainComponent;
 import com.demon.module.model.HttpModel;
 
 import javax.inject.Inject;
 
 public class MainPresenter extends BaseMvpPresenter<MainContract.IView> implements MainContract.Presenter {
 
-    //    @Inject
+    @Inject
     HttpModel httpModel;
 
-//    @Inject
-//    public MainPresenter(HttpModel httpModel) {
-//        this.httpModel = httpModel;
-//    }
+    public MainPresenter() {
+        DaggerMainComponent.create().injectPresenter(this);
+    }
 
     private void showLog(String msg) {
         Log.e("MainPresenter", msg);
@@ -26,10 +26,9 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.IView> implemen
     @Override
     public void getStallInfo() {
         showLog("请求员工信息");
-//        if (httpModel == null) {
+//        if (httpModel == null) {  // 获取单例模式对象
 //            httpModel = App.getAppComponent().getHttpModel();
 //        }
-//        DaggerMainComponent.create().injectPresenter(this);
 
         httpModel.requestData("请求员工信息");
         baseView.updateList();
@@ -41,8 +40,4 @@ public class MainPresenter extends BaseMvpPresenter<MainContract.IView> implemen
         baseView.updateList();
     }
 
-    @Inject
-    public void setHttpModel(HttpModel httpModel) {
-        this.httpModel = httpModel;
-    }
 }

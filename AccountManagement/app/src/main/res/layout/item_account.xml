@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.demon.accountmanagement.bean.AccountBean" />
+
+        <variable
+            name="bean"
+            type="AccountBean" />
+
+        <variable
+            name="order"
+            type="String" />
+
+        <variable
+            name="isShowPwd"
+            type="Boolean" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_box_gray"
+            android:orientation="vertical"
+            android:padding="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:text="@{bean.name}"
+                    android:textColor="@color/black"
+                    android:textSize="21sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:text="账号："
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:password="@{!isShowPwd}"
+                    android:text="@{bean.account}"
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:text="密码："
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/tv_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:password="@{!isShowPwd}"
+                    android:text="@{bean.pwd}"
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@{order}"
+            android:textColor="@color/black"
+            android:textSize="29sp" />
+    </RelativeLayout>
+</layout>

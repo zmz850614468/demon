@@ -8,6 +8,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * 提供注入依赖用的
+ */
 @Singleton
 @Module
 public class MainModule {

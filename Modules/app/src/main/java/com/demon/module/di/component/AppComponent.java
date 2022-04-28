@@ -7,9 +7,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-//@Singleton
-//@Component(modules = {HttpModule.class})
-//public interface AppComponent {
-//
-//    HttpModel getHttpModel();
-//}
+@Singleton
+@Component(modules = {HttpModule.class})
+public interface AppComponent {
+
+    HttpModel getHttpModel();
+}

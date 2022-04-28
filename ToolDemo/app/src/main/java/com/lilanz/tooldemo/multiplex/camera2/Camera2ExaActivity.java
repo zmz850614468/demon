@@ -82,7 +82,7 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_open:
-                zoom("2");
+//                zoom("2");
                 String id = etOpenCameraId.getText().toString();
                 camera2Helper.openCamera(id);
                 break;
@@ -300,6 +300,11 @@ public class Camera2ExaActivity extends Activity implements View.OnClickListener
 
     private void showMsg(String msg) {
         tvMsg.append(msg + "\n");
+        showLog(msg);
+    }
+
+    private void showLog(String msg) {
+        Log.e("Camera2ExaActivity", msg);
     }
 
     private void showToast(String msg) {

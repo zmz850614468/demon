@@ -7,11 +7,10 @@ import com.demon.module.R;
 import com.demon.module.contract.MainContract;
 import com.demon.module.di.component.DaggerMainComponent;
 import com.demon.module.base.BaseMvpActivity;
+import com.demon.module.di.module.HttpModule;
+import com.demon.module.di.module.MainModule;
 
 public class MainActivity extends BaseMvpActivity<MainContract.Presenter> implements MainContract.IView {
-
-//    @Inject
-//    protected MainPresenter basePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,15 @@ public class MainActivity extends BaseMvpActivity<MainContract.Presenter> implem
 
     @Override
     protected void initInject() {
+        // 1.不需要传参数
         DaggerMainComponent.create().injectActivity(this);
+
+        // 2.需要传参数的可以使用第二种
+//        DaggerMainComponent.builder()
+//                .httpModule(new HttpModule())
+//                .mainModule(new MainModule())
+//                .build()
+//                .injectActivity(this);
     }
 
     @Override
