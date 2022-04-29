@@ -1,5 +1,6 @@
 package com.demon.accountmanagement.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.demon.accountmanagement.bean.AccountBean;
 import com.demon.accountmanagement.contract.AddAccountContract;
 import com.demon.accountmanagement.databinding.ActivityAddAccountBinding;
 import com.demon.accountmanagement.di.component.DaggerAddAccountComponent;
+import com.demon.accountmanagement.presenter.GroupDetailPresenter;
 import com.demon.accountmanagement.util.StringUtil;
 
 /**
@@ -34,7 +36,7 @@ public class AddAccountActivity extends BaseMvpActivity<AddAccountContract.AddAc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account);
 
-        initInject();
+        initView();
         initUI();
     }
 
@@ -93,6 +95,10 @@ public class AddAccountActivity extends BaseMvpActivity<AddAccountContract.AddAc
 
     @Override
     public void close() {
+        Intent intent = new Intent();
+        intent.setAction(GroupDetailPresenter.UPDATE_UI);
+        sendBroadcast(intent);
+
         finish();
     }
 }

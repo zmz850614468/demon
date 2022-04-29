@@ -6,6 +6,8 @@
 
         <import type="com.demon.accountmanagement.bean.AccountBean" />
 
+        <import type="com.demon.accountmanagement.adapter.AccountAdapter" />
+
         <variable
             name="bean"
             type="AccountBean" />
@@ -17,6 +19,10 @@
         <variable
             name="isShowPwd"
             type="Boolean" />
+
+        <variable
+            name="adapter"
+            type="AccountAdapter" />
 
     </data>
 
@@ -37,7 +43,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -50,12 +56,12 @@
                     android:gravity="center_vertical"
                     android:text="@{bean.name}"
                     android:textColor="@color/black"
-                    android:textSize="21sp" />
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -68,10 +74,25 @@
                     android:gravity="center_vertical"
                     android:text="账号："
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/tv_account"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:password="@{!isShowPwd}"
+                    android:text="@{bean.account}"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_account_copy"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -79,15 +100,19 @@
                     android:layout_marginTop="2dp"
                     android:background="@color/gray"
                     android:gravity="center_vertical"
-                    android:password="@{!isShowPwd}"
-                    android:text="@{bean.account}"
+                    android:onClick="@{(view)->adapter.onCopyString(view, bean.account)}"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="复制"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -100,10 +125,25 @@
                     android:gravity="center_vertical"
                     android:text="密码："
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/tv_pwd"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/gray"
+                    android:gravity="center_vertical"
+                    android:password="@{!isShowPwd}"
+                    android:text="@{bean.pwd}"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_copy"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -111,10 +151,13 @@
                     android:layout_marginTop="2dp"
                     android:background="@color/gray"
                     android:gravity="center_vertical"
-                    android:password="@{!isShowPwd}"
-                    android:text="@{bean.pwd}"
+                    android:onClick="@{(view)->adapter.onCopyString(view, bean.pwd)}"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="复制"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="17sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -122,10 +165,10 @@
             android:id="@+id/tv_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:text="@{order}"
             android:textColor="@color/black"
-            android:textSize="29sp" />
+            android:textSize="27sp" />
     </RelativeLayout>
 </layout>

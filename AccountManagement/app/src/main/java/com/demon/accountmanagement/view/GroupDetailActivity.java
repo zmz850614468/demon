@@ -1,17 +1,13 @@
 package com.demon.accountmanagement.view;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,6 +62,7 @@ public class GroupDetailActivity extends BaseMvpActivity<GroupDetailContract.Gro
     protected void initInject() {
         DaggerGroupDetailComponent.create().injectActivity(this);
         basePresenter.setContext(this);
+        basePresenter.registerReceiver();
     }
 
     private void initUI() {
@@ -135,6 +132,17 @@ public class GroupDetailActivity extends BaseMvpActivity<GroupDetailContract.Gro
         accountList.clear();
         accountList.addAll(list);
         accountAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateUI() {
+        updateAccount(basePresenter.getAccountList(groupName));
+    }
+
+    @Override
+    protected void onDestroy() {
+        basePresenter.unRegisterReceiver();
+        super.onDestroy();
     }
 
     @Override

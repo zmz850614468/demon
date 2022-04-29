@@ -38,7 +38,7 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/shape_box_red"
             android:onClick="@{(view)->dialog.onOkClicked(view)}"
-            android:text="添 加"
+            android:text="确 认"
             android:textColor="@color/white"
             android:textSize="17sp" />
 

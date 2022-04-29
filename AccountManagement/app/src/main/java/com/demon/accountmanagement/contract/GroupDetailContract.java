@@ -19,6 +19,11 @@ public interface GroupDetailContract {
          */
         void updateAccount(List<AccountBean> list);
 
+        /**
+         *  更新界面信息
+         */
+        void updateUI();
+
         void toastMsg(String msg);
     }
 
@@ -44,6 +49,10 @@ public interface GroupDetailContract {
          * @param bean
          */
         void deleteAccount(AccountBean bean);
+
+        void registerReceiver();
+
+        void unRegisterReceiver();
 
     }
 }

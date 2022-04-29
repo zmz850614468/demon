@@ -1,7 +1,9 @@
 package com.demon.accountmanagement.presenter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.ArrayMap;
 
 import com.demon.accountmanagement.base.BaseMvpPresenter;
@@ -16,7 +18,29 @@ import java.util.Map;
 
 public class GroupDetailPresenter extends BaseMvpPresenter<GroupDetailContract.GroupDetailView> implements GroupDetailContract.GroupDetailPresenter {
 
+    public static final String UPDATE_UI = "updateUI";
     private Context context;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (UPDATE_UI.equals(intent.getAction())) {
+                baseView.updateUI();
+            }
+        }
+    };
+
+    @Override
+    public void registerReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UPDATE_UI);
+        context.registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void unRegisterReceiver() {
+        context.unregisterReceiver(receiver);
+    }
 
     @Override
     public void setContext(Context context) {

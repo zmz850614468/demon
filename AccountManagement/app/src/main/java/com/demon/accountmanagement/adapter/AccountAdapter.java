@@ -1,9 +1,12 @@
 package com.demon.accountmanagement.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -36,6 +39,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     @Override
     public AccountHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         ItemAccountBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_account, viewGroup, false);
+        binding.setAdapter(this);
         AccountHolder holder = new AccountHolder(binding.getRoot());
         holder.setBinding(binding);
         return holder;
@@ -49,13 +53,29 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         holder.getBinding().setOrder((i + 1) + "");
         holder.getBinding().setIsShowPwd(isShowPwd);
         holder.getBinding().executePendingBindings();
-        
+
+        holder.getBinding().tvAccountCopy.setVisibility(isShowPwd ? View.VISIBLE : View.GONE);
+        holder.getBinding().tvPwdCopy.setVisibility(isShowPwd ? View.VISIBLE : View.GONE);
+
         holder.itemView.setOnLongClickListener(view -> {
             if (onLongClicked != null) {
                 onLongClicked.onLongClicked(beanList.get(i));
             }
             return true;
         });
+    }
+
+    /**
+     * 复制内容
+     *
+     * @param v
+     * @param content
+     */
+    public void onCopyString(View v, String content) {
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("Label", content);
+        clipboardManager.setPrimaryClip(clipData);
+        showToast("复制成功");
     }
 
     public void setPwdShow(boolean b) {
@@ -95,4 +115,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         void onLongClicked(AccountBean baan);
     }
 
+    private void showToast(String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
 }
