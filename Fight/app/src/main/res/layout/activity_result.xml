@@ -11,7 +11,7 @@
         android:layout_weight="2"
         android:background="@drawable/shape_box_white"
         android:gravity="center"
-        android:text="执行结果"
+        android:text="旧-执行结果"
         android:textSize="21sp" />
 
     <TextView
@@ -20,12 +20,12 @@
         android:layout_height="44dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="3dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:background="@drawable/shape_box_white"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginRight="8dp"
         android:text="详 情"
         android:textSize="17sp" />
 

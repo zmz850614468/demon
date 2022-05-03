@@ -1,5 +1,9 @@
 package com.demon.accountmanagement.base;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+
 import javax.inject.Inject;
 
 public abstract class BaseMvpActivity<T extends BasePresenter> extends BaseActivity {

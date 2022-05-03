@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
@@ -24,11 +25,12 @@ public class ExampleUnitTest {
      *
      */
     @Test
-    public void learning_1(){
+    public void learning_1() {
         List<String> list = new ArrayList<>();
 
         String result = CalculateResult.getResult(list);
 
         System.out.println(result);
     }
+
 }

@@ -6,7 +6,7 @@
     <dimen name="weight_4">2</dimen>
 
     <dimen name="title_height">30dp</dimen>
-    <dimen name="title_size">14sp</dimen>
+    <dimen name="title_size">15sp</dimen>
 
     <dimen name="content_height">40dp</dimen>
     <dimen name="content_size">19sp</dimen>
