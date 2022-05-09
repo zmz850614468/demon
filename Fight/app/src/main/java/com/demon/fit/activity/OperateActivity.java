@@ -64,6 +64,7 @@ public class OperateActivity extends AppCompatActivity {
         operatetList.add("1.快速拉升，5K线难看时是卖出点");
         operatetList.add("2.长时间不拉升，优先选择卖出");
         operatetList.add("3.稳健拉升时，可多持有一会");
+        operatetList.add("4.如买点错误，择机提早出");
 //        operatetList.add("注：控制回撤，才是稳定盈利的基准");
 //        operatetList.add("注：先确认操作方式：趋势操作 或 反趋势操作");
 //        operatetList.add("1-1.多日K线组合，存在趋势机会");

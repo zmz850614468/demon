@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:gravity="center"
-        android:text="操作结果"
+        android:text="盈亏"
         android:textSize="15sp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:gravity="center"
-        android:text="正操作"
+        android:text="赢/次"
         android:textSize="15sp" />
 
     <TextView
@@ -47,6 +47,6 @@
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:gravity="center"
-        android:text="负操作"
+        android:text="亏/次"
         android:textSize="15sp" />
 </LinearLayout>

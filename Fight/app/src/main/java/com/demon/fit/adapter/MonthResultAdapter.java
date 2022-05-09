@@ -46,11 +46,11 @@ public class MonthResultAdapter extends RecyclerView.Adapter<MonthResultAdapter.
         // 3.设置界面数据
         MonthResultBean bean = beanList.get(i);
 
-        holder.tvOperateResult.setText("结果:" + bean.operateResult);
-        holder.tvPoundage.setText("手续:" + bean.poundage);
-        holder.tvPosCount.setText("正操作:" + bean.posCount);
-        holder.tvNegCount.setText("负操作:" + bean.negCount);
-        holder.tvTotalCount.setText("总操作:" + bean.operateResult);
+        holder.tvOperateResult.setText("盈亏:" + bean.operateResult);
+        holder.tvPoundage.setText("手续费:" + bean.poundage);
+        holder.tvPosCount.setText("赢/次:" + bean.posCount);
+        holder.tvNegCount.setText("亏/次:" + bean.negCount);
+        holder.tvTotalCount.setText("总/次:" + bean.totalCount);
         holder.tvPercent.setText(String.format("胜率:%.2f", bean.percent) + "%");
         holder.tvTotalResult.setText("总盈亏:" + bean.totalResult);
         holder.tvMonth.setText((bean.month + 1) + "月");

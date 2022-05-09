@@ -25,6 +25,21 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    signingConfigs {
+//        release {
+//        storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+//        storePassword "18060477245"
+//        keyAlias "key"
+//        keyPassword "18060477245"
+//        }
+        debug {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+    }
 }
 
 dependencies {
