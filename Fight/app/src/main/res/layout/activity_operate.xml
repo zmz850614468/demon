@@ -184,4 +184,14 @@
         android:textColor="@color/red"
         android:textSize="15sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"
+        android:text="稳"
+        android:textColor="@color/deepRed"
+        android:textSize="70sp" />
+
 </RelativeLayout>
