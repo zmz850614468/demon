@@ -56,8 +56,8 @@ public class OperateActivity extends AppCompatActivity {
         operatetList.add("注：技能、执行力和心态--心态最重要");
         operatetList.add("");
         operatetList.add("买：");
-        operatetList.add("1.时K线形态或趋势看好");
-        operatetList.add("2.5K线处于趋势状态");
+        operatetList.add("1.时K线形态或趋势看好 -- **");
+        operatetList.add("2.5K线处于趋势状态 -- **");
         operatetList.add("3.日K线有一定支撑--boll或形态");
         operatetList.add("");
         operatetList.add("卖：");
