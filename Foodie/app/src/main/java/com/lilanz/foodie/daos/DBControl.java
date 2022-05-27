@@ -23,7 +23,7 @@ public class DBControl {
         dao.update(obj);
     }
 
-    public static void createOrUpdate(Context context, Class clazz, ArrayList list) {
+    public static void createOrUpdate(Context context, Class clazz, List list) {
         BeanDao dao = BeanDao.getDaoOperate(context, clazz);
         for (Object o : list) {
             dao.update(o);
