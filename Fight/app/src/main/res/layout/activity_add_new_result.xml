@@ -15,8 +15,9 @@
         android:textSize="21sp" />
 
     <LinearLayout
+        android:id="@+id/layout_result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
         android:orientation="vertical">
 
@@ -35,7 +36,7 @@
                 android:paddingLeft="30dp"
                 android:text="操作结果"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_result"
@@ -68,7 +69,7 @@
                 android:paddingLeft="30dp"
                 android:text="手续费用"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_poundage"
@@ -101,7 +102,7 @@
                 android:paddingLeft="30dp"
                 android:text="正操作次数"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_pos_operate_count"
@@ -134,7 +135,7 @@
                 android:paddingLeft="30dp"
                 android:text="负操作次数"
                 android:textColor="@color/black"
-                android:textSize="19sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/et_neg_operate_count"
@@ -151,16 +152,59 @@
                 android:textSize="19sp" />
 
         </LinearLayout>
+    </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_operate_today"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_bottom"
+        android:layout_below="@id/layout_result"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <Button
+            android:id="@+id/bt_refresh_ui"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:text="+/-项"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_calculate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/shape_box_white"
+            android:gravity="center"
+            android:text="计算并保存"
+            android:textSize="17sp" />
 
         <Button
             android:id="@+id/bt_ok"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/shape_box_white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/shape_box_red"
+            android:gravity="center"
             android:text="确认添加"
-            android:textSize="21sp" />
+            android:textSize="17sp" />
+
     </LinearLayout>
 
 </RelativeLayout>

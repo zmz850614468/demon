@@ -10,10 +10,18 @@ public class SharePreferencesUtil {
     private static SharedPreferences instance = null;
 
     private static final String FU_LI = "fuLi";   //
-
     private static final String FU_LI_BASE = "fuLiBase";   //
-
     private static final String FU_LI_TIMES = "fuLTimes";   //
+    private static final String OPERATE_TODAY = "operateToday";   //
+
+    // 获取
+    public static String getOperateToday(Context context) {
+        return getInstance(context).getString(OPERATE_TODAY, null);
+    }
+
+    public static void saveOperateToday(Context context, String operateToday) {
+        setString(context, OPERATE_TODAY, operateToday);
+    }
 
     // 获取
     public static int getFuLTimes(Context context) {

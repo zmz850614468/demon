@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -43,19 +45,22 @@ public class UsbControl {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            // 这里可以拿到插入的USB设备对象
+            UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+
             switch (action) {
                 case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                     showLog("ACTION_USB_DEVICE_ATTACHED");
                     showToast("ACTION_USB_DEVICE_ATTACHED");
                     if (onUsbConnectListener != null) {
-                        onUsbConnectListener.onUsbAttached();
+                        onUsbConnectListener.onUsbAttached(usbDevice);
                     }
                     break;
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
                     showLog("ACTION_USB_DEVICE_DETACHED");
                     showToast("ACTION_USB_DEVICE_DETACHED");
                     if (onUsbConnectListener != null) {
-                        onUsbConnectListener.onUsbDetached();
+                        onUsbConnectListener.onUsbDetached(usbDevice);
                     }
                     break;
                 case UsbManager.ACTION_USB_ACCESSORY_ATTACHED:
@@ -70,6 +75,28 @@ public class UsbControl {
         }
     };
 
+
+    private static final int USB_CAMERA_TYPE = 14; //可能跟不同系统设备相关，一般是某个固定值，可以打Log验证。
+    /**
+     * 判断当前Usb设备是否是Camera设备
+     */
+    public boolean isUsbCameraDevice(UsbDevice usbDevice) {
+        if (usbDevice == null) {
+            return false;
+        }
+        boolean isCamera = false;
+        int interfaceCount = usbDevice.getInterfaceCount();
+        for (int interIndex = 0; interIndex < interfaceCount; interIndex++) {
+            UsbInterface usbInterface = usbDevice.getInterface(interIndex);
+            //usbInterface.getName()遇到过为null的情况
+            if ((usbInterface.getName() == null || usbDevice.getProductName().equals(usbInterface.getName())) && usbInterface.getInterfaceClass() == USB_CAMERA_TYPE) {
+                isCamera = true;
+                break;
+            }
+        }
+        return isCamera;
+    }
+
     public void close() {
         unregister();
     }
@@ -77,9 +104,9 @@ public class UsbControl {
     public OnUsbConnectListener onUsbConnectListener;
 
     public interface OnUsbConnectListener {
-        void onUsbAttached();
+        void onUsbAttached(UsbDevice usbDevice);
 
-        void onUsbDetached();
+        void onUsbDetached(UsbDevice usbDevice);
     }
 
     public void setOnUsbConnectListener(OnUsbConnectListener onUsbConnectListener) {
