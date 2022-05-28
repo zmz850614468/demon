@@ -1,5 +1,7 @@
 package com.demon.fit.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +63,21 @@ public class AddNewResultActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_ok)
     public void onClicked(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("注意:")
+                .setMessage("确定是否要保存？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onCalculateClicked(null);
+                        saveData();
+                    }
+                });
+        builder.create().show();
+    }
+
+    public void saveData() {
         String result = etResult.getText().toString();
         String poundage = etPoundage.getText().toString();
         String posCount = etPosOperateCount.getText().toString();
@@ -93,8 +110,16 @@ public class AddNewResultActivity extends AppCompatActivity {
 
         DBControl.createOrUpdate(this, OperateResultBean.class, bean);
         showToast("添加数据成功");
-        operate_todayList.clear();
-        SharePreferencesUtil.saveOperateToday(this, "");
+
+        List<OperateTodayBean> removeList = new ArrayList<>();
+        for (OperateTodayBean todayBean : operate_todayList) {
+            if (todayBean.outPrice > 0) {
+                removeList.add(todayBean);
+            }
+        }
+
+        operate_todayList.removeAll(removeList);
+        SharePreferencesUtil.saveOperateToday(this, new Gson().toJson(operate_todayList));
         finish();
     }
 
@@ -110,8 +135,9 @@ public class AddNewResultActivity extends AppCompatActivity {
                 break;
             }
         }
+
         int index = operate_todayList.size() - 1;
-        if (!isAllEmpty(operate_todayList.get(index))) {
+        if (index < 0 || !isAllEmpty(operate_todayList.get(index))) {
             operate_todayList.add(new OperateTodayBean());
         }
         operate_todayAdapter.notifyDataSetChanged();
@@ -125,12 +151,14 @@ public class AddNewResultActivity extends AppCompatActivity {
         int posCount = 0;
         int negCount = 0;
         for (OperateTodayBean bean : operate_todayList) {
-            bean.result = (bean.outPrice - bean.inPrice) * ("买入".equals(bean.inType) ? 1 : -1);
-            totalResult += bean.result;
-            if (bean.result > 0) {
-                posCount++;
-            } else if (bean.result < 0) {
-                negCount++;
+            bean.result = (bean.outPrice - bean.inPrice) * ("买入".equals(bean.inType) ? 1 : -1) * 10;
+            if (bean.outPrice > 0) {
+                totalResult += bean.result;
+                if (bean.result > 0) {
+                    posCount++;
+                } else if (bean.result < 0) {
+                    negCount++;
+                }
             }
         }
 
@@ -164,9 +192,19 @@ public class AddNewResultActivity extends AppCompatActivity {
             operate_todayList.clear();
             operate_todayList.addAll(new Gson().fromJson(data, new TypeToken<ArrayList<OperateTodayBean>>() {
             }.getType()));
-            operate_todayAdapter.notifyDataSetChanged();
-            onCalculateClicked(null);
         }
+
+        if (operate_todayList.isEmpty()) {
+            operate_todayList.add(new OperateTodayBean());
+        }
+        operate_todayAdapter.notifyDataSetChanged();
+        onCalculateClicked(null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        onCalculateClicked(null);
+        super.onDestroy();
     }
 
     private void showLog(String msg) {
