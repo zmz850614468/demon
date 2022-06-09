@@ -59,6 +59,7 @@ public class AddNewResultActivity extends AppCompatActivity {
 
         initAdapter();
         initData();
+
     }
 
     @OnClick(R.id.bt_ok)
@@ -70,7 +71,7 @@ public class AddNewResultActivity extends AppCompatActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onCalculateClicked(null);
+//                        onCalculateClicked(null);
                         saveData();
                     }
                 });
