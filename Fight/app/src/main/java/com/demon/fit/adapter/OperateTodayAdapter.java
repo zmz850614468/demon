@@ -10,14 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
 import com.demon.fit.bean.OperateTodayBean;
-import com.demon.fit.util.StringUtil;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,6 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull OperateTodayHolder holder, final int i) {
         // 3.设置界面数据
@@ -64,6 +62,22 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
                 bean.inType = "买入";
             }
             holder.tvInType.setText(bean.inType);
+        });
+        if (bean.isFollow) {
+            holder.tvInType.setTextColor(context.getResources().getColor(R.color.gray));
+        } else {
+            holder.tvInType.setTextColor(context.getResources().getColor(R.color.black));
+        }
+        holder.tvInType.setOnLongClickListener(v -> {
+            bean.isFollow = !bean.isFollow;
+            if (bean.isFollow) {
+                showToast("设置为跟随单");
+                holder.tvInType.setTextColor(context.getResources().getColor(R.color.gray));
+            } else {
+                showToast("设置为主单");
+                holder.tvInType.setTextColor(context.getResources().getColor(R.color.black));
+            }
+            return true;
         });
 
         holder.etName.removeTextChangedListener(holder.nameWatchListener);
@@ -82,6 +96,13 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
             public void afterTextChanged(Editable s) {
                 bean.name = s.toString();
             }
+        });
+        holder.tvPrice.setOnClickListener(v -> {
+            bean.price -= 5;
+            if (bean.price <= 0) {
+                bean.price = 20;
+            }
+            holder.tvPrice.setText(bean.price + "");
         });
         holder.etInPrice.addTextChangedListener(holder.inPriceListener = new TextWatcher() {
             @Override
@@ -124,26 +145,32 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
 
         holder.tvInType.setText(bean.inType);
         holder.etName.setText(bean.name);
+        holder.tvPrice.setText(bean.price + "");
         holder.etInPrice.setText(bean.inPrice + "");
         holder.etOutPrice.setText(bean.outPrice + "");
 
-        // 最后一个
-//        if (beanList.size() == i + 1) {
-//            holder.etName.setOnFocusChangeListener((v, hasFocus) -> {
-//                if (!hasFocus && !StringUtil.isEmpty(bean.name)) {
-//                    beanList.add(new OperateTodayBean());
-//                    showLog(new Gson().toJson(beanList));
-//                    notifyDataSetChanged();
-//                }
-//            });
-//        }
-
-
-        if (i % 2 == 0) {
-            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+        if (bean.isBadOperate) {
+            holder.itemView.setBackgroundResource(R.drawable.shape_box_green);
         } else {
-            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
+            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
         }
+        holder.tvPrice.setOnLongClickListener(v -> {
+            bean.isBadOperate = !bean.isBadOperate;
+            if (bean.isBadOperate) {
+                showToast("设置为糟糕操作");
+                holder.itemView.setBackgroundResource(R.drawable.shape_box_green);
+            } else {
+                showToast("设置为常规操作");
+                holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+            }
+            return true;
+        });
+
+//        if (i % 2 == 0) {
+//            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+//        } else {
+//            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
+//        }
     }
 
     @Override
@@ -157,6 +184,8 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
         TextView tvInType;
         @BindView(R.id.et_name)
         EditText etName;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
         @BindView(R.id.et_in_price)
         EditText etInPrice;
         @BindView(R.id.et_out_price)
@@ -185,6 +214,10 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
 
     private void showLog(String msg) {
         Log.e("OperateTodayAdapter", msg);
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }
 

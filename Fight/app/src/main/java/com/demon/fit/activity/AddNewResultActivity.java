@@ -115,11 +115,13 @@ public class AddNewResultActivity extends AppCompatActivity {
         List<OperateTodayBean> removeList = new ArrayList<>();
         for (OperateTodayBean todayBean : operate_todayList) {
             if (todayBean.outPrice > 0) {
+                todayBean.createTime = System.currentTimeMillis();
                 removeList.add(todayBean);
             }
         }
-
         operate_todayList.removeAll(removeList);
+
+        DBControl.createOrUpdate(this, OperateTodayBean.class, removeList);
         SharePreferencesUtil.saveOperateToday(this, new Gson().toJson(operate_todayList));
         finish();
     }
@@ -152,7 +154,7 @@ public class AddNewResultActivity extends AppCompatActivity {
         int posCount = 0;
         int negCount = 0;
         for (OperateTodayBean bean : operate_todayList) {
-            bean.result = (bean.outPrice - bean.inPrice) * ("买入".equals(bean.inType) ? 1 : -1) * 10;
+            bean.result = (bean.outPrice - bean.inPrice) * ("买入".equals(bean.inType) ? 1 : -1) * bean.price;
             if (bean.outPrice > 0) {
                 totalResult += bean.result;
                 if (bean.result > 0) {

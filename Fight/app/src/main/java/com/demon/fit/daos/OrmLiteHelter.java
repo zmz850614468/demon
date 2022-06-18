@@ -9,6 +9,7 @@ import android.util.Log;
 import com.demon.fit.activity.OperateActivity;
 import com.demon.fit.bean.CostBean;
 import com.demon.fit.bean.OperateResultBean;
+import com.demon.fit.bean.OperateTodayBean;
 import com.demon.fit.bean.ResultBean;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -22,7 +23,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
 
     // 数据库名称
     private static final String DATABASE_NAME = "orm.db";
-    private static final int VERSION = 11;
+    private static final int VERSION = 12;
 
     private Context context;
     private static OrmLiteHelter instance;
@@ -85,6 +86,7 @@ public class OrmLiteHelter extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
+            TableUtils.createTable(connectionSource, OperateTodayBean.class);
             TableUtils.createTable(connectionSource, OperateResultBean.class);
             TableUtils.createTable(connectionSource, CostBean.class);
             TableUtils.createTable(connectionSource, ResultBean.class);

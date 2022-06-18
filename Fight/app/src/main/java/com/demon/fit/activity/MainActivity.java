@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new ItemBean(R.drawable.jd, "经典语录"));
 //        list.add(new ItemBean(R.drawable.fy, "交易费用"));
         list.add(new ItemBean(R.drawable.mb, "目标"));
+        list.add(new ItemBean(R.drawable.jg, "操作结果分析"));
         list.add(new ItemBean(R.drawable.jg, "旧-执行结果"));
         list.add(new ItemBean(R.drawable.jg, "新-执行结果"));
 //        list.add(new ItemBean(R.drawable.ic_launcher_foreground, "测试"));
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "新-执行结果":
                     intent = new Intent(MainActivity.this, OperateResultActivity.class);
+                    startActivity(intent);
+                    break;
+                case "操作结果分析":
+                    intent = new Intent(MainActivity.this, AnalyzeOperateResultActivity.class);
                     startActivity(intent);
                     break;
             }

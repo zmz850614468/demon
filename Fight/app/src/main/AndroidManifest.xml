@@ -32,6 +32,8 @@
         <activity android:name=".activity.AddNewResultActivity" />
 
         <activity android:name=".activity.OperateDetailActivity" />
+
+        <activity android:name=".activity.AnalyzeOperateResultActivity" />
     </application>
 
 </manifest>

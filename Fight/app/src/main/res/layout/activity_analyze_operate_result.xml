@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="2"
+        android:background="@drawable/shape_box_white"
+        android:gravity="center"
+        android:text="操作结果分析"
+        android:textSize="21sp" />
+
+    <LinearLayout
+        android:id="@+id/layout_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/nice_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:hideArrow="false" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/rv_title"
+        layout="@layout/item_operate_result_analyze"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/layout_selection" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_operate_result_analyze"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_bottom"
+        android:layout_below="@id/rv_title"
+        android:layout_marginBottom="5dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <LinearLayout
+            android:id="@+id/layout_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_do"
+            android:background="@drawable/shape_box_white"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_pos_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="盈/次:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_neg_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="亏/次:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_operate_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="总/次:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
+                android:orientation="horizontal">
+
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_follow_count"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_weight="3"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:text="跟随/次:"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="@dimen/title_size" />-->
+
+                <TextView
+                    android:id="@+id/tv_bad_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="糟糕/次:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_operate_result"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="操作结果:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
+                android:layout_below="@id/layout_result"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/shape_box_red"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/tv_bad_percent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="糟糕占比:"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_percent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:text="操作胜率:"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_size" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_total_result"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_weight="2"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:text="总盈亏:"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:textSize="@dimen/title_size" />-->
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
