@@ -1,60 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray">
+    android:layout_marginBottom="3dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="2"
-        android:background="@drawable/shape_box_white"
-        android:gravity="center"
-        android:text="操作结果分析"
-        android:textSize="21sp" />
-
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="+"
-        android:textSize="25sp" />
-
-    <LinearLayout
-        android:id="@+id/layout_selection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <org.angmarch.views.NiceSpinner
-            android:id="@+id/nice_spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:hideArrow="false" />
-    </LinearLayout>
-
-    <include
-        android:id="@+id/rv_title"
-        layout="@layout/item_operate_result_analyze"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/layout_selection" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_operate_result_analyze"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/layout_bottom"
-        android:layout_below="@id/rv_title" />
 
     <LinearLayout
         android:id="@+id/layout_bottom"
@@ -62,7 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <LinearLayout
             android:id="@+id/layout_result"
@@ -71,12 +24,20 @@
             android:layout_below="@+id/layout_do"
             android:background="@drawable/shape_box_white"
             android:orientation="vertical"
-            android:padding="8dp"
-            android:visibility="gone">
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:text="石油"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
+                android:layout_height="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -113,7 +74,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
+                android:layout_height="25dp"
                 android:orientation="horizontal">
 
 
@@ -150,7 +111,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
+                android:layout_height="25dp"
                 android:layout_below="@id/layout_result"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/shape_box_red"
@@ -192,4 +153,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

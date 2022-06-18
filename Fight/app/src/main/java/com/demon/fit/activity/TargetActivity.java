@@ -77,17 +77,18 @@ public class TargetActivity extends AppCompatActivity {
     private List<String> target2022() {
 
         List<String> target = new ArrayList<>();
-        target.add("第三阶段目标--未确定");
+        target.add("第三阶段目标");
         target.add("时间范围：6个月 -- 2022-7-1~2022-12-31");
-        target.add("初始资金：4.83");
-        target.add("每月目标：10%");
-        target.add("目标资金：8.56");
+        target.add("初始资金：2.5");
+        target.add("每月目标：6%");
+        target.add("目标资金：3.55");
         target.add("");
         target.add("第二阶段目标");
         target.add("时间范围：5个月 -- 2022-2-1~2022-6-30");
         target.add("初始资金：3");
         target.add("每月目标：10%");
         target.add("目标资金：4.83");
+        target.add("操作结果：损失在13000左右 - 减少策略外的操作次数");
         target.add("");
         target.add("第一阶段目标");
         target.add("时间范围：1个月 -- 2022-1-1~2022-1-31");

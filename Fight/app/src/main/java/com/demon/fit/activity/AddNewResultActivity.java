@@ -157,9 +157,9 @@ public class AddNewResultActivity extends AppCompatActivity {
             bean.result = (bean.outPrice - bean.inPrice) * ("买入".equals(bean.inType) ? 1 : -1) * bean.price;
             if (bean.outPrice > 0) {
                 totalResult += bean.result;
-                if (bean.result > 0) {
+                if (bean.result > 0 && !bean.isFollow) {
                     posCount++;
-                } else if (bean.result < 0) {
+                } else if (bean.result < 0 && !bean.isFollow) {
                     negCount++;
                 }
             }

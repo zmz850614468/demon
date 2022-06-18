@@ -34,6 +34,8 @@
         <activity android:name=".activity.OperateDetailActivity" />
 
         <activity android:name=".activity.AnalyzeOperateResultActivity" />
+
+        <activity android:name=".activity.CompareOperateResultActivity" />
     </application>
 
 </manifest>

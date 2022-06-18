@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,17 +25,22 @@ import org.angmarch.views.OnSpinnerItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 分析操作结果类
  */
 public class AnalyzeOperateResultActivity extends AppCompatActivity {
+
+    @BindView(R.id.layout_result)
+    public ViewGroup layoutResult;
 
     @BindView(R.id.tv_pos_count)
     public TextView tvPosCount;
@@ -98,17 +104,50 @@ public class AnalyzeOperateResultActivity extends AppCompatActivity {
 
     private void initSpinner() {
         selectionList = new ArrayList<>();
-        selectionList.add("全部");
-        List<OperateTodayBean> list = DBControl.getDistinct(this, OperateTodayBean.class, "name");
+
+        List<OperateTodayBean> list = DBControl.quaryAll(this, OperateTodayBean.class);
+        Map<String, Integer> map = new HashMap<>();
+        int total = 0;
         for (OperateTodayBean bean : list) {
-            selectionList.add(bean.name);
+            if (bean.isFollow) {
+                continue;
+            }
+            if (map.containsKey(bean.name)) {
+                map.put(bean.name, map.get(bean.name) + 1);
+            } else {
+                map.put(bean.name, 1);
+            }
+            total++;
         }
+        selectionList.add("全部-" + total);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            selectionList.add(entry.getKey() + "-" + entry.getValue());
+        }
+
+        Collections.sort(selectionList, (o1, o2) -> {
+            int count1 = Integer.parseInt(o1.substring(o1.lastIndexOf("-") + 1));
+            int count2 = Integer.parseInt(o2.substring(o2.lastIndexOf("-") + 1));
+            return count2 - count1;
+        });
+
         selectionSpinner.attachDataSource(selectionList);
         selectionSpinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
             String name = (String) parent.getItemAtPosition(position);
             showLog("selected:" + name);
+            name = name.substring(0, name.lastIndexOf("-"));
             query(name);
         });
+
+//        List<OperateTodayBean> list = DBControl.getDistinct(this, OperateTodayBean.class, "name");
+//        for (OperateTodayBean bean : list) {
+//            selectionList.add(bean.name);
+//        }
+//        selectionSpinner.attachDataSource(selectionList);
+//        selectionSpinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
+//            String name = (String) parent.getItemAtPosition(position);
+//            showLog("selected:" + name);
+//            query(name);
+//        });
     }
 
     /**
@@ -140,6 +179,9 @@ public class AnalyzeOperateResultActivity extends AppCompatActivity {
         int result = 0;
 
         for (OperateTodayBean bean : analyseList) {
+
+            result += bean.result;
+
             if (bean.isFollow) {
                 continue;
             }
@@ -154,8 +196,6 @@ public class AnalyzeOperateResultActivity extends AppCompatActivity {
                 negCount++;
             }
             totalCount++;
-
-            result += bean.result;
         }
 
         tvPosCount.setText("盈/次:" + posCount);
@@ -166,6 +206,15 @@ public class AnalyzeOperateResultActivity extends AppCompatActivity {
 
         tvBadPercent.setText(String.format("糟糕占比:%.2f", badCount * 100.0f / totalCount) + "%");
         tvPercent.setText(String.format("操作胜率:%.2f", posCount * 100.0f / totalCount) + "%");
+    }
+
+    @OnClick(R.id.tv_result)
+    public void onClicked(View v) {
+        if (layoutResult.getVisibility() == View.VISIBLE) {
+            layoutResult.setVisibility(View.GONE);
+        } else {
+            layoutResult.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showToast(String msg) {
