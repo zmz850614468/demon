@@ -58,6 +58,12 @@
         android:layout_height="wrap_content"
         android:text="网络请求" />
 
+    <Button
+        android:id="@+id/bt_data_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设备间数据传输" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

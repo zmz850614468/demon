@@ -62,6 +62,12 @@
 
         <activity android:name=".API_2.test.RequestActivity" />
 
+        <activity android:name=".data_transfer.activity.DataTransferActivity" />
+
+        <activity android:name=".data_transfer.activity.ReceiverDeviceActivity" />
+
+        <activity android:name=".data_transfer.activity.SendDeviceActivity" />
+
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"

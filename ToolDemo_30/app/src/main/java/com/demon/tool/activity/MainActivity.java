@@ -18,6 +18,7 @@ import com.demon.tool.ble.BleActivity;
 import com.demon.tool.controls.PermissionControl;
 import com.demon.tool.controls.ScanKeyManager;
 import com.demon.tool.controls.UsbControl;
+import com.demon.tool.data_transfer.activity.DataTransferActivity;
 import com.demon.tool.databind_demo.activity.DataBindActivity;
 import com.demon.tool.documentviewer.DocumentViewerActivity;
 import com.demon.tool.download.DownloadActivity;
@@ -81,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.bt_camera, R.id.bt_document_viewer, R.id.bt_download, R.id.bt_data_save,
-            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc, R.id.bt_data_bind, R.id.bt_request})
+            R.id.bt_scan, R.id.bt_ble, R.id.bt_webrtc, R.id.bt_data_bind, R.id.bt_request,
+            R.id.bt_data_transfer})
     public void onClicked(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_webrtc:
                 intent = new Intent(this, WebRtcActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_data_transfer:
+                intent = new Intent(this, DataTransferActivity.class);
                 startActivity(intent);
                 break;
 
