@@ -12,14 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.demon.tool.R;
 import com.demon.tool.data_transfer.func.UDPThread;
-import com.demon.tool.data_transfer.func.UdpData;
-import com.demon.tool.data_transfer.websocket.SocketData;
+import com.demon.tool.data_transfer.func.UdpConfig;
+import com.demon.tool.data_transfer.websocket.SocketConfig;
 import com.demon.tool.data_transfer.websocket.WSocketServer;
+import com.demon.tool.data_transfer.websocket.WSocketServerThread;
 import com.demon.tool.util.WifiUtil;
 
 import org.java_websocket.WebSocket;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +33,8 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
     public TextView tvUdpServiceStatus;
 
     private UDPThread udpReceiverThread;
-
-    private WSocketServer wSocketServer;
+    private WSocketServerThread wSocketServerThread;
+//    private WSocketServer wSocketServer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,14 +44,14 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
 
         initUdp();
         initWifiStatus();
-        startWebSocketServer();
+        initWSocketServerThread();
     }
 
     /**
      * 初始化udp服务端 和 udp发送端
      */
     private void initUdp() {
-        udpReceiverThread = new UDPThread();
+        udpReceiverThread = new UDPThread(UdpConfig.SERVER_UDP_PORT);
         udpReceiverThread.setOnUdpReceiverListener(new UDPThread.OnUdpReceiverListener() {
             @Override
             public void onConnected() {
@@ -67,8 +66,8 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
             @Override
             public void onReceiver(String ip, int port, String data) {
                 showLog("接收到udp数据：" + ip + ":" + port + " -- " + data);
-                if (UdpData.getSendData(ReceiverDeviceActivity.this).equals(data)) {
-                    sendUdpMsg(ip, port, UdpData.getReceiverAnswer(ReceiverDeviceActivity.this));
+                if (UdpConfig.getSendData(ReceiverDeviceActivity.this).equals(data)) {
+                    sendUdpMsg(ip, port, UdpConfig.getReceiverAnswer(ReceiverDeviceActivity.this));
                 }
             }
         });
@@ -88,23 +87,8 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 开启 webSocketServer服务
-     */
-    private void startWebSocketServer() {
-        if (wSocketServer != null) {
-            try {
-                wSocketServer.stop();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            wSocketServer = null;
-        }
-
-        wSocketServer = new WSocketServer(SocketData.PORT);
-        wSocketServer.setOnWebSocketServerListener(new WSocketServer.OnWebSocketServerListener() {
+    private void initWSocketServerThread() {
+        wSocketServerThread = new WSocketServerThread(SocketConfig.PORT, new WSocketServer.OnWebSocketServerListener() {
             @Override
             public void onWebSocketOpen(WebSocket conn) {
             }
@@ -113,11 +97,10 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
             public void onWebSocketClose(WebSocket conn) {
             }
 
-            int index = 0;
-
             @Override
-            public void onWebSocketMsg(WebSocket conn, String msg) {
-                showLog("数据包 - " + ++index + "：" + msg);
+            public void onWebSocketMsg(WebSocket conn, String msgType, String msg) {
+                showLog("数据包 - " + msgType + " - " + msg);
+                // todo 处理接收到的数据
             }
 
             @Override
@@ -136,7 +119,7 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
                 webSocketServerHandle.sendEmptyMessageDelayed(RESTART_WEB_SOCKET_SERVER, 3000);
             }
         });
-        wSocketServer.start();
+        wSocketServerThread.start();
     }
 
     public static final int RESTART_WEB_SOCKET_SERVER = 1;
@@ -145,7 +128,7 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == RESTART_WEB_SOCKET_SERVER) {
-                startWebSocketServer();
+                wSocketServerThread.startWebSocketServer();
             }
             return true;
         }
@@ -154,15 +137,7 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         udpReceiverThread.close();
-        if (wSocketServer != null) {
-            try {
-                wSocketServer.stop();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        wSocketServerThread.onDestroy();
         super.onDestroy();
     }
 

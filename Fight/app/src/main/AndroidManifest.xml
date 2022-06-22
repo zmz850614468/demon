@@ -36,6 +36,12 @@
         <activity android:name=".activity.AnalyzeOperateResultActivity" />
 
         <activity android:name=".activity.CompareOperateResultActivity" />
+
+        <activity android:name=".data_transfer.activity.DataTransferActivity" />
+
+        <activity android:name=".data_transfer.activity.ReceiverDeviceActivity" />
+
+        <activity android:name=".data_transfer.activity.SendDeviceActivity" />
     </application>
 
 </manifest>

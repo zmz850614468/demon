@@ -68,6 +68,9 @@ dependencies {
     // NiceSpinner
     implementation 'com.github.arcadefire:nice-spinner:1.4.5'
 
+    // webSocket
+    implementation "org.java-websocket:Java-WebSocket:1.5.2"
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.12'

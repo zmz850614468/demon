@@ -1,10 +1,9 @@
-package com.demon.tool.data_transfer.websocket;
+package com.demon.fit.data_transfer.websocket;
 
-import android.util.Log;
-
-import com.demon.tool.util.StringUtil;
+import com.demon.fit.util.StringUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;

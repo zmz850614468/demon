@@ -1,28 +1,44 @@
-package com.demon.tool.data_transfer.activity;
+package com.demon.fit.data_transfer.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.demon.tool.R;
-import com.demon.tool.data_transfer.func.UDPThread;
-import com.demon.tool.data_transfer.func.UdpConfig;
-import com.demon.tool.data_transfer.websocket.SocketConfig;
-import com.demon.tool.data_transfer.websocket.WSocketClient;
-import com.demon.tool.data_transfer.websocket.WSocketClientThread;
-import com.demon.tool.util.StringUtil;
-import com.demon.tool.util.WifiUtil;
+
+import com.demon.fit.R;
+import com.demon.fit.bean.OperateResultBean;
+import com.demon.fit.bean.OperateTodayBean;
+import com.demon.fit.daos.DBControl;
+import com.demon.fit.data_transfer.func.UDPThread;
+import com.demon.fit.data_transfer.func.UdpConfig;
+import com.demon.fit.data_transfer.websocket.SocketConfig;
+import com.demon.fit.data_transfer.websocket.WSocketClient;
+import com.demon.fit.data_transfer.websocket.WSocketClientThread;
+import com.demon.fit.util.WifiUtil;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SendDeviceActivity extends AppCompatActivity {
+
+    @BindView(R.id.tv_data_info)
+    public TextView tvDataInfo;
+    @BindView(R.id.bt_send_data)
+    public Button btSendData;
 
     @BindView(R.id.tv_wifi_status)
     public TextView tvWifiStatus;
@@ -31,7 +47,9 @@ public class SendDeviceActivity extends AppCompatActivity {
 
     private UDPThread udpThread;
     private WSocketClientThread wSocketClientThread;
-    private String serverIp;
+
+    private List<OperateTodayBean> todayList;
+    private List<OperateResultBean> resultList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +59,7 @@ public class SendDeviceActivity extends AppCompatActivity {
 
         initUdp();
         initWifiStatus();
+        initData();
     }
 
     private void initWSocketClientThread(String uri) {
@@ -49,6 +68,9 @@ public class SendDeviceActivity extends AppCompatActivity {
             public void onOpen() {
                 runOnUiThread(() -> {
                     tvWebSocketStatus.setText("连接上webSocket服务器");
+                    btSendData.setVisibility(View.VISIBLE);
+                    wSocketClientThread.addData(SocketConfig.MSG_TODAY_BEAN_COUNT, todayList.size() + "");
+                    wSocketClientThread.addData(SocketConfig.MSG_RESULT_BEAN_COUNT, resultList.size() + "");
                 });
             }
 
@@ -107,12 +129,7 @@ public class SendDeviceActivity extends AppCompatActivity {
                     findServerHandler.removeMessages(1);
                     // todo
                     if (wSocketClientThread == null) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initWSocketClientThread("ws://" + ip + ":" + SocketConfig.PORT);
-                            }
-                        });
+                        runOnUiThread(() -> initWSocketClientThread("ws://" + ip + ":" + SocketConfig.PORT));
                     }
                 }
             }
@@ -124,10 +141,9 @@ public class SendDeviceActivity extends AppCompatActivity {
      * 查找服务器ip地址
      */
     private void findServer() {
-        if (StringUtil.isEmpty(serverIp) && WifiUtil.checkEnableWifi(this)) {
+        if (WifiUtil.checkEnableWifi(this)) {
             showLog("查找服务器ip地址");
             String localIp = WifiUtil.getLocalIpAddress(this);
-            int temp = Integer.parseInt(localIp.substring(localIp.lastIndexOf(".") + 1));
             localIp = localIp.substring(0, localIp.lastIndexOf(".") + 1);
 
             String finalLocalIp = localIp;
@@ -150,6 +166,31 @@ public class SendDeviceActivity extends AppCompatActivity {
             return true;
         }
     });
+
+    private void initData() {
+        todayList = DBControl.quaryAll(this, OperateTodayBean.class);
+        resultList = DBControl.quaryAll(this, OperateResultBean.class);
+
+        tvDataInfo.setText("每天操作结果数据量：" + todayList.size() + "\n" +
+                "每笔操作结果数据量：" + resultList.size());
+    }
+
+    @OnClick(R.id.bt_send_data)
+    public void onSendDataClicked(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("注意:")
+                .setMessage("确定要开始传输数据吗？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog, which) -> {
+                    for (OperateTodayBean todayBean : todayList) {
+                        wSocketClientThread.addData(SocketConfig.MSG_TODAY_BEAN, new Gson().toJson(todayBean));
+                    }
+                    for (OperateResultBean resultBean : resultList) {
+                        wSocketClientThread.addData(SocketConfig.MSG_RESULT_BEAN, new Gson().toJson(resultBean));
+                    }
+                });
+        builder.create().show();
+    }
 
     @Override
     protected void onDestroy() {

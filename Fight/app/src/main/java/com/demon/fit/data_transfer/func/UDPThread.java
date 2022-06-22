@@ -1,8 +1,9 @@
-package com.demon.tool.data_transfer.func;
+package com.demon.fit.data_transfer.func;
 
 import android.util.Log;
 
-import com.demon.tool.util.StringUtil;
+
+import com.demon.fit.util.StringUtil;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

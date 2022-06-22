@@ -1,6 +1,5 @@
-package com.demon.tool.data_transfer.websocket;
+package com.demon.fit.data_transfer.websocket;
 
-import com.demon.tool.util.StringUtil;
 import com.google.gson.Gson;
 
 import java.net.URI;

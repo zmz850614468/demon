@@ -1,10 +1,11 @@
-package com.demon.tool.data_transfer.func;
+package com.demon.fit.data_transfer.func;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
-public class UdpData {
+public class UdpConfig {
+
+    public static final int SERVER_UDP_PORT = 18899;         // udp听端口
+    public static final int CLIENT_UDP_PORT = 17788;         // udp听端口
 
     // UDP发送方数据
     private static final String UDP_SEND_DATA = "udpSendData";
@@ -18,6 +19,5 @@ public class UdpData {
     public static String getReceiverAnswer(Context context) {
         return context.getPackageName() + "_" + UDP_RECEIVER_ANSWER;
     }
-
-
+    
 }

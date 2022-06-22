@@ -1,6 +1,4 @@
-package com.demon.tool.data_transfer.websocket;
-
-import org.java_websocket.WebSocket;
+package com.demon.fit.data_transfer.websocket;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,9 +78,7 @@ public class WSocketServerThread extends Thread {
         if (wSocketServer != null) {
             try {
                 wSocketServer.stop();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            }catch (InterruptedException e) {
                 e.printStackTrace();
             }
             wSocketServer = null;
@@ -97,9 +93,7 @@ public class WSocketServerThread extends Thread {
         if (wSocketServer != null) {
             try {
                 wSocketServer.stop();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            }catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

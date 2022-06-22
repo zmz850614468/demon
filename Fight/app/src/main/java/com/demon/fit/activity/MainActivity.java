@@ -6,16 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.demon.fit.R;
 import com.demon.fit.adapter.ItemAdapter;
 import com.demon.fit.bean.ItemBean;
+import com.demon.fit.data_transfer.activity.DataTransferActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,5 +100,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         });
+    }
+
+    @OnLongClick(R.id.tv_transfer_data)
+    public void onLongClicked(View v) {
+        Intent intent = new Intent(this, DataTransferActivity.class);
+        startActivity(intent);
     }
 }
