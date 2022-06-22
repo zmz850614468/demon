@@ -49,6 +49,12 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         compareRecycler.setLayoutManager(manager);
         compareRecycler.setAdapter(compareAdapter);
+
+        compareAdapter.setListener(bean -> {
+            Intent intent = new Intent(this, AnalyzeOperateResultActivity.class);
+            intent.putExtra(AnalyzeOperateResultActivity.SELECTED_TYPE, bean.name);
+            startActivity(intent);
+        });
     }
 
     private void initAdapterData() {

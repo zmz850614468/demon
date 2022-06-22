@@ -25,7 +25,7 @@ public class WSocketServer extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        showLog("onOpen:" + conn.getRemoteSocketAddress());
+//        showLog("onOpen:" + conn.getRemoteSocketAddress());
         if (onWebSocketServerListener != null) {
             onWebSocketServerListener.onWebSocketOpen(conn);
         }
@@ -36,7 +36,7 @@ public class WSocketServer extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        showLog("onClose:" + conn.getRemoteSocketAddress());
+//        showLog("onClose:" + conn.getRemoteSocketAddress());
         if (onWebSocketServerListener != null) {
             onWebSocketServerListener.onWebSocketClose(conn);
         }
@@ -47,7 +47,7 @@ public class WSocketServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        showLog("onMessage:" + message);
+//        showLog("onMessage:" + message);
         if (onWebSocketServerListener != null) {
             onWebSocketServerListener.onWebSocketMsg(conn, message);
         }
@@ -55,7 +55,7 @@ public class WSocketServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        showLog("onError:" + ex.getMessage());
+//        showLog("onError:" + ex.getMessage());
         if (onWebSocketServerListener != null) {
             onWebSocketServerListener.onServerError(conn, ex);
         }
@@ -64,15 +64,15 @@ public class WSocketServer extends WebSocketServer {
 
     @Override
     public void onStart() {
-        showLog("onStart");
+//        showLog("onStart");
         if (onWebSocketServerListener != null) {
             onWebSocketServerListener.onServerStart(this.port);
         }
     }
 
-    private void showLog(String msg) {
-        Log.e("WSocketServer", msg);
-    }
+//    private void showLog(String msg) {
+//        Log.e("WSocketServer", msg);
+//    }
 
     private OnWebSocketServerListener onWebSocketServerListener;
 

@@ -25,7 +25,7 @@ public class WSocketClient extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        showLog("onOpen: 打开webSocket");
+//        showLog("onOpen: 打开webSocket");
         if (onWebSocketClientListener != null) {
             onWebSocketClientListener.onOpen();
         }
@@ -33,7 +33,7 @@ public class WSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        showLog("onMessage: 接收webSocket信息：" + message);
+//        showLog("onMessage: 接收webSocket信息：" + message);
         if (onWebSocketClientListener != null) {
             onWebSocketClientListener.onMessage(message);
         }
@@ -41,7 +41,7 @@ public class WSocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        showLog("onClose(...): 关闭webSocket");
+//        showLog("onClose(...): 关闭webSocket");
         if (onWebSocketClientListener != null) {
             onWebSocketClientListener.onClose();
         }
@@ -49,7 +49,7 @@ public class WSocketClient extends WebSocketClient {
 
     @Override
     public void onError(Exception ex) {
-        showLog("onError: " + ex.getMessage());
+//        showLog("onError: " + ex.getMessage());
         ex.printStackTrace();
         if (onWebSocketClientListener != null) {
             onWebSocketClientListener.onError(ex);
@@ -62,14 +62,14 @@ public class WSocketClient extends WebSocketClient {
         close();
     }
 
-    private void showLog(String msg) {
-        Log.e("webSocket", msg);
-    }
+//    private void showLog(String msg) {
+//        Log.e("webSocket", msg);
+//    }
 
     private Handler hearBitHandler = new Handler(Looper.myLooper(), new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            showLog("发送心跳包:");
+//            showLog("发送心跳包:");
             if (isDestroy) {
                 if (!isClosed()) {
                     onDestroy();
@@ -100,7 +100,7 @@ public class WSocketClient extends WebSocketClient {
                 }
             }
         }.start();
-        showLog("重连webSocket服务器");
+//        showLog("重连webSocket服务器");
     }
 
     private OnWebSocketClientListener onWebSocketClientListener;

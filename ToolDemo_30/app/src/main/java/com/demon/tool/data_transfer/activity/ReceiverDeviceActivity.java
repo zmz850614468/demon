@@ -113,9 +113,11 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
             public void onWebSocketClose(WebSocket conn) {
             }
 
+            int index = 0;
+
             @Override
             public void onWebSocketMsg(WebSocket conn, String msg) {
-
+                showLog("数据包 - " + ++index + "：" + msg);
             }
 
             @Override

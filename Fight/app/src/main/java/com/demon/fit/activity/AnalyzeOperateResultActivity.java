@@ -39,6 +39,8 @@ import butterknife.OnClick;
  */
 public class AnalyzeOperateResultActivity extends AppCompatActivity {
 
+    public static final String SELECTED_TYPE = "selectedType";
+
     @BindView(R.id.layout_result)
     public ViewGroup layoutResult;
 
@@ -75,7 +77,17 @@ public class AnalyzeOperateResultActivity extends AppCompatActivity {
 
         initSpinner();
         initAdapter();
-        query(null);
+        String name = getIntent().getStringExtra(SELECTED_TYPE);
+        query(name);
+        if (name != null) {
+            for (int i = 0; i < selectionList.size(); i++) {
+                if (selectionList.get(i).contains(name)) {
+                    selectionSpinner.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+        onClicked(null);
     }
 
     private void initAdapter() {

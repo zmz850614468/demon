@@ -55,6 +55,12 @@ public class CompareOperateResultAdapter extends RecyclerView.Adapter<CompareOpe
         holder.tvOperateResult.setText("操作结果:" + bean.result);
         holder.tvBadPercent.setText(String.format("糟糕占比:%.2f", bean.badPercent) + "%");
         holder.tvPercent.setText(String.format("操作胜率:%.2f", bean.percent) + "%");
+
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> {
+                listener.onItemClick(beanList.get(i));
+            });
+        }
     }
 
     @Override
@@ -95,6 +101,6 @@ public class CompareOperateResultAdapter extends RecyclerView.Adapter<CompareOpe
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(OperateTodayBean bean);
+        public void onItemClick(CompareResultBean bean);
     }
 }

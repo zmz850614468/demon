@@ -1,6 +1,10 @@
 package com.demon.tool.data_transfer.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -8,9 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.demon.tool.R;
 import com.demon.tool.data_transfer.websocket.WSocketClient;
+import com.demon.tool.data_transfer.websocket.WSocketClientThread;
 import com.demon.tool.util.WifiUtil;
-
-import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +25,7 @@ public class SendDeviceActivity extends AppCompatActivity {
     @BindView(R.id.tv_web_socket_status)
     public TextView tvWebSocketStatus;
 
-    private WSocketClient wSocketClient;
+    private WSocketClientThread wSocketClientThread;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,12 +34,11 @@ public class SendDeviceActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initWifiStatus();
-        connectWebSocket("ws://192.168.1.134:17788");
+        initWSocketClientThread("ws://192.168.1.134:17788");
     }
 
-    private void connectWebSocket(String uri) {
-        wSocketClient = new WSocketClient(URI.create(uri));
-        wSocketClient.setOnWebSocketClientListener(new WSocketClient.OnWebSocketClientListener() {
+    private void initWSocketClientThread(String uri) {
+        wSocketClientThread = new WSocketClientThread(uri, new WSocketClient.OnWebSocketClientListener() {
             @Override
             public void onOpen() {
                 runOnUiThread(() -> {
@@ -63,8 +65,20 @@ public class SendDeviceActivity extends AppCompatActivity {
 
             }
         });
-        wSocketClient.connect();
+        wSocketClientThread.start();
     }
+
+//    private Handler testHandler = new Handler(Looper.myLooper(), new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message msg) {
+//
+//            for (int i = 1; i <= 1000; i++) {
+//                wSocketClientThread.addData("数据库数据 -- " + i);
+//            }
+//
+//            return true;
+//        }
+//    });
 
     private void initWifiStatus() {
         if (!WifiUtil.checkEnableWifi(this)) {
@@ -76,10 +90,11 @@ public class SendDeviceActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (wSocketClient != null && wSocketClient.isOpen()) {
-            wSocketClient.onDestroy();
-            wSocketClient = null;
-        }
+        wSocketClientThread.onDestroy();
         super.onDestroy();
+    }
+
+    private void showLog(String msg) {
+        Log.e("SendDeviceActivity", msg);
     }
 }
