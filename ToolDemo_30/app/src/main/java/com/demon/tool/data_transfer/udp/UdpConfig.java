@@ -1,8 +1,6 @@
-package com.demon.tool.data_transfer.func;
+package com.demon.tool.data_transfer.udp;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 public class UdpConfig {
 
@@ -21,5 +19,5 @@ public class UdpConfig {
     public static String getReceiverAnswer(Context context) {
         return context.getPackageName() + "_" + UDP_RECEIVER_ANSWER;
     }
-    
+
 }

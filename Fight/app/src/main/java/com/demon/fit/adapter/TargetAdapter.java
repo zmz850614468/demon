@@ -45,12 +45,13 @@ public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetHold
         // 3.设置界面数据
         String bean = beanList.get(i);
         holder.tvTarget.setText(bean);
-        if (i == 3 || i == 4) {
+        if (i >= 3 && i <= 5) {
+            holder.tvTarget.setTextSize(17);
             holder.tvTarget.setTextColor(context.getResources().getColor(R.color.deepRed));
-        }else {
+        } else {
             holder.tvTarget.setTextColor(context.getResources().getColor(R.color.black));
         }
-        
+
     }
 
     @Override

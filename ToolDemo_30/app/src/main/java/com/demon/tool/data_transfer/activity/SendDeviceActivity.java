@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demon.tool.R;
-import com.demon.tool.data_transfer.func.UDPThread;
-import com.demon.tool.data_transfer.func.UdpConfig;
+import com.demon.tool.data_transfer.udp.UDPThread;
+import com.demon.tool.data_transfer.udp.UdpConfig;
 import com.demon.tool.data_transfer.websocket.SocketConfig;
 import com.demon.tool.data_transfer.websocket.WSocketClient;
 import com.demon.tool.data_transfer.websocket.WSocketClientThread;
