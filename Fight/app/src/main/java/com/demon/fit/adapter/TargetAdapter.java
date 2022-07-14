@@ -48,6 +48,8 @@ public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetHold
         if (i >= 3 && i <= 5) {
             holder.tvTarget.setTextSize(17);
             holder.tvTarget.setTextColor(context.getResources().getColor(R.color.deepRed));
+        } else if (i == 10) {
+            holder.tvTarget.setTextColor(context.getResources().getColor(R.color.deepRed));
         } else {
             holder.tvTarget.setTextColor(context.getResources().getColor(R.color.black));
         }
