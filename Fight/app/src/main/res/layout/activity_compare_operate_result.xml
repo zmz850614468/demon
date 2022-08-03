@@ -24,6 +24,16 @@
         android:text="详情"
         android:textSize="17sp" />
 
+    <TextView
+        android:id="@+id/tv_type_order"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="盈利"
+        android:textSize="17sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_compare_operate_result"
         android:layout_width="match_parent"

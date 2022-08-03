@@ -3,6 +3,7 @@ package com.demon.fit.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 对比不同品类 的操作结果
+ */
 public class CompareOperateResultActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.tv_type_order)
+    public TextView tvTypeOrder;
     @BindView(R.id.rv_compare_operate_result)
     protected RecyclerView compareRecycler;
     private CompareOperateResultAdapter compareAdapter;
@@ -41,6 +48,7 @@ public class CompareOperateResultActivity extends AppCompatActivity {
 
         initAdapterData();
         initAdapter();
+        updateOrder();
     }
 
     private void initAdapter() {
@@ -85,12 +93,12 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         }
 
         compareList.addAll(map.values());
-        Collections.sort(compareList, (o1, o2) -> {
-            if (o2.totalCount != o1.totalCount) {
-                return o2.totalCount - o1.totalCount;
-            }
-            return o2.result - o1.result;
-        });
+//        Collections.sort(compareList, (o1, o2) -> {
+//            if (o2.totalCount != o1.totalCount) {
+//                return o2.totalCount - o1.totalCount;
+//            }
+//            return o2.result - o1.result;
+//        });
         for (CompareResultBean bean : compareList) {
             bean.calculatePercent();
         }
@@ -100,6 +108,52 @@ public class CompareOperateResultActivity extends AppCompatActivity {
     public void onDetailClicked(View v) {
         Intent intent = new Intent(this, AnalyzeOperateResultActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_type_order)
+    public void onClicked(View v) {
+        String type = tvTypeOrder.getText().toString();
+        switch (type) {
+            case "盈利":
+                tvTypeOrder.setText("次数");
+                break;
+            case "次数":
+                tvTypeOrder.setText("胜率");
+                break;
+            case "胜率":
+                tvTypeOrder.setText("盈利");
+                break;
+        }
+        updateOrder();
+    }
+
+    /**
+     * 更新排序方式
+     */
+    private void updateOrder() {
+        String type = tvTypeOrder.getText().toString();
+        switch (type) {
+            case "盈利":
+                Collections.sort(compareList, (o1, o2) -> o2.result - o1.result);
+                break;
+            case "次数":
+                Collections.sort(compareList, (o1, o2) -> {
+                    if (o2.totalCount != o1.totalCount) {
+                        return o2.totalCount - o1.totalCount;
+                    }
+                    return o2.result - o1.result;
+                });
+                break;
+            case "胜率":
+                Collections.sort(compareList, (o1, o2) -> {
+                    if (o2.percent == o1.percent) {
+                        return o2.totalCount - o1.totalCount;
+                    }
+                    return (int) (o2.percent * 100 - o1.percent * 100);
+                });
+                break;
+        }
+        compareAdapter.notifyDataSetChanged();
     }
 
 }
