@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'

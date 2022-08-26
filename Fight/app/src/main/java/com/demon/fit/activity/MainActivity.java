@@ -36,9 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         initAdapter();
 
-
-        Intent intent = new Intent(MainActivity.this, OperateActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, OperateActivity.class);
+//        startActivity(intent);
     }
 
     private void initAdapter() {

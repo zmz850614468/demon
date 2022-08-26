@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -126,15 +128,36 @@ public class CameraControl {
             }
 
             // 4.设置对焦模式(设置对焦时，会报错)
+            // 支持的对焦方式
+            List<String> focusModeList = parameters.getSupportedFocusModes();
+            showLog("支持对焦方式：" + new Gson().toJson(focusModeList));
+//            for (String focusMode : focusModeList) {//检查支持的对焦
+                if (focusModeList.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                } else if (focusModeList.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                } else if (focusModeList.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                }
+//            }
 //            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 //            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-//            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+//            parameters.setPictureFormat(PixelFormat.JPEG);
+//            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
 
             camera.setParameters(parameters);
+
             // 打开摄像头预览
             camera.setPreviewDisplay(surfaceHolder);
             camera.startPreview();
             isCameraOpen = true;
+
+//            camera.autoFocus(new Camera.AutoFocusCallback() {
+//                @Override
+//                public void onAutoFocus(boolean success, Camera camera) {
+//
+//                }
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
