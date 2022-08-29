@@ -42,6 +42,8 @@
         <activity android:name=".data_transfer.activity.ReceiverDeviceActivity" />
 
         <activity android:name=".data_transfer.activity.SendDeviceActivity" />
+
+        <activity android:name=".activity.OperateTypeActivity" />
     </application>
 
 </manifest>

@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private void initAdapter() {
         list = new ArrayList<>();
         list.add(new ItemBean(R.drawable.fl, "复利"));
+        list.add(new ItemBean(R.drawable.jd, "素质需求"));
+        list.add(new ItemBean(R.drawable.zxl, "操作类型"));
         list.add(new ItemBean(R.drawable.zxl, "执行力"));
-        list.add(new ItemBean(R.drawable.jd, "经典语录"));
 //        list.add(new ItemBean(R.drawable.fy, "交易费用"));
         list.add(new ItemBean(R.drawable.mb, "目标"));
         list.add(new ItemBean(R.drawable.jg, "旧-执行结果"));
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("type", "k-test");
                     startActivity(intent);
                     break;
-                case "经典语录":
+                case "素质需求":
                     intent = new Intent(MainActivity.this, JingDianActivity.class);
                     startActivity(intent);
                     break;
@@ -95,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "操作结果分析":
                     intent = new Intent(MainActivity.this, CompareOperateResultActivity.class);
+                    startActivity(intent);
+                    break;
+                case "操作类型":
+                    intent = new Intent(MainActivity.this, OperateTypeActivity.class);
                     startActivity(intent);
                     break;
             }
