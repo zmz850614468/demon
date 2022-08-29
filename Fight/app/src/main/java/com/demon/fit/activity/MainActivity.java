@@ -18,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         list.add(new ItemBean(R.drawable.zxl, "执行力"));
 //        list.add(new ItemBean(R.drawable.fy, "交易费用"));
         list.add(new ItemBean(R.drawable.mb, "目标"));
-        list.add(new ItemBean(R.drawable.jg, "旧-执行结果"));
+//        list.add(new ItemBean(R.drawable.jg, "旧-执行结果"));
         list.add(new ItemBean(R.drawable.jg, "操作结果分析"));
-        list.add(new ItemBean(R.drawable.jg, "新-执行结果"));
+        list.add(new ItemBean(R.drawable.jg, "执行结果"));
 //        list.add(new ItemBean(R.drawable.ic_launcher_foreground, "测试"));
 
         adapter = new ItemAdapter(this, list);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, CostActivity.class);
                     startActivity(intent);
                     break;
-                case "新-执行结果":
+                case "执行结果":
                     intent = new Intent(MainActivity.this, OperateResultActivity.class);
                     startActivity(intent);
                     break;
