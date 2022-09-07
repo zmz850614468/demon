@@ -38,7 +38,7 @@ public class JingDianActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
-        list.add("一定要有耐心。\n    七层等待，三层机会");
+        list.add("一定要有耐心。\n    七成等待，三成机会");
         list.add("不要过于自信。\n    过于自信是要付出代价的");
         list.add("要遵守交易规则。\n    只做看的懂的行情");
         list.add("不用带着情绪交易。\n    杠杆作用，容不得半点冲动");

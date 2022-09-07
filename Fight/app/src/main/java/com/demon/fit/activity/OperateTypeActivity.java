@@ -38,6 +38,8 @@ public class OperateTypeActivity extends AppCompatActivity {
 
     private void initAdapter() {
         list = new ArrayList<>();
+        list.add("卖点\n    小趋势：三小阴线或一大阴线\n    大趋势：跌破boll中线");
+        list.add("   ");
         list.add("大阳夹小阴阳线做多\n    头尾是大阳线并有交集，中间多根小阴阳线");
         list.add("10日均线做多\n    回踩支撑线做多，量能缩小\n    阳线上穿5日均线和10日均线");
         list.add("破轨回踩做多\n    突破布林中轨后，回调并受到中轨支撑");
