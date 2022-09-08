@@ -44,6 +44,8 @@
         <activity android:name=".data_transfer.activity.SendDeviceActivity" />
 
         <activity android:name=".activity.OperateTypeActivity" />
+
+        <service android:name=".service.TimerService" />
     </application>
 
 </manifest>

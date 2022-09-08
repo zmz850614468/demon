@@ -7,21 +7,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.demon.fit.R;
 import com.demon.fit.adapter.ItemAdapter;
 import com.demon.fit.bean.ItemBean;
+import com.demon.fit.control.SoundControl;
 import com.demon.fit.data_transfer.activity.DataTransferActivity;
+import com.demon.fit.service.TimerService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.tv_time)
+    public TextView tvTime;
     @BindView(R.id.rv_item)
     protected RecyclerView recycler;
     private ItemAdapter adapter;
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        SoundControl.getInstance(this).initData();
         initAdapter();
 
 //        Intent intent = new Intent(MainActivity.this, OperateActivity.class);
@@ -109,5 +116,19 @@ public class MainActivity extends AppCompatActivity {
     public void onLongClicked(View v) {
         Intent intent = new Intent(this, DataTransferActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_time)
+    public void onClicked(View v) {
+        String content = tvTime.getText().toString();
+        if ("未计时".equals(content)) {
+            tvTime.setText("计时中");
+            Intent intent = new Intent(this, TimerService.class);
+            startService(intent);
+        } else {
+            tvTime.setText("未计时");
+            Intent intent = new Intent(this, TimerService.class);
+            startService(intent);
+        }
     }
 }

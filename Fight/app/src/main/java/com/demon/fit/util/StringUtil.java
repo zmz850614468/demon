@@ -20,6 +20,15 @@ public class StringUtil {
     }
 
     /**
+     * @return 获取系统时间格式："MM"
+     */
+    public static String getHouse() {
+        SimpleDateFormat format = new SimpleDateFormat("MM");
+        Date date = new Date(System.currentTimeMillis());
+        return format.format(date);
+    }
+
+    /**
      * @return 获取系统时间格式："yyyy-MM-dd"
      */
     public static String getDay() {
@@ -63,4 +72,5 @@ public class StringUtil {
         calendar.setTimeInMillis(time);
         return getDate(calendar.getTime());
     }
+
 }
