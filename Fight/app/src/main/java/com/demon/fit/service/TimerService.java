@@ -89,19 +89,19 @@ public class TimerService extends Service {
 
             while (isContinue) {
                 house = Integer.parseInt(StringUtil.getHouse());
-                if (house >= 21) {  // 只有晚上才做提示
+//                if (house >= 21) {  // 只有晚上才做提示
                     curTime = System.currentTimeMillis();
                     curTime /= 1000;
-                    if (curTime % 300 >= 270) {
+                    if (curTime % 300 >= 240) {
                         if (!isTip) {
                             isTip = true;
-                            showLog("还剩30秒钟");
+                            showLog("还剩60秒钟");
                             SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 2);
                         }
                     } else {
                         isTip = false;
                     }
-                }
+//                }
 
 //                showLog("运行：" + house + " - " + curTime % 300);
                 try {

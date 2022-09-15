@@ -6,15 +6,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="21sp"
-        android:gravity="center"
         android:background="@drawable/shape_box_white"
-        android:text="经典语录"/>
+        android:gravity="center"
+        android:text="操作类型"
+        android:textSize="21sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_jing_dian"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
 
 </RelativeLayout>
