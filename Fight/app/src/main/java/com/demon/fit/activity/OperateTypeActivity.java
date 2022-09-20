@@ -44,7 +44,8 @@ public class OperateTypeActivity extends AppCompatActivity {
         list.add("10日均线做多\n    回踩支撑线做多，量能缩小\n    阳线上穿5日均线和10日均线\n\n买点：交易量放大，大阳线，5分K线趋势向上");
         list.add("破轨回踩做多\n    突破布林中轨后，回调并受到中轨支撑\n\n买点：交易量放大，大阳线，5分K线趋势向上");
         list.add("   ");
-        list.add("大阴线做空(模拟仓测试)\n    前期一波上涨，突然一根大阴线\n\n买点：大阴线并跌破bool中线，伴随交易量放量");
+        list.add("大阴线做空-(模拟仓测试)\n    前期一波上涨，突然一根大阴线\n\n买点：大阴线并跌破bool中线，伴随交易量放量");
+        list.add("中大阴线破支撑位-(模拟仓测试)\n    中阴线或大阴线，秃头阴或小头阴\n    刚跌破支撑位或欲跌破支撑位\n    5分K线也是下跌趋势\n卖点：一个小时内");
         list.add("二次探底做多\n    第二次探底回调，并得到布林中轨支撑");
 
 
@@ -63,3 +64,33 @@ public class OperateTypeActivity extends AppCompatActivity {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

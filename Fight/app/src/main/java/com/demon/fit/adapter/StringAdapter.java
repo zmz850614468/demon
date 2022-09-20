@@ -47,11 +47,11 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringHold
         holder.tvOrder.setText((i+1) + "");
         holder.tvContent.setText(bean);
 
-        if (i % 2 == 0) {
-            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
-        } else {
+//        if (i % 2 == 0) {
+//            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
+//        } else {
             holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
-        }
+//        }
     }
 
     @Override
