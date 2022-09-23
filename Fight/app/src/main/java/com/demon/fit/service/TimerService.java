@@ -12,15 +12,32 @@ import com.demon.fit.R;
 import com.demon.fit.control.SoundControl;
 import com.demon.fit.util.StringUtil;
 
+import java.util.ArrayList;
+
 public class TimerService extends Service {
 
     //    private Timer timer;
     private static TimerThread timerThread;
+    private ArrayList<String> tipList;  // 整点提醒时间
 
     @Override
     public void onCreate() {
         showLog("onCreate");
         super.onCreate();
+
+        initData();
+    }
+
+    private void initData() {
+        tipList = new ArrayList<>();
+        tipList.add("09:58");
+//        tipList.add("09:59");
+        tipList.add("11:13");
+//        tipList.add("11:14");
+        tipList.add("14:13");
+//        tipList.add("14:14");
+        tipList.add("14:58");
+//        tipList.add("14:59");
     }
 
     @Nullable
@@ -82,25 +99,45 @@ public class TimerService extends Service {
         private boolean isContinue = true;
         long curTime = 0;
         boolean isTip = false;
-        int house;
+        private String dayTime;
 
         @Override
         public void run() {
 
             while (isContinue) {
-                house = Integer.parseInt(StringUtil.getHouse());
-//                if (house >= 21) {  // 只有晚上才做提示
-                    curTime = System.currentTimeMillis();
-                    curTime /= 1000;
-                    if (curTime % 300 >= 240) {
-                        if (!isTip) {
-                            isTip = true;
-                            showLog("还剩60秒钟");
-                            SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 2);
-                        }
-                    } else {
-                        isTip = false;
+                curTime = System.currentTimeMillis();
+                curTime /= 1000;
+                dayTime = StringUtil.getDayTime();
+                if (tipList.contains(dayTime)) {
+                    if (!isTip) {
+                        isTip = true;
+                        showLog("整点提示");
+                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 4, 1.5f);
                     }
+                } else if ("10:18".equals(dayTime) || "10:23".equals(dayTime)) { // 休息时间，不做提示
+                    if (!isTip) {
+                        isTip = true;
+                    }
+                } else if (curTime % 300 >= 240) {  // 其他5分K线结束前一分钟提示
+                    if (!isTip) {
+                        isTip = true;
+                        showLog("还剩60秒钟");
+                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 1);
+                    }
+                } else {
+                    isTip = false;
+                }
+
+//                curTime = System.currentTimeMillis();
+//                curTime /= 1000;
+//                if (curTime % 300 >= 240) {
+//                    if (!isTip) {
+//                        isTip = true;
+//                        showLog("还剩60秒钟");
+//                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 1);
+//                    }
+//                } else {
+//                    isTip = false;
 //                }
 
 //                showLog("运行：" + house + " - " + curTime % 300);
@@ -119,7 +156,6 @@ public class TimerService extends Service {
 
     }
 
-    ;
 
     private void showLog(String msg) {
         Log.e("TimerService", msg);

@@ -20,10 +20,10 @@ public class StringUtil {
     }
 
     /**
-     * @return 获取系统时间格式："MM"
+     * @return 获取系统时间格式："HH:mm"
      */
-    public static String getHouse() {
-        SimpleDateFormat format = new SimpleDateFormat("MM");
+    public static String getDayTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date date = new Date(System.currentTimeMillis());
         return format.format(date);
     }

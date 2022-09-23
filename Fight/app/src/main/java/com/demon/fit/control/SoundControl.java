@@ -75,6 +75,18 @@ public class SoundControl {
     }
 
     /**
+     * 播放声音
+     *
+     * @param rawId
+     */
+    public void play(int rawId, int times, float rate) {
+        if (soundIdMap.containsKey(new Integer(rawId))) {
+            int soundId = soundIdMap.get(new Integer(rawId));
+            soundPool.play(soundId, 1, 1, 0, times, rate);
+        }
+    }
+
+    /**
      * 停止音效播放
      *
      * @param rawId
