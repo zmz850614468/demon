@@ -40,15 +40,28 @@ public class CompareOperateResultActivity extends AppCompatActivity {
 
     private List<CompareResultBean> compareList;
 
+    private List<String> showList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compare_operate_result);
         ButterKnife.bind(this);
 
+        initShowList();
         initAdapterData();
         initAdapter();
         updateOrder();
+    }
+
+    private void initShowList() {
+        showList = new ArrayList<>();
+        showList.add("菜油");
+        showList.add("豆油");
+        showList.add("螺纹钢");
+        showList.add("聚氯乙烯");
+        showList.add("燃油");
+        showList.add("乙二醇");
     }
 
     private void initAdapter() {
@@ -71,6 +84,10 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         List<OperateTodayBean> list = DBControl.quaryAll(this, OperateTodayBean.class);
         Map<String, CompareResultBean> map = new HashMap<>();
         for (OperateTodayBean bean : list) {
+            if (!showList.contains(bean.name)) {
+                continue;
+            }
+
             if (!map.containsKey(bean.name)) {
                 map.put(bean.name, new CompareResultBean(bean.name));
             }

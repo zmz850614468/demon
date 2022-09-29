@@ -31,13 +31,11 @@ public class TimerService extends Service {
     private void initData() {
         tipList = new ArrayList<>();
         tipList.add("09:58");
-//        tipList.add("09:59");
         tipList.add("11:13");
-//        tipList.add("11:14");
         tipList.add("14:13");
-//        tipList.add("14:14");
         tipList.add("14:58");
-//        tipList.add("14:59");
+        tipList.add("21:58");
+        tipList.add("22:58");
     }
 
     @Nullable
@@ -112,7 +110,7 @@ public class TimerService extends Service {
                     if (!isTip) {
                         isTip = true;
                         showLog("整点提示");
-                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 4, 1.5f);
+                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 4, 1.2f);
                     }
                 } else if ("10:18".equals(dayTime) || "10:23".equals(dayTime)) { // 休息时间，不做提示
                     if (!isTip) {
@@ -122,7 +120,7 @@ public class TimerService extends Service {
                     if (!isTip) {
                         isTip = true;
                         showLog("还剩60秒钟");
-                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 1);
+                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 2);
                     }
                 } else {
                     isTip = false;
