@@ -128,7 +128,7 @@ public class AddNewResultActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_refresh_ui)
     public void onRefreshUiClicked(View v) {
-        layoutResult.setVisibility(View.GONE);
+//        layoutResult.setVisibility(View.GONE);
 //        showLog(new Gson().toJson(operate_todayList));
         while (operate_todayList.size() > 1) {
             int index = operate_todayList.size() - 1;
@@ -148,7 +148,8 @@ public class AddNewResultActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_calculate)
     public void onCalculateClicked(View v) {
-        layoutResult.setVisibility(View.VISIBLE);
+        onRefreshUiClicked(null);
+//        layoutResult.setVisibility(View.VISIBLE);
 
         int totalResult = 0;
         int posCount = 0;

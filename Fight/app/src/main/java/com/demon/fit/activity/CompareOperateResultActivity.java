@@ -2,6 +2,7 @@ package com.demon.fit.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,7 +40,6 @@ public class CompareOperateResultActivity extends AppCompatActivity {
     private CompareOperateResultAdapter compareAdapter;
 
     private List<CompareResultBean> compareList;
-
     private List<String> showList;
 
     @Override
@@ -58,10 +58,12 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         showList = new ArrayList<>();
         showList.add("菜油");
         showList.add("豆油");
+        showList.add("棕榈油");
         showList.add("螺纹钢");
         showList.add("聚氯乙烯");
-        showList.add("燃油");
-        showList.add("乙二醇");
+//        showList.add("燃油");
+//        showList.add("乙二醇");
+//        showList.add("石油沥青");
     }
 
     private void initAdapter() {
@@ -71,11 +73,13 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         compareRecycler.setLayoutManager(manager);
         compareRecycler.setAdapter(compareAdapter);
 
-        compareAdapter.setListener(bean -> {
-            Intent intent = new Intent(this, AnalyzeOperateResultActivity.class);
-            intent.putExtra(AnalyzeOperateResultActivity.SELECTED_TYPE, bean.name);
-            startActivity(intent);
-        });
+//        compareAdapter.setListener(bean -> {
+//            Intent intent = new Intent(this, AnalyzeOperateResultActivity.class);
+//            intent.putExtra(AnalyzeOperateResultActivity.SELECTED_TYPE, bean.name);
+//            startActivity(intent);
+//        });
+
+        showLog("size=" + compareList.size());
     }
 
     private void initAdapterData() {
@@ -173,4 +177,7 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         compareAdapter.notifyDataSetChanged();
     }
 
+    private void showLog(String msg) {
+        Log.e("compare", msg);
+    }
 }

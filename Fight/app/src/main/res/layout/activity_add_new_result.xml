@@ -181,7 +181,8 @@
             android:background="@drawable/shape_box_white"
             android:gravity="center"
             android:text="+/-项"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/bt_calculate"

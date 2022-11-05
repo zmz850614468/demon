@@ -193,8 +193,10 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
                 DBControl.createOrUpdate(this, OperateTodayBean.class, new Gson().fromJson(msg, OperateTodayBean.class));
                 break;
             case SocketConfig.MSG_RESULT_BEAN:
+                showLog("数据包 - " + msgType + " - " + msg);
                 resultBeanReceiverCount++;
-                DBControl.createOrUpdate(this, OperateTodayBean.class, new Gson().fromJson(msg, OperateResultBean.class));
+
+                DBControl.createOrUpdate(this, OperateResultBean.class, new Gson().fromJson(msg, OperateResultBean.class));
                 break;
         }
     }
@@ -207,6 +209,8 @@ public class ReceiverDeviceActivity extends AppCompatActivity {
             if (todayBeanTotal != todayBeanReceiverCount || resultBeanTotal != resultBeanReceiverCount) {
                 refreshUiHandler.sendEmptyMessageDelayed(1, 500);
             } else {
+                int count = DBControl.quaryAll(ReceiverDeviceActivity.this, OperateResultBean.class).size();
+                showLog("接收到数量:" + count);
                 showToast("全部数据接收完成");
             }
             return true;

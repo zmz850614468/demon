@@ -52,9 +52,9 @@ public class CompareOperateResultAdapter extends RecyclerView.Adapter<CompareOpe
         holder.tvNegCount.setText("亏/次:" + bean.negCount);
         holder.tvOperateCount.setText("总/次:" + bean.totalCount);
         holder.tvBadCount.setText("糟糕/次:" + bean.badCount);
-        holder.tvOperateResult.setText("操作结果:" + bean.result);
+        holder.tvOperateResult.setText("结果:" + bean.result);
         holder.tvBadPercent.setText(String.format("糟糕占比:%.2f", bean.badPercent) + "%");
-        holder.tvPercent.setText(String.format("操作胜率:%.2f", bean.percent) + "%");
+        holder.tvPercent.setText(String.format("胜率:%.2f", bean.percent) + "%");
 
         if (listener != null) {
             holder.itemView.setOnClickListener(v -> {

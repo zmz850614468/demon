@@ -103,7 +103,7 @@ public class CalculateActivity extends AppCompatActivity {
         sbFl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvFl.setText((1 + progress / 100.0f) + "");
+                tvFl.setText(String.format("%.2f", (1 + progress * 2 / 100.0f)));
                 calculate();
             }
 
