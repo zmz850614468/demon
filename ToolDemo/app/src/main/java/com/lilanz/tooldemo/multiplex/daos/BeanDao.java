@@ -180,6 +180,53 @@ public class BeanDao<T> {
         return list == null ? new ArrayList<T>() : list;
     }
 
+    // 按条件查询
+    public List<T> queryLikeForList(String key, Object value) {
+        List<T> list = null;
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                Where<T, Integer> where = dao.queryBuilder().where();
+                where.like(key, value);
+                list = where.query();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list == null ? new ArrayList<T>() : list;
+    }
+
+    /**
+     * 按条件查询
+     */
+    public List<T> queryLikeForList(Map<String, Object> eqMap, Map<String, Object> likeMap) {
+        List<T> list = null;
+        try {
+            synchronized (OrmLiteHelter.DATA_LOCK) {
+                Where<T, Integer> where = dao.queryBuilder().where();
+                if (eqMap != null) {
+                    int index = 0;
+                    for (Map.Entry<String, Object> entry : eqMap.entrySet()) {
+                        if (index == 0) {
+                            where = where.eq(entry.getKey(), entry.getValue());
+                        } else {
+                            where = where.and().eq(entry.getKey(), entry.getValue());
+                        }
+                        index++;
+                    }
+                }
+                if (likeMap != null) {
+                    for (Map.Entry<String, Object> entry : likeMap.entrySet()) {
+                        where.like(entry.getKey(), entry.getValue());
+                    }
+                }
+                list = where.query();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list == null ? new ArrayList<T>() : list;
+    }
+
     /**
      * @param columnName
      * @return

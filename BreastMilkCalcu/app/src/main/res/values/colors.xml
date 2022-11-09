@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  start:常用颜色定义  -->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#E9ECF0</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0033</color>
+    <color name="deepRed">#CC0033</color>
+    <color name="pink">#FF33CC</color>
+    <color name="purple">#CC00FF</color>
+    <color name="deepPurple">#9900CC</color>
+    <color name="blue">#00CCFF</color>
+    <color name="deepBlue">#3300CC</color>
+    <color name="yellow">#FFFF33</color>
+    <color name="deepYellow">#FF9933</color>
+    <color name="green">#00CC99</color>
+    <color name="lightGreen">#33FF33</color>
+    <color name="deepGreen">#006600</color>
+    <!--   end:常用颜色值    -->
+
+
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+</resources>

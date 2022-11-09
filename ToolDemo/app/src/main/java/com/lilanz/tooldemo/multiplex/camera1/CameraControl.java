@@ -213,6 +213,11 @@ public class CameraControl {
                 public void onPictureTaken(byte[] data, Camera camera) {
                     camera.startPreview();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    if (cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                        bitmap = BitmapUtil.rotate(bitmap, 270);
+                    } else {
+                        bitmap = BitmapUtil.rotate(bitmap, 90);
+                    }
                     if (cameraListener != null) {
                         cameraListener.onPictureBack(bitmap);
                     }

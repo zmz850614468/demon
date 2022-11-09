@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.demon.cameratest.bean.VModel" />
+
+        <import type="com.demon.cameratest.adapter.StrAdapter" />
+
+        <import type="com.demon.cameratest.bean.MainBean" />
+
+        <variable
+            name="vm"
+            type="VModel" />
+
+        <variable
+            name="mainBean"
+            type="MainBean" />
+
+        <variable
+            name="adapter"
+            type="StrAdapter" />
+
+        <variable
+            name="msg"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{mainBean.msg}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_str"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_msg"
+            app:setAdapter="@{mainBean.strAdapter}" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="onTest"
+            android:text="测试" />
+
+    </RelativeLayout>
+</layout>
+
