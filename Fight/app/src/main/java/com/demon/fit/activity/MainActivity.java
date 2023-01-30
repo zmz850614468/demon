@@ -96,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, CostActivity.class);
                     startActivity(intent);
                     break;
-                case "执行结果":
-                    intent = new Intent(MainActivity.this, OperateResultActivity.class);
+                case "操作类型":
+                    intent = new Intent(MainActivity.this, OperateTypeActivity.class);
                     startActivity(intent);
                     break;
                 case "操作结果分析":
                     intent = new Intent(MainActivity.this, CompareOperateResultActivity.class);
                     startActivity(intent);
                     break;
-                case "操作类型":
-                    intent = new Intent(MainActivity.this, OperateTypeActivity.class);
+                case "执行结果":
+                    intent = new Intent(MainActivity.this, OperateResultActivity.class);
                     startActivity(intent);
                     break;
             }

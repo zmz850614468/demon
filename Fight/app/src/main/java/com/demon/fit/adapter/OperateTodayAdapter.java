@@ -98,7 +98,7 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
             }
         });
         holder.tvPrice.setOnClickListener(v -> {
-            bean.price -= 5;
+            bean.price -= 10;
             if (bean.price <= 0) {
                 bean.price = 20;
             }
@@ -148,6 +148,12 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
         holder.tvPrice.setText(bean.price + "");
         holder.etInPrice.setText(bean.inPrice + "");
         holder.etOutPrice.setText(bean.outPrice + "");
+        holder.tvResult.setText(bean.result == 0 || bean.outPrice == 0 ? "" : bean.result + "");
+        if (bean.result > 0) {
+            holder.tvResult.setTextColor(context.getResources().getColor(R.color.red));
+        } else {
+            holder.tvResult.setTextColor(context.getResources().getColor(R.color.green));
+        }
 
         if (bean.isBadOperate) {
             holder.itemView.setBackgroundResource(R.drawable.shape_box_green);
@@ -190,6 +196,8 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
         EditText etInPrice;
         @BindView(R.id.et_out_price)
         EditText etOutPrice;
+        @BindView(R.id.tv_result)
+        TextView tvResult;
 
         TextWatcher nameWatchListener;
         TextWatcher inPriceListener;

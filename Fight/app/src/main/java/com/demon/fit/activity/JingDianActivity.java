@@ -43,7 +43,9 @@ public class JingDianActivity extends AppCompatActivity {
         list.add("要遵守交易规则。\n    只做看的懂的行情");
         list.add("不要带着情绪交易。\n    杠杆作用，容不得半点冲动");
         list.add("接受止损是期货交易必须支付的成本。");
-
+        list.add("-");
+        list.add("量化操作比主观操作更优秀。");
+        list.add("严格遵守策略，执行操作。");
 //        list.add("强制压下躁动的心，无需任何理由");
 //        list.add("控制好自己的手，不要做计划外的操作");
 //        list.add("强制执行以上两点，不然以后内心压力会越来越大");
@@ -64,12 +66,32 @@ public class JingDianActivity extends AppCompatActivity {
         recycler.setLayoutManager(manager);
         recycler.setAdapter(adapter);
 
-        adapter.setListener(new StringAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(String bean) {
+        adapter.setListener(bean -> {
 
-            }
         });
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

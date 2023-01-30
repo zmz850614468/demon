@@ -123,7 +123,9 @@ public class OperateResultUi {
             resultBean.percent = resultBean.posCount * 100.0f / resultBean.totalCount;
             resultBean.totalResult = resultBean.operateResult - resultBean.poundage;
         }
+
         resultAdapter.notifyDataSetChanged();
+
     }
 
     /**

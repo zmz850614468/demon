@@ -59,8 +59,8 @@ public class CompareOperateResultActivity extends AppCompatActivity {
         showList.add("菜油");
         showList.add("豆油");
         showList.add("棕榈油");
-        showList.add("螺纹钢");
-        showList.add("聚氯乙烯");
+//        showList.add("螺纹钢");
+//        showList.add("聚氯乙烯");
 //        showList.add("燃油");
 //        showList.add("乙二醇");
 //        showList.add("石油沥青");
