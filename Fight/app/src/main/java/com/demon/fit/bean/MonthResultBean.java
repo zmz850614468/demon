@@ -13,5 +13,6 @@ public class MonthResultBean {
     public float percent;
     public int totalResult;
     public int month;
+    public int year;
 
 }

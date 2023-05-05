@@ -100,7 +100,7 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
         holder.tvPrice.setOnClickListener(v -> {
             bean.price -= 10;
             if (bean.price <= 0) {
-                bean.price = 20;
+                bean.price = 30;
             }
             holder.tvPrice.setText(bean.price + "");
         });

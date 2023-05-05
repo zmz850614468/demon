@@ -57,8 +57,8 @@ public class CompareOperateResultActivity extends AppCompatActivity {
     private void initShowList() {
         showList = new ArrayList<>();
         showList.add("菜油");
-        showList.add("豆油");
         showList.add("棕榈油");
+//        showList.add("豆油");
 //        showList.add("螺纹钢");
 //        showList.add("聚氯乙烯");
 //        showList.add("燃油");

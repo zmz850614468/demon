@@ -7,10 +7,12 @@
 
 #include <stdlib.h>
 #include <opencv/cv.hpp>
-#include <opencv2/imgproc.hpp>
+//#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include <android/bitmap.h>
 #include <map>
 #include <string>
@@ -18,9 +20,13 @@
 #include <stdio.h>
 #include <sstream>
 #include "bitmap_util.h"
+//#include <codecvt>
+#include <locale>
 
 #define TAG    "jni-log" // 这个是自定义的LOG的标识
-#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,TAG,__VA_ARGS__) // 定义LOGD类型
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__);
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__);
 
 #define ASSERT(status, ret)     if (!(status)) { return ret; }
 #define ASSERT_FALSE(status)    ASSERT(status, false)
@@ -44,6 +50,86 @@
 
 #define MIN_VALID_COUNT 40  // 最小有效个数
 #define MAX_VALID_COUNT 100  // 最大有效个数
+
+//static std::string UTF16StringToUTF8String(const char16_t *chars, size_t len) {
+//    std::u16string u16_string(chars, len);
+//    return std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}
+//            .to_bytes(u16_string);
+//}
+//
+//std::string JavaStringToString(JNIEnv *env, jstring str) {
+//    if (env == nullptr || str == nullptr) {
+//        return "";
+//    }
+//    const jchar *chars = env->GetStringChars(str, NULL);
+//    if (chars == nullptr) {
+//        return "";
+//    }
+//    std::string u8_string = UTF16StringToUTF8String(
+//            reinterpret_cast<const char16_t *>(chars), env->GetStringLength(str));
+//    env->ReleaseStringChars(str, chars);
+//    return u8_string;
+//}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_video2pic(JNIEnv *env, jclass clazz,
+                                                                  jstring file) {
+
+
+    const char *c_str = NULL;
+    char buff[128] = {0};
+
+    c_str = env->GetStringUTFChars(file, NULL);
+
+    std::string path(c_str);
+    cv::VideoCapture capture(path);
+    bool  b = capture.open(path);
+    LOGE("打开文件：%d", b);
+
+    //检查视频是否成功打开
+//    if(!capture.isOpened())
+//    {
+//        return -1;
+//    }
+
+    //获取帧率、帧数
+    double rate = capture.get(CV_CAP_PROP_FPS);
+    long totalFramenumber = (long) capture.get(CV_CAP_PROP_FRAME_COUNT);
+//    cout<<"视频的帧数为："<<totalFramenumber<<endl;
+//    cout<<"视频的帧率为："<<rate<<endl;
+    cv::Mat frame;//当前视频帧
+    int count = 1;
+    std::string imagepath;
+    std::string pathtemp;
+    std::string temp;
+    int m = path.find_last_of('/');
+    pathtemp.assign(path, 0, (m + 1));
+    LOGE("%s -- %ld  -- %f", pathtemp.c_str(), totalFramenumber, rate);
+    while (true) {
+        if (!capture.read(frame))
+            break;
+//        if (count < 10) {
+//            imagepath = pathtemp + "image0000" + temp + ".jpg";
+//            cv::imwrite(imagepath, frame);
+//        } else if (count < 100) {
+//            imagepath = pathtemp + "image000" + temp + ".jpg";
+//            cv::imwrite(imagepath, frame);
+//        } else if (count < 1000) {
+//            imagepath = pathtemp + "image00" + temp + ".jpg";
+//            cv::imwrite(imagepath, frame);
+//        } else if (count < 10000) {
+//            imagepath = pathtemp + "image0" + temp + ".jpg";
+//            cv::imwrite(imagepath, frame);
+//        } else if (count < 100000) {
+//            imagepath = pathtemp + "image" + temp + ".jpg";
+//            cv::imwrite(imagepath, frame);
+//        }
+        LOGE("%s", imagepath.c_str());
+    }
+    LOGE("完成");
+    capture.release();
+    return file;
+}
 
 /**
  * Agv小车图片处理
@@ -289,111 +375,111 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_demon_opencvbase_jni_1opencv_jni_AgvDealNative_bitmapTest(JNIEnv *env, jclass clazz,
                                                                    jobject bitmap,
                                                                    jobject des_bitmap) {
-    // 保留的灰度值区间
-//    uchar minGray = 27;
-//    uchar maxGray = 67;
-
-    // 灯光比较亮时
-    uchar minGray = 53;
-    uchar maxGray = 108;
-
-    int maxWhiteCount = 5;  // 最大无效点个数
-    int blackCount = 0;
-    int whiteCount = 0;     // 连续白色点
-
-    cv::Mat rgb = bitmap2Mat(env, bitmap);
-    cv::Mat des = bitmap2Mat(env, des_bitmap);
-
-    cv::cvtColor(rgb, des, CV_BGRA2GRAY);   // 灰度处理
-
-
-    std::map<int, int> grayMap;
-    for (int i = 0; i < des.rows; ++i) {
-        for (int j = 0; j < des.cols; ++j) {
-            uchar &ch = des.at<uchar>(i, j);
-            grayMap[ch]++;
-        }
-    }
-
-    int centerArr[320][2];        // 每行的有效数据:[中点下标][有效个数]
-
-    for (int i = 0; i < des.rows; ++i) {
-        blackCount = 0;
-        whiteCount = 0;
-        centerArr[i][0] = 0;
-        centerArr[i][1] = 0;
-        for (int j = 0; j < des.cols; ++j) {
-            uchar &ch = des.at<uchar>(i, j);
-            if (ch >= minGray && ch <= maxGray) {
-                ch = 0;     // 保留想要的点
-
-                blackCount++;
-                if (whiteCount > 0) {   // 少量无效点，也添加为有效点
-                    blackCount += whiteCount;
-                    whiteCount = 0;
-                }
-
-            } else {
-                ch = 0;
-//                ch = 255;
-                if (blackCount > 0) {   // 开始记录有效点后，才开始记录白点
-                    whiteCount++;
-                    if (whiteCount > maxWhiteCount) {           // 开始计算有效点个数是否有效,并重新开始计算
-                        if (blackCount >= MIN_VALID_COUNT) {       // 有效情况
-                            if (blackCount >= MAX_VALID_COUNT) {   // 数据个数过多则不是有效个数
-                                break;
-                            }
-                            int centerIndex = j - whiteCount - (blackCount / 2);    // 中心点位置
-                            des.at<uchar>(i, centerIndex) = 255;
-                            centerArr[i][0] = centerIndex;
-                            centerArr[i][1] = blackCount;
-                            break;
-                        }
-
-                        blackCount = 0;
-                        whiteCount = 0;
-                    }
-                }
-            }
-        }
-    }
-
-    // 求直线两个点，并绘制直线
-    LinePoint linePoint = calculateLine(centerArr, des.rows, des.cols);
-    if (linePoint.x1 == linePoint.x2 && linePoint.y1 == linePoint.y2) {
-        std::string str = "not result";
-        rgb.release();
-        des.release();
-        return env->NewStringUTF(str.c_str());
-    }
-
-    cv::Scalar scalar(255, 0, 0, 255);
-    cv::line(rgb, cv::Point(linePoint.x1, linePoint.y1), cv::Point(linePoint.x2, linePoint.y2),
-             scalar);
-
-    // 计算过中心点 的 垂点
-    int centerX = des.cols / 2;
-    int centerY = des.rows / 2;
-    double x1 = linePoint.x1 - centerX;
-    double y1 = centerY - linePoint.y1;
-    double x2 = linePoint.x2 - centerX;
-    double y2 = centerY - linePoint.y2;
-    double k1 = (y2 - y1) / (x2 - x1);
-    double x = (k1 * k1 * x1 + k1 * (-y1)) / (k1 * k1 + 1);
-    double y = k1 * (x - x1) + y1;
-
-    int pointX = static_cast<int>(x + centerX);
-    int pointY = static_cast<int>(-y + centerY);
-    // 绘制垂点
-    cv::circle(rgb, cv::Point(pointX, pointY), 5, scalar);
-
-    mat2Bitmap(env, des, des_bitmap);
-    rgb.release();
-    des.release();
-
-    std::string str =
-            std::to_string(static_cast<int>(x)) + "&" + std::to_string(static_cast<int>(y));
-    return env->NewStringUTF(str.c_str());
+//    // 保留的灰度值区间
+////    uchar minGray = 27;
+////    uchar maxGray = 67;
+//
+//    // 灯光比较亮时
+//    uchar minGray = 53;
+//    uchar maxGray = 108;
+//
+//    int maxWhiteCount = 5;  // 最大无效点个数
+//    int blackCount = 0;
+//    int whiteCount = 0;     // 连续白色点
+//
+//    cv::Mat rgb = bitmap2Mat(env, bitmap);
+//    cv::Mat des = bitmap2Mat(env, des_bitmap);
+//
+//    cv::cvtColor(rgb, des, CV_BGRA2GRAY);   // 灰度处理
+//
+//
+//    std::map<int, int> grayMap;
+//    for (int i = 0; i < des.rows; ++i) {
+//        for (int j = 0; j < des.cols; ++j) {
+//            uchar &ch = des.at<uchar>(i, j);
+//            grayMap[ch]++;
+//        }
+//    }
+//
+//    int centerArr[320][2];        // 每行的有效数据:[中点下标][有效个数]
+//
+//    for (int i = 0; i < des.rows; ++i) {
+//        blackCount = 0;
+//        whiteCount = 0;
+//        centerArr[i][0] = 0;
+//        centerArr[i][1] = 0;
+//        for (int j = 0; j < des.cols; ++j) {
+//            uchar &ch = des.at<uchar>(i, j);
+//            if (ch >= minGray && ch <= maxGray) {
+//                ch = 0;     // 保留想要的点
+//
+//                blackCount++;
+//                if (whiteCount > 0) {   // 少量无效点，也添加为有效点
+//                    blackCount += whiteCount;
+//                    whiteCount = 0;
+//                }
+//
+//            } else {
+//                ch = 0;
+////                ch = 255;
+//                if (blackCount > 0) {   // 开始记录有效点后，才开始记录白点
+//                    whiteCount++;
+//                    if (whiteCount > maxWhiteCount) {           // 开始计算有效点个数是否有效,并重新开始计算
+//                        if (blackCount >= MIN_VALID_COUNT) {       // 有效情况
+//                            if (blackCount >= MAX_VALID_COUNT) {   // 数据个数过多则不是有效个数
+//                                break;
+//                            }
+//                            int centerIndex = j - whiteCount - (blackCount / 2);    // 中心点位置
+//                            des.at<uchar>(i, centerIndex) = 255;
+//                            centerArr[i][0] = centerIndex;
+//                            centerArr[i][1] = blackCount;
+//                            break;
+//                        }
+//
+//                        blackCount = 0;
+//                        whiteCount = 0;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    // 求直线两个点，并绘制直线
+//    LinePoint linePoint = calculateLine(centerArr, des.rows, des.cols);
+//    if (linePoint.x1 == linePoint.x2 && linePoint.y1 == linePoint.y2) {
+//        std::string str = "not result";
+//        rgb.release();
+//        des.release();
+//        return env->NewStringUTF(str.c_str());
+//    }
+//
+//    cv::Scalar scalar(255, 0, 0, 255);
+//    cv::line(rgb, cv::Point(linePoint.x1, linePoint.y1), cv::Point(linePoint.x2, linePoint.y2),
+//             scalar);
+//
+//    // 计算过中心点 的 垂点
+//    int centerX = des.cols / 2;
+//    int centerY = des.rows / 2;
+//    double x1 = linePoint.x1 - centerX;
+//    double y1 = centerY - linePoint.y1;
+//    double x2 = linePoint.x2 - centerX;
+//    double y2 = centerY - linePoint.y2;
+//    double k1 = (y2 - y1) / (x2 - x1);
+//    double x = (k1 * k1 * x1 + k1 * (-y1)) / (k1 * k1 + 1);
+//    double y = k1 * (x - x1) + y1;
+//
+//    int pointX = static_cast<int>(x + centerX);
+//    int pointY = static_cast<int>(-y + centerY);
+//    // 绘制垂点
+//    cv::circle(rgb, cv::Point(pointX, pointY), 5, scalar);
+//
+//    mat2Bitmap(env, des, des_bitmap);
+//    rgb.release();
+//    des.release();
+//
+//    std::string str =
+//            std::to_string(static_cast<int>(x)) + "&" + std::to_string(static_cast<int>(y));
+    return env->NewStringUTF("");
 }
 
 // ===============================================================================

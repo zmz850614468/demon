@@ -10,11 +10,11 @@ import com.j256.ormlite.table.DatabaseTable;
 public class OperateTodayBean {
 
     public OperateTodayBean() {
-        inType = "买入";
-        price = 10;
-        isFollow = false;
-        isBadOperate = false;
-    }
+    inType = "买入";
+    price = 20;
+    isFollow = false;
+    isBadOperate = false;
+}
 
     @DatabaseField(columnName = "id", generatedId = true)
     public int id;
@@ -37,7 +37,6 @@ public class OperateTodayBean {
 
     /**
      * 参数类型
-     * 5
      * 10   默认参数
      * 15
      * 20

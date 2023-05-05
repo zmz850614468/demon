@@ -50,7 +50,7 @@ public class TTSControl implements TextToSpeech.OnInitListener {
      *
      * @param voice
      */
-    private void playVoice(String voice) {
+    public void playVoice(String voice) {
         engine.speak(voice, TextToSpeech.QUEUE_FLUSH, null, "play_voice");
     }
 

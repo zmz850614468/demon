@@ -21,5 +21,5 @@ public class AgvDealNative {
      */
     public static native String bitmapTest(Bitmap bitmap, Bitmap desBitmap);
 
-
+    public static native String video2pic(String file);
 }

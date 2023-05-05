@@ -118,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.tv_transfer_data)
+    public void onAddClicked(View v) {
+        Intent intent = new Intent(this, AddNewResultActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.tv_time)
     public void onClicked(View v) {
         String content = tvTime.getText().toString();

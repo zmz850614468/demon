@@ -15,14 +15,14 @@
         android:textSize="21sp" />
 
     <TextView
-        android:id="@+id/bt_add"
+        android:id="@+id/tv_add"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="+"
+        android:text="月"
         android:textSize="25sp" />
 
     <TextView

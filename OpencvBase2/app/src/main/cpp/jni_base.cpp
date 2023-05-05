@@ -85,26 +85,26 @@ void jniBase() {
 void baseTypeTo(JNIEnv *env) {
     double x = 0.1f;
     double y = 0.2f;
-
-    // 引用类型 必须初始化且无法修改
-    double &xx = x;
-
-    // 转 整形
-    static_cast<int>(x);
-
-    // 转 字符串 ; 字符串拼接
-    string strX = to_string(x);
-    string strY = to_string(y);
-    string str = strX + strY + "end"; // 字符串 + 字符
-
-    // 字符串 转 jstring
-    env->NewStringUTF(str.c_str());
-
-    // 保留小数位数
-    ostringstream oss;
-    oss << setprecision(2) << x << "&";
-    oss << setprecision(2) << y;
-    oss.str().c_str();
+//
+//    // 引用类型 必须初始化且无法修改
+//    double &xx = x;
+//
+//    // 转 整形
+//    static_cast<int>(x);
+//
+//    // 转 字符串 ; 字符串拼接
+//    string strX = to_string(x);
+//    string strY = to_string(y);
+//    string str = strX + strY + "end"; // 字符串 + 字符
+//
+//    // 字符串 转 jstring
+//    env->NewStringUTF(str.c_str());
+//
+//    // 保留小数位数
+//    ostringstream oss;
+//    oss << setprecision(2) << x << "&";
+//    oss << setprecision(2) << y;
+//    oss.str().c_str();
 
 }
 

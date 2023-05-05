@@ -15,7 +15,6 @@ import com.demon.opencvbase.R;
 import com.demon.opencvbase.control.PermissionControl;
 import com.demon.opencvbase.jni_opencv.jni.LearningNative;
 import com.demon.opencvbase.util.BitmapUtil;
-import com.demon.opencvbase.util.FileUtil;
 import com.demon.opencvbase.util.ImageSplitterUtil;
 
 import java.io.File;

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
+import com.demon.fit.activity_ui.OperateResultUi;
 import com.demon.fit.bean.MonthResultBean;
 
 import java.util.ArrayList;
@@ -53,9 +54,23 @@ public class MonthResultAdapter extends RecyclerView.Adapter<MonthResultAdapter.
         holder.tvTotalCount.setText("总/次:" + bean.totalCount);
         holder.tvPercent.setText(String.format("胜率:%.2f", bean.percent) + "%");
         holder.tvTotalResult.setText("总盈亏:" + bean.totalResult);
-        holder.tvMonth.setText((bean.month + 1) + "月");
-
-//            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+        if (beanList.size() == i + 1) { // 显示总计数据
+            holder.tvMonth.setText("总");
+            holder.tvYear.setText("");
+        } else {
+            holder.tvYear.setText(bean.year + "年");
+            switch (OperateResultUi.type) {
+                case "月":
+                    holder.tvMonth.setText((bean.month + 1) + "月");
+                    break;
+                case "季":
+                    holder.tvMonth.setText((bean.month + 1) / 3 + 1 + "季");
+                    break;
+                case "年":
+                    holder.tvMonth.setText(bean.year % 100 + "年");
+                    break;
+            }
+        }
     }
 
     @Override
@@ -81,6 +96,8 @@ public class MonthResultAdapter extends RecyclerView.Adapter<MonthResultAdapter.
         TextView tvTotalResult;
         @BindView(R.id.tv_month)
         TextView tvMonth;
+        @BindView(R.id.tv_year)
+        TextView tvYear;
 
 
         public MonthResultHolder(@NonNull View view) {

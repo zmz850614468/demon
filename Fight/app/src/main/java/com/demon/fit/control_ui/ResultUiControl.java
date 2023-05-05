@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
 import com.demon.fit.activity.ResultActivity;
-import com.demon.fit.adapter.AnalyseAdapter;
 import com.demon.fit.adapter.AnalyseV2Adapter;
 import com.demon.fit.adapter.ResultAdapter;
 import com.demon.fit.bean.AnalyseBean;
@@ -68,7 +67,7 @@ public class ResultUiControl {
      *
      * @param v
      */
-    @OnClick(R.id.bt_add)
+    @OnClick(R.id.tv_add)
     public void onAddClicked(View v) {
         String name = etName.getText().toString();
         String result = etResult.getText().toString();

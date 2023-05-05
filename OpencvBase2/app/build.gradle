@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.demon.opencvbase"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -24,11 +25,48 @@ android {
             }
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+        debug {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+    }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true//混淆
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+//            externalNativeBuild {
+//                ndkBuild {
+//                    arguments 'NDK_DEBUG=0'
+//                }
+//            }
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            signingConfig signingConfigs.release
+//            externalNativeBuild {
+//                ndkBuild {
+//                    arguments 'NDK_DEBUG=1'
+//                }
+//            }
         }
     }
 

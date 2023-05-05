@@ -3,12 +3,13 @@ package com.demon.fit.activity_ui;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
-import com.demon.fit.activity.AddNewResultActivity;
 import com.demon.fit.activity.OperateDetailActivity;
 import com.demon.fit.activity.OperateResultActivity;
 import com.demon.fit.adapter.MonthResultAdapter;
@@ -16,7 +17,6 @@ import com.demon.fit.bean.MonthResultBean;
 import com.demon.fit.bean.OperateResultBean;
 import com.demon.fit.daos.DBControl;
 
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +27,10 @@ import butterknife.OnClick;
 
 public class OperateResultUi {
 
+    @BindView(R.id.tv_add)
+    TextView tvAdd;
+
+    public static String type = "月";
     private OperateResultActivity activity;
 
     @BindView(R.id.rv_result)
@@ -39,6 +43,7 @@ public class OperateResultUi {
     public OperateResultUi(OperateResultActivity activity) {
         this.activity = activity;
         ButterKnife.bind(this, activity);
+        tvAdd.setText(type);
 
         initAdapter();
     }
@@ -48,10 +53,23 @@ public class OperateResultUi {
      *
      * @param v
      */
-    @OnClick(R.id.bt_add)
+    @OnClick(R.id.tv_add)
     public void onClicked(View v) {
-        Intent intent = new Intent(activity, AddNewResultActivity.class);
-        activity.startActivity(intent);
+        switch (type) {
+            case "月":
+                type = "季";
+                break;
+            case "季":
+                type = "年";
+                break;
+            case "年":
+                type = "月";
+                break;
+        }
+        tvAdd.setText(type);
+        updateData();
+//        Intent intent = new Intent(activity, AddNewResultActivity.class);
+//        activity.startActivity(intent);
     }
 
     /**
@@ -83,6 +101,38 @@ public class OperateResultUi {
      * 更新数据
      */
     public void updateData() {
+        dealMonthData(resultList);      // 月份统计
+
+        if ("季".equals(type)) {         // 季度统计
+            dealSeasonData(resultList);
+        } else if ("年".equals(type)) {  // 年份统计
+            dealYearData(resultList);
+        }
+
+        // 添加总计数据
+        MonthResultBean resultBean = new MonthResultBean();
+        for (MonthResultBean bean : resultList) {
+            resultBean.operateResult += bean.operateResult;
+            resultBean.poundage += bean.poundage;
+            resultBean.posCount += bean.posCount;
+            resultBean.negCount += bean.negCount;
+        }
+        resultList.add(resultBean);
+
+        // 计算统计数据
+        for (MonthResultBean bean : resultList) {
+            bean.totalCount = bean.posCount + bean.negCount;
+            bean.percent = bean.posCount * 100.0f / bean.totalCount;
+            bean.totalResult = bean.operateResult - bean.poundage;
+        }
+
+        resultAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 按月份处理数据
+     */
+    private void dealMonthData(List<MonthResultBean> resultList) {
         List<OperateResultBean> list = DBControl.quaryAll(activity, OperateResultBean.class);
         showLog("数据量：" + list.size());
         resultList.clear();
@@ -92,16 +142,14 @@ public class OperateResultUi {
             calendar.setTimeInMillis(bean.timeStamp);
 
             boolean isAdded = false;
-            for (MonthResultBean monthResultBean : resultList) {
-                if (monthResultBean.month == calendar.get(Calendar.MONTH)) {
-                    isAdded = true;
+            if (!resultList.isEmpty() && resultList.get(0).month == calendar.get(Calendar.MONTH)) {
+                MonthResultBean monthResultBean = resultList.get(0);
+                isAdded = true;
 
-                    monthResultBean.operateResult += bean.result;
-                    monthResultBean.poundage += bean.poundage;
-                    monthResultBean.posCount += bean.posCount;
-                    monthResultBean.negCount += bean.negCount;
-                    break;
-                }
+                monthResultBean.operateResult += bean.result;
+                monthResultBean.poundage += bean.poundage;
+                monthResultBean.posCount += bean.posCount;
+                monthResultBean.negCount += bean.negCount;
             }
 
             if (!isAdded) {
@@ -111,21 +159,62 @@ public class OperateResultUi {
                 resultBean.posCount = bean.posCount;
                 resultBean.negCount = bean.negCount;
                 resultBean.month = calendar.get(Calendar.MONTH);
+                resultBean.year = calendar.get(Calendar.YEAR);
                 resultList.add(0, resultBean);
             }
         }
+    }
 
-        // 添加之前的数据
-//        addOldData();
-
-        for (MonthResultBean resultBean : resultList) {
-            resultBean.totalCount = resultBean.posCount + resultBean.negCount;
-            resultBean.percent = resultBean.posCount * 100.0f / resultBean.totalCount;
-            resultBean.totalResult = resultBean.operateResult - resultBean.poundage;
+    /**
+     * 按季度处理数据
+     */
+    private void dealSeasonData(List<MonthResultBean> resultList) {
+        List<MonthResultBean> tempList = new ArrayList<>();
+        MonthResultBean resultBean = new MonthResultBean();
+        for (MonthResultBean bean : resultList) {
+            resultBean.operateResult += bean.operateResult;
+            resultBean.poundage += bean.poundage;
+            resultBean.posCount += bean.posCount;
+            resultBean.negCount += bean.negCount;
+            if (bean.month % 3 == 0) {
+                resultBean.month = bean.month;
+                resultBean.year = bean.year;
+                tempList.add(resultBean);
+                resultBean = new MonthResultBean();
+            }
         }
+        if ((resultBean.posCount + resultBean.negCount) > 0) {
+            resultBean.month = resultList.get(resultList.size() - 1).month;
+            resultBean.year = resultList.get(resultList.size() - 1).year;
+            tempList.add(resultBean);
+        }
+        resultList.clear();
+        resultList.addAll(tempList);
+    }
 
-        resultAdapter.notifyDataSetChanged();
-
+    /**
+     * 按年份处理数据
+     */
+    private void dealYearData(List<MonthResultBean> resultList) {
+        List<MonthResultBean> tempList = new ArrayList<>();
+        MonthResultBean resultBean = new MonthResultBean();
+        for (MonthResultBean bean : resultList) {
+            resultBean.operateResult += bean.operateResult;
+            resultBean.poundage += bean.poundage;
+            resultBean.posCount += bean.posCount;
+            resultBean.negCount += bean.negCount;
+            if (bean.month % 12 == 0) {
+                resultBean.year = bean.year;
+                tempList.add(resultBean);
+                resultBean = new MonthResultBean();
+            }
+        }
+        if ((resultBean.posCount + resultBean.negCount) > 0) {
+            resultBean.year = resultList.get(resultList.size() - 1).year;
+            tempList.add(resultBean);
+        }
+        resultList.clear();
+        resultList.addAll(tempList);
     }
 
     /**
