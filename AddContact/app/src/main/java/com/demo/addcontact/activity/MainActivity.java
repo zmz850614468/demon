@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 //        ContactControl.addContact(this, "aaa", "18060666666");
 
         Random random = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             String phone = PhoneUitl.createMobile(random.nextInt(3));
             String name = RandInfo.getNameBySex(random.nextInt(2) == 1 ? "男" : "女");
 

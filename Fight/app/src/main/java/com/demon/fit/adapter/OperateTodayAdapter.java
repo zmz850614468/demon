@@ -99,9 +99,19 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
         });
         holder.tvPrice.setOnClickListener(v -> {
             bean.price -= 10;
-            if (bean.price <= 0) {
-                bean.price = 30;
+            if (bean.price > OperateTodayBean.MAX_PRICE/2) {  // 目前只显示40、20、10三种格式
+                bean.price = OperateTodayBean.MAX_PRICE/2;
             }
+            if (bean.price <= 0) {
+                bean.price = OperateTodayBean.MAX_PRICE;
+            }
+
+//            if (bean.price > 40) {  // 目前只显示60、30、20、10三种格式
+//                bean.price = 40;
+//            }
+//            if (bean.price <= 0) {
+//                bean.price = 60;
+//            }
             holder.tvPrice.setText(bean.price + "");
         });
         holder.etInPrice.addTextChangedListener(holder.inPriceListener = new TextWatcher() {

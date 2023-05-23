@@ -9,12 +9,15 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "operate_today_table")
 public class OperateTodayBean {
 
+    public static final int MAX_PRICE = 40;
+
     public OperateTodayBean() {
-    inType = "买入";
-    price = 20;
-    isFollow = false;
-    isBadOperate = false;
-}
+        inType = "买入";
+        price = MAX_PRICE;
+        isFollow = false;
+        isBadOperate = false;
+        name = "菜油";
+    }
 
     @DatabaseField(columnName = "id", generatedId = true)
     public int id;
@@ -35,12 +38,6 @@ public class OperateTodayBean {
     @DatabaseField(columnName = "name")
     public String name;
 
-    /**
-     * 参数类型
-     * 10   默认参数
-     * 15
-     * 20
-     */
     @DatabaseField(columnName = "price")
     public int price;   // 单价
 

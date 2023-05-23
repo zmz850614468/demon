@@ -174,7 +174,7 @@ public class AddNewResultActivity extends AppCompatActivity {
     }
 
     private boolean isAllEmpty(OperateTodayBean bean) {
-        if (!StringUtil.isEmpty(bean.name) || bean.inPrice != 0 || bean.outPrice != 0) {
+        if (bean.inPrice != 0 || bean.outPrice != 0) {
             return false;
         }
         return true;
