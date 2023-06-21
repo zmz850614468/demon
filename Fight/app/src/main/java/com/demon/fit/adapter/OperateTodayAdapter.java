@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
 import com.demon.fit.bean.OperateTodayBean;
+import com.demon.fit.dialog.SelectPriceDialog;
+import com.demon.fit.util.SharePreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,10 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
 
     private Context context;
     private List<OperateTodayBean> beanList;
+    private SelectPriceDialog selectPriceDialog;
+
+    private TextView selectedTextView;
+    private OperateTodayBean selectedBean;
 
     // 1.修改对象
     public OperateTodayAdapter(Context context, List<OperateTodayBean> list) {
@@ -37,7 +43,7 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
             beanList = new ArrayList<>();
         }
         if (beanList.isEmpty()) {
-            beanList.add(new OperateTodayBean());
+            beanList.add(new OperateTodayBean(context));
         }
     }
 
@@ -46,6 +52,7 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
     public OperateTodayHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // 2.修改布局
         View view = LayoutInflater.from(context).inflate(R.layout.item_operate_today, viewGroup, false);
+        initDialog();
         return new OperateTodayHolder(view);
     }
 
@@ -98,21 +105,17 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
             }
         });
         holder.tvPrice.setOnClickListener(v -> {
-            bean.price -= 10;
-            if (bean.price > OperateTodayBean.MAX_PRICE/2) {  // 目前只显示40、20、10三种格式
-                bean.price = OperateTodayBean.MAX_PRICE/2;
-            }
-            if (bean.price <= 0) {
-                bean.price = OperateTodayBean.MAX_PRICE;
-            }
+            selectedBean = bean;
+            selectedTextView = holder.tvPrice;
+            selectPriceDialog.show();
 
-//            if (bean.price > 40) {  // 目前只显示60、30、20、10三种格式
-//                bean.price = 40;
-//            }
+//            bean.price -= 10;
 //            if (bean.price <= 0) {
-//                bean.price = 60;
+//                bean.price = OperateTodayBean.MAX_PRICE;
 //            }
-            holder.tvPrice.setText(bean.price + "");
+//            SharePreferencesUtil.saveSelectedCount(context, bean.price);
+//
+//            holder.tvPrice.setText(bean.price + "");
         });
         holder.etInPrice.addTextChangedListener(holder.inPriceListener = new TextWatcher() {
             @Override
@@ -187,6 +190,21 @@ public class OperateTodayAdapter extends RecyclerView.Adapter<OperateTodayAdapte
 //        } else {
 //            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
 //        }
+    }
+
+    private void initDialog() {
+        selectPriceDialog = new SelectPriceDialog(context, R.style.DialogStyleOne);
+        selectPriceDialog.setListener(price -> {
+            if (selectedTextView != null) {
+                selectedTextView.setText("" + price);
+            }
+            if (selectedBean != null) {
+                selectedBean.price = price;
+            }
+            SharePreferencesUtil.saveSelectedCount(context, price);
+        });
+        selectPriceDialog.show();
+        selectPriceDialog.dismiss();
     }
 
     @Override

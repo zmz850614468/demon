@@ -1,5 +1,8 @@
 package com.demon.fit.bean;
 
+import android.content.Context;
+
+import com.demon.fit.util.SharePreferencesUtil;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -10,10 +13,18 @@ import com.j256.ormlite.table.DatabaseTable;
 public class OperateTodayBean {
 
     public static final int MAX_PRICE = 40;
+//    public static int selectedPrice = MAX_PRICE;
+
+    public OperateTodayBean(Context context) {
+        inType = "买入";
+        price = SharePreferencesUtil.getSelectedCount(context);
+        isFollow = false;
+        isBadOperate = false;
+        name = "菜油";
+    }
 
     public OperateTodayBean() {
         inType = "买入";
-        price = MAX_PRICE;
         isFollow = false;
         isBadOperate = false;
         name = "菜油";

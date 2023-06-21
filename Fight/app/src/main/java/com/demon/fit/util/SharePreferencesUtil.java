@@ -3,6 +3,12 @@ package com.demon.fit.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SharePreferencesUtil {
 
     private static final String SHARED_PREFERENCE_NAME = "shared";
@@ -13,6 +19,30 @@ public class SharePreferencesUtil {
     private static final String FU_LI_BASE = "fuLiBase";   //
     private static final String FU_LI_TIMES = "fuLTimes";   //
     private static final String OPERATE_TODAY = "operateToday";   //
+
+    private static final String SELECTED_COUNT = "selectedCount";   //
+
+    private static final String PRICE_LIST = "priceList";   //
+
+    // 获取
+    public static List<String> getPriceList(Context context) {
+        String priceLit = getInstance(context).getString(PRICE_LIST, "[]");
+        return new Gson().fromJson(priceLit, new TypeToken<ArrayList<String>>() {
+        }.getType());
+    }
+
+    public static void savePriceList(Context context, List<String> priceList) {
+        setString(context, PRICE_LIST, new Gson().toJson(priceList));
+    }
+
+    // 获取
+    public static int getSelectedCount(Context context) {
+        return getInstance(context).getInt(SELECTED_COUNT, 30);
+    }
+
+    public static void saveSelectedCount(Context context, int selectedCount) {
+        setInteger(context, SELECTED_COUNT, selectedCount);
+    }
 
     // 获取
     public static String getOperateToday(Context context) {

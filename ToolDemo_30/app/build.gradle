@@ -26,6 +26,21 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+        debug {
+            storeFile file("E:/利郎项目资料/APK签名/lilanz.jks")
+            storePassword "18060477245"
+            keyAlias "key"
+            keyPassword "18060477245"
+        }
+    }
+
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
@@ -73,6 +88,7 @@ dependencies {
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+//    new Gson().fromJson(jsonStr, new TypeToken<HashMap<String, String>>() {}.getType());
     // gson
     implementation 'com.google.code.gson:gson:2.8.6'
     //List<SongBean> list = new Gson().fromJson(bean.content, new TypeToken<List<SongBean>>() {

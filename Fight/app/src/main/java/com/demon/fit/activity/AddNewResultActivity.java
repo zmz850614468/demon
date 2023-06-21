@@ -141,7 +141,7 @@ public class AddNewResultActivity extends AppCompatActivity {
 
         int index = operate_todayList.size() - 1;
         if (index < 0 || !isAllEmpty(operate_todayList.get(index))) {
-            operate_todayList.add(new OperateTodayBean());
+            operate_todayList.add(new OperateTodayBean(this));
         }
         operate_todayAdapter.notifyDataSetChanged();
     }
@@ -199,7 +199,7 @@ public class AddNewResultActivity extends AppCompatActivity {
         }
 
         if (operate_todayList.isEmpty()) {
-            operate_todayList.add(new OperateTodayBean());
+            operate_todayList.add(new OperateTodayBean(this));
         }
         operate_todayAdapter.notifyDataSetChanged();
         onCalculateClicked(null);
