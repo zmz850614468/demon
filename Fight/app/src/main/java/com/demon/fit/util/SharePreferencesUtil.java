@@ -21,8 +21,27 @@ public class SharePreferencesUtil {
     private static final String OPERATE_TODAY = "operateToday";   //
 
     private static final String SELECTED_COUNT = "selectedCount";   //
-
     private static final String PRICE_LIST = "priceList";   //
+    private static final String VOICE_TIP = "voiceTip";   //
+    private static final String VIBRATOR_TIP = "vibratorTip";   //
+
+    // 获取
+    public static boolean getVibratorTip(Context context) {
+        return getInstance(context).getBoolean(VIBRATOR_TIP, false);
+    }
+
+    public static void saveVibratorTip(Context context, boolean vibratorTip) {
+        setBoolean(context, VIBRATOR_TIP, vibratorTip);
+    }
+
+    // 获取
+    public static boolean getVoiceTip(Context context) {
+        return getInstance(context).getBoolean(VOICE_TIP, true);
+    }
+
+    public static void saveVoiceTip(Context context, boolean voiceTip) {
+        setBoolean(context, VOICE_TIP, voiceTip);
+    }
 
     // 获取
     public static List<String> getPriceList(Context context) {

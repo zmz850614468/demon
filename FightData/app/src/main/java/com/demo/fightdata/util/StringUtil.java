@@ -1,4 +1,4 @@
-package com.demon.tool.util;
+package com.demo.fightdata.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,10 +67,10 @@ public class StringUtil {
     /**
      * 日期转换时间戳
      *
-     * @param time yyyy-MM-dd
+     * @param time yyyy-MM-dd HH:mm
      * @return
      */
-    public static Long timestamp(String time) {
+    public static Long getTime(String time) {
         try {
             Date parse = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(time);
             Long time1 = parse.getTime();

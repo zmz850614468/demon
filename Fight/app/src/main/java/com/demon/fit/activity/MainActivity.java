@@ -14,7 +14,10 @@ import com.demon.fit.adapter.ItemAdapter;
 import com.demon.fit.bean.ItemBean;
 import com.demon.fit.control.SoundControl;
 import com.demon.fit.data_transfer.activity.DataTransferActivity;
+import com.demon.fit.dialog.TipSelectDialog;
 import com.demon.fit.service.TimerService;
+import com.demon.fit.util.NotificationUtil;
+import com.demon.fit.util.VibratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter adapter;
     private List<ItemBean> list;
 
+    private TipSelectDialog tipSelectDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         SoundControl.getInstance(this).initData();
         initAdapter();
+        initDialog();
 
 //        Intent intent = new Intent(MainActivity.this, OperateActivity.class);
 //        startActivity(intent);
@@ -112,10 +118,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @OnLongClick(R.id.tv_transfer_data)
+    @OnLongClick({R.id.tv_transfer_data, R.id.tv_time})
     public void onLongClicked(View v) {
-        Intent intent = new Intent(this, DataTransferActivity.class);
-        startActivity(intent);
+        switch (v.getId()) {
+            case R.id.tv_transfer_data:
+                Intent intent = new Intent(this, DataTransferActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_time:
+                tipSelectDialog.show();
+//                NotificationUtil.sendNotification(this);
+//                VibratorUtil.vibrator(this);
+                break;
+        }
     }
 
     @OnClick(R.id.tv_transfer_data)
@@ -136,5 +151,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TimerService.class);
             startService(intent);
         }
+    }
+
+    private void initDialog() {
+        tipSelectDialog = new TipSelectDialog(this, R.style.DialogStyleOne);
+        tipSelectDialog.show();
+        tipSelectDialog.dismiss();
     }
 }

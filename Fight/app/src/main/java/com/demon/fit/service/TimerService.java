@@ -3,14 +3,23 @@ package com.demon.fit.service;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.demon.fit.R;
+import com.demon.fit.activity.App;
 import com.demon.fit.control.SoundControl;
+import com.demon.fit.util.NotificationUtil;
+import com.demon.fit.util.SharePreferencesUtil;
 import com.demon.fit.util.StringUtil;
+import com.demon.fit.util.VibratorUtil;
 
 import java.util.ArrayList;
 
@@ -20,10 +29,20 @@ public class TimerService extends Service {
     private static TimerThread timerThread;
     private ArrayList<String> tipList;  // 整点提醒时间
 
+//    private Handler wakeHandle = new Handler(Looper.myLooper(), new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message msg) {
+//            wakeHandle.sendEmptyMessageDelayed(1, 3000);
+//            showLog("wake");
+//            return false;
+//        }
+//    });
+
     @Override
     public void onCreate() {
         showLog("onCreate");
         super.onCreate();
+//        wakeHandle.sendEmptyMessage(1);
 
         initData();
     }
@@ -47,7 +66,6 @@ public class TimerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         showLog("onStartCommand");
-
         if (timerThread != null) {
             stopCount();
         } else {
@@ -98,9 +116,15 @@ public class TimerService extends Service {
         long curTime = 0;
         boolean isTip = false;
         private String dayTime;
+        private boolean voiceTip;
+        private boolean vibratorTip;
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void run() {
+
+            voiceTip = SharePreferencesUtil.getVoiceTip(getBaseContext());
+            vibratorTip = SharePreferencesUtil.getVibratorTip(getBaseContext());
 
             while (isContinue) {
                 curTime = System.currentTimeMillis();
@@ -110,7 +134,13 @@ public class TimerService extends Service {
                     if (!isTip) {
                         isTip = true;
                         showLog("整点提示");
-                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 4, 1.2f);
+                        if (voiceTip) {
+                            SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 4, 1.2f);
+                        }
+                        if (vibratorTip) {
+                            VibratorUtil.vibratorLong(getApplicationContext());
+                            NotificationUtil.sendNotification(getApplicationContext(), "整点提示:" + dayTime);
+                        }
                     }
                 } else if ("10:18".equals(dayTime) || "10:23".equals(dayTime)) { // 休息时间，不做提示
                     if (!isTip) {
@@ -119,26 +149,20 @@ public class TimerService extends Service {
                 } else if (curTime % 300 >= 240) {  // 其他5分K线结束前一分钟提示
                     if (!isTip) {
                         isTip = true;
-                        showLog("还剩60秒钟");
-                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 2);
+//                        showLog("还剩60秒钟");
+                        if (voiceTip) {
+                            SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 2);
+                        }
+                        if (vibratorTip) {
+//                            VibratorUtil.vibrator(getApplicationContext());
+                            NotificationUtil.sendNotification(getApplicationContext(), "5分提示:" + dayTime);
+//                            showLog("开始振动");
+                        }
                     }
                 } else {
                     isTip = false;
                 }
 
-//                curTime = System.currentTimeMillis();
-//                curTime /= 1000;
-//                if (curTime % 300 >= 240) {
-//                    if (!isTip) {
-//                        isTip = true;
-//                        showLog("还剩60秒钟");
-//                        SoundControl.getInstance(getBaseContext()).play(R.raw.succeed, 1);
-//                    }
-//                } else {
-//                    isTip = false;
-//                }
-
-//                showLog("运行：" + house + " - " + curTime % 300);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -153,7 +177,6 @@ public class TimerService extends Service {
         }
 
     }
-
 
     private void showLog(String msg) {
         Log.e("TimerService", msg);
