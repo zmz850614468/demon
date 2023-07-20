@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
+import com.demon.fit.activity.DrawActivity;
 import com.demon.fit.activity.OperateDetailActivity;
 import com.demon.fit.activity.OperateResultActivity;
 import com.demon.fit.adapter.MonthResultAdapter;
@@ -46,6 +47,12 @@ public class OperateResultUi {
         tvAdd.setText(type);
 
         initAdapter();
+    }
+
+    @OnClick(R.id.tv_title)
+    public void onTitleClicked(View v) {
+        Intent intent = new Intent(activity, DrawActivity.class);
+        activity.startActivity(intent);
     }
 
     /**

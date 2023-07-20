@@ -46,14 +46,14 @@ public class Strategy_test_1 {
 
                 // 1.判断是 锤子线 或 上吊线
 //                if (Math.abs(bean.amount) <= AMOUNT && bean.high - bean.low >= 15) {
-                if (Math.abs(bean.amount) * 3 <= bean.high - bean.low) {
+                if (Math.abs(bean.amount) * 5 <= bean.high - bean.low) {
                     if (bean.amount >= 0) {  // 底部，锤子线
-                        if ((bean.high - bean.start) * 2.5 <= bean.high - bean.low) {
+                        if ((bean.high - bean.start) * 3 <= bean.high - bean.low) {
                             bean.dir = 1;
                         }
                     }
                     if (bean.amount <= 0) {  // 顶部，上吊线
-                        if ((bean.start - bean.low) * 2.5 <= bean.high - bean.low) {
+                        if ((bean.start - bean.low) * 3 <= bean.high - bean.low) {
                             bean.dir = -1;
                         }
                     }

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.demo.fightdata.R;
-import com.demo.fightdata.util.NotificationUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

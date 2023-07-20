@@ -48,6 +48,8 @@
 
         <activity android:name=".activity.OperateTypeActivity" />
 
+        <activity android:name=".activity.DrawActivity"/>
+
         <service android:name=".service.TimerService"
             />
     </application>

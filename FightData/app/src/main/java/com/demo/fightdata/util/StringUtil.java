@@ -72,7 +72,7 @@ public class StringUtil {
      */
     public static Long getTime(String time) {
         try {
-            Date parse = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(time);
+            Date parse = new SimpleDateFormat("yyyy/MM/dd-HHmm").parse(time);
             Long time1 = parse.getTime();
             return time1;
         } catch (Exception e) {

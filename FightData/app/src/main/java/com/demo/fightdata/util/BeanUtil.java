@@ -206,13 +206,29 @@ public class BeanUtil {
         TypeBean b;
         TypeBean s;
         int count = 0;
+        int monthCount = 0;
+        int index = 0;
+        StringBuffer buffer = new StringBuffer();
+        String monthStr = resultList.get(0).date.substring(0, 7);
         for (int i = 1; i < resultList.size(); i += 2) {
             b = resultList.get(i - 1);
             s = resultList.get(i);
-            System.out.println(String.format("%s -- %s  %2d -- %5d --%5d %4d", b.date, s.date, b.dir, b.end, s.end, (s.end - b.end) * b.dir));
-            count += (s.end - b.end) * b.dir;
+//            System.out.println(String.format("%s -- %s  %2d -- %5d --%5d %4d", b.date, s.date, b.dir, b.end, s.end, (s.end - b.end) * b.dir));
+
+            if (!b.date.startsWith(monthStr)) {
+                buffer.append(String.format("月份：%s -- 次数：%d -- 结果：%d", monthStr, index, monthCount)).append("\n");
+
+                index = 0;
+                count += monthCount;
+                monthCount = 0;
+                monthStr = b.date.substring(0, 7);
+            }
+            monthCount += (s.end - b.end) * b.dir;
+            index++;
         }
-        System.out.println(resultList.size() / 2 + " -- " + count);
+        buffer.append(String.format("月份：%s -- 次数：%d -- 结果：%d", monthStr, index, monthCount)).append("\n");
+        System.out.println(String.format("总次数：%d -- 总结果：%d", resultList.size() / 2, count));
+        System.out.println(buffer.toString());
     }
 
     /**

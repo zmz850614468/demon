@@ -58,19 +58,23 @@ public class TypeBean {
      * @return
      */
     public boolean setData(String data) {
-        String[] strArr = data.split(",");
-        if (strArr.length < 11) {
+//        while (data.contains("  ")) {
+//            data.replace("  ", " ");
+//        }
+
+        String[] strArr = data.split("\t");
+        if (strArr.length < 7) {
             return false;
         }
-        name = strArr[0];
-        dm = strArr[1];
-        date = strArr[2];
-        start = Integer.parseInt(strArr[3]);
-        end = Integer.parseInt(strArr[4]);
-        high = Integer.parseInt(strArr[5]);
-        low = Integer.parseInt(strArr[6]);
-        number = Integer.parseInt(strArr[7]);
-        amplitude = Float.parseFloat(strArr[8]);
+//        name = strArr[0];
+//        dm = strArr[1];
+        date = strArr[0] + "-" + strArr[1];
+        start = Integer.parseInt(strArr[2]);
+        end = Integer.parseInt(strArr[5]);
+        high = Integer.parseInt(strArr[3]);
+        low = Integer.parseInt(strArr[4]);
+        number = Integer.parseInt(strArr[6]);
+//        amplitude = Float.parseFloat(strArr[7]);
 //        amount = Float.parseFloat(strArr[10]);
         amount = end - start;
         return true;
