@@ -28,7 +28,7 @@ public class Strategy_2 {
      *
      * @param list
      */
-    public static List<TypeBean> getResult(List<TypeBean> list) {
+    public static List<TypeBean> getResult(List<TypeBean> list, String beginTime) {
         BeanUtil.calAvg(list);
 
         List<TypeBean> resultList = new ArrayList<>();
@@ -38,7 +38,14 @@ public class Strategy_2 {
         int size = list.size();
         List<Integer> numberList = new ArrayList<>();
         TypeBean bean;
-        for (int i = 29; i < size; i++) {
+
+        int i = 0;
+        for (; i < size; i++) {
+            if (list.get(i).date.startsWith(beginTime)) {
+                break;
+            }
+        }
+        for (; i < size; i++) {
             bean = list.get(i);
 
             if (bean.date.equals("2023-06-27 21:10")) {

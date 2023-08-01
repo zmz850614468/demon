@@ -154,7 +154,7 @@ public class BeanUtil {
 
         int i = 0;
         for (TypeBean typeBean : list) {
-            if (i % type == 0 || typeBean.date.contains("21:05") || typeBean.date.contains("9:05")) {
+            if (i % type == 0 || typeBean.date.contains("2105") || typeBean.date.contains("0905")) {
                 i = 0;
                 bean = new TypeBean();
                 newList.add(bean);
@@ -208,12 +208,29 @@ public class BeanUtil {
         int count = 0;
         int monthCount = 0;
         int index = 0;
+        int printCount = 0;
+        int temCount = 0;
         StringBuffer buffer = new StringBuffer();
         String monthStr = resultList.get(0).date.substring(0, 7);
         for (int i = 1; i < resultList.size(); i += 2) {
             b = resultList.get(i - 1);
             s = resultList.get(i);
-//            System.out.println(String.format("%s -- %s  %2d -- %5d --%5d %4d", b.date, s.date, b.dir, b.end, s.end, (s.end - b.end) * b.dir));
+
+            // todo 测试用
+//            if ((s.end - b.end) * b.dir >= 180 || printCount > 0) {
+//                if (printCount == 0) {
+//                    printCount = 6;
+//                    temCount = 0;
+//                }
+//                System.out.println(String.format("%s -- %s  %2d -- %5d --%5d %4d", b.date, s.date, b.dir, b.end, s.end, (s.end - b.end) * b.dir));
+//                printCount--;
+//                if (printCount < 5) {
+//                    temCount += (s.end - b.end) * b.dir;
+//                }
+//                if (printCount == 0) {
+//                    System.out.println("小计：" + temCount);
+//                }
+//            }
 
             if (!b.date.startsWith(monthStr)) {
                 buffer.append(String.format("月份：%s -- 次数：%d -- 结果：%d", monthStr, index, monthCount)).append("\n");
@@ -226,6 +243,8 @@ public class BeanUtil {
             monthCount += (s.end - b.end) * b.dir;
             index++;
         }
+        count += monthCount;
+        
         buffer.append(String.format("月份：%s -- 次数：%d -- 结果：%d", monthStr, index, monthCount)).append("\n");
         System.out.println(String.format("总次数：%d -- 总结果：%d", resultList.size() / 2, count));
         System.out.println(buffer.toString());

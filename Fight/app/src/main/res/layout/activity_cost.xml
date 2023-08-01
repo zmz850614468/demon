@@ -21,7 +21,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:text="+"
-        android:textSize="27sp" />
+        android:textSize="27sp"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/layout_title"

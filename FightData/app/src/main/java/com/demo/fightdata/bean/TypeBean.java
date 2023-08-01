@@ -40,6 +40,7 @@ public class TypeBean {
     public int dir;
     public boolean isCondition_1;   // 是否满足条件1
     public boolean isCondition_2;   // 是否满足条件2
+    public String memo;
 
 
 //    @DatabaseField(columnName = "macd")

@@ -116,8 +116,13 @@ public class CostUi {
 
     private void refreshData() {
         costList.clear();
-        costList.addAll(DBControl.quaryAll(activity, CostBean.class));
-        Collections.sort(costList, (o1, o2) -> o1.index - o2.index);
+        costList.add(new CostBean("菜油-OI", 4.4f));
+        costList.add(new CostBean("棕榈油-P", 5.5f));
+        costList.add(new CostBean("豆油-Y", 5.5f));
+        costList.add(new CostBean("菜粕-RM", 3.3f));
+
+//        costList.addAll(DBControl.quaryAll(activity, CostBean.class));
+//        Collections.sort(costList, (o1, o2) -> o1.index - o2.index);
 
         costAdapter.notifyDataSetChanged();
     }

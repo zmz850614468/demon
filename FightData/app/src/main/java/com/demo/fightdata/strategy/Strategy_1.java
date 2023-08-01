@@ -16,7 +16,10 @@ import java.util.List;
  * 卖点：两根或三个反趋势k线
  * <p>
  * 结果优异的例子：
- * 菜油5分组K线
+ * 菜油-OI2309
+ * 棕榈油-P2309
+ * 豆油-Y2309
+ * 豆粕-RM2309
  */
 public class Strategy_1 {
 
@@ -34,7 +37,7 @@ public class Strategy_1 {
      * 1.两根或三个反趋势k线
      * 2.周末 或 节假日前夕
      */
-    public static void getResult(List<TypeBean> list) {
+    public static void getResult(List<TypeBean> list, String beginTime) {
         BeanUtil.calAvg(list);
         BeanUtil.dealSpecialTime(list);
 
@@ -45,7 +48,16 @@ public class Strategy_1 {
         int size = list.size();
         List<Integer> numberList = new ArrayList<>();
         TypeBean bean;
-        for (int i = 29; i < size; i++) {
+
+        int i = 0;
+        for (; i < size; i++) {
+            if (list.get(i).date.startsWith(beginTime)) {
+                break;
+            }
+        }
+
+        for (; i < size; i++) {
+
             bean = list.get(i);
             if (!hasBuy) {  // 未买入，找买点
                 numberList.clear();
@@ -53,31 +65,28 @@ public class Strategy_1 {
                     numberList.add(list.get(i - j).number);
                 }
 
-                // 1.两个以上交易量大于当日交易量，则丢弃
+                // 1.两个以上交易量大于 当日交易量-400 以上，则丢弃。（明显大于，肉眼可以分辨）
                 int count = 0;
                 int numberTotal = 0;
                 for (Integer integer : numberList) {
-                    if (bean.number < integer) {
+                    if (bean.number < integer + 400) {
                         count++;
                     }
                     numberTotal += integer;
                 }
                 if (count >= 2) {
-//                System.out.println("1111");
                     continue;
                 }
 
                 // 2.三个最小交易量均值要小于当日交易量 500多
-                int avg = (numberTotal - Collections.max(numberList)) / 3;
-                if (bean.number - avg < 500) {
-//                System.out.println("2222");
-                    continue;
-                }
+//                int avg = (numberTotal - Collections.max(numberList)) / 3;
+//                if (bean.number - avg < 500) {
+//                    continue;
+//                }
 
                 // 3.5K、30K 均线方向 和 收盘价方向一致
                 if (!((bean.ma5 >= bean.ma30 && bean.amount >= 0 && bean.end > Math.max(bean.ma5, bean.ma10))
                         || (bean.ma5 <= bean.ma30 && bean.amount <= 0 && bean.end < Math.min(bean.ma5, bean.ma10)))) {
-//                System.out.println("3333");
                     continue;
                 }
 
@@ -117,7 +126,7 @@ public class Strategy_1 {
 
                 // 2.周末 或 节假日前夕,优先卖
                 if (hasBuy && i + 1 < size) {
-                    if (StringUtil.getTime(list.get(i + 1).date) - StringUtil.getTime(bean.date) > 24 * 3600 * 1000) {
+                    if (StringUtil.getTime(list.get(i + 1).date) - StringUtil.getTime(bean.date) > 48 * 3600 * 1000) {
                         hasBuy = true;
                     }
                 }

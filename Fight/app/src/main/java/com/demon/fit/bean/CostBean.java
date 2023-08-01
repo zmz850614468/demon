@@ -17,4 +17,14 @@ public class CostBean {
 
     @DatabaseField(columnName = "cost")
     public int cost;    // 费用
+
+    public float cost2;// 费用
+
+    public CostBean() {
+    }
+
+    public CostBean(String name, float cost2) {
+        this.name = name;
+        this.cost2 = cost2;
+    }
 }

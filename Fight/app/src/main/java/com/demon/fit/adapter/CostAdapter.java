@@ -46,14 +46,14 @@ public class CostAdapter extends RecyclerView.Adapter<CostAdapter.CostHolder> {
         // 3.设置界面数据
         CostBean bean = beanList.get(i);
 
-        holder.tvOrder.setText(bean.index + "");
+        holder.tvOrder.setText((i + 1) + "");
         holder.tvName.setText(bean.name);
-        holder.tvCost.setText(bean.cost + "");
-        if (i % 2 == 0) {
-            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
-        } else {
-            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
-        }
+        holder.tvCost.setText(bean.cost2 + "");
+//        if (i % 2 == 0) {
+//            holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+//        } else {
+//            holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
+//        }
 
         if (listener != null) {
             holder.itemView.setOnClickListener(v -> listener.onItemClick(bean));
