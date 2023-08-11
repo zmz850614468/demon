@@ -1,0 +1,41 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.cer",
+          "storePassword": "0000001A7C8A72647A652FF4BAFFFABB810013D3D9A302DFCDAE838A372F5E43CC6327C373C8D2342D0A",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AF34161AA399DB79F460FF2F9AC4C759BBF33EA36ED557F20F5D93BD418C11887F1695ADAE8AA",
+          "profile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

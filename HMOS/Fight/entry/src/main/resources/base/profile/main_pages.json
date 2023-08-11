@@ -1,0 +1,8 @@
+{
+  "src": [
+    "pages/Function",
+    "pages/Cost",
+    "pages/FuLi",
+    "pages/OperateResult"
+  ]
+}
