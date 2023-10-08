@@ -57,8 +57,8 @@ struct FuLi {
       this.fuLiBeanList.pop()
     }
 
-    let fl = this.fuLi - 0.04
-    for (let i = 0; i < 7; i++) {
+    let fl = this.fuLi - 0.02
+    for (let i = 0; i < 3; i++) {
       fl += 0.01
       let result = this.basic * Math.pow(fl, this.count)
       let bean = new FuLiBean((i + 1) + '', this.basic + '', Math.round(fl * 100 - 100) + '%', this.count + '', Math.round(result * 100) / 100 + '')
@@ -70,7 +70,7 @@ struct FuLi {
   build() {
     Column() {
       Text("复利")
-        .fontSize(21)
+        .fontSize(19)
         .width('100%')
         .height(50)
         .textAlign(TextAlign.Center)
@@ -92,7 +92,7 @@ struct FuLi {
 
       this.fuLiLayout(new FuLiBean('序号', '基数', '利率', '次数', '结果'))
 
-      List({ space: 3 }) {
+      List({ space: 2 }) {
         ForEach(this.fuLiBeanList, (item: FuLiBean) => {
           ListItem() {
             this.fuLiLayout(item)
@@ -135,21 +135,33 @@ struct FuLi {
         TextInput({ text: this.basic.toString() })
           .input()
           .onChange((val) => {
-            this.basic = Number.parseFloat(val)
+            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+              this.basic = 0
+            } else {
+              this.basic = Number.parseFloat(val)
+            }
             this.cal()
           })
       } else if (type === FU_LI) {
         TextInput({ text: this.fuLi.toString() })
           .input()
           .onChange((val) => {
-            this.fuLi = Number.parseFloat(val)
+            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+              this.fuLi = 0
+            } else {
+              this.fuLi = Number.parseFloat(val)
+            }
             this.cal()
           })
       } else {
         TextInput({ text: this.count.toString() })
           .input()
           .onChange((val) => {
-            this.count = Number.parseFloat(val)
+            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+              this.count = 0
+            } else {
+              this.count = Number.parseFloat(val)
+            }
             this.cal()
           })
       }

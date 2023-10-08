@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -25,6 +26,8 @@ public class NotificationUtil {
 //        manager.notify(1, builder.build());
 //    }
 
+    private static int id = 1;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void sendNotification(Context context, String msg) {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -44,7 +47,8 @@ public class NotificationUtil {
                 .build();
 
 
-        manager.notify(1, notification);
+        manager.notify(id++, notification);
+
     }
 
 }

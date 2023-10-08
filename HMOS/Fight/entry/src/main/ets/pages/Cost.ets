@@ -1,20 +1,19 @@
-import CostList from "./CostList";
-import { CostBean, costDataList } from "../common/bean/CostBean";
+import CostList from "../views/CostList";
+// import { CostBean, costDataList } from "../common/bean/CostBean";
 
 @Entry
 @Component
-export default struct Cost {
-
+struct Cost {
 
   build() {
     Column() {
       Text("交易费用")
-        .fontSize(21)
+        .fontSize(19)
         .width('100%')
         .height(50)
         .textAlign(TextAlign.Center)
       Scroll() {
-        Column() {
+        // Column() {
           // Text("交易费用")
           //   .fontSize(21)
           //   .width('100%')
@@ -22,8 +21,8 @@ export default struct Cost {
           //   .textAlign(TextAlign.Center)
 
           CostList()
-        }
-        .width('100%')
+        // }
+        // .width('100%')
       }
     }
   }

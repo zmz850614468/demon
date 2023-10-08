@@ -70,10 +70,17 @@ public class TypeBean {
 //        name = strArr[0];
 //        dm = strArr[1];
         date = strArr[0] + "-" + strArr[1];
-        start = Integer.parseInt(strArr[2]);
-        end = Integer.parseInt(strArr[5]);
-        high = Integer.parseInt(strArr[3]);
-        low = Integer.parseInt(strArr[4]);
+        if (strArr[2].contains(".")) {
+            start = (int) (Float.parseFloat(strArr[2]) * 10);
+            end = (int) (Float.parseFloat(strArr[5]) * 10);
+            high = (int) (Float.parseFloat(strArr[3]) * 10);
+            low = (int) (Float.parseFloat(strArr[4]) * 10);
+        } else {
+            start = Integer.parseInt(strArr[2]);
+            end = Integer.parseInt(strArr[5]);
+            high = Integer.parseInt(strArr[3]);
+            low = Integer.parseInt(strArr[4]);
+        }
         number = Integer.parseInt(strArr[6]);
 //        amplitude = Float.parseFloat(strArr[7]);
 //        amount = Float.parseFloat(strArr[10]);

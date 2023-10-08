@@ -43,12 +43,14 @@
         <activity android:name=".data_transfer.activity.DataTransferActivity" />
 
         <activity android:name=".data_transfer.activity.ReceiverDeviceActivity" />
+        <activity android:name=".data_transfer.activity.SendMsgToHMActivity" />
 
         <activity android:name=".data_transfer.activity.SendDeviceActivity" />
 
         <activity android:name=".activity.OperateTypeActivity" />
 
         <activity android:name=".activity.DrawActivity"/>
+
 
         <service android:name=".service.TimerService"
             />

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demon.fit.R;
 import com.demon.fit.bean.FuLiBean;
+import com.demon.fit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,12 @@ public class FuLiAdapter extends RecyclerView.Adapter<FuLiAdapter.FuLiHolder> {
         // 3.设置界面数据
         FuLiBean bean = beanList.get(i);
 
-        holder.tvOrder.setText((i + 1) + "");
+        if (StringUtil.isEmpty(bean.date)) {
+            holder.tvOrder.setText((i + 1) + "");
+        } else {
+            holder.tvOrder.setText(bean.date);
+        }
+
         holder.tvBase.setText(bean.base + "");
         holder.tvTimes.setText(bean.times + "");
         holder.tvFul.setText(String.format("%.1f", (bean.fuL - 1) * 100) + "%");
@@ -57,6 +63,13 @@ public class FuLiAdapter extends RecyclerView.Adapter<FuLiAdapter.FuLiHolder> {
             holder.itemView.setBackgroundResource(R.drawable.shape_box_gray);
         } else {
             holder.itemView.setBackgroundResource(R.drawable.shape_box_white);
+        }
+
+        if (listener != null) {
+            holder.itemView.setOnLongClickListener(v -> {
+                listener.onItemClick(bean);
+                return false;
+            });
         }
     }
 
@@ -94,3 +107,30 @@ public class FuLiAdapter extends RecyclerView.Adapter<FuLiAdapter.FuLiHolder> {
         public void onItemClick(FuLiBean bean);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

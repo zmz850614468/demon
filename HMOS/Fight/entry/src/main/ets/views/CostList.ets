@@ -1,4 +1,4 @@
-import { CostListSource } from "../viewmodel/CostListSource";
+import { CostListSource } from "./CostListSource";
 import { CostBean, costDataList } from "../common/bean/CostBean";
 
 @Component

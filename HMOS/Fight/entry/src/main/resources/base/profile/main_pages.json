@@ -3,6 +3,8 @@
     "pages/Function",
     "pages/Cost",
     "pages/FuLi",
-    "pages/OperateResult"
+    "pages/OperateResult",
+    "pages/ReceiverData",
+    "pages/Money"
   ]
 }

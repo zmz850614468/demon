@@ -1,6 +1,8 @@
 package com.demon.fit.activity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -13,12 +15,14 @@ import com.demon.fit.R;
 import com.demon.fit.adapter.FuLiAdapter;
 import com.demon.fit.bean.FuLiBean;
 import com.demon.fit.util.SharePreferencesUtil;
+import com.demon.fit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 复利计算界面
@@ -44,6 +48,12 @@ public class CalculateActivity extends AppCompatActivity {
 
     private List<FuLiBean> fuLiList;
 
+    @BindView(R.id.rv_record)
+    protected RecyclerView recordRecycler;
+    private FuLiAdapter recordAdapter;
+
+    private List<FuLiBean> recordList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +61,28 @@ public class CalculateActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initAdapter();
+        initRecordAdapter();
         initSeekBar();
         initUI();
+    }
+
+    @OnClick(R.id.bt_add)
+    public void onClicked(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("注意:")
+                .setMessage("确定添加吗？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog, which) -> {
+                    FuLiBean bean = fuLiList.get(1);
+                    bean.date = StringUtil.getMonthDay();
+                    recordList.add(0, bean);
+                    if (recordList.size() > 5) {
+                        recordList.remove(recordList.size() - 1);
+                    }
+                    SharePreferencesUtil.saveFuLiRecode(this, recordList);
+                    recordAdapter.notifyDataSetChanged();
+                });
+        builder.create().show();
     }
 
     private void calculate() {
@@ -66,13 +96,13 @@ public class CalculateActivity extends AppCompatActivity {
             tvResult.setText(String.format("%.2f", result));
 
             fuLiList.clear();
-            fl -= 0.03;
+            fl -= 0.01;
             if (fl < 1.01f) {
                 fl = 1.01f;
             }
 
             FuLiBean bean;
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 3; i++) {
                 bean = new FuLiBean();
                 bean.base = base;
                 bean.fuL = fl;
@@ -146,6 +176,30 @@ public class CalculateActivity extends AppCompatActivity {
             public void onItemClick(FuLiBean bean) {
 
             }
+        });
+    }
+
+    private void initRecordAdapter() {
+        recordList = SharePreferencesUtil.getFuLiRecode(this);
+//        recordList = new ArrayList<>();
+
+        recordAdapter = new FuLiAdapter(this, recordList);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recordRecycler.setLayoutManager(manager);
+        recordRecycler.setAdapter(recordAdapter);
+
+        recordAdapter.setListener(bean -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CalculateActivity.this)
+                    .setTitle("注意:")
+                    .setMessage("确定删除吗?")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        recordList.remove(bean);
+                        SharePreferencesUtil.saveFuLiRecode(CalculateActivity.this, recordList);
+                        recordAdapter.notifyDataSetChanged();
+                    });
+            builder.create().show();
         });
     }
 

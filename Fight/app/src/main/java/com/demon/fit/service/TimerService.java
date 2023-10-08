@@ -139,7 +139,8 @@ public class TimerService extends Service {
                         }
                         if (vibratorTip) {
                             VibratorUtil.vibratorLong(getApplicationContext());
-                            NotificationUtil.sendNotification(getApplicationContext(), "整点提示:" + dayTime);
+//                            NotificationUtil.sendNotification(getApplicationContext(), "整点:" + dayTime);
+                            sendTip("整点:" + dayTime);
                         }
                     }
                 } else if ("10:18".equals(dayTime) || "10:23".equals(dayTime)) { // 休息时间，不做提示
@@ -155,8 +156,8 @@ public class TimerService extends Service {
                         }
                         if (vibratorTip) {
 //                            VibratorUtil.vibrator(getApplicationContext());
-                            NotificationUtil.sendNotification(getApplicationContext(), "5分提示:" + dayTime);
-//                            showLog("开始振动");
+//                            NotificationUtil.sendNotification(getApplicationContext(), "5分:" + dayTime);
+                            sendTip("5分:" + dayTime);
                         }
                     }
                 } else {
@@ -176,6 +177,18 @@ public class TimerService extends Service {
             isContinue = false;
         }
 
+    }
+
+    /**
+     * 发送提示信息
+     *
+     * @param msg
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void sendTip(String msg) {
+        NotificationUtil.sendNotification(getApplicationContext(), msg);
+//        new Handler().postDelayed(() -> NotificationUtil.sendNotification(getApplicationContext(), msg + "-1"), 1500);
+//        new Handler().postDelayed(() -> NotificationUtil.sendNotification(getApplicationContext(), msg + "-2"), 3000);
     }
 
     private void showLog(String msg) {

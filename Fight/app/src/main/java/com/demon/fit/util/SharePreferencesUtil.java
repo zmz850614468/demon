@@ -3,6 +3,7 @@ package com.demon.fit.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.demon.fit.bean.FuLiBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,6 +25,19 @@ public class SharePreferencesUtil {
     private static final String PRICE_LIST = "priceList";   //
     private static final String VOICE_TIP = "voiceTip";   //
     private static final String VIBRATOR_TIP = "vibratorTip";   //
+
+    private static final String FULI_RECORD = "fuLiRecode";   //
+
+    // 获取
+    public static List<FuLiBean> getFuLiRecode(Context context) {
+        String msg = getInstance(context).getString(FULI_RECORD, "[]");
+        return new Gson().fromJson(msg, new TypeToken<ArrayList<FuLiBean>>() {
+        }.getType());
+    }
+
+    public static void saveFuLiRecode(Context context, List<FuLiBean> list) {
+        setString(context, FULI_RECORD, new Gson().toJson(list));
+    }
 
     // 获取
     public static boolean getVibratorTip(Context context) {

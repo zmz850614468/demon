@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.cer",
-          "storePassword": "0000001A7C8A72647A652FF4BAFFFABB810013D3D9A302DFCDAE838A372F5E43CC6327C373C8D2342D0A",
+          "storePassword": "0000001ABD2203CAE0A7854273FE5201CCC765FB9770000608D50048B7D4AAA99E6936BE7E69CA69AC55",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001AF34161AA399DB79F460FF2F9AC4C759BBF33EA36ED557F20F5D93BD418C11887F1695ADAE8AA",
+          "keyPassword": "0000001AA989AC25EE7A64DC744C3E1A8B1B7333018F0A886B177114096C8E4F19769E5CEBF6FB8486CC",
           "profile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p12"
@@ -28,6 +28,22 @@
     {
       "name": "entry",
       "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "httpclient",
+      "srcPath": "./httpclient"
+    },
+    {
+      "name": "dataORM",
+      "srcPath": "./dataORM",
       "targets": [
         {
           "name": "default",

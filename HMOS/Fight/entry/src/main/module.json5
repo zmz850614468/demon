@@ -1,5 +1,12 @@
 {
   "module": {
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      }
+    ],
+    "dependencies": [
+    ],
     "name": "entry",
     "type": "entry",
     "description": "$string:module_desc",

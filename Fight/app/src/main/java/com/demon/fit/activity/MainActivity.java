@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private void initAdapter() {
         list = new ArrayList<>();
         list.add(new ItemBean(R.drawable.fl, "复利"));
-        list.add(new ItemBean(R.drawable.jd, "素质需求"));
+        list.add(new ItemBean(R.drawable.fy, "交易费用"));
+//        list.add(new ItemBean(R.drawable.jd, "素质需求"));
         list.add(new ItemBean(R.drawable.zxl, "操作类型"));
 //        list.add(new ItemBean(R.drawable.zxl, "执行力"));
-        list.add(new ItemBean(R.drawable.fy, "交易费用"));
 //        list.add(new ItemBean(R.drawable.mb, "目标"));
 //        list.add(new ItemBean(R.drawable.jg, "旧-执行结果"));
         list.add(new ItemBean(R.drawable.jg, "操作结果分析"));

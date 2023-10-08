@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "httpclient",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}

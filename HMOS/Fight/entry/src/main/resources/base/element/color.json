@@ -15,6 +15,42 @@
     {
       "name": "gray",
       "value": "#989A9C"
+    },
+    {
+      "name": "red",
+      "value": "#FF0033"
+    },
+    {
+      "name": "deepRed",
+      "value": "#CC0033"
+    },
+    {
+      "name": "pink",
+      "value": "#FF33CC"
+    },
+    {
+      "name": "purple",
+      "value": "#CC00FF"
+    },
+    {
+      "name": "blue",
+      "value": "#00CCFF"
+    },
+    {
+      "name": "yellow",
+      "value": "#FFFF33"
+    },
+    {
+      "name": "green",
+      "value": "#00CC99"
+    },
+    {
+      "name": "lightGreen",
+      "value": "#33FF33"
+    },
+    {
+      "name": "deepGreen",
+      "value": "#006600"
     }
   ]
 }

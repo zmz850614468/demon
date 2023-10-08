@@ -25,7 +25,7 @@ public class DataTransferActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.bt_send, R.id.bt_receive})
+    @OnClick({R.id.bt_send, R.id.bt_receive, R.id.bt_send_hm})
     public void onClicked(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -34,6 +34,9 @@ public class DataTransferActivity extends AppCompatActivity {
                 break;
             case R.id.bt_send:
                 intent = new Intent(this, SendDeviceActivity.class);
+                break;
+            case R.id.bt_send_hm:
+                intent = new Intent(this, SendMsgToHMActivity.class);
                 break;
         }
         startActivity(intent);

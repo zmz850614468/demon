@@ -98,6 +98,28 @@
                 android:gravity="center"
                 android:textSize="17sp" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:gravity="center"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/bt_add"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:text="添  加"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_box_red"
+                android:gravity="center"
+                android:textSize="17sp" />
+
         </LinearLayout>
 
 
@@ -158,4 +180,9 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

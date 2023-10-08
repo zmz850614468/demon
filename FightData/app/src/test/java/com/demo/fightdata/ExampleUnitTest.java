@@ -3,6 +3,7 @@ package com.demo.fightdata;
 import com.demo.fightdata.bean.TypeBean;
 import com.demo.fightdata.strategy.Strategy_1;
 import com.demo.fightdata.strategy.Strategy_2;
+import com.demo.fightdata.strategy.Strategy_3;
 import com.demo.fightdata.strategy.Strategy_test_1;
 import com.demo.fightdata.util.BeanUtil;
 import com.demo.fightdata.util.FileUtil;
@@ -80,31 +81,28 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         List<String> fileNameList = new ArrayList<>();
-        fileNameList.add("OI2309.txt");
-        fileNameList.add("zly#P2309.txt");
-        fileNameList.add("dy#Y2309.txt");
-        fileNameList.add("cp#RM2309.txt");
-
-        fileNameList.add("pvc#V2309.txt");
-        fileNameList.add("bx#PP2309.txt");
-        fileNameList.add("byx#EB2309.txt");
-        fileNameList.add("lwg#RB2310.txt");
-        fileNameList.add("rj#HC2310.txt");
-//        fileNameList.add("");
-//        fileNameList.add("");
-//        fileNameList.add("");
+        fileNameList.add("28#OI2309.txt");
+        fileNameList.add("28#SF2309.txt");
+        fileNameList.add("28#SM2309.txt");
+        fileNameList.add("29#EB2309.txt");
+        fileNameList.add("29#EG2309.txt");
+        fileNameList.add("29#JM2309.txt");
+        fileNameList.add("29#P2309.txt");
+        fileNameList.add("29#PG2309.txt");
+        fileNameList.add("29#V2309.txt");
+        fileNameList.add("29#Y2309.txt");
         try {
             for (String s : fileNameList) {
 
-                List<TypeBean> k5List = FileUtil.parseTxt("E:\\demon\\FightData\\app\\src\\main\\assets\\" + s);
-                System.out.println(s + " -- 5K 数据条数：" + k5List.size());
-                System.out.println(s + " -- 5k策略结果：");
-                Strategy_1.getResult(k5List, "2023/03");
+                List<TypeBean> k5List = FileUtil.parseTxt("E:\\demon\\FightData\\app\\src\\main\\assets\\09\\" + s);
+//                System.out.println(s + " -- 5K 数据条数：" + k5List.size());
+//                System.out.println(s + " -- 5k策略结果：");
+//                Strategy_1.getResult(k5List, "2023/04");
 
 
                 System.out.println(s + " -- 10k策略结果：");
                 List<TypeBean> k10List = BeanUtil.k5To(k5List, 10);
-                Strategy_2.getResult(k10List, "2023/03");
+                Strategy_2.getResult(k10List, "2023/04");
 
 //                System.out.println(s + " -- 10k L 和 T 策略结果：");
 //                List<TypeBean> k10List = BeanUtil.k5To(k5List, 60);
@@ -120,7 +118,7 @@ public class ExampleUnitTest {
     public void test() {
         try {
 
-            List<TypeBean> k5List = FileUtil.parseTxt("E:\\demon\\FightData\\app\\src\\main\\assets\\zly#P2309.txt");
+            List<TypeBean> k5List = FileUtil.parseTxt("E:\\demon\\FightData\\app\\src\\main\\assets\\09\\28#OI2309.txt");
 //            List<TypeBean> k5List = FileUtil.parseTxt("E:\\demon\\FightData\\app\\src\\main\\assets\\test.txt");
 //            System.out.println(" -- 5K 数据条数：" + k5List.size());
 //            System.out.println(" -- 5k策略结果：");
@@ -132,7 +130,7 @@ public class ExampleUnitTest {
 //            for (TypeBean b : k10List) {
 //                System.out.println(String.format("%s -- %5d", b.date, b.end));
 //            }
-            Strategy_test_1.getResult(k10List, "2023/03");
+            Strategy_3.getResult(k10List, "2023/04");
 
         } catch (Exception e) {
             e.printStackTrace();

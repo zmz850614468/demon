@@ -38,6 +38,15 @@ public class StringUtil {
     }
 
     /**
+     * @return 获取系统时间格式："MM-dd"
+     */
+    public static String getMonthDay() {
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        return format.format(date);
+    }
+
+    /**
      * @return 获取系统时间格式："yy-MM-dd"
      */
     public static String getDay(Date date) {
@@ -45,6 +54,7 @@ public class StringUtil {
 //        Date date = new Date(System.currentTimeMillis());
         return format.format(date);
     }
+
 
     /**
      * @return 获取系统时间格式："yy-MM-dd"

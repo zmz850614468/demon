@@ -18,4 +18,11 @@
         android:layout_marginTop="30dp"
         android:text="数据发送设备" />
 
+    <Button
+        android:id="@+id/bt_send_hm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:text="发送数据到鸿蒙设备" />
+
 </LinearLayout>
