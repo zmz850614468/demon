@@ -1,5 +1,4 @@
 import dataPreferences from '@ohos.data.preferences';
-// import dataPreferences from '@ohos.data.storage';
 import promptAction from '@ohos.promptAction';
 import Logger from '../common/util/Logger';
 
@@ -11,6 +10,12 @@ export let BASIC: string = 'basic'
 export let FU_LI: string = 'fuLi'
 
 export let COUNT: string = 'count'
+
+export let TARGET_LIST: string = 'targetList'
+
+export let OPERATE_LIST: string = 'operateList'
+
+export let HANDS_LIST: string = 'handsList'
 
 class PreferenceModel {
 
@@ -48,18 +53,18 @@ class PreferenceModel {
    * Get preference data.
    */
   async get(key: string) {
-    let fruit;
+    let value;
     if (preference === null) {
       await this.getPreferencesFromStorage();
     }
     try {
       // Logger.error('tag', 'has key : ' + key + ' -- ' + preference.has(key))
-      fruit = <string> await preference.get(key, null);
+      value = <string> await preference.get(key, null);
     } catch (err) {
       Logger.error('tag', `Failed to get value, Cause: ${err}`);
     }
 
-    return fruit;
+    return value;
   }
 
   /**

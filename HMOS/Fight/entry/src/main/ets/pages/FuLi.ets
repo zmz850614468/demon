@@ -1,16 +1,18 @@
 import FuLiBean from '../common/bean/FuLiBean';
-import PreferenceModel from '../model/PreferenceModel';
+import PreferenceModel, { TARGET_LIST } from '../model/PreferenceModel';
 import Logger from '../common/util/Logger';
 import { BASIC, FU_LI, COUNT } from '../model/PreferenceModel';
+import StringUtil from '../common/util/StringUtil';
+import Toast from '../common/util/Toast';
 
 @Entry
 @Component
 struct FuLi {
   @State fuLiBeanList: Array<FuLiBean> = [];
-  isInit: boolean = false
   @State basic: number = 1.0
   @State fuLi: number = 1.2;
   @State count: number = 12;
+  @State targetList: Array<FuLiBean> = []
 
   /**
    * 每次显示页面时，加载数据
@@ -36,6 +38,10 @@ struct FuLi {
     })
   }
 
+  aboutToAppear() {
+    this.initData()
+  }
+
   /**
    * 每次退出时，保存数据
    */
@@ -45,8 +51,9 @@ struct FuLi {
     PreferenceModel.save(COUNT, this.count)
   }
 
-  initData() {
-    this.isInit = true
+  private async initData() {
+    let listValue = await PreferenceModel.get(TARGET_LIST)
+    Object.assign(this.targetList, JSON.parse(listValue))
   }
 
   /**
@@ -61,11 +68,12 @@ struct FuLi {
     for (let i = 0; i < 3; i++) {
       fl += 0.01
       let result = this.basic * Math.pow(fl, this.count)
-      let bean = new FuLiBean((i + 1) + '', this.basic + '', Math.round(fl * 100 - 100) + '%', this.count + '', Math.round(result * 100) / 100 + '')
+      let bean = new FuLiBean((i + 1).toString(), this.basic.toString(), Math.round(fl * 100 - 100) + '%', this.count.toString(), result.toFixed(2))
       this.fuLiBeanList.push(bean)
     }
-
   }
+
+  private lastTime: number = 0
 
   build() {
     Column() {
@@ -96,9 +104,51 @@ struct FuLi {
         ForEach(this.fuLiBeanList, (item: FuLiBean) => {
           ListItem() {
             this.fuLiLayout(item)
-          }
+          }.onClick(async (e) => {
+            let time = e.timestamp
+            if (time - this.lastTime < 300000000) {
+              let bean = new FuLiBean((await StringUtil.getDayTimeAsync()).slice(2), item.basic, item.fuLi, item.count, item.result)
+              this.targetList.push(bean)
+              if (this.targetList.length > 5) {
+                this.targetList.shift()
+              }
+
+              PreferenceModel.save(TARGET_LIST, JSON.stringify(this.targetList))
+              Toast.show('数据添加成功')
+            }
+            this.lastTime = time
+          })
         })
       }
+
+      Stack() {
+        List({ space: 1 }) {
+          ForEach(this.targetList, (item) => {
+            ListItem() {
+              this.fuLiLayout(item)
+            }.onClick((e) => {
+              let time = e.timestamp
+              if (time - this.lastTime < 300000000) {
+                AlertDialog.show({
+                  title: "注意",
+                  message: "确定删除改数据吗？",
+                  confirm: {
+                    value: "确定",
+                    action: () => {
+                      let index = this.targetList.indexOf(item)
+                      this.targetList.splice(index, 1)
+                      PreferenceModel.save(TARGET_LIST, JSON.stringify(this.targetList))
+                    },
+                  }
+                })
+              }
+              this.lastTime = time
+            })
+          })
+        }
+      }.width('100%')
+      .height('51%')
+      .align(Alignment.Bottom)
     }
   }
 

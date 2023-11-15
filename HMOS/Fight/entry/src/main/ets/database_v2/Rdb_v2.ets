@@ -137,4 +137,13 @@ export default class Rdb_v2 {
       resultSet.close();
     });
   }
+
+  /**
+   * 执行sql语句
+   * @param sql
+   * @param callback
+   */
+  exeSql(sql: string) {
+    this.rdbStore.executeSql(sql)
+  }
 }

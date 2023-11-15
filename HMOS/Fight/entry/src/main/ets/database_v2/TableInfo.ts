@@ -1,0 +1,5 @@
+export declare interface TableInfo {
+  tableName: string
+  sqlCreateTable: string
+  columns: Array<string>
+}

@@ -51,6 +51,11 @@
     {
       "name": "deepGreen",
       "value": "#006600"
+    },
+
+    {
+      "name": "red_01",
+      "value": "#b3424a"
     }
   ]
 }

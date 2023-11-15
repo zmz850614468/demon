@@ -4,23 +4,9 @@ import BaseTable_v2 from '../database_v2/BaseTable_v2'
 
 @Component
 export default struct ResultEach {
-  @State operateList: Array<OperateBean> = null
-  table: BaseTable_v2<OperateBean>
-
-  /**
-   * 加载前初始化数据
-   */
-  aboutToAppear() {
-    this.table = new BaseTable_v2(OperateBean.TABLE_NAME, OperateBean.SQL, OperateBean.COLUMNS, (b: boolean) => {
-      // Logger.error("tag", "数据表初始化结果：" + b)
-      this.table.queryAll(new OperateBean(), (list: Array<OperateBean>) => {
-        this.operateList = list.reverse()
-      })
-    })
-  }
+  operateList: Array<OperateBean> = null
 
   build() {
-    // Stack({ alignContent: Alignment.TopStart }) {
     Column() {
       Row() {
         Text('时间')
@@ -37,11 +23,11 @@ export default struct ResultEach {
         ForEach(this.operateList, (item: OperateBean) => {
           ListItem() {
             Row() {
-              Text(item.getDay() + "")
+              Text(item.getDay().toString())
                 .textItem()
               Text(item.name)
                 .textItem()
-              Text(item.result + "")
+              Text(item.result.toString())
                 .textItem()
             }
           }

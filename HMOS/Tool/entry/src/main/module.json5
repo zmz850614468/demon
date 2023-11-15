@@ -1,5 +1,14 @@
 {
   "module": {
+    // 权限管理
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      }
+    ],
+    // 依赖
+    "dependencies": [
+    ],
     "name": "entry",
     "type": "entry",
     "description": "$string:module_desc",

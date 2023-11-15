@@ -81,7 +81,6 @@ export default class BaseTable_v2<T extends DBBaseBean> {
     this.rdbTable.query(predicates, function (resultSet) {
       let count = resultSet.rowCount;
       if (count === 0 || typeof count === 'string') {
-        // console.log(`${CommonConstants.TABLE_TAG}` + 'Query no results!');
         callback([]);
       } else {
         resultSet.goToFirstRow();

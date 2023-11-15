@@ -29,11 +29,6 @@ export default class BaseTable_v2<T extends DBBaseBean> {
     this.columns = columns
     this.rdbTable = new Rdb_v2(tableName, sqlCreateTable, columns);
     this.rdbTable.getRdbStore(callback);
-
-    // this.tableName = DBBaseBean.TABLE_NAME
-    // this.columns = DBBaseBean.COLUMNS
-    // this.rdbTable = new Rdb_v2(DBBaseBean.TABLE_NAME, DBBaseBean.SQL, DBBaseBean.COLUMNS);
-    // this.rdbTable.getRdbStore(callback);
   }
 
   getRdbStore(callback?: Function) {
@@ -85,7 +80,6 @@ export default class BaseTable_v2<T extends DBBaseBean> {
     this.rdbTable.query(predicates, function (resultSet) {
       let count = resultSet.rowCount;
       if (count === 0 || typeof count === 'string') {
-        // console.log(`${CommonConstants.TABLE_TAG}` + 'Query no results!');
         callback([]);
       } else {
         resultSet.goToFirstRow();
@@ -100,6 +94,15 @@ export default class BaseTable_v2<T extends DBBaseBean> {
         callback(result);
       }
     });
+  }
+
+  /**
+   * 执行sql语句
+   * @param sql
+   * @param callback
+   */
+  exeSql(sql: string) {
+    this.rdbTable.exeSql(sql)
   }
 
   generateBucket(account: T) {

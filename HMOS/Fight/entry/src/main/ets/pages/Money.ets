@@ -2,7 +2,6 @@ import Toast from '../common/util/Toast';
 import BaseTable_v2 from '../database_v2/BaseTable_v2';
 import MoneyBean from '../database_v2/bean/MoneyBean';
 import Logger from '../common/util/Logger'
-import systemDateTime from '@ohos.systemDateTime';
 import StringUtil from '../common/util/StringUtil';
 
 @Entry
@@ -28,7 +27,7 @@ struct Money {
    * 异步获取时间
    */
   private async getDate() {
-    this.date = await StringUtil.getDayTime()
+    this.date = await StringUtil.getDayTimeAsync()
   }
 
   /**
@@ -141,20 +140,28 @@ struct Money {
             Row() {
               Text(item.date)
                 .textItem()
-              Text(item.result + '')
+              Text(item.result.toString())
                 .textItem()
               Text(item.memo)
                 .textItem()
             }.onClick((e) => {
-              Camera
               Logger.error('tag', 'time:' + e.timestamp) // 返回的是纳秒级 数据
               if (e.timestamp - this.lastClickTime < 300000000) {
-                this.table.deleteData(item, (num) => {
-                  if (num > 0) {
-                    this.refreshData()
-                    Toast.show('删除成功')
-                  } else {
-                    Toast.show('删除失败')
+                AlertDialog.show({
+                  title: "注意",
+                  message: "确定删除改数据吗？",
+                  confirm: {
+                    value: "确定",
+                    action: () => {
+                      this.table.deleteData(item, (num) => {
+                        if (num > 0) {
+                          this.refreshData()
+                          Toast.show('删除成功')
+                        } else {
+                          Toast.show('删除失败')
+                        }
+                      })
+                    },
                   }
                 })
               }
@@ -174,4 +181,6 @@ struct Money {
   .textAlign(TextAlign.Center)
   .fontColor($r('app.color.black'))
 }
+
+
 

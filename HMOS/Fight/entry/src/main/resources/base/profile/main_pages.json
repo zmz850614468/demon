@@ -5,6 +5,8 @@
     "pages/FuLi",
     "pages/OperateResult",
     "pages/ReceiverData",
-    "pages/Money"
+    "pages/Money",
+    "pages/DataAnalysis",
+    "pages/Operate"
   ]
 }

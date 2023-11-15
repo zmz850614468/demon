@@ -13,7 +13,11 @@ export default class OperateBean implements DBBaseBean {
   name: string // 名称
   type: string // 类型：入手、出手
   // isRight: boolean
-  result: number
+  result: number = 0
+
+  hands: number = 0 // 手
+  inPrice: number = 0
+  outPrice: number = 0
 
   /**
    * 解析数据库返回的数据信息

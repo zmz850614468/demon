@@ -4,16 +4,7 @@ import DayOperateBean from '../database_v2/bean/DayOperateBean'
 @Preview
 @Component
 export default struct ResultDay {
-  @State dayOperateList: Array<DayOperateBean> = null
-  table: BaseTable_v2<DayOperateBean>
-
-  aboutToAppear() {
-    this.table = new BaseTable_v2(DayOperateBean.TABLE_NAME, DayOperateBean.SQL, DayOperateBean.COLUMNS, (b: boolean) => {
-      this.table.queryAll(new DayOperateBean(), (list: Array<DayOperateBean>) => {
-        this.dayOperateList = list.reverse()
-      })
-    })
-  }
+  dayOperateList: Array<DayOperateBean> = null
 
   build() {
     Column() {

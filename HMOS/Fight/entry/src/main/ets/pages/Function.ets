@@ -1,36 +1,70 @@
 import router from '@ohos.router'
 import Logger from '../common/util/Logger';
 import Notification from '@ohos.notificationManager';
+import Rdb_v3 from '../database_v2/Rdb_v3';
+import TestBean from '../database_v2/bean/TestBean';
+import Toast from '../common/util/Toast';
 
 @Entry
 @Component
 struct Function {
-  // onPageShow() {
-  //   Logger.error("tag", "Function  onPageShow()")
-  // }
-  //
-  // onPageHide() {
-  //   Logger.error("tag", "Function  onPageHide()")
-  // }
-  //
-  aboutToAppear() {
-    Logger.error("tag", "Function  aboutToAppear()")
-  }
+  itemList = []
 
-  aboutToDisappear() {
-    Logger.error("tag", "Function  aboutToDisappear()")
+  aboutToAppear() {
+    this.itemList.push([$r('app.media.fl'), '复利', 'pages/FuLi'])
+    this.itemList.push([$r('app.media.fy'), '交易费用', 'pages/Cost'])
+    this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
+    this.itemList.push([$r('app.media.crj'), '出入金', 'pages/Money'])
+    this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
+    this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
+    this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
+
+    // Logger.error('tag', null ? 'null = true' : 'null = false')
+    // Logger.error('tag', undefined ? 'undefined = true' : 'undefined = false')
+    // Logger.error('tag', 'undefined' ? 'str = true' : 'str = false')
+
+    let table = new Rdb_v3(TestBean.info, (b) => {
+      Toast.show('表初始化：' + b)
+      let bean = new TestBean()
+      bean.date = "2023-11-15"
+      bean.result = -8888
+      bean.memo = '测试'
+      let bean2 = new TestBean()
+      bean2.date = "2023-11-15"
+      bean2.result = -6666
+      bean2.memo = '测试'
+
+      table.batchInsertData([bean, bean2])
+      // table.deleteData(table)
+      // table.insertData(bean)
+
+
+      table.query(TestBean, (list: Array<TestBean>) => {
+        list.forEach((item) => {
+          Logger.error('tag', JSON.stringify(item))
+        })
+      })
+
+
+    })
+
   }
 
   build() {
-    Column({ space: 15 }) {
-
-      // this.rowItem($r('app.media.exchange'), '数据接收', 'pages/ReceiverData')
-      this.rowItem($r('app.media.crj'), '出入金', 'pages/Money')
-      this.rowItem($r('app.media.fl'), '复利', 'pages/FuLi')
-      this.rowItem($r('app.media.fy'), '交易费用', 'pages/Cost')
-      this.rowItem($r('app.media.ic_record'), '历史详情', 'pages/OperateResult')
-      // this.rowItem($r('app.media.ic_memo'), '当前操作', 'pages/')
-    }
+    Column() {
+      Grid() {
+        ForEach(this.itemList, (item, index) => {
+          GridItem() {
+            this.rowItem(item[0], item[1], item[2])
+          }
+        })
+      }
+      .align(Alignment.Center)
+      .layoutDirection(GridDirection.Row)
+      .maxCount(3)
+      .minCount(3)
+      .rowsGap(20)
+    }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
   }
 
   /**
@@ -39,35 +73,29 @@ struct Function {
    * @param text
    * @param path
    */
-  @Builder rowItem(res: Resource, text: string, path: string) {
-    Row() {
+  @Builder
+  rowItem(res: Resource, text: string, path: string) {
+    Column() {
       Image(res)
-        .width(40)
-        .height(40)
+        .width(50)
+        .height(50)
+
       Text(text)
-        .fontSize(19)
-        .margin({ left: 5 })
-        .height(40)
-        .width('100%')
-        .padding({ left: 10 })
-        .onClick(() => {
-          router.pushUrl({ url: path })
-          this.test()
-        })
+        .fontSize(17)
+        .margin({ left: 0, right: 0, top: 10, bottom: 0 })
+        .textAlign(TextAlign.Center)
     }
-    .height(50)
-    .width('100%')
-    .padding({ left: 20, top: 5, bottom: 5 })
-    .justifyContent(FlexAlign.Start)
+    .width('33%')
+    .height(85)
+    .onClick(() => {
+      router.pushUrl({ url: path })
+    })
   }
 
   // table: BaseTable_v2<OperateBean>
-
   // model = new WebSocketModel(new DBWebSocketListener())
 
   test() {
-
-
     // let inter = 5 // 间隔时间
     // let isTiped = false
     // setInterval(() => {
@@ -87,7 +115,6 @@ struct Function {
     //     }
     //   })
     // }, 1000)
-
 
     // new HttpModel().getRequest("http://192.168.35.90:8900/svr-external/fabricReport/report4FKKZ?bjdjh=100981&bjrq=2022-04-12&ph=11&lydjlx=624&lydjid=2707019&userid=26965",
     //   (code: number, err) => {
