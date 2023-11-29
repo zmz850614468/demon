@@ -1,15 +1,9 @@
 import relationalStore from '@ohos.data.relationalStore'
+import { TableInfo } from './TableInfo';
 
 /**
  * api-9 后发布的
  */
-
-declare class TableInfo {
-  tableName: string
-  sqlCreateTable: string
-  columns: Array<string>
-}
-
 export default class Rdb_v3 {
   static readonly STORE_CONFIG = {
     name: "demon.db",
@@ -59,7 +53,7 @@ export default class Rdb_v3 {
    * @param objs 表对象组
    * @param callback
    */
-  batchInsertData(objs: [], callback?: (Array) => void) {
+  batchInsertData(objs: Array<any>, callback?: (Array) => void) {
     let bucketArray = []
     objs.forEach((obj) => {
       bucketArray.push(this.generateBucket(obj))
@@ -107,10 +101,10 @@ export default class Rdb_v3 {
 
   /**
    * 查询数据
-   * @param clazz 表累
+   * @param clazz 表类
    * @param callback 表对象数组
    */
-  query(clazz: any, callback?: (Array) => void) {
+  queryAll(clazz: any, callback: (Array) => void) {
     let predicates = new relationalStore.RdbPredicates(this.tableInfo.tableName);
 
     this.rdbStore.query(predicates, this.tableInfo.columns, function (err, resultSet) {
@@ -131,13 +125,12 @@ export default class Rdb_v3 {
           callback(result);
         }
 
-        callback(resultSet);
         resultSet.close();
       }
     });
   }
 
-  generateBucket(account: any) {
+  private generateBucket(account: any) {
     let obj = {};
     this.tableInfo.columns.forEach((item) => {
       if (item != 'id') {

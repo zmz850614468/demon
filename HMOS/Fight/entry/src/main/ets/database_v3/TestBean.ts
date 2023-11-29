@@ -1,5 +1,5 @@
-import DBBaseBean from '../DBBaseBean'
-import { TableInfo } from '../TableInfo'
+import DBBaseBean from '../database_v2/DBBaseBean'
+import { TableInfo } from './TableInfo'
 
 /**
  * 数据库对象:出入金结果

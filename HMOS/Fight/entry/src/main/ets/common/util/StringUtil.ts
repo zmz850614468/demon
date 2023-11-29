@@ -20,6 +20,15 @@ export default class StringUtil {
   }
 
   /**
+   * 获取 年-月-日 时间信息
+   * @returns
+   */
+  static getHourTime(time: number): string {
+    let date = new Date(time)
+    return date.getHours() + ':' + date.getMinutes()
+  }
+
+  /**
    * 获取 年 时间信息
    * @returns
    */
@@ -36,5 +45,4 @@ export default class StringUtil {
     let date = new Date(time)
     return date.getMonth() + 1
   }
-
 }

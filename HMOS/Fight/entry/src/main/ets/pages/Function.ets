@@ -1,14 +1,26 @@
 import router from '@ohos.router'
 import Logger from '../common/util/Logger';
 import Notification from '@ohos.notificationManager';
-import Rdb_v3 from '../database_v2/Rdb_v3';
-import TestBean from '../database_v2/bean/TestBean';
+import Rdb_v3 from '../database_v3/Rdb_v3';
+import TestBean from '../database_v3/TestBean';
 import Toast from '../common/util/Toast';
+import systemDateTime from '@ohos.systemDateTime';
+import StringUtil from '../common/util/StringUtil';
+import window from '@ohos.window';
 
 @Entry
 @Component
 struct Function {
+  @State isOn: boolean = false
+  timerId: number
   itemList = []
+
+  // onPageShow() {
+  //   window.getLastWindow(getContext(this), (err, w) => {
+  //     let pro = w.getWindowProperties()
+  //       w.setWindowColorSpace(window.ColorSpace.WIDE_GAMUT)
+  //   })
+  // }
 
   aboutToAppear() {
     this.itemList.push([$r('app.media.fl'), '复利', 'pages/FuLi'])
@@ -19,52 +31,63 @@ struct Function {
     this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
     this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
 
-    // Logger.error('tag', null ? 'null = true' : 'null = false')
-    // Logger.error('tag', undefined ? 'undefined = true' : 'undefined = false')
-    // Logger.error('tag', 'undefined' ? 'str = true' : 'str = false')
-
-    let table = new Rdb_v3(TestBean.info, (b) => {
-      Toast.show('表初始化：' + b)
-      let bean = new TestBean()
-      bean.date = "2023-11-15"
-      bean.result = -8888
-      bean.memo = '测试'
-      let bean2 = new TestBean()
-      bean2.date = "2023-11-15"
-      bean2.result = -6666
-      bean2.memo = '测试'
-
-      table.batchInsertData([bean, bean2])
-      // table.deleteData(table)
-      // table.insertData(bean)
-
-
-      table.query(TestBean, (list: Array<TestBean>) => {
-        list.forEach((item) => {
-          Logger.error('tag', JSON.stringify(item))
-        })
-      })
-
-
-    })
-
   }
 
   build() {
-    Column() {
-      Grid() {
-        ForEach(this.itemList, (item, index) => {
-          GridItem() {
-            this.rowItem(item[0], item[1], item[2])
+    Stack({ alignContent: Alignment.TopStart }) {
+      Column() {
+        Grid() {
+          ForEach(this.itemList, (item, index) => {
+            GridItem() {
+              this.rowItem(item[0], item[1], item[2])
+            }
+          })
+        }
+        .align(Alignment.Center)
+        .layoutDirection(GridDirection.Row)
+        .maxCount(3)
+        .minCount(3)
+        .rowsGap(20)
+      }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
+
+      Toggle({ type: ToggleType.Checkbox, isOn: this.isOn })
+        .onChange((isOn) => {
+          this.isOn = isOn
+          if (this.isOn) {
+            this.startTime()
+          } else {
+            clearInterval(this.timerId)
           }
         })
-      }
-      .align(Alignment.Center)
-      .layoutDirection(GridDirection.Row)
-      .maxCount(3)
-      .minCount(3)
-      .rowsGap(20)
-    }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
+        .height(20)
+        .margin({ left: 15, right: 0, top: 15, bottom: 0 })
+    }
+  }
+
+  /**
+   * 启动计时器
+   */
+  startTime() {
+    let inter = 5 // 间隔时间
+    let isTiped = false
+    this.timerId = setInterval(() => {
+      systemDateTime.getCurrentTime((err, time) => {
+        if (err) {
+          Logger.error('tag', 'err = ' + JSON.stringify(err))
+        } else {
+          let temp = StringUtil.getHourTime(time)
+          time /= 1000
+          time %= inter * 60
+          if (!isTiped && time > (inter - 1) * 60) {
+            // Logger.error('tag', 'time = ' + time)
+            this.notify("提示", "5分-" + temp)
+            isTiped = true
+          } else if (isTiped && time < 60) {
+            isTiped = false
+          }
+        }
+      })
+    }, 1000)
   }
 
   /**
@@ -116,6 +139,7 @@ struct Function {
     //   })
     // }, 1000)
 
+
     // new HttpModel().getRequest("http://192.168.35.90:8900/svr-external/fabricReport/report4FKKZ?bjdjh=100981&bjrq=2022-04-12&ph=11&lydjlx=624&lydjid=2707019&userid=26965",
     //   (code: number, err) => {
     //     Logger.error('tag', code + " - " + err)
@@ -159,7 +183,7 @@ struct Function {
   private notify(title: string, text: string, additionalText: string = "") {
     //通知Request对象
     let notificationRequest = {
-      id: Math.random() * 1000,
+      id: 2356,
       content: {
         contentType: Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
         normal: {
@@ -167,7 +191,11 @@ struct Function {
           text: text,
           additionalText: additionalText
         }
-      }
+      },
+      tapDismissed: true,
+      groupName: 'Fight',
+      // autoDeletedTime: 2,
+      // isCountDown: true
     };
 
     Notification.publish(notificationRequest)

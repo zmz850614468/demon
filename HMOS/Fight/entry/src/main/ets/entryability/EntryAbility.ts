@@ -16,6 +16,7 @@ export default class EntryAbility extends UIAbility {
   }
 
   onWindowStageCreate(windowStage: window.WindowStage) {
+
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
@@ -26,6 +27,13 @@ export default class EntryAbility extends UIAbility {
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
+
+
+    // app全屏显示
+    // windowStage.getMainWindow((err, windowClass) => {
+    // windowClass.setWindowLayoutFullScreen(true)    // 全屏显示
+    // windowClass.setWindowSystemBarEnable(['navigation']) // 隐藏状态栏
+    // })
   }
 
   onWindowStageDestroy() {

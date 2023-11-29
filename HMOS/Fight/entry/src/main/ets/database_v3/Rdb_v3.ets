@@ -2,6 +2,7 @@ import relationalStore from '@ohos.data.relationalStore'
 import { TableInfo } from './TableInfo';
 
 /**
+ * 数据库操作类
  * api-9 后发布的
  */
 export default class Rdb_v3 {
@@ -35,11 +36,11 @@ export default class Rdb_v3 {
   }
 
   /**
-   * 插入数据
+   * 插入 单条数据
    * @param obj 表对象
    * @param callback -1：插入失败 >0:插入的rowId值
    */
-  insertData(obj: any, callback?: (number) => void) {
+  insertBean(obj: any, callback?: (number) => void) {
     const valueBucket = this.generateBucket(obj)
     this.rdbStore.insert(this.tableInfo.tableName, valueBucket, function (err, rowId) {
       if (callback) {
@@ -67,14 +68,23 @@ export default class Rdb_v3 {
   }
 
   /**
-   * 删除数据
+   * 删除 单条数据
    * @param obj 表对象
    * @param callback >=0:删除了多少条数据
    */
-  deleteData(obj: any, callback?: (number) => void) {
+  deleteBean(obj: any, callback?: (number) => void) {
     let predicates = new relationalStore.RdbPredicates(this.tableInfo.tableName);
     predicates.equalTo('id', obj.id);
 
+    this.delete(predicates, callback)
+  }
+
+  /**
+   * 删除指定条件的数据
+   * @param predicates 条件约束
+   * @param callback
+   */
+  delete(predicates: relationalStore.RdbPredicates, callback: (Array) => void) {
     this.rdbStore.delete(predicates, function (err, rows) {
       if (callback) {
           err ? callback(rows) : callback(rows)
@@ -83,15 +93,25 @@ export default class Rdb_v3 {
   }
 
   /**
-   * 更新数据
+   * 更新 单条数据
    * @param obj 表对象
    * @param callback >=0:更新了多少条数据
    */
-  updateData(obj: any, callback?: (number) => void) {
+  updateBean(obj: any, callback?: (number) => void) {
     let predicates = new relationalStore.RdbPredicates(this.tableInfo.tableName);
     predicates.equalTo('id', obj.id);
 
     const valueBucket = this.generateBucket(obj)
+    this.update(valueBucket, predicates, callback)
+  }
+
+  /**
+   * 更新 批量数据
+   * @param valueBucket 键值对对象，需要更新的数据
+   * @param predicates 条件约束
+   * @param callback
+   */
+  update(valueBucket: any, predicates: relationalStore.RdbPredicates, callback?: (number) => void) {
     this.rdbStore.update(valueBucket, predicates, function (err, rows) {
       if (callback) {
           err ? callback(rows) : callback(rows)
@@ -101,12 +121,22 @@ export default class Rdb_v3 {
 
   /**
    * 查询数据
-   * @param clazz 表累
+   * @param clazz 表类
    * @param callback 表对象数组
    */
-  query(clazz: any, callback: (Array) => void) {
-    let predicates = new relationalStore.RdbPredicates(this.tableInfo.tableName);
+  queryAll(clazz: any, callback: (Array) => void) {
+    let predicates = new relationalStore.RdbPredicates(this.tableInfo.tableName)
 
+    this.query(clazz, predicates, callback)
+  }
+
+  /**
+   * 指定条件查询数据
+   * @param clazz 查询的数据类型
+   * @param predicates 条件约束
+   * @param callback
+   */
+  query(clazz: any, predicates: relationalStore.RdbPredicates, callback: (Array) => void) {
     this.rdbStore.query(predicates, this.tableInfo.columns, function (err, resultSet) {
       if (!err) {
         let count = resultSet.rowCount;
@@ -130,7 +160,15 @@ export default class Rdb_v3 {
     });
   }
 
-  generateBucket(account: any) {
+  /**
+   * 获取 限制条件对象，就是 where 后添加的约束条件
+   * @returns 条件约束
+   */
+  getPredicates(): relationalStore.RdbPredicates {
+    return new relationalStore.RdbPredicates(this.tableInfo.tableName)
+  }
+
+  private generateBucket(account: any) {
     let obj = {};
     this.tableInfo.columns.forEach((item) => {
       if (item != 'id') {
@@ -141,6 +179,6 @@ export default class Rdb_v3 {
   }
 
   getColumns(): Array<string> {
-    return this.tableInfo.columns;
+    return this.tableInfo.columns
   }
 }

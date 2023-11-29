@@ -93,7 +93,7 @@ class PreferenceModel {
   /**
    * 获取 Array[] 数据
    * @param key
-   * @returns 对象数据
+   * @returns 对象数据 - 不是基础数据对象
    */
   async getObjArray(key: string, array: Array<Object>) {
     let value = await this.get(key)

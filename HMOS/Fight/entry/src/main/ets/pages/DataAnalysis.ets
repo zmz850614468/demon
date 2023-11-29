@@ -8,6 +8,7 @@ import DataParse_IO_10 from '../dataAnalysis/DataParse_IO_10';
 import DataParse_P_10 from '../dataAnalysis/DataParse_P_10';
 import DataParse_IO_5 from '../dataAnalysis/DataParse_IO_5';
 import { SingleSelectDialog } from '../dialog/SingleSelectDialog';
+import CircleView from '../component/CircleView';
 
 @Entry
 @Component
@@ -152,7 +153,7 @@ struct DataAnalysis {
           .height(45)
 
           if (this.recordResult !== null) {
-            ForEach([this.recordResult], (item) => {
+            ForEach([this.recordResult], (item: RecordResult) => {
               Row() {
                 RecordView({ name: '月低点榜', list: item.monthLowList })
               }
@@ -188,7 +189,12 @@ struct RecordView {
         .fontSize(17)
         .textAlign(TextAlign.Center)
         .width('100%')
-        .height(40)
+        .height(35)
+
+      // CircleView({ values: RecordResult.getValues(this.list), disArr: RecordResult.getDisArr(this.list) })
+      //   .width('100%')
+      //   .height(190)
+      //   .margin({ left: 0, right: 0, top: 5, bottom: 0 })
 
       List({ space: 1 }) {
         ForEach(this.list, (item: RecordBean, index) => {
@@ -206,7 +212,7 @@ struct RecordView {
                 .width('55%')
                 .height('100%')
 
-              Text(item.record.toString())
+              Text(item.record == 0 ? '' : item.record.toString())
                 .fontSize(17)
                 .textAlign(TextAlign.Center)
                 .width('30%')
@@ -217,6 +223,7 @@ struct RecordView {
         })
       }
     }
+    .align(Alignment.Top)
     .borderWidth(1)
     .borderRadius(15)
     .borderColor($r("app.color.gray"))

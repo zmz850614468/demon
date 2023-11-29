@@ -1,0 +1,18 @@
+
+1.hdc list targets    // 查询连接的设备信息
+
+2.hdc install [file]    // 安装应用到设备上
+
+
+
+
+
+
+
+
+
+
+
+
+
+

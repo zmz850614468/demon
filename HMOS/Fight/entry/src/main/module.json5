@@ -3,7 +3,13 @@
     "requestPermissions": [
       {
         "name": "ohos.permission.INTERNET"
-      }
+      },
+      {
+        "name": "ohos.permission.PUBLISH_AGENT_REMINDER"
+      },
+//      {
+//        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW"
+//      }
     ],
     "dependencies": [
     ],
@@ -14,6 +20,12 @@
     "deviceTypes": [
       "phone",
       "tablet"
+    ],
+    "metadata": [
+      {
+        "name": "EasyGoClient",
+        "value": "true"
+      }
     ],
     "deliveryWithInstall": true,
     "installationFree": false,

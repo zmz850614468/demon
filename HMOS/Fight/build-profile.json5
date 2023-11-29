@@ -1,5 +1,6 @@
 {
   "app": {
+
     "signingConfigs": [
       {
         "name": "default",

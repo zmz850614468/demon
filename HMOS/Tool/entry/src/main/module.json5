@@ -2,9 +2,46 @@
   "module": {
     // 权限管理
     "requestPermissions": [
+//      {
+//        "name": "ohos.permission.ACCESS_IDS"
+//      },
       {
         "name": "ohos.permission.INTERNET"
-      }
+      },
+      {
+        "name": "ohos.permission.GET_WIFI_INFO"
+      },
+      {
+        "name": "ohos.permission.SET_WIFI_INFO"
+      },
+      //      {
+      //        "name": "ohos.permission.GET_WIFI_CONFIG"
+      //      },
+      {
+        "name": "ohos.permission.APPROXIMATELY_LOCATION"
+      },
+      {
+        "name": "ohos.permission.LOCATION",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "always"
+        },
+      },
+      {
+        "name": "ohos.permission.LOCATION_IN_BACKGROUND"
+      },
+//      {
+//        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW",
+//        "usedScene": {
+//          "abilities": [
+//            "EntryAbility"
+//          ],
+//          "when": "inuse"
+//        }
+//      }
     ],
     // 依赖
     "dependencies": [
@@ -39,6 +76,10 @@
               "action.system.home"
             ]
           }
+        ],
+        "supportWindowMode": [
+          "fullscreen",
+          "split"
         ]
       }
     ]

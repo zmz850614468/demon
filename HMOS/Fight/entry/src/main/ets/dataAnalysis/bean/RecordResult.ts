@@ -23,6 +23,26 @@ export default class RecordResult {
   // 高亏损操作
   lossOperateList: Array<RecordBean> = []
 
+  static getValues(list: Array<RecordBean>): Array<number> {
+    let values: Array<number> = []
+    list.forEach((bean) => {
+      if (bean.record != 0) {
+        values.push(Math.abs(bean.record))
+      }
+    })
+    return values;
+  }
+
+  static getDisArr(list: Array<RecordBean>): Array<string> {
+    let disArr: Array<string> = []
+    list.forEach((bean) => {
+      if (bean.record != 0) {
+        disArr.push(bean.time + ' : ' + bean.record)
+      }
+    })
+    return disArr;
+  }
+
   constructor() {
 
     this.monthLowList.push(new RecordBean())

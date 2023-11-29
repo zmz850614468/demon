@@ -13,8 +13,8 @@ export default class HttpModel {
     expectDataType: http.HttpDataType.STRING, // 可选，指定返回数据的类型
     usingCache: true, // 可选，默认为true
     priority: 1, // 可选，默认为1
-    connectTimeout: 30000, // 可选，默认为60000ms
-    readTimeout: 30000, // 可选，默认为60000ms
+    connectTimeout: 20000, // 可选，默认为60000ms
+    readTimeout: 20000, // 可选，默认为60000ms
     usingProtocol: http.HttpProtocol.HTTP1_1, // 可选，协议类型默认值由系统自动指定
   }
 
@@ -24,7 +24,7 @@ export default class HttpModel {
    * @param errBack
    * @param dataBack
    */
-  getRequest(url: string, errBack, dataBack) {
+  getRequest(url: string, errBack: (number, string) => void, dataBack: (data: any) => void) {
     this.option.method = http.RequestMethod.GET
 
     let request = http.createHttp()
@@ -39,7 +39,7 @@ export default class HttpModel {
    * post 请求方式
    * @param url
    */
-  postRequest(url: string, errBack, dataBack) {
+  postRequest(url: string, errBack: (number, string) => void, dataBack: (data: any) => void) {
     this.option.method = http.RequestMethod.POST
 
     let request = http.createHttp()
@@ -56,7 +56,7 @@ export default class HttpModel {
    * @param dataBack
    * @returns
    */
-  private getResultFunction(request: http.HttpRequest, errBack, dataBack) {
+  private getResultFunction(request: http.HttpRequest, errBack: (number, string) => void, dataBack: (data: any) => void) {
     return (err, data) => {
       if (err) {
         errBack(err.code, err.message)

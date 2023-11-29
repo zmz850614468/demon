@@ -1,10 +1,11 @@
 {
   "app": {
+    "bundleType": "app",
     "bundleName": "com.demon.fight_hm",
     "vendor": "example",
     "versionCode": 1000000,
     "versionName": "1.0.0",
     "icon": "$media:app_icon",
-    "label": "$string:app_name"
+    "label": "$string:app_name",
   }
 }

@@ -108,9 +108,9 @@ struct FuLi {
             let time = e.timestamp
             if (time - this.lastTime < 300000000) {
               let bean = new FuLiBean((await StringUtil.getDayTimeAsync()).slice(2), item.basic, item.fuLi, item.count, item.result)
-              this.targetList.push(bean)
+              this.targetList.unshift(bean)
               if (this.targetList.length > 5) {
-                this.targetList.shift()
+                this.targetList.pop()
               }
 
               PreferenceModel.save(TARGET_LIST, JSON.stringify(this.targetList))

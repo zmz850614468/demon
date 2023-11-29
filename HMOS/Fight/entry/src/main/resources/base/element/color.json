@@ -56,6 +56,18 @@
     {
       "name": "red_01",
       "value": "#b3424a"
+    },
+    {
+      "name": "circle_1",
+      "value": "#F8AF0B"
+    },
+    {
+      "name": "circle_2",
+      "value": "#F3460E"
+    },
+    {
+      "name": "circle_3",
+      "value": "#E755AE"
     }
   ]
 }
