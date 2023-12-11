@@ -1,5 +1,29 @@
 {
+  // 权限管理
   "module": {
+    "requestPermissions": [
+      //      {
+      //        "name": "ohos.permission.ACCESS_IDS"
+      //      },
+      {
+        "name": "ohos.permission.INTERNET"
+      },
+      {
+        "name": 'ohos.permission.APPROXIMATELY_LOCATION'
+      },
+      {
+        "name": 'ohos.permission.LOCATION'
+      },
+      {
+        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW",
+        "usedScene": {
+          "abilities": [
+            "FloatAbility"
+          ],
+          "when": "inuse"
+        }
+      }
+    ],
     "name": "entry",
     "type": "entry",
     "description": "$string:module_desc",
@@ -7,6 +31,12 @@
     "deviceTypes": [
       "phone",
       "tablet"
+    ],
+    "metadata": [
+      {
+        "name": "EasyGoClient",
+        "value": "true"
+      }
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
@@ -29,6 +59,31 @@
             "actions": [
               "action.system.home"
             ]
+          }
+        ]
+      },
+      {
+        "name": "FloatAbility",
+        "srcEntry": "./ets/entryability/FloatAbility.ts",
+        "description": "$string:EntryAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:EntryAbility_label",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+      }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "EntryFormAbility",
+        "srcEntry": "./ets/entryformability/EntryFormAbility.ts",
+        "label": "$string:EntryFormAbility_label",
+        "description": "$string:EntryFormAbility_desc",
+        "type": "form",
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:form_config"
           }
         ]
       }

@@ -1,7 +1,7 @@
-import { getCost } from '../common/bean/CostBean'
-import Toast from '../common/util/Toast'
+import { getCost } from '../bean/CostBean'
+import Toast from '../util/Toast'
 import OperateBean from '../database_v2/bean/OperateBean'
-import PreferenceModel, { HANDS_LIST, OPERATE_LIST } from '../model/PreferenceModel'
+import PreferenceModel, { BEST_COMBINATION, HANDS_LIST, OPERATE_LIST } from '../model/PreferenceModel'
 import systemDateTime from '@ohos.systemDateTime'
 import DayOperateBean from '../database_v2/bean/DayOperateBean'
 import BaseTable_v2 from '../database_v2/BaseTable_v2'
@@ -11,9 +11,11 @@ import { HandsSelectDialog } from '../dialog/HandsSelectDialog'
 @Entry
 @Component
 struct Operate {
+  bestCombination: Array<OperateBean> = [] // 最佳组合数据
   @State operateList: Array<OperateBean> = []
   @State isSelectType: boolean = true
-  typeList: Array<string> = ['菜油', '棕榈油', '豆油']
+  // typeList: Array<string> = ['菜油', '棕榈油', '豆油']
+  typeList: Array<string> = []
   @State handsList: Array<number> = []
   inputHands: number = 0
   @State selectBean: OperateBean = null
@@ -27,6 +29,11 @@ struct Operate {
   }
 
   private async initData() {
+    this.bestCombination = await PreferenceModel.getObj(BEST_COMBINATION)
+    this.bestCombination.forEach((bean) => {
+      this.typeList.push(bean.name)
+    })
+
     let value = await PreferenceModel.get(OPERATE_LIST)
     if (value === undefined) {
       let bean = this.getNewBean()
@@ -50,7 +57,9 @@ struct Operate {
     this.negCount = 0
     this.operateResult = 0
     this.poundage = 0
-    this.operateList.forEach((bean) => {
+    let lastIndex = 0 // 最后一个买入不为0的数据
+    let emptyArray = []
+    this.operateList.forEach((bean, index) => {
       if (bean.outPrice > 0) {
         bean.result = (bean.outPrice - bean.inPrice) * bean.hands * 10 * (bean.type == '买入' ? 1 : -1)
         if (bean.result > 0) {
@@ -61,15 +70,46 @@ struct Operate {
         this.operateResult += bean.result
         this.poundage += bean.hands * getCost(bean.name)
       }
+      if (bean.inPrice > 0) {
+        lastIndex = index
+      }
+      if (bean.inPrice == 0) {
+        emptyArray.push(index)
+      }
+    })
 
-      if (this.operateList.length > 0) {
-        let bean = this.operateList[this.operateList.length-1]
-        if (bean.inPrice > 0) {
-          this.operateList.push(this.getNewBean(bean.name, bean.hands))
+    // 空数据全部往后推
+    emptyArray.reverse()
+    emptyArray.forEach((index) => {
+      if (index < lastIndex) {
+        this.operateList.push(this.operateList.splice(index, 1)[0])
+      }
+    })
+
+    // if (emptyArray.length != this.bestCombination.length) {
+    // 需要添加空数据
+    let length = this.operateList.length
+    this.bestCombination.forEach((bean) => {
+      let has = false
+      for (let i = length - emptyArray.length; i < length; i++) {
+        if (bean.name === this.operateList[i].name) {
+          has = true
+          break
         }
       }
-
+      // 数据不存在，则添加
+      if (!has) {
+        this.operateList.push(this.getNewBean(bean.name, bean.hands))
+      }
     })
+    // }
+
+    // if (this.operateList.length > 0) {
+    //   let bean = this.operateList[this.operateList.length-1]
+    //   if (bean.inPrice > 0) {
+    //     this.operateList.push(this.getNewBean(bean.name, bean.hands))
+    //   }
+    // }
 
     this.operateList.push(this.operateList.pop())
     PreferenceModel.save(OPERATE_LIST, JSON.stringify(this.operateList))

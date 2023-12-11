@@ -1,6 +1,6 @@
 import dataPreferences from '@ohos.data.preferences';
 import promptAction from '@ohos.promptAction';
-import Logger from '../common/util/Logger';
+import Logger from '../util/Logger';
 
 let context = getContext(this);
 let preference: dataPreferences.Preferences = null
@@ -16,6 +16,10 @@ export let TARGET_LIST: string = 'targetList'
 export let OPERATE_LIST: string = 'operateList'
 
 export let HANDS_LIST: string = 'handsList'
+
+export let BEST_COMBINATION: string = 'bestCombination'
+
+export let FLOAT_POSITION: string = 'floatPosition'
 
 class PreferenceModel {
 
@@ -66,6 +70,26 @@ class PreferenceModel {
 
     return value;
   }
+
+  /**
+   *  保存 对象 到文件中
+   * @param key
+   * @param value 对象数据
+   */
+  async saveObj(key: string, value: object) {
+    await this.save(key, JSON.stringify(value))
+  }
+
+  /**
+   * 获取 对象 数据
+   * @param key
+   * @returns 对象数据
+   */
+  async getObj(key: string) {
+    let value = await this.get(key)
+    return JSON.parse(value);
+  }
+
 
   /**
    * 提示信息

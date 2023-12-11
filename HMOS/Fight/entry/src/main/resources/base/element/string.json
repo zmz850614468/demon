@@ -11,6 +11,14 @@
     {
       "name": "EntryAbility_label",
       "value": "D"
+    },
+    {
+      "name": "EntryFormAbility_desc",
+      "value": "form_description"
+    },
+    {
+      "name": "EntryFormAbility_label",
+      "value": "form_label"
     }
   ]
 }

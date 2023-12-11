@@ -23,24 +23,24 @@ struct Index {
 
 
     // 多文件下载
-    let downLoad = new DownLoadModel_v2(['https://oos-fj2.ctyunapi.cn/lilanz/showcase.mp4', 'http://tm.lilanz.com/qywx/res/img/appicons/p2.jpg'])
-    downLoad.onProgress = (cur, total) => {
-      this.showLog(cur + '/' + total)
-    }
-    downLoad.onComplete = (url, filePath) => {
-      // this.showLog(url + ' - ' + filePath)
-      // this.saveFile(filePath)
-      // SaveFileToModel.saveMediaTo([filePath])
-      this.showLog('文件下载完成：' + url + ' - ' + filePath)
-    }
-    downLoad.onFailure = (code, msg) => {
-      this.showLog(code + ' - ' + msg)
-    }
-    downLoad.onAllComplete = (urls, filePaths) => {
-      CopyFileToModel.copyMediaTo(filePaths)
-      this.showLog('全部下载完成')
-    }
-    downLoad.startDownLoad()
+    // let downLoad = new DownLoadModel_v2(['https://oos-fj2.ctyunapi.cn/lilanz/showcase.mp4', 'http://tm.lilanz.com/qywx/res/img/appicons/p2.jpg'])
+    // downLoad.onProgress = (cur, total) => {
+    //   this.showLog(cur + '/' + total)
+    // }
+    // downLoad.onComplete = (url, filePath) => {
+    //   // this.showLog(url + ' - ' + filePath)
+    //   // this.saveFile(filePath)
+    //   // SaveFileToModel.saveMediaTo([filePath])
+    //   this.showLog('文件下载完成：' + url + ' - ' + filePath)
+    // }
+    // downLoad.onFailure = (code, msg) => {
+    //   this.showLog(code + ' - ' + msg)
+    // }
+    // downLoad.onAllComplete = (urls, filePaths) => {
+    //   CopyFileToModel.copyMediaTo(filePaths)
+    //   this.showLog('全部下载完成')
+    // }
+    // downLoad.startDownLoad()
   }
 
   startDo() {
@@ -111,8 +111,6 @@ struct Index {
     try {
       atManager.requestPermissionsFromUser(getContext(this), permission, (err, data) => {
         console.info("tag" + JSON.stringify(data));
-        // console.info("data permissions:" + data.permissions);
-        // console.info("data authResults:" + data.authResults);
         callBack(data.authResults)
       });
     } catch (err) {

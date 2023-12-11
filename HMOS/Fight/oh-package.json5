@@ -8,9 +8,5 @@
   "description": "Please describe the basic information.",
   "main": "",
   "version": "1.0.0",
-  "dependencies": {
-    "httpclient": "file:httpclient",
-    "dataORM": "file:dataORM",
-    "@ohos/dataorm": "file:dataORM"
-  }
+  "dependencies": {}
 }

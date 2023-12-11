@@ -1,8 +1,8 @@
-import Toast from '../common/util/Toast';
+import Toast from '../util/Toast';
 import BaseTable_v2 from '../database_v2/BaseTable_v2';
 import MoneyBean from '../database_v2/bean/MoneyBean';
-import Logger from '../common/util/Logger'
-import StringUtil from '../common/util/StringUtil';
+import Logger from '../util/Logger'
+import StringUtil from '../util/StringUtil';
 
 @Entry
 @Component
@@ -17,10 +17,40 @@ struct Money {
 
   aboutToAppear() {
     this.table = new BaseTable_v2(MoneyBean.TABLE_NAME, MoneyBean.SQL, MoneyBean.COLUMNS, (b: boolean) => {
-      Logger.error("tag", "数据表初始化结果：" + b)
+      // Logger.error("tag", "数据表初始化结果：" + b)
+      // this.initData()
       this.refreshData()
     })
     this.getDate()
+  }
+
+  /**
+   * 程序数据历史数据
+   */
+  initData() {
+    let bean = new MoneyBean()
+    bean.date = '2023-10-9'
+    bean.result = -1000
+    bean.memo = '奖励'
+    this.table.insertData(bean, (b) => {
+      // Toast.show('添加数据成功:' + b)
+    })
+
+    bean = new MoneyBean()
+    bean.date = '2023-11-1'
+    bean.result = -1000
+    bean.memo = '奖励'
+    this.table.insertData(bean, (b) => {
+      // Toast.show('添加数据成功:' + b)
+    })
+
+    bean = new MoneyBean()
+    bean.date = '2023-12-7'
+    bean.result = 20000
+    bean.memo = '入金'
+    this.table.insertData(bean, (b) => {
+      // Toast.show('添加数据成功:' + b)
+    })
   }
 
   /**

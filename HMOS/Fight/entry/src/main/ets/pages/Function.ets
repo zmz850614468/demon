@@ -1,28 +1,31 @@
 import router from '@ohos.router'
-import Logger from '../common/util/Logger';
+import Logger from '../util/Logger';
 import Notification from '@ohos.notificationManager';
-import Rdb_v3 from '../database_v3/Rdb_v3';
-import TestBean from '../database_v3/TestBean';
-import Toast from '../common/util/Toast';
+import Toast from '../util/Toast';
 import systemDateTime from '@ohos.systemDateTime';
-import StringUtil from '../common/util/StringUtil';
+import StringUtil from '../util/StringUtil';
 import window from '@ohos.window';
+import common from '@ohos.app.ability.common';
+import { PermissionUtil } from '../util/PermissionUtil';
+import { AVPlayerModel } from '../model/AVPlayerModel';
 
 @Entry
 @Component
 struct Function {
+  player: AVPlayerModel = new AVPlayerModel()
   @State isOn: boolean = false
   timerId: number
   itemList = []
 
-  // onPageShow() {
-  //   window.getLastWindow(getContext(this), (err, w) => {
-  //     let pro = w.getWindowProperties()
-  //       w.setWindowColorSpace(window.ColorSpace.WIDE_GAMUT)
-  //   })
-  // }
-
   aboutToAppear() {
+    PermissionUtil.requestFloatPermission((result) => {
+      if (result == 0) {
+        Toast.show('悬浮框授权成功')
+      } else {
+        Toast.show('悬浮框授权失败')
+      }
+    })
+
     this.itemList.push([$r('app.media.fl'), '复利', 'pages/FuLi'])
     this.itemList.push([$r('app.media.fy'), '交易费用', 'pages/Cost'])
     this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
@@ -30,6 +33,7 @@ struct Function {
     this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
     this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
     this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
+    this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
 
   }
 
@@ -52,6 +56,9 @@ struct Function {
 
       Toggle({ type: ToggleType.Checkbox, isOn: this.isOn })
         .onChange((isOn) => {
+          this.toggleFloat(isOn)
+
+          // todo 提示声音
           this.isOn = isOn
           if (this.isOn) {
             this.startTime()
@@ -62,6 +69,37 @@ struct Function {
         .height(20)
         .margin({ left: 15, right: 0, top: 15, bottom: 0 })
     }
+  }
+
+  /**
+   * 悬浮窗的 开关
+   * @param isOn
+   */
+  private toggleFloat(isOn: boolean) {
+    let want = null
+    if (isOn) {
+      want = {
+        "deviceId": "", // deviceId为空表示本设备
+        "bundleName": "com.demon.fight_hm",
+        "abilityName": "EntryAbility",
+        "moduleName": "entry", // moduleName非必选
+        "parameters": {
+          "action": "open"
+        }
+      }
+    } else {
+      want = {
+        "deviceId": "", // deviceId为空表示本设备
+        "bundleName": "com.demon.fight_hm",
+        "abilityName": "EntryAbility",
+        "moduleName": "entry", // moduleName非必选
+        "parameters": {
+          "action": "close"
+        }
+      }
+    }
+    let context = getContext(this) as common.UIAbilityContext
+    context.startAbility(want)
   }
 
   /**
@@ -80,6 +118,7 @@ struct Function {
           time %= inter * 60
           if (!isTiped && time > (inter - 1) * 60) {
             // Logger.error('tag', 'time = ' + time)
+            this.player.play(getContext(this), 'succeed.wav', 3)
             this.notify("提示", "5分-" + temp)
             isTiped = true
           } else if (isTiped && time < 60) {
@@ -174,6 +213,10 @@ struct Function {
 
   }
 
+  onBackPress() {
+    return this.isOn
+  }
+
   /**
    * 发送通知消息
    * @param title
@@ -183,7 +226,7 @@ struct Function {
   private notify(title: string, text: string, additionalText: string = "") {
     //通知Request对象
     let notificationRequest = {
-      id: 2356,
+      // id: 2356,
       content: {
         contentType: Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
         normal: {
@@ -193,7 +236,7 @@ struct Function {
         }
       },
       tapDismissed: true,
-      groupName: 'Fight',
+      groupName: 'Fighting',
       // autoDeletedTime: 2,
       // isCountDown: true
     };

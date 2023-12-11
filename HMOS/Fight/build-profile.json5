@@ -1,27 +1,43 @@
 {
   "app": {
-
     "signingConfigs": [
       {
         "name": "default",
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.cer",
-          "storePassword": "0000001ABD2203CAE0A7854273FE5201CCC765FB9770000608D50048B7D4AAA99E6936BE7E69CA69AC55",
+          "storePassword": "0000001A2E92FAB773A2E59981129F9FE5BC1033FB33EEC7B149DD4B02EEE89C0EA84351E506F6D6DA07",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001AA989AC25EE7A64DC744C3E1A8B1B7333018F0A886B177114096C8E4F19769E5CEBF6FB8486CC",
+          "keyPassword": "0000001AED385FE7224BFF6D337A129D279EA14C623C08B3C9F63B42CFA0B53C22F49172850223E35C2A",
           "profile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_Fight_com.demon.fight_hm_70086000146795691.p12"
+        }
+      },
+      {
+        "name": "debug",
+        "type": "HarmonyOS",
+        "material": {
+          "storePassword": "00000019BFA8B3676B53D2762CA8116FC03A8FC971ACED2158C2B845072F17C7D91F5650D1D88A06DF",
+          "certpath": "E:/demon/HMOS/Fight/debug/zmz_debug.cer",
+          "keyAlias": "zmz_debug",
+          "keyPassword": "00000019DCB57A904B4B6BF43678BAA11FF3E1735799C1F879A691ECED70BCD74D17B2A692D9E74C64",
+          "profile": "E:/demon/HMOS/Fight/debug/fight_float_ebug.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "E:/demon/HMOS/Fight/debug/zmz_debug.p12"
         }
       }
     ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [
+      //      {
+      //        "name": "default",
+      //        "signingConfig": "default",
+      //      },
       {
         "name": "default",
-        "signingConfig": "default",
+        "signingConfig": "debug",
       }
     ]
   },
@@ -29,22 +45,6 @@
     {
       "name": "entry",
       "srcPath": "./entry",
-      "targets": [
-        {
-          "name": "default",
-          "applyToProducts": [
-            "default"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "httpclient",
-      "srcPath": "./httpclient"
-    },
-    {
-      "name": "dataORM",
-      "srcPath": "./dataORM",
       "targets": [
         {
           "name": "default",

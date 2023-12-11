@@ -1,0 +1,13 @@
+{
+  "src": [
+    "pages/Function",
+    "pages/Cost",
+    "pages/FuLi",
+    "pages/OperateResult",
+    "pages/ReceiverData",
+    "pages/Money",
+    "pages/DataAnalysis",
+    "pages/Operate",
+    "pages/BestCombination"
+  ]
+}

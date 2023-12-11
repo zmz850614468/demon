@@ -1,13 +1,44 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.cer",
+          "storePassword": "0000001BA775823E4D61D59D3AEE24E3A41E46206678E91DD2852784B4D9F8297AA99D012DDA2303A00DEE",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BAFBD9227AD4060493389FDC79590330DDD2B8DEBB4286BC7CA0A8266758E2AB8B1B8A0176F7467",
+          "profile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.p12"
+        }
+      },
+      {
+        "name": "aclDebug",
+        "type": "HarmonyOS",
+        "material": {
+          "storePassword": "00000019DB33C6D6CB664B75B666922871673805AD731DC341A332677AEEDEC5EB7D172B2B14562672",
+          "certpath": "E:/demon/HMOS/debug/zmz_debug.cer",
+          "keyAlias": "zmz_debug",
+          "keyPassword": "00000019C65FF71837EFA1C92FA2CE6136AD66AC745050B99370D11079E06047CE7A035BEA526A83D1",
+          "profile": "E:/demon/HMOS/debug/zmz_debugDebug.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "E:/demon/HMOS/debug/zmz_debug.p12"
+        }
+      }
+    ],
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [
-      {
-        "name": "default",
-        "signingConfig": "default",
-      }
+//      {
+//        "name": "default",
+//        "signingConfig": "default"
+//      }
+            {
+              "name": "default",
+              "signingConfig": "aclDebug",
+            }
     ]
   },
   "modules": [
@@ -22,6 +53,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "myLibrary",
+      "srcPath": "./myLibrary"
     }
   ]
 }

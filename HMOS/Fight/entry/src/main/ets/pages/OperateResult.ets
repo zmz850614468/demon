@@ -80,28 +80,28 @@ struct OperateResult {
             ResultMonth({ dayOperateList: this.dayOperateList, operateResult: this })
           }
         }
-        .tabBar(this.TabBuilder('每月详情', 0, $r('app.media.icon')))
+        .tabBar(this.TabBuilder('每月详情', 0, $r('app.media.fighting')))
 
         TabContent() {
           if (this.operateList !== null) {
             ResultType({ operateList: this.operateList })
           }
         }
-        .tabBar(this.TabBuilder('每种详情', 1, $r('app.media.icon')))
+        .tabBar(this.TabBuilder('每种详情', 1, $r('app.media.fighting')))
 
         TabContent() {
           if (this.dayOperateList !== null) {
             ResultDay({ dayOperateList: this.dayOperateList })
           }
         }
-        .tabBar(this.TabBuilder('每天详情', 2, $r('app.media.icon')))
+        .tabBar(this.TabBuilder('每天详情', 2, $r('app.media.fighting')))
 
         TabContent() {
           if (this.operateList !== null) {
             ResultEach({ operateList: this.operateList })
           }
         }
-        .tabBar(this.TabBuilder('每笔详情', 3, $r('app.media.icon')))
+        .tabBar(this.TabBuilder('每笔详情', 3, $r('app.media.fighting')))
       }
       .height('95%')
       .width('100%')

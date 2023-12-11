@@ -5,11 +5,8 @@
         "name": "ohos.permission.INTERNET"
       },
       {
-        "name": "ohos.permission.PUBLISH_AGENT_REMINDER"
-      },
-//      {
-//        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW"
-//      }
+        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW"
+      }
     ],
     "dependencies": [
     ],
@@ -21,12 +18,6 @@
       "phone",
       "tablet"
     ],
-    "metadata": [
-      {
-        "name": "EasyGoClient",
-        "value": "true"
-      }
-    ],
     "deliveryWithInstall": true,
     "installationFree": false,
     "pages": "$profile:main_pages",
@@ -35,9 +26,9 @@
         "name": "EntryAbility",
         "srcEntry": "./ets/entryability/EntryAbility.ts",
         "description": "$string:EntryAbility_desc",
-        "icon": "$media:icon",
+        "icon": "$media:fighting",
         "label": "$string:EntryAbility_label",
-        "startWindowIcon": "$media:icon",
+        "startWindowIcon": "$media:fighting",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
         "skills": [

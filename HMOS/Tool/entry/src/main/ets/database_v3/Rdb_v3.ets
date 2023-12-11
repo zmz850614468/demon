@@ -4,7 +4,7 @@ import { TableInfo } from './TableInfo';
 /**
  * api-9 后发布的
  */
-export default class Rdb_v3 {
+export class Rdb_v3 {
   static readonly STORE_CONFIG = {
     name: "demon.db",
     securityLevel: relationalStore.SecurityLevel.S1

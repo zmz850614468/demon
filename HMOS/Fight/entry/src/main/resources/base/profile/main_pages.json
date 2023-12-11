@@ -7,6 +7,8 @@
     "pages/ReceiverData",
     "pages/Money",
     "pages/DataAnalysis",
-    "pages/Operate"
+    "pages/Operate",
+    "pages/BestCombination",
+    "pages/Float"
   ]
 }

@@ -1,6 +1,6 @@
-import StringUtil from '../common/util/StringUtil'
+import StringUtil from '../util/StringUtil'
 import DayOperateBean from '../database_v2/bean/DayOperateBean'
-import Logger from '../common/util/Logger';
+import Logger from '../util/Logger';
 import OperateBean from '../database_v2/bean/OperateBean';
 
 @Component
@@ -164,7 +164,7 @@ struct ItemView {
             .fontSize(17)
             .width('40%')
             .height('100%')
-          Text('手续费:' + this.item.poundage)
+          Text('手续费:' + this.item.poundage.toFixed(2))
             .fontSize(17)
             .width('40%')
             .height('100%')
@@ -192,14 +192,14 @@ struct ItemView {
         .padding({ left: 8, right: 0, top: 0, bottom: 0 })
 
         Row() {
-          Text('胜率:' + (this.item.posCount * 100 / (this.item.posCount + this.item.negCount)).toFixed(2) + '%')
+          Text('胜率:' + (this.item.posCount == 0 ? 100 : (this.item.posCount * 100 / (this.item.posCount + this.item.negCount))).toFixed(2) + '%')
             .fontSize(17)
             .width('50%')
             .height('100%')
             .textAlign(TextAlign.Center)
             .fontColor($r('app.color.white'))
 
-          Text('盈亏:' + (this.item.result - this.item.poundage))
+          Text('盈亏:' + (this.item.result - this.item.poundage).toFixed(2))
             .fontSize(17)
             .width('50%')
             .height('100%')

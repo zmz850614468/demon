@@ -40,7 +40,7 @@ export class DownLoadModel {
   private listener() {
     if (this.onProgress) {
       this.downloadTask.on('progress', (cur, total) => {
-        // Logger.error('tag', this.url + ' - ' + cur + ' - ' + total)
+        Logger.error('tag', this.url + ' - ' + cur + ' - ' + total)
         this.onProgress(cur, total)
       })
     }
