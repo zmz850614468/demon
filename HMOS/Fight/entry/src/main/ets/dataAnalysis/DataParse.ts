@@ -1,11 +1,6 @@
 import DataBean from './bean/DataBean'
 import ArrayList from '@ohos.util.ArrayList'
-import List from '@ohos.util.List'
 import AnalysisBean from './bean/AnalysisBean'
-import Data_IO_10_2023 from './data/Data_IO_10_2023'
-import Data_P_10_2023 from './data/Data_P_10_2023'
-import Data_IO_5_2023 from './data/Data_IO_5_2023'
-import RecordResult from './bean/RecordResult'
 
 export default class DataParse {
 

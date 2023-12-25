@@ -1,10 +1,16 @@
 import OperateBean from '../database_v2/bean/OperateBean'
 import Logger from '../util/Logger'
 import BaseTable_v2 from '../database_v2/BaseTable_v2'
+import { MyDataSource } from '../adapter/MyDataSource'
 
 @Component
 export default struct ResultEach {
   operateList: Array<OperateBean> = null
+  data: MyDataSource
+
+  aboutToAppear() {
+    this.data = new MyDataSource(this.operateList)
+  }
 
   build() {
     Column() {
@@ -20,7 +26,7 @@ export default struct ResultEach {
       .width('100%')
 
       List({ space: 1 }) {
-        ForEach(this.operateList, (item: OperateBean) => {
+        LazyForEach(this.data, (item: OperateBean) => {
           ListItem() {
             Row() {
               Text(item.getDay().toString())

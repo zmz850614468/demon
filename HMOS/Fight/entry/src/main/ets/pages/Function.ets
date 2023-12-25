@@ -12,6 +12,7 @@ import { AVPlayerModel } from '../model/AVPlayerModel';
 @Entry
 @Component
 struct Function {
+  @State hasAuth: boolean = false // 用户是否授权
   player: AVPlayerModel = new AVPlayerModel()
   @State isOn: boolean = false
   timerId: number
@@ -30,29 +31,46 @@ struct Function {
     this.itemList.push([$r('app.media.fy'), '交易费用', 'pages/Cost'])
     this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
     this.itemList.push([$r('app.media.crj'), '出入金', 'pages/Money'])
+    this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
+    this.itemList.push([$r('app.media.ic_translate_data'), '数据迁移', 'pages/FileManager'])
+    this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
     this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
     this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
-    this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
-    this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
 
+    router.pushUrl({ url: 'pages/UserAuth' })
+  }
+
+  onPageShow() {
+    let param: any = router.getParams()
+    if (param && param.from && param.from === 'UserAuth') {
+      if (param.err) {
+        Toast.show(param.err)
+      }
+      if (param.token) {
+        // Toast.show('用户授权成功')
+        this.hasAuth = true
+      }
+    }
   }
 
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
-      Column() {
-        Grid() {
-          ForEach(this.itemList, (item, index) => {
-            GridItem() {
-              this.rowItem(item[0], item[1], item[2])
-            }
-          })
-        }
-        .align(Alignment.Center)
-        .layoutDirection(GridDirection.Row)
-        .maxCount(3)
-        .minCount(3)
-        .rowsGap(20)
-      }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
+      if (this.hasAuth) {
+        Column() {
+          Grid() {
+            ForEach(this.itemList, (item, index) => {
+              GridItem() {
+                this.rowItem(item[0], item[1], item[2])
+              }
+            })
+          }
+          .align(Alignment.Center)
+          .layoutDirection(GridDirection.Row)
+          .maxCount(3)
+          .minCount(3)
+          .rowsGap(20)
+        }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
+      }
 
       Toggle({ type: ToggleType.Checkbox, isOn: this.isOn })
         .onChange((isOn) => {
@@ -61,6 +79,9 @@ struct Function {
           // todo 提示声音
           this.isOn = isOn
           if (this.isOn) {
+            if (!this.hasAuth) {
+              router.pushUrl({ url: 'pages/UserAuth' })
+            }
             this.startTime()
           } else {
             clearInterval(this.timerId)
@@ -117,9 +138,16 @@ struct Function {
           time /= 1000
           time %= inter * 60
           if (!isTiped && time > (inter - 1) * 60) {
-            // Logger.error('tag', 'time = ' + time)
-            this.player.play(getContext(this), 'succeed.wav', 3)
-            this.notify("提示", "5分-" + temp)
+            if (!('10:19' === temp || '10:24' === temp)) { // 休息期间不提示
+              if (((temp < '10:20' || temp > '20.00') && temp.endsWith('4')) ||
+              (temp > '10:20' && temp < '20.00' && temp.endsWith('9'))) { // 五分钟，响一下
+                this.player.play(getContext(this), 'succeed.wav', 1)
+                this.notify("提示", "5分-" + temp)
+              } else { // // 十分钟，响三下
+                this.player.play(getContext(this), 'succeed.wav', 4)
+                this.notify("提示", "10分-" + temp)
+              }
+            }
             isTiped = true
           } else if (isTiped && time < 60) {
             isTiped = false
@@ -223,16 +251,18 @@ struct Function {
    * @param text
    * @param additionalText
    */
+  notifyId = 1
+
   private notify(title: string, text: string, additionalText: string = "") {
     //通知Request对象
     let notificationRequest = {
-      // id: 2356,
+      id: this.notifyId++,
       content: {
         contentType: Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
         normal: {
           title: title,
           text: text,
-          additionalText: additionalText
+          additionalText: additionalText,
         }
       },
       tapDismissed: true,

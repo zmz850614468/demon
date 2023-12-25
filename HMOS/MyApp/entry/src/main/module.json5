@@ -2,11 +2,21 @@
   // 权限管理
   "module": {
     "requestPermissions": [
+      {
+        // 用户认证
+        "name": "ohos.permission.ACCESS_BIOMETRIC"
+      },
       //      {
-      //        "name": "ohos.permission.ACCESS_IDS"
+      //        "name": "ohos.permission.WRITE_DOCUMENT"
+      //      },
+      //      {
+      //        "name": "ohos.permission.READ_DOCUMENT"
       //      },
       {
         "name": "ohos.permission.INTERNET"
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO"
       },
       {
         "name": 'ohos.permission.APPROXIMATELY_LOCATION'
@@ -15,13 +25,10 @@
         "name": 'ohos.permission.LOCATION'
       },
       {
+        "name": "ohos.permission.LOCATION_IN_BACKGROUND"
+      },
+      {
         "name": "ohos.permission.SYSTEM_FLOAT_WINDOW",
-        "usedScene": {
-          "abilities": [
-            "FloatAbility"
-          ],
-          "when": "inuse"
-        }
       }
     ],
     "name": "entry",
@@ -87,6 +94,6 @@
           }
         ]
       }
-    ]
+    ],
   }
 }

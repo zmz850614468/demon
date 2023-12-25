@@ -2,6 +2,10 @@
   "module": {
     "requestPermissions": [
       {
+        // 用户认证
+        "name": "ohos.permission.ACCESS_BIOMETRIC"
+      },
+      {
         "name": "ohos.permission.INTERNET"
       },
       {

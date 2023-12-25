@@ -331,7 +331,7 @@ struct Operate {
           .height('100%')
           .fontColor($r('app.color.black'))
 
-        Text(this.poundage.toString())
+        Text(this.poundage.toFixed(2))
           .fontSize(17)
           .width('30%')
           .textAlign(TextAlign.Start)

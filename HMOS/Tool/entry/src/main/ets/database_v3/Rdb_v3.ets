@@ -18,7 +18,7 @@ export class Rdb_v3 {
   }
 
   getRdbStore(callback?: (boolean) => void) {
-    if (this.rdbStore != null) {
+    if (this.rdbStore !== null) {
         callback ? callback(true) : null
       return
     }

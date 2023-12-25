@@ -19,6 +19,8 @@ export let HANDS_LIST: string = 'handsList'
 
 export let BEST_COMBINATION: string = 'bestCombination'
 
+export let BEST_COMBINATION_TEST: string = 'bestCombinationTest'
+
 export let FLOAT_POSITION: string = 'floatPosition'
 
 class PreferenceModel {

@@ -9,6 +9,7 @@ export class PreferenceModel {
 
   private constructor(context: Context) {
     this.context = context
+  // getContext(this)
   }
 
   static getInstance(context?: Context) {

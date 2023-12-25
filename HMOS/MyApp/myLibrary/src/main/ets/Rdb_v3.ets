@@ -1,5 +1,5 @@
 import relationalStore from '@ohos.data.relationalStore'
-import { TableInfo } from './TableInfo';
+import { TableInfo } from './database_v3/TableInfo';
 
 /**
  * 数据库操作类
@@ -84,7 +84,7 @@ export class Rdb_v3 {
    * @param predicates 条件约束
    * @param callback
    */
-  delete(predicates: relationalStore.RdbPredicates, callback: (Array) => void) {
+  delete(predicates: relationalStore.RdbPredicates, callback: (rows: number) => void) {
     this.rdbStore.delete(predicates, function (err, rows) {
       if (callback) {
           err ? callback(rows) : callback(rows)

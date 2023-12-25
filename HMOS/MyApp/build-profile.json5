@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.cer",
-          "storePassword": "0000001BA775823E4D61D59D3AEE24E3A41E46206678E91DD2852784B4D9F8297AA99D012DDA2303A00DEE",
+          "storePassword": "0000001B19B113756B62ED5A6201A4CE436706E4101BA9F2E2E5716D668D36E88006AC29F9D27CD0856AF0",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BAFBD9227AD4060493389FDC79590330DDD2B8DEBB4286BC7CA0A8266758E2AB8B1B8A0176F7467",
+          "keyPassword": "0000001B09E118D9E1C9B33371DF8C159EDB354876CBCC24F69EAD70D5D6EF56DDD89D6F7FFE2A34372C6B",
           "profile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\zhmz\\.ohos\\config\\auto_debug_MyApp_com.demon.myapp_70086000146795691.p12"
@@ -18,11 +18,11 @@
         "name": "aclDebug",
         "type": "HarmonyOS",
         "material": {
-          "storePassword": "00000019DB33C6D6CB664B75B666922871673805AD731DC341A332677AEEDEC5EB7D172B2B14562672",
+          "storePassword": "00000019F230D2759AD87D3A85EC93F6D2A7A8DD794BBD26E573C8C5D137D96A015C0F60E579847259",
           "certpath": "E:/demon/HMOS/debug/zmz_debug.cer",
           "keyAlias": "zmz_debug",
-          "keyPassword": "00000019C65FF71837EFA1C92FA2CE6136AD66AC745050B99370D11079E06047CE7A035BEA526A83D1",
-          "profile": "E:/demon/HMOS/debug/zmz_debugDebug.p7b",
+          "keyPassword": "0000001938017D621EC42D12F64C60B38A860805AEE856A0082A0811CCD5586569FC80BF6A87BF6DA5",
+          "profile": "E:/demon/HMOS/MyApp/zmz_myapp_debug.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "E:/demon/HMOS/debug/zmz_debug.p12"
         }
@@ -31,14 +31,14 @@
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [
-//      {
-//        "name": "default",
-//        "signingConfig": "default"
-//      }
-            {
-              "name": "default",
-              "signingConfig": "aclDebug",
-            }
+      //      {
+      //        "name": "default",
+      //        "signingConfig": "default"
+      //      }
+      {
+        "name": "default",
+        "signingConfig": "aclDebug",
+      }
     ]
   },
   "modules": [

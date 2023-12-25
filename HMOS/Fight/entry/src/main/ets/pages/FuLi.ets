@@ -78,7 +78,7 @@ struct FuLi {
   build() {
     Column() {
       Text("复利")
-        .fontSize(19)
+        .fontSize(17)
         .width('100%')
         .height(50)
         .textAlign(TextAlign.Center)
@@ -107,8 +107,11 @@ struct FuLi {
           }.onClick(async (e) => {
             let time = e.timestamp
             if (time - this.lastTime < 300000000) {
+
               let bean = new FuLiBean((await StringUtil.getDayTimeAsync()).slice(2), item.basic, item.fuLi, item.count, item.result)
-              this.targetList.unshift(bean)
+              animateTo({ duration: 1000 }, () => {
+                this.targetList.unshift(bean)
+              })
               if (this.targetList.length > 5) {
                 this.targetList.pop()
               }
@@ -126,7 +129,9 @@ struct FuLi {
           ForEach(this.targetList, (item) => {
             ListItem() {
               this.fuLiLayout(item)
-            }.onClick((e) => {
+            }
+            .transition({ type: TransitionType.All, translate: { x: 200 }, scale: { x: 0, y: 0 } })
+            .onClick((e) => {
               let time = e.timestamp
               if (time - this.lastTime < 300000000) {
                 AlertDialog.show({
@@ -136,7 +141,9 @@ struct FuLi {
                     value: "确定",
                     action: () => {
                       let index = this.targetList.indexOf(item)
-                      this.targetList.splice(index, 1)
+                      animateTo({ duration: 1000 }, () => {
+                        this.targetList.splice(index, 1)
+                      })
                       PreferenceModel.save(TARGET_LIST, JSON.stringify(this.targetList))
                     },
                   }
@@ -176,7 +183,7 @@ struct FuLi {
   inputItem(title: string, type: string) {
     Row() {
       Text(title)
-        .fontSize(17)
+        .fontSize(15)
         .width('40%')
         .height('100%')
         .textAlign(TextAlign.Center)
@@ -226,7 +233,7 @@ struct FuLi {
  * 复利显示属性
  */
 @Extend(Text) function fuLiItem() {
-  .fontSize(17)
+  .fontSize(15)
   .width('20%')
   .height(40)
   .textAlign(TextAlign.Center)
@@ -237,7 +244,7 @@ struct FuLi {
  * 输入框属性
  */
 @Extend(TextInput) function input() {
-  .fontSize(17)
+  .fontSize(15)
   .width('60%')
   .height('100%')
   .type(InputType.Number)

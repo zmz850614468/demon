@@ -20,6 +20,7 @@ export default class EntryAbility extends UIAbility {
 
     this.initData()
     windowStage.loadContent('pages/Index', (err, data) => {
+      // windowStage.loadContent('pages/PickerDemo', (err, data) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
@@ -73,13 +74,13 @@ export default class EntryAbility extends UIAbility {
       this.windowClass = data;
 
       // 2.悬浮窗窗口创建成功后，设置悬浮窗的位置、大小及相关属性等。
-      this.windowClass.moveWindowTo(this.floatPosition.x, this.floatPosition.y, (err) => {
-        if (err.code) {
-          console.error('Failed to move the window. Cause:' + JSON.stringify(err));
-          return;
-        }
-        console.info('Succeeded in moving the window.');
-      });
+      // this.windowClass.moveWindowTo(this.floatPosition.x, this.floatPosition.y, (err) => {
+      //   if (err.code) {
+      //     console.error('Failed to move the window. Cause:' + JSON.stringify(err));
+      //     return;
+      //   }
+      //   console.info('Succeeded in moving the window.');
+      // });
       this.windowClass.resize(200, 70, (err) => {
         // this.windowClass.resize(800, 800, (err) => {
         if (err.code) {

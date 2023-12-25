@@ -24,7 +24,7 @@ export default class Rdb_v2 {
       callback(false)
       return;
     }
-    if (this.rdbStore != null) {
+    if (this.rdbStore !== null) {
       callback(true);
       return
     }

@@ -2,6 +2,7 @@ import StringUtil from '../util/StringUtil'
 import DayOperateBean from '../database_v2/bean/DayOperateBean'
 import Logger from '../util/Logger';
 import OperateBean from '../database_v2/bean/OperateBean';
+import { MyDataSource } from '../adapter/MyDataSource';
 
 @Component
 export default struct ResultMonth {
@@ -10,6 +11,7 @@ export default struct ResultMonth {
   monthList: Array<ResultBean> = []
   @State resultList: Array<ResultBean> = []
   @State type: string = '月'
+  @State data: MyDataSource = new MyDataSource(this.resultList)
 
   aboutToAppear() {
     this.calculate()
@@ -48,10 +50,13 @@ export default struct ResultMonth {
   private async switchType(type: string) {
     switch (type) {
       case '月':
-        this.resultList = this.monthList
+        this.data.deleteAll()
+        this.monthList.forEach((item) => {
+          this.data.pushData(item)
+        })
+        this.data.pushData(this.calTotal(this.resultList))
         break;
       case '季':
-        this.monthList.pop()
         this.seasonData()
         break;
       case '年':
@@ -61,14 +66,13 @@ export default struct ResultMonth {
         }
         break;
     }
-    this.resultList.push(this.calTotal(this.resultList))
   }
 
   /**
    * 统计  季  数据
    */
   private seasonData() {
-    this.resultList = []
+    this.data.deleteAll()
     let size = this.monthList.length
     let bean = new ResultBean()
     for (let i = 0; i < size; i++) {
@@ -82,21 +86,22 @@ export default struct ResultMonth {
 
       if (bean.month == 1 || bean.month == 4 || bean.month == 7 || bean.month == 10) {
         bean.month = (bean.month + 2) / 3
-        this.resultList.push(bean)
+        this.data.pushData(bean)
         bean = new ResultBean()
       }
     }
     if (bean.poundage > 0) {
       bean.month = Number.parseInt(((bean.month + 2) / 3).toString())
-      this.resultList.push(bean)
+      this.data.pushData(bean)
     }
+    this.data.pushData(this.calTotal(this.resultList))
   }
 
   /**
    * 统计  年  数据
    */
   private yearData() {
-    this.resultList = []
+    this.data.deleteAll()
     let size = this.monthList.length
     let bean = new ResultBean()
     for (let i = 0; i < size; i++) {
@@ -116,11 +121,11 @@ export default struct ResultMonth {
     if (bean.month > 0) {
       this.resultList.push(bean)
     }
+    this.data.pushData(this.calTotal(this.resultList))
   }
 
   private calTotal(list: Array<ResultBean>): ResultBean {
     let bean = new ResultBean()
-
     list.forEach((item) => {
       bean.posCount += item.posCount
       bean.negCount += item.negCount
@@ -134,12 +139,12 @@ export default struct ResultMonth {
   build() {
     Column() {
       List({ space: 1 }) {
-        ForEach(Array.from(this.resultList), (item: ResultBean) => {
+        LazyForEach(this.data, (item: ResultBean) => {
           ListItem() {
             ItemView({ item: item, type: this.type })
               .padding({ left: 0, right: 0, top: 0, bottom: 3 })
           }
-        })
+        }, (item: ResultBean) => item.toString())
       }
     }.width('100%')
     .height('100%')
@@ -248,8 +253,11 @@ class ResultBean {
   negCount: number = 0
   result: number = 0
   poundage: number = 0 // 费用
-}
 
+  toString(): string {
+    return this.year + '-' + this.month + '-' + this.result + '-' + this.poundage
+  }
+}
 
 @Extend(Text) function textItem() {
   .fontSize(17)
@@ -258,3 +266,7 @@ class ResultBean {
   .textAlign(TextAlign.Center)
   .fontColor($r('app.color.black'))
 }
+
+
+
+

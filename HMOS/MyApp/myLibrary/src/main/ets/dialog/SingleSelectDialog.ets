@@ -9,8 +9,9 @@
 //   }),
 //   autoCancel: true,
 //   alignment: DialogAlignment.Bottom,
-//   offset: { dx: 0, dy: -20 }
+//   offset: { dx: 0, dy: -40 }
 // })
+// selectDialogController.open()
 
 /**
  * 自定义 单选框
@@ -18,10 +19,11 @@
 @Preview
 @CustomDialog
 export struct SingleSelectDialog {
+  // 这四个数据，需要传入
   title: string = null // 标题
   itemList: Array<string> = null // 选择列表
   selected: string = null // 已选择项
-  callBack: (selected: string) => void = null // 回调监听
+  callback: (selected: string) => void = null // 回调监听
 
   private controller: CustomDialogController = new CustomDialogController({
     builder: SingleSelectDialog()
@@ -43,15 +45,15 @@ export struct SingleSelectDialog {
           ListItem() {
             Text(item)
               .fontSize(17)
-              .fontColor(this.selected == item ? $r('app.color.red') : $r('app.color.black'))
+              .fontColor(this.selected === item ? $r('app.color.red') : $r('app.color.black'))
               .height(45)
           }
           .width('100%')
-          .onClick((e) => {
-            if (this.callBack) {
-              this.callBack(item)
+          .onClick(() => {
+            if (this.callback) {
+              this.callback(item)
             }
-            this.controller.close();
+            // this.controller.close();
           })
         })
       }.padding(10)

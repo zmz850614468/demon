@@ -1,6 +1,15 @@
 {
   "src": [
     "pages/Index",
-    "pages/Float"
+    "pages/Float",
+    "pages/LazyList",
+    "pages/PickerDemo",
+    "pages/DragDemo",
+    "pages/NetInfo",
+    "pages/DeviceInfo",
+    "pages/LocationInfo",
+    "pages/UserAuth",
+    "pages/AccountManager",
+    "pages/DisplayInfo"
   ]
 }

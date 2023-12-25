@@ -1,12 +1,33 @@
-import { AVPlayerModel, PermissionUtil, Toast } from 'myLibrary'
+import { PermissionUtil, Toast } from 'myLibrary'
 import Logger from 'myLibrary/src/main/ets/util/Logger'
-import common from '@ohos.app.ability.common'
 import EntryAbility from '../entryability/EntryAbility'
+import router from '@ohos.router';
+import common from '@ohos.app.ability.common';
+import window from '@ohos.window';
 
 @Entry
 @Component
 struct Index {
+  @State hasUserAuth: boolean = false // 用户是否授权
+
   aboutToAppear() {
+
+    window.getLastWindow(getContext(this), (err, window) => {
+      if (window) {
+        this.showLog('获取窗口成功')
+      }
+      // window.setWindowSystemBarProperties({ // 设备暂不支持
+      //   statusBarColor: '#ffffff',
+      //   statusBarContentColor: '#ffffff',
+      //   isStatusBarLightIcon: false,
+      //   navigationBarColor: '#ffffff',
+      //   isNavigationBarLightIcon: false,
+      //   navigationBarContentColor: '#ffffff'
+      // }, (err) => {
+      //   this.showLog('问题：' + JSON.stringify(err))
+      // })
+    })
+
 
     PermissionUtil.requestFloatPermission((result) => {
       if (result == 0) {
@@ -21,64 +42,125 @@ struct Index {
     } else {
       this.showLog('this not instanceof EntryAbility')
     }
+
+    this.test()
+  }
+
+  onPageShow() {
+    let param: any = router.getParams()
+    if (param && param.from && param.from === 'UserAuth') {
+      if (param.err) {
+        Toast.show(param.err)
+      }
+      if (param.token) {
+        this.hasUserAuth = true
+        // Toast.show('用户授权成功')
+      }
+    }
   }
 
   onBackPress() {
     return true
   }
 
+  isFloat = false
+
   build() {
-    Row() {
-      Column() {
-        Text('打开悬浮窗')
-          .fontSize(15)
+    Column({ space: 3 }) {
+      if (this.hasUserAuth) {
+        Text('账号管理').item()
           .onClick(() => {
-            let want = {
-              "deviceId": "", // deviceId为空表示本设备
-              "bundleName": "com.demon.myapp",
-              "abilityName": "EntryAbility",
-              // "abilityName": "FloatAbility",
-              "moduleName": "entry", // moduleName非必选
-              "parameters": {
-                "action": "open"
-              }
-            }
-            let context = getContext(this) as common.UIAbilityContext
-            context.startAbility(want)
+            router.pushUrl({ url: 'pages/AccountManager' })
           })
-
-        Text('关闭悬浮窗')
-          .fontSize(15)
-          .margin({ left: 0, right: 0, top: 30, bottom: 0 })
-          .onClick(() => {
-            let want = {
-              "deviceId": "", // deviceId为空表示本设备
-              "bundleName": "com.demon.myapp",
-              "abilityName": "EntryAbility",
-              "moduleName": "entry", // moduleName非必选
-              "parameters": {
-                "action": "close"
-              }
-            }
-            let context = getContext(this) as common.UIAbilityContext
-            context.startAbility(want)
-          })
-
-        Text('播放音乐')
-          .fontSize(15)
-          .margin({ left: 0, right: 0, top: 30, bottom: 0 })
-          .onClick(() => {
-            this.player.play(getContext(this), 'succeed.wav', 3)
-          })
-
-
       }
-      .width('100%')
+
+      Text('悬浮窗口').item()
+        .onClick(() => {
+          this.isFloat = !this.isFloat
+          let want = {
+            "deviceId": "", // deviceId为空表示本设备
+            "bundleName": "com.demon.myapp",
+            "abilityName": "EntryAbility",
+            "moduleName": "entry", // moduleName非必选
+            "parameters": {
+              "action": this.isFloat ? "open" : "close"
+            }
+          }
+          let context = getContext(this) as common.UIAbilityContext
+          context.startAbility(want)
+        })
+
+      Text('拖拽效果').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/DragDemo' })
+        })
+
+      Text('网络信息').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/NetInfo' })
+        })
+
+      Text('设备信息').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/DeviceInfo' })
+        })
+
+      Text('位置信息').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/LocationInfo' })
+        })
+
+      Text('用户认证').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/UserAuth' })
+        })
+
+      Text('显示设备属性').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/DisplayInfo' })
+        })
+
     }
-    .height('100%')
+    .width('100%')
   }
 
-  player: AVPlayerModel = new AVPlayerModel()
+  test() {
+    // this.showLog('1.比大小：' + ('9.14' > '9.04'))
+    // this.showLog('2.比大小：' + ('9.04' > '8.59'))
+    // this.showLog('3.比大小：' + ('10.59' > '09.04'))
+    // this.showLog('4.比大小：' + ('14.14' > '12.04'))
+    // this.showLog('5.比大小：' + ('22.14' > '09.54'))
+
+    // let table = new Rdb_v4(AccountBean.tableInfo, (err) => {
+    //   this.showLog('new Rdb_v4:' + JSON.stringify(err))
+    // })
+    //
+    // setTimeout(() => {
+    //   let bean = new AccountBean()
+    //   bean.typeGroup = '金融'
+    //   bean.name = '京东'
+    //   bean.account = '115200'
+    //   bean.pwd = '124578'
+    //   table.insertBean(bean, (err, rowId) => {
+    //     this.showLog('insertBean:' + JSON.stringify(err) + ' - ' + rowId)
+    //   })
+    // }, 2000)
+
+    // let table2 = new Rdb_v4(TestBean.tableInfo, (err) => {
+    //   this.showLog('new Rdb_v4 TestBean:' + JSON.stringify(err))
+    // })
+    //
+    // setTimeout(() => {
+    //   let bean = new TestBean()
+    //   bean.date = '金融'
+    //   bean.result = 100
+    //   bean.memo = '115200'
+    //   table2.insertBean(bean, (err, rowId) => {
+    //     this.showLog('insertBean TestBean:' + JSON.stringify(err) + ' - ' + rowId)
+    //   })
+    // }, 2000)
+
+  }
 
   /**
    * 日志信息
@@ -88,5 +170,17 @@ struct Index {
     Logger.error('Index', msg)
   }
 }
+
+@Extend(Text) function item() {
+  .textAlign(TextAlign.Center)
+  .fontSize(17)
+  .width('100%')
+  .height(50)
+  .borderWidth(1)
+  .borderRadius(10)
+  .borderColor($r("app.color.gray"))
+}
+
+
 
 

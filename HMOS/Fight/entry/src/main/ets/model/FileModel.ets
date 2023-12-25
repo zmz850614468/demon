@@ -5,7 +5,7 @@ import File from '@system.file';
 /**
  * 文件读写
  */
-export default class FileModel {
+export class FileModel {
 
   /**
    * 获取文件详细属性信息

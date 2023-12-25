@@ -9,11 +9,12 @@ import DataParse_P_10 from '../dataAnalysis/DataParse_P_10';
 import DataParse_IO_5 from '../dataAnalysis/DataParse_IO_5';
 import { SingleSelectDialog } from '../dialog/SingleSelectDialog';
 import CircleView from '../component/CircleView';
+import DataParse_RM_10 from '../dataAnalysis/DataParse_RM_10';
 
 @Entry
 @Component
 struct DataAnalysis {
-  private static selectItems: string[] = ['OI-10', 'P-10', 'OI-5']
+  private static selectItems: string[] = ['OI-10', 'P-10', 'RM-10']
   @State recordResult: RecordResult = null
   @State private title: string = DataAnalysis.selectItems[0]
   @State private analysisList: ArrayList<AnalysisBean> = null
@@ -45,15 +46,20 @@ struct DataAnalysis {
       case 'OI-10':
         this.analysisList = new DataParse_IO_10().getAnalysis()
         this.recordResult = DataParse_IO_10.record
-        break;
+        break
       case 'P-10':
         this.analysisList = new DataParse_P_10().getAnalysis()
         this.recordResult = DataParse_P_10.record
-        break;
+        break
       case 'OI-5':
         this.analysisList = new DataParse_IO_5().getAnalysis()
         this.recordResult = DataParse_IO_5.record
         break
+      case 'RM-10':
+        this.analysisList = new DataParse_RM_10().getAnalysis()
+        this.recordResult = DataParse_RM_10.record
+        break
+
       default:
         Toast.show('不存在的类型')
         return

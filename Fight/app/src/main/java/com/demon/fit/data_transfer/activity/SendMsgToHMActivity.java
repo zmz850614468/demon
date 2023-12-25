@@ -132,7 +132,13 @@ public class SendMsgToHMActivity extends AppCompatActivity {
                 showLog("数据包 - " + msgType + " - " + msg);
 //                dealMsg(conn, msgType, msg);
                 if ("hm-os".equals(msg)) {
-                    sendMsgToHM(conn);
+                    new Thread(() -> {
+                        try {
+                            SendMsgToHMActivity.this.sendMsgToHM(conn);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
                 }
             }
 
@@ -147,7 +153,7 @@ public class SendMsgToHMActivity extends AppCompatActivity {
             @Override
             public void onServerError(WebSocket conn, Exception ex) {
                 runOnUiThread(() -> {
-                    tvWebSocketStatus.setText("webSocket服务器开启错误");
+                    tvWebSocketStatus.setText("webSocket服务器开启错误:" + ex.toString());
                 });
                 webSocketServerHandle.sendEmptyMessageDelayed(RESTART_WEB_SOCKET_SERVER, 3000);
             }
@@ -172,13 +178,15 @@ public class SendMsgToHMActivity extends AppCompatActivity {
      * poundage
      * 发送数据到鸿蒙设备
      */
-    private void sendMsgToHM(WebSocket conn) {
+    private void sendMsgToHM(WebSocket conn) throws InterruptedException {
 
         for (OperateTodayBean bean : list) {
+            Thread.sleep(50);
             conn.send(new Gson().toJson(bean));
         }
 
         for (OperateResultBean bean : list1) {
+            Thread.sleep(50);
             conn.send(new Gson().toJson(bean));
         }
 

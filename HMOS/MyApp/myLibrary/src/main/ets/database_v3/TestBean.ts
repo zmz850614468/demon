@@ -1,4 +1,3 @@
-import DBBaseBean from '../database_v2/DBBaseBean'
 import { TableInfo } from './TableInfo'
 
 /**
@@ -6,17 +5,13 @@ import { TableInfo } from './TableInfo'
  */
 export class TestBean {
   static readonly TABLE_NAME = 'MoneyTable'
-  // static readonly SQL = 'CREATE TABLE IF NOT EXISTS ' + MoneyBean.TABLE_NAME + '(id INTEGER PRIMARY KEY AUTOINCREMENT,' +
-  // 'date TEXT,result INTEGER,memo TEXT)'
-  // static readonly COLUMNS = ['id', 'date', 'result', 'memo']
 
-  static info: TableInfo = {
+  static tableInfo: TableInfo = {
     tableName: TestBean.TABLE_NAME,
     sqlCreateTable: 'CREATE TABLE IF NOT EXISTS ' + TestBean.TABLE_NAME + '(id INTEGER PRIMARY KEY AUTOINCREMENT,' +
     'date TEXT,result INTEGER,memo TEXT)',
     columns: ['id', 'date', 'result', 'memo']
   }
-
 
   id: number
   date: string
@@ -28,10 +23,10 @@ export class TestBean {
    * @param resultSet
    */
   parse(resultSet: any) {
-    this.id = resultSet.getDouble(resultSet.getColumnIndex(TestBean.info.columns[0]))
-    this.date = resultSet.getString(resultSet.getColumnIndex(TestBean.info.columns[1]))
-    this.result = resultSet.getDouble(resultSet.getColumnIndex(TestBean.info.columns[2]))
-    this.memo = resultSet.getString(resultSet.getColumnIndex(TestBean.info.columns[3]))
+    this.id = resultSet.getDouble(resultSet.getColumnIndex(TestBean.tableInfo.columns[0]))
+    this.date = resultSet.getString(resultSet.getColumnIndex(TestBean.tableInfo.columns[1]))
+    this.result = resultSet.getDouble(resultSet.getColumnIndex(TestBean.tableInfo.columns[2]))
+    this.memo = resultSet.getString(resultSet.getColumnIndex(TestBean.tableInfo.columns[3]))
   }
 
   // getDay(): string {

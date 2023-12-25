@@ -9,6 +9,8 @@
     "pages/DataAnalysis",
     "pages/Operate",
     "pages/BestCombination",
-    "pages/Float"
+    "pages/Float",
+    "pages/FileManager",
+    "pages/UserAuth"
   ]
 }

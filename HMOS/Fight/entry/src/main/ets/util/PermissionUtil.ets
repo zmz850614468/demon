@@ -22,6 +22,16 @@ export class PermissionUtil {
   }
 
   /**
+   * 请求 用户认证 权限
+   * @param callback
+   */
+  static requestAuthPermission(callback: (result: number) => void) {
+    PermissionUtil.requestPermission(['ohos.permission.ACCESS_BIOMETRIC'], (arr) => {
+      callback(arr[0])
+    })
+  }
+
+  /**
    * 请求悬浮 权限
    * @param callBack
    */

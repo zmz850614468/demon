@@ -1,11 +1,14 @@
 import OperateBean from '../database_v2/bean/OperateBean'
-import myPreference, { BEST_COMBINATION } from '../model/PreferenceModel'
+import myPreference, { BEST_COMBINATION, BEST_COMBINATION_TEST } from '../model/PreferenceModel'
 import Logger from '../util/Logger'
 
 @Entry
 @Component
 struct BestCombination {
   @State bestCombination: Array<OperateBean> = []
+  @State bestCombinationTest: Array<OperateBean> = []
+  @State dragIndex: number = 0
+  @State dragStarted: boolean = false
   @State total: number = 0
   @State total_60: number = 0
   @State total_70: number = 0
@@ -18,71 +21,144 @@ struct BestCombination {
 
   async initData() {
     this.bestCombination = await myPreference.getObj(BEST_COMBINATION)
+    this.bestCombinationTest = await myPreference.getObj(BEST_COMBINATION_TEST)
   }
 
   aboutToDisappear() {
     myPreference.saveObj(BEST_COMBINATION, this.bestCombination)
+    myPreference.saveObj(BEST_COMBINATION_TEST, this.bestCombinationTest)
   }
 
   calResult() {
     this.total = 0
     this.bestCombination.forEach((bean) => {
-      this.total += bean.result
+      if (bean) {
+        this.total += bean.result
+      }
     })
 
     this.total /= 10000
     this.total_60 = this.total / 0.6
     this.total_70 = this.total / 0.7
   }
+  /**
+   * 移动位置
+   * @param from
+   * @param to
+   */
+  move(from: number, to: number) {
+    let item = this.bestCombinationTest.splice(from, 1)[0]
+    this.bestCombinationTest.splice(to, 0, item)
+  }
 
   build() {
     Column() {
+      Column() {
+        Stack() {
+          Text('最佳组合')
+            .fontSize(17)
+            .width('100%')
+            .height(50)
+            .textAlign(TextAlign.Center)
 
-      Stack() {
-        Text('最佳组合')
-          .fontSize(17)
-          .width('100%')
-          .height(50)
-          .textAlign(TextAlign.Center)
-
-        Text('+')
-          .fontSize(21)
-          .width(50)
-          .height(50)
-          .textAlign(TextAlign.Center)
-          .onClick(() => {
-            this.bestCombination.push(new OperateBean())
-          })
-      }
-      .alignContent(Alignment.End)
-      .width('100%')
-      .height(50)
-
-      ResultLayout({ total: $total, total_60: $total_60, total_70: $total_70 })
-
-
-      List({ space: 1 }) {
-        ForEach(this.bestCombination, (item, index) => {
-          ListItem() {
-            Item({ bean: item, changeTimes: $changeTimes })
-          }.gesture(
-            LongPressGesture()
-              .onActionEnd(() => {
-                AlertDialog.show({
-                  title: "注意",
-                  message: "确定要删除当前数据吗？",
-                  confirm: {
-                    value: "确定",
-                    action: () => {
-                      this.bestCombination.splice(index, 1)
-                    },
-                  }
+          Text('+')
+            .fontSize(21)
+            .width(50)
+            .height(50)
+            .textAlign(TextAlign.Center)
+            .onClick(() => {
+              this.bestCombination.push(new OperateBean())
+            })
+            .gesture(
+              LongPressGesture()
+                .onAction(() => {
+                  this.bestCombinationTest.push(new OperateBean())
                 })
-              })
-          )
-        })
+            )
+        }
+        .alignContent(Alignment.End)
+        .width('100%')
+        .height(50)
+
+        ResultLayout({ total: $total, total_60: $total_60, total_70: $total_70 })
+
+        List({ space: 1 }) {
+          ForEach(this.bestCombination, (item, index) => {
+            ListItem() {
+              if (item) {
+                Item({ bean: item, changeTimes: $changeTimes })
+              } else {
+                Text('异常项')
+                  .textAlign(TextAlign.Center)
+                  .width('100%')
+                  .height(40)
+              }
+            }.gesture(
+              LongPressGesture()
+                .onAction(() => {
+                  AlertDialog.show({
+                    title: "注意",
+                    message: "确定要删除当前数据吗？",
+                    confirm: {
+                      value: "确定",
+                      action: () => {
+                        this.bestCombination.splice(index, 1)
+                      },
+                    }
+                  })
+                })
+            )
+          })
+        }
       }
+
+      Blank()
+
+      Column() {
+        List({ space: 1 }) {
+          ForEach(this.bestCombinationTest, (item, index) => {
+            ListItem() {
+              Item({ bean: item, changeTimes: $changeTimes })
+            }
+            .onDragStart(() => {
+              this.dragStarted = true
+              return this.drawItem(item)
+            })
+            .onTouch((e) => {
+              if (e.type === TouchType.Down) {
+                this.dragIndex = index // 获取当前拖拽子组件的索引
+              } else if (e.type === TouchType.Up) {
+                this.dragStarted = false
+              }
+            })
+            .gesture(
+              LongPressGesture()
+                .onAction(() => {
+                  AlertDialog.show({
+                    title: "注意",
+                    message: "确定要删除当前数据吗？",
+                    confirm: {
+                      value: "确定",
+                      action: () => {
+                        this.bestCombinationTest.splice(index, 1)
+                      },
+                    }
+                  })
+                })
+            )
+          })
+        }
+        .onDrop((e: DragEvent, params: string) => {
+          let p = JSON.parse(params)
+          this.move(this.dragIndex, p.insertIndex)
+        })
+      }.padding({ left: 0, right: 0, top: 0, bottom: 10 })
     }
+    .height('100%')
+  }
+
+  @Builder drawItem(bean: OperateBean) {
+    Item({ bean: bean, changeTimes: $changeTimes })
   }
 }
 

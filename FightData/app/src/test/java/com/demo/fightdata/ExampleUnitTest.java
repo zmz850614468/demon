@@ -82,15 +82,17 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         List<String> fileNameList = new ArrayList<>();
         fileNameList.add("28#OI2309.txt");
+        fileNameList.add("29#P2309.txt");
+        fileNameList.add("29#Y2309.txt");
+        fileNameList.add("cp#RM2309.txt");
+        fileNameList.add("29#PG2309.txt");
+        fileNameList.add("29#EG2309.txt");
+        fileNameList.add("29#JM2309.txt");
+        fileNameList.add("29#V2309.txt");
         fileNameList.add("28#SF2309.txt");
         fileNameList.add("28#SM2309.txt");
         fileNameList.add("29#EB2309.txt");
-        fileNameList.add("29#EG2309.txt");
-        fileNameList.add("29#JM2309.txt");
-        fileNameList.add("29#P2309.txt");
-        fileNameList.add("29#PG2309.txt");
-        fileNameList.add("29#V2309.txt");
-        fileNameList.add("29#Y2309.txt");
+
         try {
             for (String s : fileNameList) {
 
@@ -192,15 +194,8 @@ public class ExampleUnitTest {
 
 }
 
-//10
-//
-//
-//
-//
-//
-//5
-//11.20 -1 0.5 9297
-//
-//
+//10400 豆油
+//15000 液化气
+//4800 菜粕
 //
 //

@@ -1,3 +1,4 @@
+import { MyDataSource } from '../adapter/MyDataSource'
 import BaseTable_v2 from '../database_v2/BaseTable_v2'
 import DayOperateBean from '../database_v2/bean/DayOperateBean'
 
@@ -5,6 +6,11 @@ import DayOperateBean from '../database_v2/bean/DayOperateBean'
 @Component
 export default struct ResultDay {
   dayOperateList: Array<DayOperateBean> = null
+  data: MyDataSource
+
+  aboutToAppear() {
+    this.data = new MyDataSource(this.dayOperateList)
+  }
 
   build() {
     Column() {
@@ -24,14 +30,14 @@ export default struct ResultDay {
       .width('100%')
 
       List() {
-        ForEach(this.dayOperateList, (item: DayOperateBean) => {
+        LazyForEach(this.data, (item: DayOperateBean) => {
           ListItem() {
             Row() {
               Text(item.getDay())
                 .textItem()
-              Text(item.result + "")
+              Text(item.result.toFixed(0))
                 .textItem()
-              Text(item.poundage + "")
+              Text(item.poundage.toFixed(1))
                 .textItem()
               Text(item.posCount + "")
                 .textItem()
