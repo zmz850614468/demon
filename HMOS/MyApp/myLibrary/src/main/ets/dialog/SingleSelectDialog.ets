@@ -25,9 +25,11 @@ export struct SingleSelectDialog {
   selected: string = null // 已选择项
   callback: (selected: string) => void = null // 回调监听
 
-  private controller: CustomDialogController = new CustomDialogController({
-    builder: SingleSelectDialog()
-  });
+  // 这个是必须的，不然编译器报错
+  private controller: CustomDialogController =null
+  // private controller: CustomDialogController = new CustomDialogController({
+  //   builder: SingleSelectDialog()
+  // });
 
   build() {
     Column() {

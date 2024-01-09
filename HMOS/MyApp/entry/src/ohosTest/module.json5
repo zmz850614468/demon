@@ -32,6 +32,10 @@
           }
         ]
       }
-    ]
+    ],
+    "testRunner": {
+      "name": 'HarmonyTestRunner',
+      "srcPath": "etc/testrunner/HarmonyTestRunner.ts"
+    }
   }
 }

@@ -7,6 +7,8 @@
   "main": "",
   "version": "1.0.0",
   "dependencies": {
-    "myLibrary": "file:../myLibrary"
+    "myLibrary": "file:../myLibrary",
+    "@hw-agconnect/hmcore": "^1.0.1",
+    "@hw-agconnect/cloud": "^1.0.1"
   }
 }

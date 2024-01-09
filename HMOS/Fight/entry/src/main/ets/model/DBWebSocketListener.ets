@@ -14,6 +14,7 @@ export default class DBWebSocketListener implements WebSocketListener {
   dayOperateTable: BaseTable_v2<DayOperateBean>
   listener: Function
 
+
   constructor(listener: Function) {
     this.listener = listener
     this.operateTable = new BaseTable_v2(OperateBean.TABLE_NAME, OperateBean.SQL, OperateBean.COLUMNS, (b: boolean) => {

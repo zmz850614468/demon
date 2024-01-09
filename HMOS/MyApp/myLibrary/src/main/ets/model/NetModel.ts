@@ -2,7 +2,7 @@
  * 获取网络相关信息
  */
 import connection from '@ohos.net.connection'
-import Logger from 'myLibrary/src/main/ets/util/Logger'
+import Logger from '../util/Logger'
 
 export class NetModel {
   private netConnect: connection.NetConnection

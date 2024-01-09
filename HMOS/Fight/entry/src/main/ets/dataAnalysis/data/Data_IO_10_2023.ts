@@ -7,6 +7,7 @@ export default class Data_IO_10_2023 {
    */
   getBasicList(): Array<MonthBasicDataBean> {
     let basicList: Array<MonthBasicDataBean> = []
+    basicList.push(new MonthBasicDataBean('23', '12', Data_IO_10_2023.month_12))
     basicList.push(new MonthBasicDataBean('23', '11', Data_IO_10_2023.month_11))
     basicList.push(new MonthBasicDataBean('23', '10', Data_IO_10_2023.month_10))
     basicList.push(new MonthBasicDataBean('23', '9', Data_IO_10_2023.month_9))
@@ -20,7 +21,42 @@ export default class Data_IO_10_2023 {
   }
 
 
-  // static month_12: string =
+  static month_12: string =
+    "\t30\t9.50\t1\t8589\t8616\n" +
+    "*\t1\t9.10\t-1\t8575\t8554\n" +
+    "/\t1\t9.30\t1\t8554\t8504\n" +
+    "*\t1\t10.35\t-1\t8504\t8518\n" +
+    "\t1\t22.10\t1\t8547\t8412\n" +
+    "/\t4\t9.50\t1\t8375\t8416\n" +
+    "\t4\t13.55\t-1\t8416\t8417\n" +
+    "*\t5\t9.30\t-1\t8369\t8283\n" +
+    "/\t5\t21.30\t1\t8283\t8223\n" +
+    "*\t5\t22.00\t-1\t8223\t8115\n" +
+    "\t7\t21.10\t1\t8180\t8241\n" +
+    "\t11\t10.35\t-1\t8221\t8261\n" +
+    "\t11\t21.20\t1\t8261\t8247\n" +
+    "\t12\t14.15\t1\t8288\t8250\n" +
+    "\t12\t22.20\t-1\t8255\t8142\n" +
+    "\t14\t22.50\t1\t8131\t8089\n" +
+    "\t15\t13.45\t-1\t8070\t8055\n" +
+    "\t18\t14.35\t1\t8055\t8016\n" +
+    "\t19\t9.20\t-1\t8016\t8036\n" +
+    "\t19\t14.55\t1\t8036\t7973\n" +
+    "/\t20\t10.00\t1\t8002\t8012\n" +
+    "*\t20\t13.55\t-1\t8012\t8037\n" +
+    "\t20\t22.10\t1\t8037\t8006\n" +
+    "\t21\t14.05\t1\t8084\t8009\n" +
+    "\t21\t21.30\t-1\t8009\t8028\n" +
+    "\t22\t21.10\t1\t8062\t8007\n" +
+    "\t25\t13.35\t1\t8083\t8087\n" +
+    "\t26\t13.55\t-1\t8088\t8134\n" +
+    "\t27\t9.50\t1\t8104\t8117\n" +
+    "\t27\t22.40\t-1\t8117\t8173\n" +
+    "\t28\t9.10\t1\t8173\t8101\n" +
+    "\t28\t14.35\t-1\t8104\t8116\n" +
+    "*\t28\t22.40\t1\t8115\t8175\n" +
+    "/\t28\t23.00\t-1\t8175\t8052\n" +
+    "\t29\t10.55\t-1\t8026\t7965"
   static month_11: string =
     "\t30\t14.55\t\t1\t8435\t8360\n" +
     "\t1\t10.10\t0\t-1\t8360\t8442\n" +

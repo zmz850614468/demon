@@ -10,6 +10,8 @@
     "pages/LocationInfo",
     "pages/UserAuth",
     "pages/AccountManager",
-    "pages/DisplayInfo"
+    "pages/DisplayInfo",
+    "pages/PasteBoard",
+    "pages/HWServerless"
   ]
 }

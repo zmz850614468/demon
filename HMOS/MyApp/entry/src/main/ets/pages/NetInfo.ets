@@ -11,7 +11,7 @@ struct NetInfo {
   model: NetModel = new NetModel()
 
   aboutToAppear() {
-    this.model.register()
+    // this.model.register()  // 注册监听实时变化
     this.model.getNetType((err, netType: string) => {
       if (err) {
         this.showLog('getNetType：' + JSON.stringify(err))
@@ -48,7 +48,6 @@ struct NetInfo {
         this.netIps = ips
       }
     })
-
   }
 
   aboutToDisappear() {

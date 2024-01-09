@@ -17,8 +17,10 @@ struct Function {
   @State isOn: boolean = false
   timerId: number
   itemList = []
+  hourArr: Array<string> = []
 
   aboutToAppear() {
+    this.initData()
     PermissionUtil.requestFloatPermission((result) => {
       if (result == 0) {
         Toast.show('悬浮框授权成功')
@@ -33,11 +35,21 @@ struct Function {
     this.itemList.push([$r('app.media.crj'), '出入金', 'pages/Money'])
     this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
     this.itemList.push([$r('app.media.ic_translate_data'), '数据迁移', 'pages/FileManager'])
-    this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
+    this.itemList.push([$r('app.media.ic_compare'), '数据对比', 'pages/DataCompare'])
     this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
     this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
+    this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
 
     router.pushUrl({ url: 'pages/UserAuth' })
+  }
+
+  initData() {
+    this.hourArr.push('09:59')
+    this.hourArr.push('11:14')
+    this.hourArr.push('14:14')
+    this.hourArr.push('14:59')
+    this.hourArr.push('21:59')
+    this.hourArr.push('22:59')
   }
 
   onPageShow() {
@@ -143,7 +155,10 @@ struct Function {
               (temp > '10:20' && temp < '20.00' && temp.endsWith('9'))) { // 五分钟，响一下
                 this.player.play(getContext(this), 'succeed.wav', 1)
                 this.notify("提示", "5分-" + temp)
-              } else { // // 十分钟，响三下
+              } else if (this.hourArr.indexOf(temp) >= 0) { // 整点
+                this.player.play(getContext(this), 'succeed_2.wav', 4)
+                this.notify("提示", "整点-" + temp)
+              } else { // 十分钟，响三下
                 this.player.play(getContext(this), 'succeed.wav', 4)
                 this.notify("提示", "10分-" + temp)
               }

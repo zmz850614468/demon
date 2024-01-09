@@ -6,10 +6,13 @@ import { MyDataSource } from '../adapter/MyDataSource'
 @Component
 export default struct ResultEach {
   operateList: Array<OperateBean> = null
-  data: MyDataSource
+  @State data: MyDataSource = null
+  eachTable: BaseTable_v2<OperateBean> = null
 
   aboutToAppear() {
     this.data = new MyDataSource(this.operateList)
+    this.eachTable = new BaseTable_v2(OperateBean.TABLE_NAME, OperateBean.SQL, OperateBean.COLUMNS, (b: boolean) => {
+    })
   }
 
   build() {
@@ -26,7 +29,7 @@ export default struct ResultEach {
       .width('100%')
 
       List({ space: 1 }) {
-        LazyForEach(this.data, (item: OperateBean) => {
+        LazyForEach(this.data, (item: OperateBean, index) => {
           ListItem() {
             Row() {
               Text(item.getDay().toString())
@@ -36,7 +39,19 @@ export default struct ResultEach {
               Text(item.result.toString())
                 .textItem()
             }
-          }
+          }.gesture(LongPressGesture().onAction(() => {
+            AlertDialog.show({
+              title: '注意',
+              message: '确定要删除当前数据吗？',
+              confirm: {
+                value: '确定',
+                action: () => {
+                  this.data.deleteData(index)
+                  this.eachTable.deleteData(item)
+                },
+              }
+            })
+          }))
         })
       }
       .width('100%')

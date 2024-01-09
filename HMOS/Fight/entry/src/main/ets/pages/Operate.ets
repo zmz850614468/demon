@@ -7,6 +7,7 @@ import DayOperateBean from '../database_v2/bean/DayOperateBean'
 import BaseTable_v2 from '../database_v2/BaseTable_v2'
 import { SingleSelectDialog } from '../dialog/SingleSelectDialog'
 import { HandsSelectDialog } from '../dialog/HandsSelectDialog'
+import HashMap from '@ohos.util.HashMap'
 
 @Entry
 @Component
@@ -23,9 +24,12 @@ struct Operate {
   @State posCount: number = 0
   @State negCount: number = 0
   @State poundage: number = 0
+  map: HashMap<string, number> = new HashMap() // 实际数量:默认都是10倍数量
 
   aboutToAppear() {
     this.initData()
+
+    this.map.set('液化气', 20)
   }
 
   private async initData() {
@@ -61,7 +65,8 @@ struct Operate {
     let emptyArray = []
     this.operateList.forEach((bean, index) => {
       if (bean.outPrice > 0) {
-        bean.result = (bean.outPrice - bean.inPrice) * bean.hands * 10 * (bean.type == '买入' ? 1 : -1)
+        let count = this.map.get(bean.name) ? this.map.get(bean.name) : 10
+        bean.result = (bean.outPrice - bean.inPrice) * bean.hands * count * (bean.type == '买入' ? 1 : -1)
         if (bean.result > 0) {
           this.posCount++
         } else {
@@ -90,16 +95,18 @@ struct Operate {
     // 需要添加空数据
     let length = this.operateList.length
     this.bestCombination.forEach((bean) => {
-      let has = false
-      for (let i = length - emptyArray.length; i < length; i++) {
-        if (bean.name === this.operateList[i].name) {
-          has = true
-          break
+      if (bean.hands > 0) {
+        let has = false
+        for (let i = length - emptyArray.length; i < length; i++) {
+          if (bean.name === this.operateList[i].name) {
+            has = true
+            break
+          }
         }
-      }
-      // 数据不存在，则添加
-      if (!has) {
-        this.operateList.push(this.getNewBean(bean.name, bean.hands))
+        // 数据不存在，则添加
+        if (!has) {
+          this.operateList.push(this.getNewBean(bean.name, bean.hands))
+        }
       }
     })
     // }
@@ -118,9 +125,9 @@ struct Operate {
   /**
    * 保存 可选择数量 信息
    */
-  private saveHands() {
-    PreferenceModel.save(HANDS_LIST, JSON.stringify(this.handsList))
-  }
+  // private saveHands() {
+  //   PreferenceModel.save(HANDS_LIST, JSON.stringify(this.handsList))
+  // }
 
   /**
    * 保存数据库数据
@@ -155,9 +162,14 @@ struct Operate {
           })
         }
       })
-      while (this.operateList[0].outPrice > 0) {
-        this.operateList.shift()
+      for (let i = this.operateList.length - 1; i >= 0; i--) {
+        if (this.operateList[i].outPrice > 0) {
+          this.operateList.splice(i, 1)
+        }
       }
+      // while (this.operateList[0].outPrice > 0) {
+      //   this.operateList.shift()
+      // }
 
       this.calAndSave()
     })
@@ -224,10 +236,21 @@ struct Operate {
           this.inputTitle()
 
           List({ space: 1 }) {
-            ForEach(this.operateList, (item) => {
+            ForEach(this.operateList, (item, index) => {
               ListItem() {
                 this.inputLayout(item)
-              }
+              }.gesture(LongPressGesture().onAction(() => {
+                AlertDialog.show({
+                  title: '注意',
+                  message: '确定要删除当前数据吗？',
+                  confirm: {
+                    value: '确定',
+                    action: () => {
+                      this.operateList.splice(index, 1)
+                    },
+                  }
+                })
+              }))
             })
           }
         }.width('100%')

@@ -11,6 +11,7 @@
     "pages/BestCombination",
     "pages/Float",
     "pages/FileManager",
-    "pages/UserAuth"
+    "pages/UserAuth",
+    "pages/DataCompare"
   ]
 }

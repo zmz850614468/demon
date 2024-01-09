@@ -6,6 +6,7 @@ export default class Data_RM_10_2023 {
    */
   getBasicList(): Array<MonthBasicDataBean> {
     let basicList: Array<MonthBasicDataBean> = []
+    basicList.push(new MonthBasicDataBean('23', '12', Data_RM_10_2023.month_12))
     basicList.push(new MonthBasicDataBean('23', '11', Data_RM_10_2023.month_11))
     basicList.push(new MonthBasicDataBean('23', '10', Data_RM_10_2023.month_10))
     basicList.push(new MonthBasicDataBean('23', '9', Data_RM_10_2023.month_9))
@@ -18,6 +19,49 @@ export default class Data_RM_10_2023 {
     return basicList;
   }
 
+
+  static month_12: string =
+    "\t30\t11.05\t-1\t2819\t2793\n" +
+    "\t1\t21.50\t1\t2793\t2751\n" +
+    "\t4\t10.35\t-1\t2751\t2768\n" +
+    "\t4\t22.20\t1\t2776\t2764\n" +
+    "\t5\t21.20\t-1\t2764\t2785\n" +
+    "\t6\t10.10\t1\t2785\t2765\n" +
+    "0\t7\t9.10\t1\t2765\t2795\n" +
+    "*\t7\t11.25\t1\t2795\t2897\n" +
+    "/\t8\t22.50\t-1\t2897\t2884\n" +
+    "*\t11\t10.35\t1\t2884\t2862\n" +
+    "\t11\t13.55\t-1\t2853\t2873\n" +
+    "*\t11\t22.10\t1\t2873\t2900\n" +
+    "/\t12\t9.40\t-1\t2900\t2900\n" +
+    "*\t12\t22.10\t1\t2900\t2887\n" +
+    "\t12\t22.10\t-1\t2882\t2891\n" +
+    "\t13\t13.35\t-1\t2874\t2860\n" +
+    "\t15\t9.20\t1\t2874\t2846\n" +
+    "*\t15\t13.45\t-1\t2869\t2803\n" +
+    "/\t18\t11.25\t1\t2803\t2828\n" +
+    "\t18\t21.2\t1\t2828\t2836\n" +
+    "*\t20\t9.5\t-1\t2825\t2828\n" +
+    "/\t20\t21.4\t1\t2828\t2846\n" +
+    "\t20\t22.2\t1\t2846\t2826\n" +
+    "\t21\t10.35\t-1\t2826\t2870\n" +
+    "0\t21\t14.15\t-1\t2870\t2896\n" +
+    "\t21\t21.1\t1\t2896\t2835\n" +
+    "\t21\t23\t-1\t2821\t2855\n" +
+    "\t22\t21.1\t1\t2850\t2857\n" +
+    "\t25\t21.50\t1\t2880\t2868\n" +
+    "*\t26\t13.55\t-1\t2868\t2844\n" +
+    "/\t26\t14.15\t1\t2844\t2835\n" +
+    "*\t26\t15.00\t-1\t2835\t2875\n" +
+    "-\t26\t22.30\t-1\t2875\t2901\n" +
+    "*\t27\t9.10\t1\t2901\t2908\n" +
+    "/\t27\t9.30\t-1\t2908\t2900\n" +
+    "*\t27\t11.25\t1\t2905\t2900\n" +
+    "\t27\t22.20\t-1\t2896\t2931\n" +
+    "*\t28\t10.45\t1\t2921\t2933\n" +
+    "/\t28\t21.30\t-1\t2933\t2950\n" +
+    "*\t28\t22.00\t1\t2950\t2928\n" +
+    "\t29\t11.15\t-1\t2916\t2870"
   static month_11: string =
     "\t30\t21.10\t\t-1\t2929\t2875\n" +
     "*\t1\t21.10\t\t1\t2875\t2930\n" +

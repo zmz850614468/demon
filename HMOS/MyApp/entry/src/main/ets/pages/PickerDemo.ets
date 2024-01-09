@@ -69,7 +69,6 @@ struct PickerDemo {
     new picker.DocumentViewPicker().select(options).then((result) => {
       this.showLog('uri :' + result[0])
       let fileModel = new FileModel_v2()
-      // todo 文件不可用
       fileModel.open(result[0], fs.OpenMode.READ_ONLY)
 
       // let stat = fileModel.getStat()

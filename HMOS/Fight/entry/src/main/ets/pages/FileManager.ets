@@ -22,6 +22,9 @@ struct FileManager {
   dayTable: BaseTable_v2<DayOperateBean> = null
   moneyTable: BaseTable_v2<MoneyBean> = null
 
+// month_9=
+
+
   aboutToAppear() {
     this.operateTable = new BaseTable_v2(OperateBean.TABLE_NAME, OperateBean.SQL, OperateBean.COLUMNS, (b: boolean) => {
       this.operateTable.queryAll(new OperateBean(), (list: Array<OperateBean>) => {

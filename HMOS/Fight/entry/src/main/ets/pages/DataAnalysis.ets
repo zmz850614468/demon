@@ -10,11 +10,15 @@ import DataParse_IO_5 from '../dataAnalysis/DataParse_IO_5';
 import { SingleSelectDialog } from '../dialog/SingleSelectDialog';
 import CircleView from '../component/CircleView';
 import DataParse_RM_10 from '../dataAnalysis/DataParse_RM_10';
+import DataParse_PG_10 from '../dataAnalysis/DataParse_PG_10';
+import pasteboard from '@ohos.pasteboard';
+import { Types } from '../constant/TypeConstant'
 
 @Entry
 @Component
 struct DataAnalysis {
-  private static selectItems: string[] = ['OI-10', 'P-10', 'RM-10']
+  // private static selectItems: string[] = ['OI-10', 'P-10', 'PG-10', 'RM-10']
+  private static selectItems: string[] = Types
   @State recordResult: RecordResult = null
   @State private title: string = DataAnalysis.selectItems[0]
   @State private analysisList: ArrayList<AnalysisBean> = null
@@ -40,7 +44,6 @@ struct DataAnalysis {
   })
 
   refreshData(type: string) {
-
     this.title = type
     switch (type) {
       case 'OI-10':
@@ -58,6 +61,10 @@ struct DataAnalysis {
       case 'RM-10':
         this.analysisList = new DataParse_RM_10().getAnalysis()
         this.recordResult = DataParse_RM_10.record
+        break
+      case 'PG-10':
+        this.analysisList = new DataParse_PG_10().getAnalysis()
+        this.recordResult = DataParse_PG_10.record
         break
 
       default:
@@ -77,6 +84,10 @@ struct DataAnalysis {
       this.totalBean.negCount += item.negCount
       this.totalBean.pos_60_count += item.pos_60_count
       this.totalBean.neg_60_count += item.neg_60_count
+
+      // 反向操作结果
+      this.totalBean.fxCount += item.fxCount
+      this.totalBean.fxResult += item.fxResult
     })
   }
 
@@ -92,6 +103,12 @@ struct DataAnalysis {
             .onClick(() => {
               this.selectDialogController.open()
             })
+            .gesture(LongPressGesture().onAction(() => {
+              let pasteData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN,
+                DataParse.copyMonthAnalysis(this.title, this.analysisList))
+              pasteboard.getSystemPasteboard().setData(pasteData)
+              Toast.show('复制数据完成')
+            }))
 
           Text("榜单")
             .fontSize(17)
@@ -262,23 +279,38 @@ struct ItemView {
         .margin({ left: 0, right: 0, top: 3, bottom: 0 })
         .height('33%')
 
+        // Row() {
+        //   Text('正-负:' + this.item.posCount + "-" + this.item.negCount)
+        //     .fontSize(16)
+        //     .width('50%')
+        //     .height('100%')
+        //     .textAlign(TextAlign.Center)
+        //   Text('60(正-负):')
+        //     .fontSize(17)
+        //     .width('25%')
+        //     .height('100%')
+        //     .textAlign(TextAlign.End)
+        //   Text(this.item.pos_60_count + "-" + this.item.neg_60_count)
+        //     .text(this.getTipColor(this.item.pos_60_count - this.item.neg_60_count, 100))
+        //     .textAlign(TextAlign.Start)
+        // }.width('100%')
+        // .height('33%')
         Row() {
-          Text('正-负:' + this.item.posCount + "-" + this.item.negCount)
+          Text('数量(/):' + this.item.fxCount)
             .fontSize(16)
             .width('50%')
             .height('100%')
             .textAlign(TextAlign.Center)
-          Text('60(正-负):')
+          Text('结果(/):')
             .fontSize(17)
             .width('25%')
             .height('100%')
             .textAlign(TextAlign.End)
-          Text(this.item.pos_60_count + "-" + this.item.neg_60_count)
-            .text(this.getTipColor(this.item.pos_60_count - this.item.neg_60_count, 100))
+          Text(this.item.fxResult.toFixed(0))
+            .text(this.getTipColor(this.item.fxResult, 100000))
             .textAlign(TextAlign.Start)
         }.width('100%')
         .height('33%')
-
 
         Row() {
           Text('胜率:' + (this.item.posCount * 100 / this.item.count).toFixed(2) + '%')
@@ -314,7 +346,7 @@ struct ItemView {
         .height('100%')
         .margin({ left: 5, right: 0, top: 3, bottom: 0 })
     }.width('100%')
-    .height(120)
+    .height(114)
   }
 
   /**

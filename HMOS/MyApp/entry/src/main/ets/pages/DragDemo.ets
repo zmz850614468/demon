@@ -33,8 +33,10 @@ struct Type_1 {
     List({ space: 1 }) {
       ForEach(this.list, (item, index) => {
         ListItem() {
-          Text(this.dragStarted && this.dragIndex == index ? '' : item)
+          Text(this.dragStarted && this.dragIndex == index ? '    ' : item)
             .fontSize(17)
+            .width('25%')
+            .height(40)
             .padding({ left: 10, right: 10, top: 10, bottom: 10 })
             .borderWidth(1)
             .borderRadius(10)
@@ -58,6 +60,13 @@ struct Type_1 {
 
       })
     }
+    .onDragMove((e: DragEvent, params: string) => {
+      let p = JSON.parse(params)
+      if (this.dragIndex !== p.insertIndex) {
+        this.move(this.dragIndex, p.insertIndex)
+        this.dragIndex = p.insertIndex
+      }
+    })
     .onDrop((e: DragEvent, params: string) => {
       let p = JSON.parse(params)
       this.showLog('onDrop:' + params)
@@ -70,6 +79,7 @@ struct Type_1 {
       Text(name)
         .padding({ left: 10, right: 10, top: 10, bottom: 10 })
         .height(40)
+        .width('25%')
         .fontSize(17)
         .borderRadius(10)
         .textAlign(TextAlign.Center)
@@ -112,6 +122,7 @@ struct Type_2 {
             Text(this.dragStarted && this.dragIndex == index ? '' : item)
               .textAlign(TextAlign.Center)
               .width('25%')
+              .height(40)
               .fontSize(17)
               .padding({ left: 0, right: 0, top: 10, bottom: 10 })
               .borderWidth(1)
@@ -141,6 +152,7 @@ struct Type_2 {
             Text(item)
               .textAlign(TextAlign.Center)
               .width('25%')
+              .height(40)
               .fontSize(17)
               .padding({ left: 0, right: 0, top: 10, bottom: 10 })
               .borderWidth(1)
@@ -151,6 +163,8 @@ struct Type_2 {
         })
       }
       .margin({ left: 0, right: 0, top: 20, bottom: 0 })
+      // .onDragMove((e: DragEvent, params: string) => {
+      // })
       .onDrop((e: DragEvent, params: string) => {
         let p = JSON.parse(params)
         this.showLog('onDrop:' + params)
@@ -163,8 +177,8 @@ struct Type_2 {
     Column() {
       Text(name)
         .width('25%')
-        .padding({ left: 0, right: 0, top: 10, bottom: 10 })
         .height(40)
+        .padding({ left: 0, right: 0, top: 10, bottom: 10 })
         .fontSize(17)
         .borderRadius(10)
         .textAlign(TextAlign.Center)

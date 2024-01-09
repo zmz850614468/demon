@@ -6,10 +6,13 @@ import DayOperateBean from '../database_v2/bean/DayOperateBean'
 @Component
 export default struct ResultDay {
   dayOperateList: Array<DayOperateBean> = null
-  data: MyDataSource
+  @State data: MyDataSource = null
+  dayTable: BaseTable_v2<DayOperateBean> = null
 
   aboutToAppear() {
     this.data = new MyDataSource(this.dayOperateList)
+    this.dayTable = new BaseTable_v2(DayOperateBean.TABLE_NAME, DayOperateBean.SQL, DayOperateBean.COLUMNS, (b: boolean) => {
+    })
   }
 
   build() {
@@ -30,7 +33,7 @@ export default struct ResultDay {
       .width('100%')
 
       List() {
-        LazyForEach(this.data, (item: DayOperateBean) => {
+        LazyForEach(this.data, (item: DayOperateBean, index) => {
           ListItem() {
             Row() {
               Text(item.getDay())
@@ -44,7 +47,20 @@ export default struct ResultDay {
               Text(item.negCount + "")
                 .textItem()
             }
-          }
+          }.gesture(LongPressGesture().onAction(() => {
+            AlertDialog.show({
+              title: '注意',
+              message: '确定要删除当前数据吗？',
+              confirm: {
+                value: '确定',
+                action: () => {
+                  this.data.deleteData(index)
+                  this.dayTable.deleteData(item, () => {
+                  })
+                },
+              }
+            })
+          }))
         })
       }
       .width('100%')

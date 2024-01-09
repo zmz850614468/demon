@@ -51,6 +51,7 @@ export struct AddAccountDialog {
           .textAlign(TextAlign.Center)
           .fontSize(17)
           .height(40)
+
       }.width('100%')
       .justifyContent(FlexAlign.Center)
 
@@ -101,7 +102,6 @@ export struct AddAccountDialog {
       }.width('80%')
       .margin({ left: 0, right: 0, top: 20, bottom: 10 })
       .justifyContent(FlexAlign.Center)
-
     }
     .padding({ left: 0, right: 0, top: 15, bottom: 15 })
   }

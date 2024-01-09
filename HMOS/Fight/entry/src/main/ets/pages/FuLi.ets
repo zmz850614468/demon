@@ -109,10 +109,10 @@ struct FuLi {
             if (time - this.lastTime < 300000000) {
 
               let bean = new FuLiBean((await StringUtil.getDayTimeAsync()).slice(2), item.basic, item.fuLi, item.count, item.result)
-              animateTo({ duration: 1000 }, () => {
-                this.targetList.unshift(bean)
-              })
-              if (this.targetList.length > 5) {
+              this.targetList.unshift(bean)
+              // animateTo({ duration: 1000 }, () => {
+              // })
+              if (this.targetList.length > 12) {
                 this.targetList.pop()
               }
 
@@ -130,7 +130,7 @@ struct FuLi {
             ListItem() {
               this.fuLiLayout(item)
             }
-            .transition({ type: TransitionType.All, translate: { x: 200 }, scale: { x: 0, y: 0 } })
+            // .transition({ type: TransitionType.All, translate: { x: 200 }, scale: { x: 0, y: 0 } })
             .onClick((e) => {
               let time = e.timestamp
               if (time - this.lastTime < 300000000) {
@@ -141,9 +141,9 @@ struct FuLi {
                     value: "确定",
                     action: () => {
                       let index = this.targetList.indexOf(item)
-                      animateTo({ duration: 1000 }, () => {
-                        this.targetList.splice(index, 1)
-                      })
+                      this.targetList.splice(index, 1)
+                      // animateTo({ duration: 1000 }, () => {
+                      // })
                       PreferenceModel.save(TARGET_LIST, JSON.stringify(this.targetList))
                     },
                   }
@@ -154,7 +154,7 @@ struct FuLi {
           })
         }
       }.width('100%')
-      .height('51%')
+      .layoutWeight(1)
       .align(Alignment.Bottom)
     }
   }
@@ -235,7 +235,7 @@ struct FuLi {
 @Extend(Text) function fuLiItem() {
   .fontSize(15)
   .width('20%')
-  .height(40)
+  .height(35)
   .textAlign(TextAlign.Center)
   .fontColor($r('app.color.black'))
 }

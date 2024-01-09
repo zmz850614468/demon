@@ -31,7 +31,7 @@ struct Index {
 
     PermissionUtil.requestFloatPermission((result) => {
       if (result == 0) {
-        Toast.show('悬浮框授权成功')
+        // Toast.show('悬浮框授权成功')
       } else {
         Toast.show('悬浮框授权失败')
       }
@@ -59,9 +59,9 @@ struct Index {
     }
   }
 
-  onBackPress() {
-    return true
-  }
+  // onBackPress() {
+  //   return true
+  // }
 
   isFloat = false
 
@@ -73,6 +73,11 @@ struct Index {
             router.pushUrl({ url: 'pages/AccountManager' })
           })
       }
+
+      Text('用户认证').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/UserAuth' })
+        })
 
       Text('悬浮窗口').item()
         .onClick(() => {
@@ -110,14 +115,19 @@ struct Index {
           router.pushUrl({ url: 'pages/LocationInfo' })
         })
 
-      Text('用户认证').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/UserAuth' })
-        })
-
       Text('显示设备属性').item()
         .onClick(() => {
           router.pushUrl({ url: 'pages/DisplayInfo' })
+        })
+
+      Text('剪切板').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/PasteBoard' })
+        })
+
+      Text('华为-serverless').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/HWServerless' })
         })
 
     }
@@ -130,36 +140,6 @@ struct Index {
     // this.showLog('3.比大小：' + ('10.59' > '09.04'))
     // this.showLog('4.比大小：' + ('14.14' > '12.04'))
     // this.showLog('5.比大小：' + ('22.14' > '09.54'))
-
-    // let table = new Rdb_v4(AccountBean.tableInfo, (err) => {
-    //   this.showLog('new Rdb_v4:' + JSON.stringify(err))
-    // })
-    //
-    // setTimeout(() => {
-    //   let bean = new AccountBean()
-    //   bean.typeGroup = '金融'
-    //   bean.name = '京东'
-    //   bean.account = '115200'
-    //   bean.pwd = '124578'
-    //   table.insertBean(bean, (err, rowId) => {
-    //     this.showLog('insertBean:' + JSON.stringify(err) + ' - ' + rowId)
-    //   })
-    // }, 2000)
-
-    // let table2 = new Rdb_v4(TestBean.tableInfo, (err) => {
-    //   this.showLog('new Rdb_v4 TestBean:' + JSON.stringify(err))
-    // })
-    //
-    // setTimeout(() => {
-    //   let bean = new TestBean()
-    //   bean.date = '金融'
-    //   bean.result = 100
-    //   bean.memo = '115200'
-    //   table2.insertBean(bean, (err, rowId) => {
-    //     this.showLog('insertBean TestBean:' + JSON.stringify(err) + ' - ' + rowId)
-    //   })
-    // }, 2000)
-
   }
 
   /**

@@ -28,6 +28,12 @@ export default class DataParse {
       } else if (item.result <= -60) {
         bean.neg_60_count++
       }
+
+      // 反向操作数据
+      if (item.type === '/' || item.type === '0') {
+        bean.fxCount++
+        bean.fxResult += item.result
+      }
     })
 
     bean.pay = bean.count * 0.5
@@ -53,10 +59,17 @@ export default class DataParse {
       bean.type = beanArr[0]
       bean.day = beanArr[1]
       bean.time = beanArr[2]
-      bean.op = beanArr[3]
-      bean.dir = Number.parseInt(beanArr[4])
-      bean.in_ = Number.parseFloat(beanArr[5])
-      bean.out_ = Number.parseFloat(beanArr[6])
+      if (beanArr.length == 6) { // 调整了excel的格式后
+        bean.op = ""
+        bean.dir = Number.parseInt(beanArr[3])
+        bean.in_ = Number.parseFloat(beanArr[4])
+        bean.out_ = Number.parseFloat(beanArr[5])
+      } else {
+        bean.op = beanArr[3]
+        bean.dir = Number.parseInt(beanArr[4])
+        bean.in_ = Number.parseFloat(beanArr[5])
+        bean.out_ = Number.parseFloat(beanArr[6])
+      }
 
       // 计算结果
       bean.result = (bean.out_ - bean.in_) * bean.dir
@@ -68,6 +81,20 @@ export default class DataParse {
     })
 
     return list
+  }
+
+  /**
+   * 月份数据分析
+   * @returns
+   */
+  static copyMonthAnalysis(type: string, list: ArrayList<AnalysisBean>): string {
+    let result = type + '\n'
+    result += AnalysisBean.getTitle() + '\n'
+    list.forEach((item) => {
+      result += item.toString() + '\n'
+    })
+
+    return result
   }
 
   /**
