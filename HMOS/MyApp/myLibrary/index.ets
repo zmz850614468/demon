@@ -4,11 +4,14 @@ export { SingleSelectDialog } from './src/main/ets/dialog/SingleSelectDialog'
 // adapter
 export { MyDataSource } from './src/main/ets/adapter/MyDataSource'
 
-// database
-export { Rdb_v3 } from './src/main/ets/database_v3/Rdb_v3'
+// database_v3
+// export { Rdb_v3 } from './src/main/ets/database_v3/Rdb_v3'
+// export { TableInfo } from './src/main/ets/database_v3/TableInfo'
 
-export { TableInfo } from './src/main/ets/database_v3/TableInfo'
+// database_v4
+export { Rdb_v4 } from './src/main/ets/database_v4/Rdb_v4'
 
+export { TableInfo } from './src/main/ets/database_v4/TableInfo'
 // model
 export { LocationModel } from './src/main/ets/model/LocationModel'
 

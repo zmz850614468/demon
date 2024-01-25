@@ -8,6 +8,7 @@ import window from '@ohos.window';
 import common from '@ohos.app.ability.common';
 import { PermissionUtil } from '../util/PermissionUtil';
 import { AVPlayerModel } from '../model/AVPlayerModel';
+import { OperateDataModel } from '../model/OperateDataModel';
 
 @Entry
 @Component
@@ -16,10 +17,13 @@ struct Function {
   player: AVPlayerModel = new AVPlayerModel()
   @State isOn: boolean = false
   timerId: number
-  itemList = []
+  @State itemList: Array<any> = []
   hourArr: Array<string> = []
+  @Watch('addShowItem')
+  @State isShow: boolean = false
 
   aboutToAppear() {
+    OperateDataModel.getInstance()
     this.initData()
     PermissionUtil.requestFloatPermission((result) => {
       if (result == 0) {
@@ -29,18 +33,31 @@ struct Function {
       }
     })
 
+    // 三个占位用
+    this.itemList.push([, '', ''])
+    this.itemList.push([, '', ''])
+    this.itemList.push([, '', ''])
+    this.itemList.push([, '', ''])
+    this.itemList.push([, '', ''])
+    this.itemList.push([, '', ''])
+    this.itemList.push([$r('app.media.crj'), '出入金', 'pages/Money'])
     this.itemList.push([$r('app.media.fl'), '复利', 'pages/FuLi'])
     this.itemList.push([$r('app.media.fy'), '交易费用', 'pages/Cost'])
-    this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
-    this.itemList.push([$r('app.media.crj'), '出入金', 'pages/Money'])
-    this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
-    this.itemList.push([$r('app.media.ic_translate_data'), '数据迁移', 'pages/FileManager'])
-    this.itemList.push([$r('app.media.ic_compare'), '数据对比', 'pages/DataCompare'])
-    this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
+    // this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
+    // this.itemList.push([$r('app.media.ic_translate_data'), '数据迁移', 'pages/FileManager'])
     this.itemList.push([$r('app.media.ic_record'), '操作详情', 'pages/OperateResult'])
+    this.itemList.push([$r('app.media.fxsj'), '数据分析', 'pages/DataAnalysis'])
+    this.itemList.push([$r('app.media.ic_compare'), '数据对比', 'pages/DataCompare'])
     this.itemList.push([$r('app.media.ic_memo'), '当前操作', 'pages/Operate'])
+    this.itemList.push([$r('app.media.ic_target'), '目标', 'pages/Target'])
+    this.itemList.push([$r('app.media.zjzh'), '最佳组合', 'pages/BestCombination'])
 
     router.pushUrl({ url: 'pages/UserAuth' })
+  }
+
+  addShowItem() {
+    this.itemList.push([$r('app.media.exchange'), '数据接收', 'pages/ReceiverData'])
+    this.itemList.push([$r('app.media.ic_translate_data'), '数据迁移', 'pages/FileManager'])
   }
 
   initData() {
@@ -81,7 +98,7 @@ struct Function {
           .maxCount(3)
           .minCount(3)
           .rowsGap(20)
-        }.padding({ left: 20, right: 20, top: 20, bottom: 20 })
+        }.padding({ left: 10, right: 10, top: 20, bottom: 20 })
       }
 
       Toggle({ type: ToggleType.Checkbox, isOn: this.isOn })
@@ -101,6 +118,9 @@ struct Function {
         })
         .height(20)
         .margin({ left: 15, right: 0, top: 15, bottom: 0 })
+        .gesture(LongPressGesture().onAction(() => {
+          this.isShow = true
+        }))
     }
   }
 
@@ -151,13 +171,13 @@ struct Function {
           time %= inter * 60
           if (!isTiped && time > (inter - 1) * 60) {
             if (!('10:19' === temp || '10:24' === temp)) { // 休息期间不提示
-              if (((temp < '10:20' || temp > '20.00') && temp.endsWith('4')) ||
+              if (this.hourArr.indexOf(temp) >= 0) { // 整点
+                this.player.play(getContext(this), 'succeed_2.wav', 4)
+                this.notify("提示", "整点-" + temp)
+              } else if (((temp < '10:20' || temp > '20.00') && temp.endsWith('4')) ||
               (temp > '10:20' && temp < '20.00' && temp.endsWith('9'))) { // 五分钟，响一下
                 this.player.play(getContext(this), 'succeed.wav', 1)
                 this.notify("提示", "5分-" + temp)
-              } else if (this.hourArr.indexOf(temp) >= 0) { // 整点
-                this.player.play(getContext(this), 'succeed_2.wav', 4)
-                this.notify("提示", "整点-" + temp)
               } else { // 十分钟，响三下
                 this.player.play(getContext(this), 'succeed.wav', 4)
                 this.notify("提示", "10分-" + temp)
@@ -185,6 +205,7 @@ struct Function {
         .width(50)
         .height(50)
 
+
       Text(text)
         .fontSize(17)
         .margin({ left: 0, right: 0, top: 10, bottom: 0 })
@@ -195,6 +216,7 @@ struct Function {
     .onClick(() => {
       router.pushUrl({ url: path })
     })
+
   }
 
   // table: BaseTable_v2<OperateBean>

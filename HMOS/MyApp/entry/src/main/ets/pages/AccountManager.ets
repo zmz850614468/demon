@@ -1,21 +1,21 @@
-import { Rdb_v3 } from 'myLibrary/src/main/ets/database_v3/Rdb_v3'
 import { AccountBean } from '../bean/data/AccountBean'
 import Logger from 'myLibrary/src/main/ets/util/Logger'
 import { Toast } from 'myLibrary/src/main/ets/util/Toast'
 import HashMap from '@ohos.util.HashMap'
 import { AddAccountDialog } from '../dialog/AddAccountDialog'
+import { Rdb_v4 } from 'myLibrary'
 
 @Entry
 @Component
 struct AccountManager {
-  accountTable: Rdb_v3 = null
+  accountTable: Rdb_v4<AccountBean> = null
   map: HashMap<string, Array<AccountBean>> = new HashMap()
   @State keyList: Array<string> = []
   @State selectedIndex: number = -1
 
   aboutToAppear() {
     // 获取数据库表
-    this.accountTable = new Rdb_v3(AccountBean.tableInfo, (err) => {
+    this.accountTable = new Rdb_v4(getContext(this), AccountBean, (err) => {
       // this.showLog('new Rdb_v4:' + JSON.stringify(err))
       if (err) {
         Toast.show('初始化账号数据表出错：' + JSON.stringify(err))
@@ -29,8 +29,8 @@ struct AccountManager {
    * 查询数据
    */
   private queryData() {
-    this.accountTable.queryAll(AccountBean, (err, list) => {
-      this.showLog('queryAll:' + JSON.stringify(err))
+    this.accountTable.queryAll((err, list) => {
+      // this.showLog('queryAll:' + JSON.stringify(err))
       if (err) {
         Toast.show('账号表查询错误：' + JSON.stringify(err))
       } else {
@@ -44,7 +44,7 @@ struct AccountManager {
    * @param list
    */
   private dealResult(list: Array<AccountBean>) {
-    this.showLog('数据：' + JSON.stringify(list))
+    // this.showLog('数据：' + JSON.stringify(list))
     this.map.clear()
     this.keyList.splice(0, this.keyList.length)
     list.forEach((item) => {
@@ -126,7 +126,7 @@ struct AccountManager {
                     confirm: {
                       value: "确定",
                       action: () => {
-                        this.accountTable.deleteBean(item, (err, rowId) => {
+                        this.accountTable.deleteById(item.id, (err, rowId) => {
                           if (err) {
                             Toast.show('删除数据出错：' + JSON.stringify(err))
                           } else {
@@ -173,11 +173,11 @@ struct AccountManager {
     }
     .onClick(() => {
       // animateTo({ duration: 1000 }, () => {
-        if (this.selectedIndex === index) {
-          this.selectedIndex = -1
-        } else {
-          this.selectedIndex = index
-        }
+      if (this.selectedIndex === index) {
+        this.selectedIndex = -1
+      } else {
+        this.selectedIndex = index
+      }
       // })
     })
     .backgroundColor($r('app.color.white'))

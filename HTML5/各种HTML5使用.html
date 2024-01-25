@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>各种HTML5使用</title>
+
+    <style>
+        .container {
+            display: flex; /* 设置容器为flex布局 */
+        }
+        
+        .left {
+            width: 50%; /* 左侧区域宽度为30% */
+            padding: 10px;
+        }
+        
+        .right {
+            width: 50%; /* 右侧区域宽度为70% */
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left">
+            <section>  
+                <h3>input 各种类型<br></h3> 
+                <p> 
+                    1. 年月选择：month - <input type="month"><br>
+                    2. 日期选择：date - <input type="date"><br>
+                    3. 时间选择：time - <input type="time"><br>
+                    4. 颜色选择：color - <input type="color"><br>
+                    5. 数值选择：number- <input type="number" min="1" max="10"><br>
+                    6. 滑动选择：range - <input type="range" min="1" max="10" value="9"><br>
+                </p>
+    
+                <hr>
+                <p>展示给定的数据范围:</p>
+                <meter value="2" min="0" max="10">2 out of 10</meter><br>
+                <meter value="0.6">60%</meter><br>
+    
+                下载进度:
+                <progress value="22" max="100">
+                </progress><br>
+
+                <fieldset>
+                    <legend>有序列表:</legend>
+                    <ol>
+                        <li>咖啡</li>
+                        <li>茶</li>
+                        <li>牛奶</li>
+                    </ol>
+                </fieldset>
+                  
+                <p>无序列表:</p>
+                <ul>
+                    <li>咖啡</li>
+                    <li>茶</li>
+                    <li>牛奶</li>
+                </ul>
+                下拉选择 <br>
+                <select>
+                    <optgroup label="Swedish Cars">
+                      <option value="volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                    </optgroup>
+                    <optgroup label="German Cars">
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </optgroup>
+                  </select><br>
+
+            </section>
+            
+        </div> <!-- 左侧内容 -->
+        <div class="right">
+            <section id="storage">  
+                <h3>web存储：localStorage 和 sessionStorage <br></h3> 
+                <!-- <p> 
+                    是否支持存储 - <label ></label><br><br>
+                </p> -->
+                
+            </section>
+            <hr>
+            <section >  
+                <h3>各种标签</h3>
+                <p>
+                    <a href="http://www.w3cschool.cn">  链接标签：访问W3Cschool教程!</a><br>
+                    <b >加粗标签：访问W3Cschool教程!</b><br>
+                    <button type="button" >按钮标签</button>
+                    <dt>dt:dt标签</dt>
+                    <dd>dd:缩进标签</dd>
+                    <i><del><ins>下划线/删除线/倾斜</ins></del></i><br>
+
+    
+                    <mark>高亮</mark>部分数据<br>
+                    我的母亲有 <span style="color:blue;font-weight:bold">蓝色</span> 的眼睛<br>
+            
+                    <pre>
+                此例演示如何使用 pre 标签
+                对空行和    空格
+                进行控制
+                    </pre>
+                    <q>添加引号标签</q><br>
+                    <p>这个文本包含 <sub>下标</sub>文本<br>
+                    这个文本包含 <sup>上标</sup> 文本<br>
+            
+                    <hr>
+                    嵌入浏览器<br>
+                    <iframe src="https://www.w3cschool.cn">
+                        <p>您的浏览器不支持  iframe 标签。</p>
+                    </iframe>
+
+                </p>
+                
+            </section>
+
+        </div> <!-- 右侧内容 -->
+    </div>
+
+    <!-- <br><br>
+    二、表单<br><br>
+    1. 下拉选择：datalist - <datalist><option value="选项一"><option value="选项二"><option value="选项三"></datalist><br><br> -->
+
+
+<script >
+    var result = document.getElementById('storage')
+
+    var newDiv = document.createElement("div");
+    newDiv.innerHTML =  "是否支持存储："+ canStorage()
+    result.appendChild(newDiv); // 将 div 添加到 body 中
+    if(canStorage()){
+        newDiv = document.createElement("div");
+        newDiv.innerHTML =  "方法： .getItem(key) ; .setItem(key,value)" 
+        result.appendChild(newDiv); // 将 div 添加到 body 中
+    }
+
+    function canStorage(){
+        if(typeof(Storage) !== "undefined"){
+            return true
+        }else{
+            return false
+        }
+    }
+
+</script>
+
+</body>
+</html>

@@ -14,7 +14,6 @@ export default class OperateBean implements DBBaseBean {
   type: string // 类型：入手、出手
   // isRight: boolean
   result: number = 0
-
   hands: number = 0 // 手
   inPrice: number = 0
   outPrice: number = 0
@@ -38,5 +37,10 @@ export default class OperateBean implements DBBaseBean {
   getDay(): string {
     let date = new Date(this.timeStamp)
     return (date.getMonth() + 1) + "-" + date.getDate()
+  }
+
+  getMonth(): string {
+    let date = new Date(this.timeStamp)
+    return date.getFullYear() + "-" + (date.getMonth() + 1)
   }
 }

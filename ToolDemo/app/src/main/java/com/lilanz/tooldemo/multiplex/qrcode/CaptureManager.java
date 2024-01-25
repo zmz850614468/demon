@@ -420,7 +420,7 @@ public class CaptureManager {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(activity.getString(com.google.zxing.client.android.R.string.zxing_app_name));
         builder.setMessage(activity.getString(com.google.zxing.client.android.R.string.zxing_msg_camera_framework_bug));
-        builder.setPositiveButton(com.google.zxing.client.android.R.string.zxing_button_ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();

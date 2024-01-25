@@ -130,6 +130,16 @@ struct Index {
           router.pushUrl({ url: 'pages/HWServerless' })
         })
 
+      Text('反射机子：Reflect').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/ReflectDemo' })
+        })
+
+      Text('数据库存储').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/DbDemo' })
+        })
+
     }
     .width('100%')
   }

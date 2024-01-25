@@ -6,6 +6,7 @@ import ResultDay from '../views/ResultDay'
 import ResultEach from '../views/ResultEach'
 import ResultMonth from '../views/ResultMonth'
 import ResultType from '../views/ResultType'
+import ResultType_v2 from '../views/ResultType_v2'
 
 @Entry
 @Component
@@ -77,24 +78,25 @@ struct OperateResult {
       }) {
         TabContent() {
           if (this.dayOperateList !== null) {
-            ResultMonth({ dayOperateList: this.dayOperateList, operateResult: this })
+            ResultMonth({ dayOperateList: this.dayOperateList, operateResult: this, operateList: this.operateList })
           }
         }
         .tabBar(this.TabBuilder('每月详情', 0, $r('app.media.fighting')))
 
         TabContent() {
           if (this.operateList !== null) {
-            ResultType({ operateList: this.operateList })
+            // ResultType({ operateList: this.operateList })
+            ResultType_v2({ operateList: this.operateList })
           }
         }
         .tabBar(this.TabBuilder('每种详情', 1, $r('app.media.fighting')))
 
-        TabContent() {
-          if (this.dayOperateList !== null) {
-            ResultDay({ dayOperateList: this.dayOperateList })
-          }
-        }
-        .tabBar(this.TabBuilder('每天详情', 2, $r('app.media.fighting')))
+        // TabContent() {
+        //   if (this.dayOperateList !== null) {
+        //     ResultDay({ dayOperateList: this.dayOperateList })
+        //   }
+        // }
+        // .tabBar(this.TabBuilder('每天详情', 2, $r('app.media.fighting')))
 
         TabContent() {
           if (this.operateList !== null) {

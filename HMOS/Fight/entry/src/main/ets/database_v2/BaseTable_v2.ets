@@ -105,6 +105,10 @@ export default class BaseTable_v2<T extends DBBaseBean> {
     this.rdbTable.exeSql(sql)
   }
 
+  clearData(){
+    this.exeSql('delete from ' + this.tableName + ' where id>0')
+  }
+
   generateBucket(account: T) {
     let obj = {};
     this.columns.forEach((item) => {

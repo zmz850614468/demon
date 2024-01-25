@@ -4,6 +4,8 @@
 import DBBaseBean from './DBBaseBean'
 
 export default class TestBean implements DBBaseBean {
+  constructor() {
+  }
   static readonly TABLE_NAME = 'OperateTable'
   static readonly SQL = 'CREATE TABLE IF NOT EXISTS ' + TestBean.TABLE_NAME + '(id INTEGER PRIMARY KEY AUTOINCREMENT, timeStamp LONG, ' +
   'name TEXT,type TEXT, result INTEGER)'
@@ -25,6 +27,8 @@ export default class TestBean implements DBBaseBean {
     this.name = resultSet.getString(resultSet.getColumnIndex(TestBean.COLUMNS[2]))
     this.type = resultSet.getString(resultSet.getColumnIndex(TestBean.COLUMNS[3]))
     this.result = resultSet.getDouble(resultSet.getColumnIndex(TestBean.COLUMNS[4]))
+
+    Reflect
   }
 
   getNewBean(): DBBaseBean {

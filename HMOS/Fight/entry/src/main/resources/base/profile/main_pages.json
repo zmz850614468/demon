@@ -12,6 +12,7 @@
     "pages/Float",
     "pages/FileManager",
     "pages/UserAuth",
-    "pages/DataCompare"
+    "pages/DataCompare",
+    "pages/Target"
   ]
 }

@@ -12,6 +12,8 @@
     "pages/AccountManager",
     "pages/DisplayInfo",
     "pages/PasteBoard",
-    "pages/HWServerless"
+    "pages/HWServerless",
+    "pages/ReflectDemo",
+    "pages/DbDemo"
   ]
 }

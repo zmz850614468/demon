@@ -1,0 +1,103 @@
+{
+    "document": {
+        "VisualVersion": "12",
+        "type": "ETS",
+        "custom": true,
+        "path": "/entry/src/main/supervisual/component/Dialog_Comp"
+    },
+    "visualModel": {
+        "dataType": "VisualModel",
+        "value": {
+            "propertyStorage": {
+                "dataType": "Map",
+                "value": {}
+            },
+            "dynamicPropertyStorage": {
+                "dataType": "Map",
+                "value": {}
+            },
+            "mediaPropertyStorage": {
+                "dataType": "Map",
+                "value": {}
+            },
+            "dynamicMediaPropertyStorage": {
+                "dataType": "Map",
+                "value": {}
+            },
+            "property": {
+                "dataType": "Map",
+                "value": {
+                    "width": "100%",
+                    "height": "100%"
+                }
+            },
+            "dynamicProperty": {
+                "dataType": "Map",
+                "value": {}
+            },
+            "children": [
+                {
+                    "dataType": "VisualModel",
+                    "value": {
+                        "propertyStorage": {
+                            "dataType": "Map",
+                            "value": {}
+                        },
+                        "dynamicPropertyStorage": {
+                            "dataType": "Map",
+                            "value": {}
+                        },
+                        "mediaPropertyStorage": {
+                            "dataType": "Map",
+                            "value": {}
+                        },
+                        "dynamicMediaPropertyStorage": {
+                            "dataType": "Map",
+                            "value": {}
+                        },
+                        "property": {
+                            "dataType": "Map",
+                            "value": {
+                                "width": "100%",
+                                "height": "100%",
+                                "left": "0vp",
+                                "top": "0vp",
+                                "position": "absolute"
+                            }
+                        },
+                        "dynamicProperty": {
+                            "dataType": "Map",
+                            "value": {}
+                        },
+                        "children": [],
+                        "id": "column1",
+                        "type": "column"
+                    }
+                }
+            ],
+            "id": "wrapper",
+            "type": "column"
+        }
+    },
+    "formData": {
+        "data": {
+            "dataType": "Map",
+            "value": {}
+        },
+        "actions": {
+            "dataType": "Map",
+            "value": {}
+        }
+    },
+    "imgData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIoAAAEsCAYAAAActSsjAAAAAXNSR0IArs4c6QAABPRJREFUeF7t0jERADAMA7GEP+gUQh+APHv6097djSnwKbCgMFIKgFIq+QwoEKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCoKRMTqAwkAqAkjI5gcJAKgBKyuQECgOpACgpkxMoDKQCDy8lrLnj8v5WAAAAAElFTkSuQmCC",
+    "customData": {
+        "property": {
+            "dataType": "Map",
+            "value": {}
+        },
+        "event": {
+            "dataType": "Map",
+            "value": {}
+        }
+    }
+}

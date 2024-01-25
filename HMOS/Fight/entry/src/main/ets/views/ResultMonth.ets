@@ -7,7 +7,8 @@ import { MyDataSource } from '../adapter/MyDataSource';
 @Component
 export default struct ResultMonth {
   operateResult: any
-  dayOperateList: Array<DayOperateBean> = null
+  dayOperateList: Array<DayOperateBean> = null // 天数据
+  operateList: Array<OperateBean> = null // 每笔数据
   monthList: Array<ResultBean> = []
   @State resultList: Array<ResultBean> = []
   @State type: string = '月'
@@ -23,6 +24,7 @@ export default struct ResultMonth {
 
   /**
    * 异步处理数据
+   * 处理月份数据
    */
   private async calculate() {
     let lastMonth = -1
@@ -144,7 +146,7 @@ export default struct ResultMonth {
             ItemView({ item: item, type: this.type })
               .padding({ left: 0, right: 0, top: 0, bottom: 3 })
           }
-        }, (item: ResultBean) => item.toString())
+        }, (item: ResultBean) => this.type + '-' + item.toString())
       }
     }.width('100%')
     .height('100%')
@@ -202,7 +204,7 @@ struct ItemView {
             .width('50%')
             .height('100%')
             .textAlign(TextAlign.Center)
-            .fontColor($r('app.color.white'))
+            .fontColor($r('app.color.black'))
 
           Text('盈亏:' + (this.item.result - this.item.poundage).toFixed(2))
             .fontSize(17)
@@ -210,13 +212,11 @@ struct ItemView {
             .height('100%')
             .textAlign(TextAlign.Center)
             .fontColor($r('app.color.white'))
+            .borderRadius(15)
+            .backgroundColor(this.item.result - this.item.poundage > 0 ? $r('app.color.deepRed') : $r('app.color.deepGreen'))
         }
         .width('100%')
         .height(35)
-        .borderWidth(1)
-        .borderRadius(15)
-        .backgroundColor($r("app.color.red"))
-        .borderColor($r("app.color.red"))
       }
       .width('100%')
       .height('100%')

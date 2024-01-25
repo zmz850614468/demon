@@ -23,8 +23,9 @@ export default struct ResultType {
         item.result > 0 ? bean.posCount++ : bean.negCount++
     })
 
-    this.resultList.push(this.map.get('菜油'))
+    this.resultList.push(this.map.get('液化气'))
     this.resultList.push(this.map.get('棕榈油'))
+    this.resultList.push(this.map.get('菜油'))
   }
 
   build() {

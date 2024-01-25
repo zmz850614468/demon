@@ -8,6 +8,7 @@ import BaseTable_v2 from '../database_v2/BaseTable_v2'
 import { SingleSelectDialog } from '../dialog/SingleSelectDialog'
 import { HandsSelectDialog } from '../dialog/HandsSelectDialog'
 import HashMap from '@ohos.util.HashMap'
+import { OperateDataModel } from '../model/OperateDataModel'
 
 @Entry
 @Component
@@ -167,9 +168,8 @@ struct Operate {
           this.operateList.splice(i, 1)
         }
       }
-      // while (this.operateList[0].outPrice > 0) {
-      //   this.operateList.shift()
-      // }
+
+      OperateDataModel.getInstance().refreshData()
 
       this.calAndSave()
     })

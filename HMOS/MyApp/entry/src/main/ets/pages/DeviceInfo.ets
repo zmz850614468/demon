@@ -1,6 +1,4 @@
 import deviceInfo from '@ohos.deviceInfo'
-import router from '@ohos.router'
-import { Toast } from 'myLibrary/src/main/ets/util/Toast'
 
 @Entry
 @Component

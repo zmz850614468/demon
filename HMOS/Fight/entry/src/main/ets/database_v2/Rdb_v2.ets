@@ -1,4 +1,5 @@
 import relationalStore from '@ohos.data.relationalStore'
+import Logger from '../util/Logger';
 
 /**
  * api-9 后发布的
@@ -53,6 +54,7 @@ export default class Rdb_v2 {
     const valueBucket = data;
     this.rdbStore.insert(this.tableName, valueBucket, function (err, rowId) {
       if (err) {
+        console.error('数据插入错误：' + JSON.stringify(err))
         callback(resFlag);
         return;
       }
@@ -131,6 +133,7 @@ export default class Rdb_v2 {
     }
     this.rdbStore.query(predicates, this.columns, function (err, resultSet) {
       if (err) {
+        console.error('数据查询错误：' + JSON.stringify(err))
         return;
       }
       callback(resultSet);
@@ -145,5 +148,13 @@ export default class Rdb_v2 {
    */
   exeSql(sql: string) {
     this.rdbStore.executeSql(sql)
+  }
+
+  /** import Logger from 'myLibrary/src/main/ets/util/Logger'
+   * 日志信息
+   * @param msg
+   */
+  showLog(msg: string) {
+    Logger.error('Rdb_v2', msg)
   }
 }

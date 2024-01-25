@@ -1,0 +1,21 @@
+
+一、反编译工具
+    1.apktool   提取资源文件和布局文件；解包打包
+    2.dex2jar   .apk解压后得到的.dex文件再给还原成.class文件（classes.dex还原成jar文件）
+    3.jd-gui工具  将第二步生成的jar文件在这个工具中打开查看
+
+二、步骤
+    1.解压.apk文件， 获取classes.dex文件
+    2.通过命令 d2j-dex2jar classes.dex ;获取classes-dex2jar.jar文件
+    3.通过jd-gui工具，查看classes-dex2jar.jar文件
+
+    4.安装图片安装apktool工具
+    5.通过命令  apktool d lilanz5.0.apk ；获取资源和布局文件
+    6.反向打包：apktool b lilanz5.0(文件名) ; 获得dist文件夹
+    7.生成keystore：keytool -genkey -alias abc.keystore -keyalg RSA -validity 20000 -keystore abc.keystore
+    8.重新签名：jarsigner -verbose -keystore abc.keystore -signedjar lilanz5.0_signed.apk lilanz5.0.apk abc.keystore
+    9.abc.keystore密码：12345678
+
+
+
+
