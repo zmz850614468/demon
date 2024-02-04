@@ -173,3 +173,4 @@ class ResultBean {
     return bean
   }
 }
+
