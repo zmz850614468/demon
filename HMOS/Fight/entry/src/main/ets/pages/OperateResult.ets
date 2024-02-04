@@ -103,7 +103,7 @@ struct OperateResult {
             ResultEach({ operateList: this.operateList })
           }
         }
-        .tabBar(this.TabBuilder('每笔详情', 3, $r('app.media.fighting')))
+        .tabBar(this.TabBuilder('每笔详情', 2, $r('app.media.fighting')))
       }
       .height('95%')
       .width('100%')

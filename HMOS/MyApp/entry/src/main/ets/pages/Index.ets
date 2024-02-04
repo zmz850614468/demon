@@ -140,6 +140,11 @@ struct Index {
           router.pushUrl({ url: 'pages/DbDemo' })
         })
 
+      Text('Emitter通信').item()
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/EmitterDemo' })
+        })
+
     }
     .width('100%')
   }

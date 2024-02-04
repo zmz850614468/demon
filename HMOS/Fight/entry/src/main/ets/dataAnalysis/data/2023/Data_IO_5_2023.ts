@@ -1,4 +1,4 @@
-import MonthBasicDataBean from '../bean/MonthBasicDataBean'
+import MonthBasicDataBean from '../../bean/MonthBasicDataBean'
 export default class Data_IO_5_2023 {
 
   /**

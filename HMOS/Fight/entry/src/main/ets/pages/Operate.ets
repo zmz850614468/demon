@@ -151,6 +151,7 @@ struct Operate {
     let dayOperateTable = new BaseTable_v2(DayOperateBean.TABLE_NAME, DayOperateBean.SQL, DayOperateBean.COLUMNS, (b: boolean) => {
       dayOperateTable.insertData(bean, (id) => {
         Toast.show('天数据添加成功', 300)
+        OperateDataModel.getInstance().refreshData()
       })
     })
 

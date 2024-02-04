@@ -1,10 +1,10 @@
 import RecordResult from './bean/RecordResult'
 import ArrayList from '@ohos.util.ArrayList'
 import AnalysisBean from './bean/AnalysisBean'
-import Data_IO_10_2023 from './data/Data_IO_10_2023'
+import Data_IO_10_2023 from './data/2023/Data_IO_10_2023'
 import MonthBasicDataBean from './bean/MonthBasicDataBean'
 import DataParse from './DataParse'
-import Data_IO_5_2023 from './data/Data_IO_5_2023'
+import Data_IO_5_2023 from './data/2023/Data_IO_5_2023'
 
 /**
  * IO 数据解析

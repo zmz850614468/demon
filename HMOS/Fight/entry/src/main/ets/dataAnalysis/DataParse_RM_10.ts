@@ -3,7 +3,8 @@ import ArrayList from '@ohos.util.ArrayList'
 import AnalysisBean from './bean/AnalysisBean'
 import MonthBasicDataBean from './bean/MonthBasicDataBean'
 import DataParse from './DataParse'
-import Data_RM_10_2023 from './data/Data_RM_10_2023'
+import Data_RM_10_2023 from './data/2023/Data_RM_10_2023'
+import Data_RM_10_2024 from './data/2024/Data_RM_10_2024'
 
 /**
  * IO 数据解析
@@ -19,7 +20,8 @@ export default class DataParse_RM_10 {
   static analysiclist: ArrayList<AnalysisBean> = new ArrayList()
 
   constructor() {
-    DataParse_RM_10.basicList = DataParse_RM_10.basicList.concat(DataParse_RM_10.basicList, new Data_RM_10_2023().getBasicList())
+    DataParse_RM_10.basicList = DataParse_RM_10.basicList.concat(new Data_RM_10_2024().getBasicList())
+    DataParse_RM_10.basicList = DataParse_RM_10.basicList.concat(new Data_RM_10_2023().getBasicList())
   }
 
   /**
@@ -37,4 +39,5 @@ export default class DataParse_RM_10 {
     }
     return DataParse_RM_10.analysiclist
   }
+
 }

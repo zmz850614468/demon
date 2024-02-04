@@ -13,6 +13,7 @@ import DataParse_RM_10 from '../dataAnalysis/DataParse_RM_10';
 import DataParse_PG_10 from '../dataAnalysis/DataParse_PG_10';
 import pasteboard from '@ohos.pasteboard';
 import { Types } from '../constant/TypeConstant'
+import DataParse_RU_10 from '../dataAnalysis/DataParse_RU_10';
 
 @Entry
 @Component
@@ -66,6 +67,10 @@ struct DataAnalysis {
         this.analysisList = new DataParse_PG_10().getAnalysis()
         this.recordResult = DataParse_PG_10.record
         break
+      case 'RU-10':
+        this.analysisList = new DataParse_RU_10().getAnalysis()
+        this.recordResult = DataParse_RU_10.record
+        break
 
       default:
         Toast.show('不存在的类型')
@@ -85,9 +90,13 @@ struct DataAnalysis {
       this.totalBean.pos_60_count += item.pos_60_count
       this.totalBean.neg_60_count += item.neg_60_count
 
-      // 反向操作结果
+      // /类型  反向操作结果
       this.totalBean.fxCount += item.fxCount
       this.totalBean.fxResult += item.fxResult
+
+      // -1类型  反向操作结果
+      this.totalBean.fxCount_1 += item.fxCount_1
+      this.totalBean.fxResult_1 += item.fxResult_1
     })
   }
 
@@ -103,12 +112,12 @@ struct DataAnalysis {
             .onClick(() => {
               this.selectDialogController.open()
             })
-            .gesture(LongPressGesture().onAction(() => {
-              let pasteData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN,
-                DataParse.copyMonthAnalysis(this.title, this.analysisList))
-              pasteboard.getSystemPasteboard().setData(pasteData)
-              Toast.show('复制数据完成')
-            }))
+          // .gesture(LongPressGesture().onAction(() => {
+          //   let pasteData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN,
+          //     DataParse.copyMonthAnalysis(this.title, this.analysisList))
+          //   pasteboard.getSystemPasteboard().setData(pasteData)
+          //   Toast.show('复制数据完成')
+          // }))
 
           Text("榜单")
             .fontSize(17)
@@ -124,14 +133,10 @@ struct DataAnalysis {
         .width('100%')
         .height(50)
 
-        Stack() {
-          Column() {
-            ForEach([this.totalBean], (item: AnalysisBean) => {
-              ItemView({ item: item })
-                .padding({ left: 0, right: 0, top: 0, bottom: 3 })
-            })
-          }
 
+        Column() {
+
+          // 分结果
           Column() {
             List({ space: 1 }) {
               ForEach(Array.from(this.analysisList), (item: AnalysisBean) => {
@@ -142,14 +147,19 @@ struct DataAnalysis {
             }
           }
           .width('100%')
-          .height('100%')
-          .padding({ left: 0, right: 0, top: 0, bottom: 125 })
+          .layoutWeight(1)
+          // .padding({ left: 0, right: 0, top: 0, bottom: 125 })
 
-        }
-        .alignContent(Alignment.Bottom)
-        .padding({ left: 0, right: 0, top: 0, bottom: 50 })
-        .width('100%')
-        .height('100%')
+          // 总结果
+          Column() {
+            ForEach([this.totalBean], (item: AnalysisBean) => {
+              ItemView({ item: item })
+                .padding({ left: 0, right: 0, top: 0, bottom: 3 })
+            })
+          }
+
+        }.layoutWeight(1)
+
       }
 
       Panel(this.recordShow) {
@@ -276,8 +286,8 @@ struct ItemView {
             .textAlign(TextAlign.Center)
 
         }.width('100%')
-        .margin({ left: 0, right: 0, top: 3, bottom: 0 })
-        .height('33%')
+        // .margin({ left: 0, right: 0, top: 3, bottom: 0 })
+        .height(30)
 
         // Row() {
         //   Text('正-负:' + this.item.posCount + "-" + this.item.negCount)
@@ -310,7 +320,26 @@ struct ItemView {
             .text(this.getTipColor(this.item.fxResult, 100000))
             .textAlign(TextAlign.Start)
         }.width('100%')
-        .height('33%')
+        .height(30)
+
+        if (this.item.fxCount_1 > 0) {
+          Row() {
+            Text('数量(-1):' + this.item.fxCount_1)
+              .fontSize(16)
+              .width('50%')
+              .height('100%')
+              .textAlign(TextAlign.Center)
+            Text('结果(-1):')
+              .fontSize(17)
+              .width('25%')
+              .height('100%')
+              .textAlign(TextAlign.End)
+            Text(this.item.fxResult_1.toFixed(0))
+              .text(this.getTipColor(this.item.fxResult_1, 100000))
+              .textAlign(TextAlign.Start)
+          }.width('100%')
+          .height(30)
+        }
 
         Row() {
           Text('胜率:' + (this.item.posCount * 100 / this.item.count).toFixed(2) + '%')
@@ -331,22 +360,22 @@ struct ItemView {
             .height('100%')
 
         }.width('100%')
-        .height('34%')
+        .height(33)
 
-      }.borderWidth(2)
-      .borderRadius(15)
-      .margin({ left: 0, right: 0, top: 5, bottom: 0 })
-      .borderColor($r("app.color.gray"))
+      }
+      // .margin({ left: 0, right: 0, top: 5, bottom: 0 })
 
       Text(this.item.month + (this.item.year !== undefined ? '/' + this.item.year : ''))
         .fontSize(18)
         .fontColor($r("app.color.red"))
-        .align(Alignment.TopStart)
-        .width('100%')
-        .height('100%')
-        .margin({ left: 5, right: 0, top: 3, bottom: 0 })
-    }.width('100%')
-    .height(114)
+        .padding({ left: 5, right: 5, top: 5, bottom: 5 })
+    }
+    .width('100%')
+    .borderWidth(1)
+    .alignContent(Alignment.TopStart)
+    .borderRadius(15)
+    .borderColor($r("app.color.gray"))
+    .margin({ left: 0, right: 0, top: 0, bottom: 5 })
   }
 
   /**

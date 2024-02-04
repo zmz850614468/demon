@@ -54,12 +54,15 @@ export default struct ResultType_v2 {
     result.name = '所有记录'
     // this.map.forEach((value, key) => {
     //   result.resultList.push(value)
+    // })
     result.resultList.push(this.map.get('液化气'))
     result.resultList.push(this.map.get('棕榈油'))
     result.resultList.push(this.map.get('菜油'))
     result.resultList.push(this.map.get('菜粕'))
     result.resultList.push(this.map.get('豆粕'))
-    // })
+    if (this.map.hasKey('橡胶')) {
+      result.resultList.push(this.map.get('橡胶'))
+    }
     this.resultList.push(result)
   }
 
@@ -135,7 +138,7 @@ export default struct ResultType_v2 {
         .textAlign(TextAlign.Center)
         .fontColor($r('app.color.white'))
         .backgroundColor(item.result > 0 ? $r('app.color.deepRed') : $r('app.color.deepGreen'))
-        // .borderWidth(0.5)
+          // .borderWidth(0.5)
         .borderRadius(15)
       // }
       // .width('35%')

@@ -33,6 +33,9 @@ export default class DataParse {
       if (item.type === '/' || item.type === '0') {
         bean.fxCount++
         bean.fxResult += item.result
+      } else if (item.type === '-1') {
+        bean.fxCount_1++
+        bean.fxResult_1 += item.result
       }
     })
 
@@ -73,7 +76,7 @@ export default class DataParse {
 
       // 计算结果
       bean.result = (bean.out_ - bean.in_) * bean.dir
-      if (bean.op === "0") {
+      if (bean.op === "0" || bean.type === "-1") {
         bean.result *= -1
       }
 
@@ -87,15 +90,15 @@ export default class DataParse {
    * 月份数据分析
    * @returns
    */
-  static copyMonthAnalysis(type: string, list: ArrayList<AnalysisBean>): string {
-    let result = type + '\n'
-    result += AnalysisBean.getTitle() + '\n'
-    list.forEach((item) => {
-      result += item.toString() + '\n'
-    })
-
-    return result
-  }
+  // static copyMonthAnalysis(type: string, list: ArrayList<AnalysisBean>): string {
+  //   let result = type + '\n'
+  //   result += AnalysisBean.getTitle() + '\n'
+  //   list.forEach((item) => {
+  //     result += item.toString() + '\n'
+  //   })
+  //
+  //   return result
+  // }
 
   /**
    * 字符串转对象

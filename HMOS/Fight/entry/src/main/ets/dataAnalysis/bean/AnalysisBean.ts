@@ -15,25 +15,28 @@ export default class AnalysisBean {
   pos_60_count: number = 0 // 正60以上操作数
   neg_60_count: number = 0 // 负60以上操作数
 
-  fxCount: number = 0 // 反向操作数
-  fxResult: number = 0 // 反向操作结果
+  fxCount: number = 0 // /类型 反向操作数
+  fxResult: number = 0 // /类型 反向操作结果
+
+  fxCount_1: number = 0 // -1类型 反向操作数
+  fxResult_1: number = 0 // -1类型 反向操作结果
 
   private static split: string = ';'
 
-  toString(): string {
-    let result = ''
-    result += this.month + '/' + this.year + AnalysisBean.split
-    result += this.posCount + AnalysisBean.split
-    result += this.negCount + AnalysisBean.split
-    result += this.count + AnalysisBean.split
-    result += this.pay + AnalysisBean.split
-    result += this.fxCount + AnalysisBean.split
-    result += this.fxResult.toFixed(1) + AnalysisBean.split
-    result += (this.posCount * 100 / this.count).toFixed(2) + '%' + AnalysisBean.split
-    result += this.result.toFixed(1)
-
-    return result
-  }
+  // toString(): string {
+  //   let result = ''
+  //   result += this.month + '/' + this.year + AnalysisBean.split
+  //   result += this.posCount + AnalysisBean.split
+  //   result += this.negCount + AnalysisBean.split
+  //   result += this.count + AnalysisBean.split
+  //   result += this.pay + AnalysisBean.split
+  //   result += this.fxCount + AnalysisBean.split
+  //   result += this.fxResult.toFixed(1) + AnalysisBean.split
+  //   result += (this.posCount * 100 / this.count).toFixed(2) + '%' + AnalysisBean.split
+  //   result += this.result.toFixed(1)
+  //
+  //   return result
+  // }
 
   add(bean: AnalysisBean) {
     this.count += bean.count
@@ -45,11 +48,16 @@ export default class AnalysisBean {
     this.neg_60_count += bean.neg_60_count
     this.fxCount += bean.fxCount
     this.fxResult += bean.fxResult
+
+
+    this.fxCount_1 += bean.fxCount_1
+    this.fxResult_1 += bean.fxResult_1
   }
 
   update(hands: number) {
-    this.result *= 2
-    this.fxResult *= 2
+    this.result *= hands
+    this.fxResult *= hands
+    this.fxResult_1 *= hands
   }
 
   static getTitle(): string {

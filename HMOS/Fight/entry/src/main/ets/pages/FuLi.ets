@@ -9,9 +9,12 @@ import Toast from '../util/Toast';
 @Component
 struct FuLi {
   @State fuLiBeanList: Array<FuLiBean> = [];
-  @State basic: number = 1.0
-  @State fuLi: number = 1.2;
-  @State count: number = 12;
+  basic: number = 1.0
+  fuLi: number = 1.2;
+  count: number = 12;
+  @State basicStr: string = '1.0'
+  @State fuLiStr: string = '1.2'
+  @State countStr: string = '12'
   @State targetList: Array<FuLiBean> = []
 
   /**
@@ -21,6 +24,7 @@ struct FuLi {
     PreferenceModel.get(BASIC).then(value => {
       if (!(value === undefined)) {
         this.basic = value
+        this.basicStr = this.basic.toString()
         Logger.error('tag', 'basic = ' + this.basic)
       } else {
         Logger.error('tag', 'basic undefined ' + value)
@@ -29,11 +33,13 @@ struct FuLi {
     PreferenceModel.get(FU_LI).then(value => {
       if (!(value === undefined)) {
         this.fuLi = value
+        this.fuLiStr = this.fuLi.toString()
       }
     })
     PreferenceModel.get(COUNT).then(value => {
       if (!(value === undefined)) {
         this.count = value
+        this.countStr = this.count.toString()
       }
     })
   }
@@ -189,10 +195,11 @@ struct FuLi {
         .textAlign(TextAlign.Center)
 
       if (type === BASIC) {
-        TextInput({ text: this.basic.toString() })
+        TextInput({ text: this.basicStr })
           .input()
           .onChange((val) => {
-            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+            // this.basicStr = val
+            if (val === '') {
               this.basic = 0
             } else {
               this.basic = Number.parseFloat(val)
@@ -200,10 +207,11 @@ struct FuLi {
             this.cal()
           })
       } else if (type === FU_LI) {
-        TextInput({ text: this.fuLi.toString() })
+        TextInput({ text: this.fuLiStr })
           .input()
           .onChange((val) => {
-            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+            // this.fuLiStr = val
+            if (val === '') {
               this.fuLi = 0
             } else {
               this.fuLi = Number.parseFloat(val)
@@ -211,10 +219,10 @@ struct FuLi {
             this.cal()
           })
       } else {
-        TextInput({ text: this.count.toString() })
+        TextInput({ text: this.countStr })
           .input()
           .onChange((val) => {
-            if (val === 'NaN' || val === 'Na' || val === 'N' || val === '') {
+            if (val === '') {
               this.count = 0
             } else {
               this.count = Number.parseFloat(val)

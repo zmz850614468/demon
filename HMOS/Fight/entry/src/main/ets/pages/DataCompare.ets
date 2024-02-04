@@ -7,10 +7,11 @@ import Toast from '../util/Toast'
 @Entry
 @Component
 struct DataCompare {
-  @State selectedMonthIndex: Array<number> = [0, 1]
-  @State selectedTypeIndex: Array<number> = [1, 2]
+  @State selectedMonthIndex: Array<number> = [0, 1, 2]
+  @State selectedTypeIndex: Array<number> = [0, 1, 2, 3, 4]
   @State isSelectionLayoutShow: boolean = false
   @State selectionDatas: Array<AnalysisBean> = []
+  updateCount: number = 1
 
   // 月数据
   monthAnalysisMap: HashMap<string, Array<AnalysisBean>> = new HashMap()
@@ -55,6 +56,7 @@ struct DataCompare {
       }
     })
 
+    this.updateCount++
     // let list = this.selectionDatas
     // let size = this.selectionDatas.length
     // size++
@@ -88,6 +90,8 @@ struct DataCompare {
     result += '交易费用' + split
     result += '操作数(/)' + split
     result += '结果(/)' + split
+    result += '操作数(-1)' + split
+    result += '结果(-1)' + split
     result += '胜率' + split
     result += '收益' + '\n'
     this.selectionDatas.forEach((item, index) => {
@@ -101,6 +105,8 @@ struct DataCompare {
         result += item.pay + split
         result += item.fxCount + split
         result += item.fxResult + split
+        result += item.fxCount_1 + split
+        result += item.fxResult_1 + split
         result += (item.posCount * 100 / item.count).toFixed(1) + '%' + split
         result += item.result + '\n'
       }
@@ -127,7 +133,7 @@ struct DataCompare {
                 .margin({ left: 0, right: 0, top: 15, bottom: 0 })
             }
           }
-        }, item => item.toString())
+        }, item => item.toString() + this.updateCount)
       }.layoutWeight(1)
 
       Column() {

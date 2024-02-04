@@ -29,7 +29,8 @@ struct Cost {
                 .height(50)
                 .textAlign(TextAlign.Center)
             }
-            .borderWidth(1)
+            .margin({ left: 0, right: 0, top: 0, bottom: 3 })
+            .borderWidth(0.5)
             .borderRadius(15)
             .borderColor($r("app.color.gray"))
           }
