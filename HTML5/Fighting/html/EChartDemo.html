@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EChartDemo</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <script src="../js/EChartConfig.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.common.min.js"></script> -->
+    <script src="../lib/echarts.js"></script>
+  </head> 
+  <body>
+    <div style="display: flex; gap: 5px; margin: 10px">
+      <div class="board_9" style="height: min-content">
+        <div id="bar" style="width: 600px; height: 400px"></div>
+      </div>
+      <div class="board_9" style="height: min-content">
+        <div id="line" style="width: 600px; height: 400px"></div>
+      </div>
+      <div class="board_9" style="height: min-content">
+        <div id="pie" style="width: 600px; height: 400px"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      // 柱状图
+      let barOption = new BarOption();
+      barOption.setXAxis(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
+      barOption.addSeriesData([23, 24, 18, 25, 27, 28, 25]);
+      barOption.setLabelShow()
+      echarts.init(document.getElementById("bar")).setOption(barOption);
+
+      // 折线图
+      let lineOption = new LineOption();
+      lineOption.setXAxis(["A", "B", "C"]);
+      lineOption.addSeriesData([120, 200, 150]);
+      // lineOption.setSmooth(false)
+      echarts.init(document.getElementById("line")).setOption(lineOption);
+
+      // 饼状图
+      let pieOption = new PieOption();
+      pieOption.setSeriesData([
+        {
+          value: 335,
+          name: "A-16.6%",
+        },
+        {
+          value: 234,
+          name: "B-13.3%",
+        },
+        {
+          value: 1548,
+          name: "C-70.1%",
+        },
+      ]);
+      // pieOption.setRadius('50%','80%')
+      // pieOption.setCenterLabelShow(true)
+      // pieOption.setCenterLabelShow(false)
+      echarts.init(document.getElementById("pie")).setOption(pieOption);
+    </script>
+  </body>
+</html>

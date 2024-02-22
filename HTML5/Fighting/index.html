@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Fighting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.common.min.js"></script>
+
+    <style>
+      /* CSS样式 */
+      .popup {
+          display: none; /* 初始状态为隐藏 */
+          position: fixed;
+          text-align: center;
+          top: 50px;
+          bottom: 50px;
+          left: 25px;
+          right: 25px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .show {
+          display: block; /* 当点击按钮时显示弹窗 */
+      }
+  </style>
+
+
+  </head>
+  <body id="body" style="padding: 20px">
+    <label> 图片例子</label><br /><br />
+    <a href="./html/FightingResult.html">FightingResult</a><br /><br />
+    <a href="./html/ChartDemo.html">ChartDemo</a><br /><br />
+    <a href="./html/EChartDemo.html">EChartDemo</a><br />
+
+    <!-- HTML结构 -->
+    <button  onclick="openPopup()">打开弹窗</button>
+    <div id="myPopup" class="popup">
+      <h2>这里是弹窗的标题</h2>
+      <p>这里是弹窗的内容。</p>
+      <button onclick="closePopup()">关闭弹窗</button>
+    </div>
+
+    <script type="text/javascript">
+        // JavaScript函数
+        function openPopup() {
+            document.getElementById("myPopup").classList.add("show");
+        }
+        
+        function closePopup() {
+            document.getElementById("myPopup").classList.remove("show");
+        }
+    </script>
+    
+  </body>
+
+
+
+
+</html>

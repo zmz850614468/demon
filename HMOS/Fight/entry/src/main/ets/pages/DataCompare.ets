@@ -7,7 +7,7 @@ import Toast from '../util/Toast'
 @Entry
 @Component
 struct DataCompare {
-  @State selectedMonthIndex: Array<number> = [0, 1, 2]
+  @State selectedMonthIndex: Array<number> = [0, 1]
   @State selectedTypeIndex: Array<number> = [0, 1, 2, 3, 4]
   @State isSelectionLayoutShow: boolean = false
   @State selectionDatas: Array<AnalysisBean> = []

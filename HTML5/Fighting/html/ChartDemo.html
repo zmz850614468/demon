@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ChartDemo</title>
+    <script src="../js/DealFile.js" type="text/javascript"></script>
+    <script src="../js/ChartConfig.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <script src="https://cdn.staticfile.org/Chart.js/3.9.1/chart.js"></script>
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.common.min.js'></script> -->
+
+</head>
+  <body id="body">
+    <!-- <script  src="js/ReadExcel.js" type="text/javascript"></script> -->
+
+    选择文件夹: <input type="file" id="xlf" multiple="multiple" /><br />
+    <script>
+      document
+        .getElementById("xlf")
+        .addEventListener("change", selectFile, false);
+      function selectFile(e) {
+        dealFiles(e.target.files);
+      }
+    </script>
+
+    <div id="container" >
+      <div class="board_9" style="height: min-content">
+        <canvas id="myChart" height="180px"></canvas>
+      </div>
+      <div class="board_9" style="height: min-content">
+        <canvas id="lineChart"></canvas>
+      </div>
+      <div class="board_9" style="height: min-content">
+        <div style="height: 180px">
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div style="height: 180px">
+          <canvas id="doughnutChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let xlabels = [
+        "Red",
+        "Blue",
+        "Yellow",
+        "Green",
+        "Purple",
+        "Orange",
+        "Blue",
+        "Yellow",
+        "Green",
+        "Purple",
+        "Orange",
+      ];
+
+      // 柱状图
+      let dataSet = new BarDataSet();
+      dataSet.label = "bar";
+      dataSet.indexAxis = "y";
+      dataSet.data = [12, 19, 3, 5, 2, 3, 19, 3, -5, 2, 3];
+      dataSet.backgroundColor = ["rgba(255, 159, 64)", "rgba(255, 99, 132)"];
+
+      let barConfig = new ChartConfig("bar"); 
+      barConfig.setXLable(xlabels);
+      barConfig.addDataSet(dataSet);
+      barConfig.plugins = [
+        {
+          scrollableBar: true, // 开启滚动条插件
+          zoom: false, // 不显示放大/缩小工具
+          pan: false, // 不显示平移工具
+        },
+      ];
+
+      new Chart(document.getElementById("myChart"), barConfig);
+
+      // 折线图
+      let lineData = new LineDataSet();
+      lineData.label = "line";
+      lineData.data = [12, 19, 3, 5, 2, 3, 19, 3, 5, 2, 3];
+      lineData.fill = true;
+      lineData.borderColor = "rgba(255, 159, 64)";
+      lineData.tension = 0.5;
+
+      let lineConfig = new ChartConfig("line");
+      lineConfig.setXLable(xlabels);
+      lineConfig.addDataSet(lineData);
+
+      new Chart(document.getElementById("lineChart"), lineConfig);
+
+      // 饼状图
+      let pieData = new CircleDataSet();
+      pieData.label = "圆形";
+      pieData.data = [300, 50, 100];
+      pieData.backgroundColor = [
+        "rgb(255, 99, 132)",
+        "rgb(54, 162, 235)",
+        "rgb(255, 205, 86)",
+      ];
+      pieData.hoverOffset = 10;
+
+      let pieConfig = new ChartConfig("pie");
+      pieConfig.setXLable(["Red", "Blue", "Yellow"]);
+      pieConfig.addDataSet(pieData);
+      pieConfig.options = {
+        responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+        maintainAspectRatio: false, // 保持图表原有比例
+      };
+
+      new Chart(document.getElementById("pieChart"), pieConfig);
+
+      // 环形图
+      let doughnutConfig = new ChartConfig("doughnut");
+      doughnutConfig.setXLable(["Red", "Blue", "Yellow"]);
+      doughnutConfig.addDataSet(pieData);
+      doughnutConfig.options = {
+        responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+        maintainAspectRatio: false, // 保持图表原有比例
+      };
+
+      new Chart(document.getElementById("doughnutChart"), doughnutConfig);
+    </script>
+  </body>
+</html>

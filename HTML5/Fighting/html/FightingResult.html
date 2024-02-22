@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>FightingResult</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <script src="../js/EChartConfig.js"></script>
+    <script src="../lib/echarts.js"></script>
+    <script src="../js/FightingData.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.common.min.js"></script> -->
+
+    <style>
+      /* CSS样式 */
+      .popup {
+          display: none; /* 初始状态为隐藏 */
+          position: fixed;
+          text-align: center;
+          top: 20px;
+          bottom: 20px;
+          left: 10px;
+          right: 10px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .show {
+          display: block; /* 当点击按钮时显示弹窗 */
+      }
+  </style>
+  </head> 
+
+  <body>
+
+    <div style=" position: fixed;top: 0px; bottom: 0px; left: 0px; right: 0px;
+    text-align: center;">
+      <div style="display: flex;position: relative; width: 100%; height: 50%;">
+        <div onclick="openPopup('1','十万盈利能力-每月')" class="board_box" style="position: relative; width: 33%;margin: 3px;">
+          <label style="font-size: 20px;">十万盈利能力-每月</label>
+          <div  id="dir_month" style="width: 100%; height: 100%" ></div>
+        </div>
+        
+        <div onclick="openPopup('3','/-十万盈利能力-每月')" class="board_box" style="position: relative; width: 33%;margin: 3px;">
+          <label style="font-size: 20px;">/-十万盈利能力-每月</label>
+          <div id="redir-month" style="width: 100%; height: 100%" ></div>
+        </div>
+
+        <div onclick="openPopup('5','复利年盈利倍数')" class="board_box" style="position: relative; width: 33%;margin: 3px;">
+          <label style="font-size: 20px;">复利年盈利倍数</label>
+          <div  id="fuli" style="width: 100%; height: 100%" ></div>
+        </div>
+      </div>
+
+      <div style="display: flex;position: relative; width: 100%; height: 50%;">
+        <div onclick="openPopup('2','十万盈利能力-近三个月')"  class="board_box" style="position: relative; width: 33%;margin: 3px;">
+          <label style="font-size: 20px;">十万盈利能力-近三个月</label>
+          <div  id="dir" style="width: 100%; height: 100%" ></div>
+        </div>
+
+        <div onclick="openPopup('4','/-十万盈利能力-近三个月')" class="board_box" style="position: relative; width: 33%;margin: 3px;">
+          <label style="font-size: 20px;">/-十万盈利能力-近三个月</label>
+          <div  id="dir-" style="width: 100%; height: 100%" ></div>
+        </div>
+        
+        <div onclick="openPopup('6','交易费用')" class="board_box" style="position: relative; width: 33%; margin: 3px;">
+          <label style="font-size: 20px;">交易费用</label>
+          <div  id="cost" style="width: 100%; height: 100%" ></div>
+        </div>
+      </div>
+  </div>
+
+
+    <!-- HTML结构 -->
+    <div onclick="closePopup()" id="myPopup" class="popup">
+      <label id="title" style="font-size: 20px;"></label>
+      <div style="position: fixed; text-align: center; top: 70px;
+        bottom: 20px;
+        left: 10px;
+        right: 10px;" id="img"></div>
+    </div>
+
+    <script type="text/javascript">
+
+      // 十万盈利能力-每月
+      let optionData = getOptionData(totalProfitAndLoss)
+      let dirMonthBarOption = new BarOption();
+      dirMonthBarOption.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        dirMonthBarOption.addSeriesData(optionData.series[i]);
+      }
+      dirMonthBarOption.setLabelShow()
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        dirMonthBarOption.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("dir_month")).setOption(dirMonthBarOption);
+
+      // 十万盈利能力-近三个月 - 则线图     
+      optionData = getOptionData(threeMonthProfitAndLoss)
+      let dirLineOption_2 = new LineOption();
+      dirLineOption_2.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        dirLineOption_2.addSeriesData(optionData.series[i]);
+      }
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        dirLineOption_2.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("dir")).setOption(dirLineOption_2);
+
+      // /-十万盈利能力-每月 
+      optionData = getOptionData(reProfitAndLoss)
+      let redirBarOption_3 = new BarOption();
+      redirBarOption_3.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        redirBarOption_3.addSeriesData(optionData.series[i]);
+      }
+      redirBarOption_3.setLabelShow()
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        redirBarOption_3.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("redir-month")).setOption(redirBarOption_3);
+
+      // /-十万盈利能力-近三个月 - 则线图    
+      optionData = getOptionData(reThreeMonthProfitAndLoss)
+      let dirLineOption_4 = new LineOption();
+      dirLineOption_4.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        dirLineOption_4.addSeriesData(optionData.series[i]);
+      }
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        dirLineOption_4.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("dir-")).setOption(dirLineOption_4);
+
+      // 交易费用      
+      optionData = getOptionData(costData)
+      let costBarOption_5 = new BarOption();
+      costBarOption_5.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        costBarOption_5.addSeriesData(optionData.series[i]);
+      }
+      costBarOption_5.setLabelShow()
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        costBarOption_5.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("cost")).setOption(costBarOption_5);
+
+      // 复利年盈利倍数
+      optionData = getOptionData(fuLiData)
+      let fuLiBarOption_6 = new BarOption();
+      fuLiBarOption_6.setXAxis(optionData.axis);
+      for(let i=0;i<optionData.series.length;i++){
+        fuLiBarOption_6.addSeriesData(optionData.series[i]);
+      }
+      fuLiBarOption_6.setLabelShow()
+      for (let i=0;i< optionData.tipLable.length;i++) {
+        fuLiBarOption_6.addTipLable(optionData.tipLable[i])
+      }
+      echarts.init(document.getElementById("fuli")).setOption(fuLiBarOption_6);
+
+
+      let divEcharts = null
+      // JavaScript函数
+      function openPopup(type,title) {
+        
+        document.getElementById("myPopup").classList.add("show");
+        document.getElementById("title").innerHTML=title
+        switch(type){
+          case '1':
+            echarts.init(document.getElementById("img")).setOption(dirMonthBarOption);
+            break
+          case '2':
+            echarts.init(document.getElementById("img")).setOption(dirLineOption_2);
+            break
+          case '3':
+            echarts.init(document.getElementById("img")).setOption(redirBarOption_3);
+            break
+          case '4':
+            echarts.init(document.getElementById("img")).setOption(dirLineOption_4);
+            break
+          case '5':
+            echarts.init(document.getElementById("img")).setOption(fuLiBarOption_6);
+            break
+            case '6':
+            echarts.init(document.getElementById("img")).setOption(costBarOption_5);
+            break
+        }
+      }
+
+      function closePopup() {
+        // document.getElementById("myPopup").classList.remove("show");
+        location.reload()
+      }
+    </script>
+  </body>
+</html>

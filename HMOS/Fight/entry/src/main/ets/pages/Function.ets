@@ -178,7 +178,7 @@ struct Function {
               (temp > '10:20' && temp < '20.00' && temp.endsWith('9'))) { // 五分钟，响一下
                 this.player.play(getContext(this), 'succeed.wav', 1)
                 this.notify("提示", "5分-" + temp)
-              } else { // 十分钟，响三下
+              } else { // 十分钟，响
                 this.player.play(getContext(this), 'succeed.wav', 4)
                 this.notify("提示", "10分-" + temp)
               }

@@ -100,7 +100,7 @@ export default class EntryAbility extends UIAbility {
     }
     let value = <string> await preference.get('floatPosition', null);
     let position = JSON.parse(value);
-    if (position) {
+    if (position.x > 600) {
       this.floatPosition = position
     }
   }
