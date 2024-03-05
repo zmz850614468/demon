@@ -16,12 +16,21 @@ export default class AnalysisBean {
   neg_60_count: number = 0 // 负60以上操作数
 
   fxCount: number = 0 // /类型 反向操作数
+  fxPosCount: number = 0 // /类型 反向操作数 - 结果>0
   fxResult: number = 0 // /类型 反向操作结果
 
   fxCount_1: number = 0 // -1类型 反向操作数
   fxResult_1: number = 0 // -1类型 反向操作结果
 
   private static split: string = ';'
+
+  /**
+   * 获取反向操作胜率
+   * @returns
+   */
+  getFxPercent(): string {
+    return (this.fxPosCount * 100 / this.fxCount ).toFixed(1)+'%'
+  }
 
   // toString(): string {
   //   let result = ''
@@ -48,7 +57,6 @@ export default class AnalysisBean {
     this.neg_60_count += bean.neg_60_count
     this.fxCount += bean.fxCount
     this.fxResult += bean.fxResult
-
 
     this.fxCount_1 += bean.fxCount_1
     this.fxResult_1 += bean.fxResult_1

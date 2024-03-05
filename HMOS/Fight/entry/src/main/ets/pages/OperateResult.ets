@@ -5,6 +5,7 @@ import OperateBean from '../database_v2/bean/OperateBean'
 import ResultDay from '../views/ResultDay'
 import ResultEach from '../views/ResultEach'
 import ResultMonth from '../views/ResultMonth'
+import ResultMonthType from '../views/ResultMonthType'
 import ResultType from '../views/ResultType'
 import ResultType_v2 from '../views/ResultType_v2'
 
@@ -85,11 +86,17 @@ struct OperateResult {
 
         TabContent() {
           if (this.operateList !== null) {
-            // ResultType({ operateList: this.operateList })
             ResultType_v2({ operateList: this.operateList })
           }
         }
         .tabBar(this.TabBuilder('每种详情', 1, $r('app.media.fighting')))
+
+        TabContent() {
+          if (this.operateList !== null) {
+            ResultMonthType({ operateList: this.operateList})
+          }
+        }
+        .tabBar(this.TabBuilder('种类盈亏', 2, $r('app.media.fighting')))
 
         // TabContent() {
         //   if (this.dayOperateList !== null) {
@@ -103,7 +110,7 @@ struct OperateResult {
             ResultEach({ operateList: this.operateList })
           }
         }
-        .tabBar(this.TabBuilder('每笔详情', 2, $r('app.media.fighting')))
+        .tabBar(this.TabBuilder('每笔详情', 3, $r('app.media.fighting')))
       }
       .height('95%')
       .width('100%')

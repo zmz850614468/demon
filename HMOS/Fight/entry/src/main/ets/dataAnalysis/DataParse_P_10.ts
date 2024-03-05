@@ -4,7 +4,7 @@ import AnalysisBean from './bean/AnalysisBean'
 import MonthBasicDataBean from './bean/MonthBasicDataBean'
 import DataParse from './DataParse'
 import Data_P_10_2023 from './data/2023/Data_P_10_2023'
-import Data_P_10_2024 from './data/2024/Data_IO_P_2024'
+import Data_P_10_2024 from './data/2024/Data_P_10_2024'
 
 /**
  * IO 数据解析

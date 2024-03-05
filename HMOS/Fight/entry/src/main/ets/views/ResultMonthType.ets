@@ -1,9 +1,10 @@
 import OperateBean from '../database_v2/bean/OperateBean'
 import HashMap from '@ohos.util.HashMap'
+import { ResultBean } from './ResultType_v2'
 
 @Preview
 @Component
-export default struct ResultType_v2 {
+export default struct ResultMonthType {
   operateList: Array<OperateBean> = null
   map: HashMap<string, ResultBean> = new HashMap()
   @State resultList: Array<ResultBean> = []
@@ -19,26 +20,19 @@ export default struct ResultType_v2 {
       if (!this.lastMonth) {
         this.lastMonth = item.getMonth()
       } else if (this.lastMonth !== item.getMonth()) {
-        this.lastMonth = item.getMonth()
         this.currentMonthIndex++
-        let result: ResultBean = null
-        if (this.currentMonthIndex == 1) {
-          result = new ResultBean()
-          result.name = '当前月'
-        } else if (this.currentMonthIndex == 3) {
-          result = new ResultBean()
-          result.name = '前三个月'
-        } else if (this.currentMonthIndex == 6) {
-          result = new ResultBean()
-          result.name = '前六个月'
-        }
-        if (result) {
-          this.map.forEach((value, key) => {
-            result.resultList.push(value.copy())
-          })
-          result.order()
-          this.resultList.push(result)
-        }
+        let result: ResultBean = new ResultBean()
+        result.name = this.lastMonth
+
+        this.lastMonth = item.getMonth()
+
+        this.map.forEach((value, key) => {
+          result.resultList.push(value.copy())
+        })
+        result.order()
+        this.resultList.push(result)
+
+        this.map.clear()
       }
 
       if (!this.map.hasKey(item.name)) {
@@ -51,20 +45,6 @@ export default struct ResultType_v2 {
         item.result > 0 ? bean.posCount++ : bean.negCount++
     })
 
-    let result = new ResultBean()
-    result.name = '所有记录'
-    // this.map.forEach((value, key) => {
-    //   result.resultList.push(value)
-    // })
-    result.resultList.push(this.map.get('液化气'))
-    result.resultList.push(this.map.get('棕榈油'))
-    result.resultList.push(this.map.get('菜油'))
-    result.resultList.push(this.map.get('菜粕'))
-    // result.resultList.push(this.map.get('豆粕'))
-    if (this.map.hasKey('橡胶')) {
-      result.resultList.push(this.map.get('橡胶'))
-    }
-    this.resultList.push(result)
   }
 
   build() {
@@ -92,7 +72,6 @@ export default struct ResultType_v2 {
           }
         })
       }
-      // .divider({ strokeWidth: 0.3, color: $r('app.color.gray'), startMargin: 10, endMargin: 10 })
     }
     .width('100%')
     .height('100%')
@@ -155,38 +134,5 @@ export default struct ResultType_v2 {
   .height(40)
   .textAlign(TextAlign.Center)
   .fontColor($r('app.color.black'))
-}
-
-export class ResultBean {
-  name: string
-  posCount: number = 0
-  negCount: number = 0
-  result: number = 0
-  resultList: Array<ResultBean> = [] // 显示结果集
-
-  /**
-   * 对 resultList 进行排序
-   */
-  order() {
-    let orderArr: Array<string> = ['液化气', '塑料','棕榈油', '菜油', '菜粕', '橡胶']
-    orderArr.reverse().forEach((item) => {
-      for (let i = 0; i < this.resultList.length; i++) {
-        if (item === this.resultList[i].name) {
-          this.resultList.unshift(this.resultList.splice(i, 1)[0])
-          break
-        }
-      }
-    })
-  }
-
-  copy(): ResultBean {
-    let bean = new ResultBean()
-    bean.name = this.name
-    bean.posCount = this.posCount
-    bean.negCount = this.negCount
-    bean.result = this.result
-
-    return bean
-  }
 }
 

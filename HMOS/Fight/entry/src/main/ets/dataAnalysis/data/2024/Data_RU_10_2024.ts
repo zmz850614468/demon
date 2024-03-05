@@ -16,7 +16,7 @@ export default class Data_RU_10_2024 {
     // basicList.push(new MonthBasicDataBean('24', '5', Data_RU_10_2024.month_5))
     // basicList.push(new MonthBasicDataBean('24', '4', Data_RU_10_2024.month_4))
     // basicList.push(new MonthBasicDataBean('24', '3', Data_RU_10_2024.month_3))
-    // basicList.push(new MonthBasicDataBean('24', '2', Data_RU_10_2024.month_2))
+    basicList.push(new MonthBasicDataBean('24', '2', Data_RU_10_2024.month_2))
     basicList.push(new MonthBasicDataBean('24', '1', Data_RU_10_2024.month_1))
 
     return basicList;
@@ -32,7 +32,33 @@ export default class Data_RU_10_2024 {
   // static month_5: string =
   // static month_4: string =
   // static month_3: string =
-  // static month_2: string =
+  static month_2: string =
+  "/\t31\t21.30\t1\t13395\t13380\n"+
+  "\t1\t10.00\t-1\t13380\t13455\n"+
+  "\t1\t14.05\t1\t13430\t13380\n"+
+  "*\t1\t14.45\t-1\t13380\t13160\n"+
+  "/\t2\t14.15\t1\t13160\t13340\n"+
+  "\t5\t9.20\t1\t13415\t13382\n"+
+  "-1\t6\t9.20\t-1\t13380\t13400\n"+
+  "\t6\t9.40\t1\t13400\t13380\n"+
+  "\t6\t13.35\t1\t13435\t13393\n"+
+  "\t6\t14.35\t-1\t13335\t13250\n"+
+  "\t8\t14.05\t1\t13250\t13365\n"+
+  "\t20\t14.55\t-1\t13555\t13555\n"+
+  "\t21\t10.55\t1\t13555\t13530\n"+
+  "\t21\t21.10\t1\t13560\t13725\n"+
+  "\t23\t11.25\t1\t13780\t13755\n"+
+  "*\t23\t23.00\t-1\t13755\t13750\n"+
+  "/\t26\t9.20\t1\t73750\t73735\n"+
+  "\t26\t10.00\t-1\t13735\t13900\n"+
+  "\t26\t21.10\t1\t13900\t13990\n"+
+  "/\t26\t22.10\t-1\t13990\t13955\n"+
+  "\t27\t11.15\t1\t13955\t13920\n"+
+  "\t27\t21.40\t-1\t13920\t13990\n"+
+  "\t28\t11.25\t1\t13990\t13925\n"+
+  "\t28\t14.35\t-1\t13925\t13915\n"+
+  "\t29\t14.25\t1\t13935\t13830"
+  
   static month_1: string =
     "/\t2\t9.20\t-1\t14455\t14255\n" +
     "*\t2\t13.55\t1\t14255\t14230\n" +

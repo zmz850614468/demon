@@ -31,6 +31,7 @@ struct Operate {
     this.initData()
 
     this.map.set('液化气', 20)
+    this.map.set('塑料', 5)
   }
 
   private async initData() {
@@ -150,7 +151,7 @@ struct Operate {
 
     let dayOperateTable = new BaseTable_v2(DayOperateBean.TABLE_NAME, DayOperateBean.SQL, DayOperateBean.COLUMNS, (b: boolean) => {
       dayOperateTable.insertData(bean, (id) => {
-        Toast.show('天数据添加成功', 300)
+        // Toast.show('数据添加成功', 300)
         OperateDataModel.getInstance().refreshData()
       })
     })
@@ -223,7 +224,7 @@ struct Operate {
   })
 
   build() {
-    Stack() {
+    // Stack() {
       Column() {
         Column() {
           Text("当前操作")
@@ -253,9 +254,9 @@ struct Operate {
                 })
               }))
             })
-          }
+          }.layoutWeight(1)
         }.width('100%')
-        .height('94%')
+        .layoutWeight(1)
 
         Row() {
           Text("计算保存")
@@ -268,7 +269,7 @@ struct Operate {
             .borderColor($r("app.color.gray"))
             .onClick((e) => {
               this.calAndSave()
-              Toast.show('数据缓存成功')
+              // Toast.show('数据缓存成功')
             })
 
           Text("确认添加")
@@ -298,9 +299,9 @@ struct Operate {
         }.width('100%')
         .height('6%')
         .padding({ left: 15, right: 15, top: 0, bottom: 5 })
-      }
+      }.height('100%')
 
-    }
+    // }
   }
 
   /**

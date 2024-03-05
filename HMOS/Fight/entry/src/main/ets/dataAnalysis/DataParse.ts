@@ -30,9 +30,17 @@ export default class DataParse {
       }
 
       // 反向操作数据
-      if (item.type === '/' || item.type === '0') {
+      /**
+       * / 旧形式反向操作
+       * // 新形式反向操作
+       * 0 已经被弃用的形式
+       */
+      if (item.type === '/' || item.type === '//' || item.type === '0') {
         bean.fxCount++
         bean.fxResult += item.result
+        if (item.result > 0) {
+          bean.fxPosCount++
+        }
       } else if (item.type === '-1') {
         bean.fxCount_1++
         bean.fxResult_1 += item.result

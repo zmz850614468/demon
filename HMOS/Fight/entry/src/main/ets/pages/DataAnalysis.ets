@@ -14,6 +14,7 @@ import DataParse_PG_10 from '../dataAnalysis/DataParse_PG_10';
 import pasteboard from '@ohos.pasteboard';
 import { Types } from '../constant/TypeConstant'
 import DataParse_RU_10 from '../dataAnalysis/DataParse_RU_10';
+import DataParse_L_10 from '../dataAnalysis/DataParse_L_10';
 
 @Entry
 @Component
@@ -71,6 +72,10 @@ struct DataAnalysis {
         this.analysisList = new DataParse_RU_10().getAnalysis()
         this.recordResult = DataParse_RU_10.record
         break
+      case 'L-10':
+        this.analysisList = new DataParse_L_10().getAnalysis()
+        this.recordResult = DataParse_L_10.record
+        break
 
       default:
         Toast.show('不存在的类型')
@@ -93,6 +98,7 @@ struct DataAnalysis {
       // /类型  反向操作结果
       this.totalBean.fxCount += item.fxCount
       this.totalBean.fxResult += item.fxResult
+      this.totalBean.fxPosCount += item.fxPosCount
 
       // -1类型  反向操作结果
       this.totalBean.fxCount_1 += item.fxCount_1
@@ -306,7 +312,7 @@ struct ItemView {
         // }.width('100%')
         // .height('33%')
         Row() {
-          Text('数量(/):' + this.item.fxCount)
+          Text('数量-胜率(/):' + this.item.fxCount + '-' + this.item.getFxPercent())
             .fontSize(16)
             .width('50%')
             .height('100%')

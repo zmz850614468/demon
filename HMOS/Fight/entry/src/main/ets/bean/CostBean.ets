@@ -11,6 +11,7 @@ export const costDataList: CostBean[] = [
   { name: "菜粕-RM", cost: 3.3 },
   { name: "豆油-Y", cost: 5.5 },
   { name: "豆粕-M", cost: 3.3 },
+  { name: "塑料-L", cost: 2.2 },
 ]
 
 export function getCost(name: string): number {

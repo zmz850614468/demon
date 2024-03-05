@@ -39,8 +39,17 @@ export default class OperateBean implements DBBaseBean {
     return (date.getMonth() + 1) + "-" + date.getDate()
   }
 
+  // getMonth(): string {
+  //   let date = new Date(this.timeStamp)
+  //   return date.getFullYear() + "-" + (date.getMonth() + 1)
+  // }
+
+  /**
+   * 1月-2024年
+   * @returns
+   */
   getMonth(): string {
     let date = new Date(this.timeStamp)
-    return date.getFullYear() + "-" + (date.getMonth() + 1)
+    return (date.getMonth() + 1) + "月 - " + date.getFullYear() + '年'
   }
 }

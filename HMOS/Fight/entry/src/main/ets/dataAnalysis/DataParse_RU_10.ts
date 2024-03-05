@@ -38,9 +38,9 @@ export default class DataParse_RU_10 {
       DataParse_RU_10.record.dealMonthData(DataParse_RU_10.analysiclist)
 
       // 1手 对应 0.5
-      DataParse_RU_10.analysiclist.forEach((item) => {
-        item.update(0.5)
-      })
+      // DataParse_RU_10.analysiclist.forEach((item) => {
+      //   item.update(0.5)
+      // })
     }
     return DataParse_RU_10.analysiclist
   }
