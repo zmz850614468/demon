@@ -30,7 +30,7 @@ export struct SingleSelectDialog {
     Column() {
       Column() {
         Text(this.title)
-          .fontSize(19)
+          .fontSize(18)
           .margin({ left: 0, right: 0, top: 10, bottom: 0 })
           .width('100%')
           .textAlign(TextAlign.Center)
@@ -38,12 +38,21 @@ export struct SingleSelectDialog {
       .width('90%')
 
       List({ space: 1 }) {
-        ForEach(this.itemList, (item) => {
+        ForEach(this.itemList, (item, index) => {
           ListItem() {
-            Text(item)
-              .fontSize(17)
-              .fontColor(this.selected == item ? $r('app.color.red') : $r('app.color.black'))
-              .height(45)
+            Column() {
+              if (index > 0) {
+                Blank()
+                  .width('95%')
+                  .height(0.3)
+                  .color($r('app.color.gray'))
+              }
+
+              Text(item)
+                .fontSize(16)
+                .fontColor(this.selected == item ? $r('app.color.red') : $r('app.color.black'))
+                .height(45)
+            }
           }
           .width('100%')
           .onClick((e) => {

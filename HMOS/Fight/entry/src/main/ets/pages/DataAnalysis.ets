@@ -100,9 +100,10 @@ struct DataAnalysis {
       this.totalBean.fxResult += item.fxResult
       this.totalBean.fxPosCount += item.fxPosCount
 
-      // -1类型  反向操作结果
+      // //类型  反向操作结果
       this.totalBean.fxCount_1 += item.fxCount_1
       this.totalBean.fxResult_1 += item.fxResult_1
+      this.totalBean.fxPosCount_1 += item.fxPosCount_1
     })
   }
 
@@ -337,14 +338,14 @@ struct ItemView {
 
         if (this.item.fxCount_1 > 0) {
           Row() {
-            Text('数量(-1):' + this.item.fxCount_1)
+            Text('数量-胜率(//):' + this.item.fxCount_1 + '-' + this.item.getFx_1Percent())
               .fontSize(16)
               .width('50%')
               .height('100%')
               .textAlign(TextAlign.Center)
 
             Row() {
-              Text('结果(-1):')
+              Text('结果(//):')
                 .fontSize(17)
                 .height('100%')
               Text(this.item.fxResult_1.toFixed(0))

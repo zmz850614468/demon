@@ -78,7 +78,7 @@ public class OpencvUIControl {
     private Bitmap preBitmap;
 
 //    private int resId = R.drawable.line_13;
-    private int resId = R.drawable.diliver_2;
+    private int resId = R.drawable.test_2;
 
     public OpencvUIControl(Activity activity) {
         this.activity = activity;

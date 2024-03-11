@@ -58,9 +58,9 @@ export default struct ResultType_v2 {
     // })
     result.resultList.push(this.map.get('液化气'))
     result.resultList.push(this.map.get('棕榈油'))
+    result.resultList.push(this.map.get('塑料'))
     result.resultList.push(this.map.get('菜油'))
     result.resultList.push(this.map.get('菜粕'))
-    // result.resultList.push(this.map.get('豆粕'))
     if (this.map.hasKey('橡胶')) {
       result.resultList.push(this.map.get('橡胶'))
     }
@@ -168,7 +168,7 @@ export class ResultBean {
    * 对 resultList 进行排序
    */
   order() {
-    let orderArr: Array<string> = ['液化气', '塑料','棕榈油', '菜油', '菜粕', '橡胶']
+    let orderArr: Array<string> = ['液化气', '棕榈油', '塑料', '菜油', '菜粕', '橡胶']
     orderArr.reverse().forEach((item) => {
       for (let i = 0; i < this.resultList.length; i++) {
         if (item === this.resultList[i].name) {

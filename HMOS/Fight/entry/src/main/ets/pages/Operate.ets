@@ -26,6 +26,7 @@ struct Operate {
   @State negCount: number = 0
   @State poundage: number = 0
   map: HashMap<string, number> = new HashMap() // 实际数量:默认都是10倍数量
+  @State updateCount: number = 0
 
   aboutToAppear() {
     this.initData()
@@ -55,6 +56,7 @@ struct Operate {
     }
   }
 
+
   /**
    * 计算并保存缓存数据
    */
@@ -63,8 +65,8 @@ struct Operate {
     this.negCount = 0
     this.operateResult = 0
     this.poundage = 0
-    let lastIndex = 0 // 最后一个买入不为0的数据
-    let emptyArray = []
+
+    // 1.计算所有结果
     this.operateList.forEach((bean, index) => {
       if (bean.outPrice > 0) {
         let count = this.map.get(bean.name) ? this.map.get(bean.name) : 10
@@ -77,29 +79,39 @@ struct Operate {
         this.operateResult += bean.result
         this.poundage += bean.hands * getCost(bean.name)
       }
-      if (bean.inPrice > 0) {
-        lastIndex = index
+    })
+
+    // 2.未卖出的上移
+    let size = this.operateList.length
+    let index = size - 1
+    for (let i = size - 1; i >= 0; i--) {
+      let bean = this.operateList[index]
+      if (bean.inPrice > 0 && bean.outPrice == 0) {
+        this.operateList.unshift(this.operateList.splice(index, 1)[0])
+      } else {
+        index--
       }
+    }
+
+    // 3.未买入的上移
+    index = size - 1
+    for (let i = size - 1; i >= 0; i--) {
+      let bean = this.operateList[index]
       if (bean.inPrice == 0) {
-        emptyArray.push(index)
+        this.operateList.unshift(this.operateList.splice(index, 1)[0])
+      } else {
+        index--
       }
-    })
+    }
 
-    // 空数据全部往后推
-    emptyArray.reverse()
-    emptyArray.forEach((index) => {
-      if (index < lastIndex) {
-        this.operateList.push(this.operateList.splice(index, 1)[0])
-      }
-    })
-
-    // if (emptyArray.length != this.bestCombination.length) {
-    // 需要添加空数据
-    let length = this.operateList.length
+    // 4.添加缺失的
     this.bestCombination.forEach((bean) => {
       if (bean.hands > 0) {
         let has = false
-        for (let i = length - emptyArray.length; i < length; i++) {
+        for (let i = 0; i < this.operateList.length; i++) {
+          if (this.operateList[i].inPrice > 0) {
+            break
+          }
           if (bean.name === this.operateList[i].name) {
             has = true
             break
@@ -107,28 +119,75 @@ struct Operate {
         }
         // 数据不存在，则添加
         if (!has) {
-          this.operateList.push(this.getNewBean(bean.name, bean.hands))
+          this.operateList.unshift(this.getNewBean(bean.name, bean.hands))
         }
       }
     })
-    // }
 
-    // if (this.operateList.length > 0) {
-    //   let bean = this.operateList[this.operateList.length-1]
-    //   if (bean.inPrice > 0) {
-    //     this.operateList.push(this.getNewBean(bean.name, bean.hands))
-    //   }
-    // }
-
-    this.operateList.push(this.operateList.pop())
+    // this.operateList.push(this.operateList.pop())
+    this.updateCount++
     PreferenceModel.save(OPERATE_LIST, JSON.stringify(this.operateList))
   }
 
   /**
-   * 保存 可选择数量 信息
+   * 计算并保存缓存数据
    */
-  // private saveHands() {
-  //   PreferenceModel.save(HANDS_LIST, JSON.stringify(this.handsList))
+  // private calAndSave_() {
+  //   this.posCount = 0
+  //   this.negCount = 0
+  //   this.operateResult = 0
+  //   this.poundage = 0
+  //   let lastIndex = 0 // 最后一个买入不为0的数据
+  //   let emptyArray = []
+  //   this.operateList.forEach((bean, index) => {
+  //     if (bean.outPrice > 0) {
+  //       let count = this.map.get(bean.name) ? this.map.get(bean.name) : 10
+  //       bean.result = (bean.outPrice - bean.inPrice) * bean.hands * count * (bean.type == '买入' ? 1 : -1)
+  //       if (bean.result > 0) {
+  //         this.posCount++
+  //       } else {
+  //         this.negCount++
+  //       }
+  //       this.operateResult += bean.result
+  //       this.poundage += bean.hands * getCost(bean.name)
+  //     }
+  //     if (bean.inPrice > 0) {
+  //       lastIndex = index
+  //     }
+  //     if (bean.inPrice == 0) {
+  //       emptyArray.push(index)
+  //     }
+  //   })
+  //
+  //   // 空数据全部往后推
+  //   emptyArray.reverse()
+  //   emptyArray.forEach((index) => {
+  //     if (index < lastIndex) {
+  //       this.operateList.push(this.operateList.splice(index, 1)[0])
+  //     }
+  //   })
+  //
+  //   // if (emptyArray.length != this.bestCombination.length) {
+  //   // 需要添加空数据
+  //   let length = this.operateList.length
+  //   this.bestCombination.forEach((bean) => {
+  //     if (bean.hands > 0) {
+  //       let has = false
+  //       for (let i = length - emptyArray.length; i < length; i++) {
+  //         if (bean.name === this.operateList[i].name) {
+  //           has = true
+  //           break
+  //         }
+  //       }
+  //       // 数据不存在，则添加
+  //       if (!has) {
+  //         this.operateList.push(this.getNewBean(bean.name, bean.hands))
+  //       }
+  //     }
+  //   })
+  //
+  //   this.operateList.push(this.operateList.pop())
+  //   PreferenceModel.save(OPERATE_LIST, JSON.stringify(this.operateList))
   // }
 
   /**
@@ -200,7 +259,8 @@ struct Operate {
       selected: this.selectBean.name,
       callBack: (selected: string) => {
         this.selectBean.name = selected
-        this.operateList.push(this.operateList.pop())
+        // this.operateList.push(this.operateList.pop())
+        this.updateCount++
       }
     }),
     autoCancel: true,
@@ -225,81 +285,82 @@ struct Operate {
 
   build() {
     // Stack() {
+    Column() {
       Column() {
-        Column() {
-          Text("当前操作")
-            .fontSize(19)
-            .width('100%')
-            .height(50)
-            .textAlign(TextAlign.Center)
+        Text("当前操作")
+          .fontSize(19)
+          .width('100%')
+          .height(50)
+          .textAlign(TextAlign.Center)
 
-          this.resultLayout()
+        this.resultLayout()
 
-          this.inputTitle()
+        this.inputTitle()
 
-          List({ space: 1 }) {
-            ForEach(this.operateList, (item, index) => {
-              ListItem() {
-                this.inputLayout(item)
-              }.gesture(LongPressGesture().onAction(() => {
-                AlertDialog.show({
-                  title: '注意',
-                  message: '确定要删除当前数据吗？',
-                  confirm: {
-                    value: '确定',
-                    action: () => {
-                      this.operateList.splice(index, 1)
-                    },
-                  }
-                })
-              }))
-            })
-          }.layoutWeight(1)
-        }.width('100%')
-        .layoutWeight(1)
-
-        Row() {
-          Text("计算保存")
-            .fontSize(17)
-            .width('50%')
-            .height('100%')
-            .textAlign(TextAlign.Center)
-            .borderWidth(1)
-            .borderRadius(15)
-            .borderColor($r("app.color.gray"))
-            .onClick((e) => {
-              this.calAndSave()
-              // Toast.show('数据缓存成功')
-            })
-
-          Text("确认添加")
-            .fontSize(17)
-            .width('50%')
-            .height('100%')
-            .textAlign(TextAlign.Center)
-            .borderWidth(1)
-            .borderRadius(15)
-            .fontColor($r("app.color.white"))
-            .backgroundColor($r("app.color.red"))
-            .borderColor($r("app.color.gray"))
-            .margin({ left: 8, right: 0, top: 0, bottom: 0 })
-            .onClick((e) => {
+        List({ space: 1 }) {
+          ForEach(this.operateList, (item, index) => {
+            ListItem() {
+              this.inputLayout(item)
+            }.gesture(LongPressGesture().onAction(() => {
               AlertDialog.show({
-                title: "注意",
-                message: "确定添加数据吗？",
+                title: '注意',
+                message: '确定要删除当前数据吗？',
                 confirm: {
-                  value: "确定",
+                  value: '确定',
                   action: () => {
-                    this.ok()
+                    this.operateList.splice(index, 1)
+                    this.updateCount++
                   },
                 }
               })
-            })
+            }))
+          }, (item) => this.updateCount.toString())
+        }.layoutWeight(1)
+      }.width('100%')
+      .layoutWeight(1)
 
-        }.width('100%')
-        .height('6%')
-        .padding({ left: 15, right: 15, top: 0, bottom: 5 })
-      }.height('100%')
+      Row() {
+        Text("计算保存")
+          .fontSize(17)
+          .width('50%')
+          .height('100%')
+          .textAlign(TextAlign.Center)
+          .borderWidth(1)
+          .borderRadius(15)
+          .borderColor($r("app.color.gray"))
+          .onClick((e) => {
+            this.calAndSave()
+            // Toast.show('数据缓存成功')
+          })
+
+        Text("确认添加")
+          .fontSize(17)
+          .width('50%')
+          .height('100%')
+          .textAlign(TextAlign.Center)
+          .borderWidth(1)
+          .borderRadius(15)
+          .fontColor($r("app.color.white"))
+          .backgroundColor($r("app.color.red"))
+          .borderColor($r("app.color.gray"))
+          .margin({ left: 8, right: 0, top: 0, bottom: 0 })
+          .onClick((e) => {
+            AlertDialog.show({
+              title: "注意",
+              message: "确定添加数据吗？",
+              confirm: {
+                value: "确定",
+                action: () => {
+                  this.ok()
+                },
+              }
+            })
+          })
+
+      }.width('100%')
+      .height('6%')
+      .padding({ left: 15, right: 15, top: 0, bottom: 5 })
+    }.height('100%')
 
     // }
   }
@@ -437,7 +498,8 @@ struct Operate {
           .fontColor($r('app.color.black'))
           .onClick((e) => {
             bean.type = bean.type === '买入' ? '卖入' : '买入'
-            this.operateList.push(this.operateList.pop())
+            // this.operateList.push(this.operateList.pop())
+            this.updateCount++
           })
         Text(bean.name)
           .fontSize(15)
