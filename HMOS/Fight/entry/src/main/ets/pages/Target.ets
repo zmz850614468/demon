@@ -257,6 +257,7 @@ struct Target {
                   // this.targetList.pop()
                   this.isAddMonth = false
                   this.refreshData()
+                  this.updateUiCount++
                 }
               }
             })
@@ -398,6 +399,7 @@ struct Target {
               // todo 插入数据库
               this.targetList.unshift(bean)
               this.isAddYear = false
+              this.updateUiCount++
             }
           } else {
             Toast.show('数据不能为空')

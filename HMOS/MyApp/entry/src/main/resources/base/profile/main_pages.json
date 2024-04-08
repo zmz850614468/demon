@@ -15,6 +15,7 @@
     "pages/HWServerless",
     "pages/ReflectDemo",
     "pages/DbDemo",
-    "pages/EmitterDemo"
+    "pages/EmitterDemo",
+    "pages/Layout"
   ]
 }

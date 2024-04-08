@@ -1,6 +1,7 @@
 import DataBean from './bean/DataBean'
 import ArrayList from '@ohos.util.ArrayList'
 import AnalysisBean from './bean/AnalysisBean'
+import TypeResultBean from './bean/TypeResultBean'
 
 export default class DataParse {
 
@@ -48,6 +49,21 @@ export default class DataParse {
           bean.fxPosCount_1++
         }
       }
+
+      // 统计所有类型数据
+      if (bean.type !== "") {
+        if (!bean.typeResultMap.hasKey(item.type)) {
+          bean.typeResultMap.set(item.type, new TypeResultBean(item.type))
+        }
+
+        let result = bean.typeResultMap.get(item.type);
+        result.count++
+        if (item.result > 0) {
+          result.posCount++
+        }
+        result.result += item.result
+      }
+
     })
 
     bean.pay = bean.count * 0.5

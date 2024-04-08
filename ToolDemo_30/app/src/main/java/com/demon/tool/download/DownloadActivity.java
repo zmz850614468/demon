@@ -50,18 +50,22 @@ public class DownloadActivity extends AppCompatActivity {
                     file.mkdirs();
                 }
 
-                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showcase.mp4");
-                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/LightBusiness.mp4");
-                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/pad/NewBusiness.mp4");
+                // 应用下载
+                imgList.add("https://tm.lilanz.com/apk/pdatd50.apk");
+
+//                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showcase.mp4");
+//                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/LightBusiness.mp4");
+//                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/pad/NewBusiness.mp4");
 //                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showcase.mp4");
 //                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/LightBusiness.mp4");
 //                imgList.add("https://oos-fj2.ctyunapi.cn/lilanz/showVideos/20213/pad/NewBusiness.mp4");
 
-                imgList.add("https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/9c16fdfaaf51f3de9ba8ee1194eef01f3a2979a8.jpg");
-                imgList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4277010421,1238629898&fm=11&gp=0.jpg");
-                imgList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1692236545,1995714621&fm=11&gp=0.jpg");
+//                imgList.add("https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/9c16fdfaaf51f3de9ba8ee1194eef01f3a2979a8.jpg");
+//                imgList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4277010421,1238629898&fm=11&gp=0.jpg");
+//                imgList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1692236545,1995714621&fm=11&gp=0.jpg");
 //                DownloadThread downloadThread = new DownloadThread(this, imgList, msgHandle);
 //                downloadThread.start();
+
                 basePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 
                 DownloadDialog dialog = new DownloadDialog(this, R.style.DialogStyleOne);

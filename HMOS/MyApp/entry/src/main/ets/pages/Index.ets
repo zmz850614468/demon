@@ -7,7 +7,7 @@ import window from '@ohos.window';
 
 @Entry
 @Component
-struct Index {
+export struct Index {
   @State hasUserAuth: boolean = false // 用户是否授权
 
   aboutToAppear() {
@@ -66,87 +66,92 @@ struct Index {
   isFloat = false
 
   build() {
-    Column({ space: 3 }) {
-      if (this.hasUserAuth) {
-        Text('账号管理').item()
+    Scroll() {
+      Column({ space: 3 }) {
+        if (this.hasUserAuth) {
+          Text('账号管理').item()
+            .onClick(() => {
+              router.pushUrl({ url: 'pages/AccountManager' })
+            })
+        }
+
+        Text('用户认证').item()
           .onClick(() => {
-            router.pushUrl({ url: 'pages/AccountManager' })
+            router.pushUrl({ url: 'pages/UserAuth' })
+          })
+
+        Text('悬浮窗口').item()
+          .onClick(() => {
+            this.isFloat = !this.isFloat
+            let want = {
+              "deviceId": "", // deviceId为空表示本设备
+              "bundleName": "com.demon.myapp",
+              "abilityName": "EntryAbility",
+              "moduleName": "entry", // moduleName非必选
+              "parameters": {
+                "action": this.isFloat ? "open" : "close"
+              }
+            }
+            let context = getContext(this) as common.UIAbilityContext
+            context.startAbility(want)
+          })
+
+        Text('拖拽效果').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/DragDemo' })
+          })
+
+        Text('网络信息').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/NetInfo' })
+          })
+
+        Text('设备信息').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/DeviceInfo' })
+          })
+
+        Text('位置信息').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/LocationInfo' })
+          })
+
+        Text('显示设备属性').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/DisplayInfo' })
+          })
+
+        Text('剪切板').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/PasteBoard' })
+          })
+
+        Text('华为-serverless').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/HWServerless' })
+          })
+
+        Text('反射机子：Reflect').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/ReflectDemo' })
+          })
+
+        Text('数据库存储').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/DbDemo' })
+          })
+
+        Text('Emitter通信').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/EmitterDemo' })
+          })
+
+        Text('自适应布局').item()
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/Layout' })
           })
       }
-
-      Text('用户认证').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/UserAuth' })
-        })
-
-      Text('悬浮窗口').item()
-        .onClick(() => {
-          this.isFloat = !this.isFloat
-          let want = {
-            "deviceId": "", // deviceId为空表示本设备
-            "bundleName": "com.demon.myapp",
-            "abilityName": "EntryAbility",
-            "moduleName": "entry", // moduleName非必选
-            "parameters": {
-              "action": this.isFloat ? "open" : "close"
-            }
-          }
-          let context = getContext(this) as common.UIAbilityContext
-          context.startAbility(want)
-        })
-
-      Text('拖拽效果').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/DragDemo' })
-        })
-
-      Text('网络信息').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/NetInfo' })
-        })
-
-      Text('设备信息').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/DeviceInfo' })
-        })
-
-      Text('位置信息').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/LocationInfo' })
-        })
-
-      Text('显示设备属性').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/DisplayInfo' })
-        })
-
-      Text('剪切板').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/PasteBoard' })
-        })
-
-      Text('华为-serverless').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/HWServerless' })
-        })
-
-      Text('反射机子：Reflect').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/ReflectDemo' })
-        })
-
-      Text('数据库存储').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/DbDemo' })
-        })
-
-      Text('Emitter通信').item()
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/EmitterDemo' })
-        })
-
     }
-    .width('100%')
   }
 
   test() {

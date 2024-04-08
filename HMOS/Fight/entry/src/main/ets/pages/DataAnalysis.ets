@@ -15,6 +15,7 @@ import pasteboard from '@ohos.pasteboard';
 import { Types } from '../constant/TypeConstant'
 import DataParse_RU_10 from '../dataAnalysis/DataParse_RU_10';
 import DataParse_L_10 from '../dataAnalysis/DataParse_L_10';
+import TypeResultBean from '../dataAnalysis/bean/TypeResultBean';
 
 @Entry
 @Component
@@ -104,6 +105,18 @@ struct DataAnalysis {
       this.totalBean.fxCount_1 += item.fxCount_1
       this.totalBean.fxResult_1 += item.fxResult_1
       this.totalBean.fxPosCount_1 += item.fxPosCount_1
+
+      item.typeResultMap.forEach((val, key: string) => {
+        if (!this.totalBean.typeResultMap.hasKey(key)) {
+          this.totalBean.typeResultMap.set(key, new TypeResultBean(key))
+        }
+
+        let result = this.totalBean.typeResultMap.get(key)
+        result.count += val.count
+        result.posCount += val.posCount
+        result.result += val.result
+      })
+
     })
   }
 
@@ -277,6 +290,34 @@ struct RecordView {
 struct ItemView {
   private item: AnalysisBean
 
+  @Builder
+  showType(type: string) {
+    if (this.item.hasType(type)) {
+      Row() {
+        Text('数量-胜率(' + type + '):' + this.item.getCountByType(type) + '-' + this.item.getPercentByType(type))
+          .fontSize(16)
+          .width('50%')
+          .height('100%')
+          .textAlign(TextAlign.Center)
+
+        Row() {
+          Text('结果(' + type + '):')
+            .fontSize(17)
+            .height('100%')
+          Text(this.item.getResultByType(type).toFixed(0))
+            .fontSize(17)
+            .height('100%')
+            .padding({ left: 0, right: 0, top: 0, bottom: 0 })
+            .fontColor(this.getTipColor(this.item.getResultByType(type), 100000))
+        }
+        .justifyContent(FlexAlign.Center)
+        .width('50%')
+        .height('100%')
+      }.width('100%')
+      .height(30)
+    }
+  }
+
   build() {
     Stack() {
       Column() {
@@ -297,68 +338,40 @@ struct ItemView {
         .height(30)
 
         // Row() {
-        //   Text('正-负:' + this.item.posCount + "-" + this.item.negCount)
+        //   Text('数量-胜率(/):' + this.item.fxCount + '-' + this.item.getFxPercent())
         //     .fontSize(16)
         //     .width('50%')
         //     .height('100%')
         //     .textAlign(TextAlign.Center)
-        //   Text('60(正-负):')
-        //     .fontSize(17)
-        //     .width('25%')
-        //     .height('100%')
-        //     .textAlign(TextAlign.End)
-        //   Text(this.item.pos_60_count + "-" + this.item.neg_60_count)
-        //     .text(this.getTipColor(this.item.pos_60_count - this.item.neg_60_count, 100))
-        //     .textAlign(TextAlign.Start)
+        //
+        //   Row() {
+        //     Text('结果(/):')
+        //       .fontSize(17)
+        //       .height('100%')
+        //     Text(this.item.fxResult.toFixed(0))
+        //       .fontSize(17)
+        //       .height('100%')
+        //       .padding({ left: 0, right: 0, top: 0, bottom: 0 })
+        //       .fontColor(this.getTipColor(this.item.fxResult, 100000))
+        //   }
+        //   .justifyContent(FlexAlign.Center)
+        //   .width('50%')
+        //   .height('100%')
+        //
         // }.width('100%')
-        // .height('33%')
-        Row() {
-          Text('数量-胜率(/):' + this.item.fxCount + '-' + this.item.getFxPercent())
-            .fontSize(16)
-            .width('50%')
-            .height('100%')
-            .textAlign(TextAlign.Center)
+        // .height(30)
 
-          Row() {
-            Text('结果(/):')
-              .fontSize(17)
-              .height('100%')
-            Text(this.item.fxResult.toFixed(0))
-              .fontSize(17)
-              .height('100%')
-              .padding({ left: 0, right: 0, top: 0, bottom: 0 })
-              .fontColor(this.getTipColor(this.item.fxResult, 100000))
-          }
-          .justifyContent(FlexAlign.Center)
-          .width('50%')
-          .height('100%')
-
-        }.width('100%')
-        .height(30)
-
-        if (this.item.fxCount_1 > 0) {
-          Row() {
-            Text('数量-胜率(//):' + this.item.fxCount_1 + '-' + this.item.getFx_1Percent())
-              .fontSize(16)
-              .width('50%')
-              .height('100%')
-              .textAlign(TextAlign.Center)
-
-            Row() {
-              Text('结果(//):')
-                .fontSize(17)
-                .height('100%')
-              Text(this.item.fxResult_1.toFixed(0))
-                .fontSize(17)
-                .height('100%')
-                .padding({ left: 0, right: 0, top: 0, bottom: 0 })
-                .fontColor(this.getTipColor(this.item.fxResult_1, 100000))
-            }
-            .justifyContent(FlexAlign.Center)
-            .width('50%')
-            .height('100%')
-          }.width('100%')
-          .height(30)
+        if (this.item.hasType('.')) {
+          this.showType('.')
+        }
+        if (this.item.hasType('/')) {
+          this.showType('/')
+        }
+        if (this.item.hasType('t')) {
+          this.showType('t')
+        }
+        if (this.item.hasType('-1')) {
+          this.showType('-1')
         }
 
         Row() {
@@ -429,4 +442,5 @@ struct ItemView {
   .textAlign(TextAlign.Start)
   .fontColor(value)
 }
+
 
