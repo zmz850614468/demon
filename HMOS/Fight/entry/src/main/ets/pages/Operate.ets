@@ -27,6 +27,7 @@ struct Operate {
   @State poundage: number = 0
   map: HashMap<string, number> = new HashMap() // 实际数量:默认都是10倍数量
   @State updateCount: number = 0
+  operateTypeList: Array<string> = [] // 操作类型 常规 .  / -1  t
 
   aboutToAppear() {
     this.initData()
@@ -130,67 +131,6 @@ struct Operate {
   }
 
   /**
-   * 计算并保存缓存数据
-   */
-  // private calAndSave_() {
-  //   this.posCount = 0
-  //   this.negCount = 0
-  //   this.operateResult = 0
-  //   this.poundage = 0
-  //   let lastIndex = 0 // 最后一个买入不为0的数据
-  //   let emptyArray = []
-  //   this.operateList.forEach((bean, index) => {
-  //     if (bean.outPrice > 0) {
-  //       let count = this.map.get(bean.name) ? this.map.get(bean.name) : 10
-  //       bean.result = (bean.outPrice - bean.inPrice) * bean.hands * count * (bean.type == '买入' ? 1 : -1)
-  //       if (bean.result > 0) {
-  //         this.posCount++
-  //       } else {
-  //         this.negCount++
-  //       }
-  //       this.operateResult += bean.result
-  //       this.poundage += bean.hands * getCost(bean.name)
-  //     }
-  //     if (bean.inPrice > 0) {
-  //       lastIndex = index
-  //     }
-  //     if (bean.inPrice == 0) {
-  //       emptyArray.push(index)
-  //     }
-  //   })
-  //
-  //   // 空数据全部往后推
-  //   emptyArray.reverse()
-  //   emptyArray.forEach((index) => {
-  //     if (index < lastIndex) {
-  //       this.operateList.push(this.operateList.splice(index, 1)[0])
-  //     }
-  //   })
-  //
-  //   // if (emptyArray.length != this.bestCombination.length) {
-  //   // 需要添加空数据
-  //   let length = this.operateList.length
-  //   this.bestCombination.forEach((bean) => {
-  //     if (bean.hands > 0) {
-  //       let has = false
-  //       for (let i = length - emptyArray.length; i < length; i++) {
-  //         if (bean.name === this.operateList[i].name) {
-  //           has = true
-  //           break
-  //         }
-  //       }
-  //       // 数据不存在，则添加
-  //       if (!has) {
-  //         this.operateList.push(this.getNewBean(bean.name, bean.hands))
-  //       }
-  //     }
-  //   })
-  //
-  //   this.operateList.push(this.operateList.pop())
-  //   PreferenceModel.save(OPERATE_LIST, JSON.stringify(this.operateList))
-  // }
-
-  /**
    * 保存数据库数据
    */
   private async ok() {
@@ -252,6 +192,20 @@ struct Operate {
     return bean
   }
 
+  selectOperateTypeController: CustomDialogController = new CustomDialogController({
+    builder: SingleSelectDialog({
+      title: '请选择操作类型',
+      itemList: this.operateTypeList,
+      selected: this.selectBean.operateType,
+      callBack: (selected: string) => {
+        this.selectBean.operateType = selected
+        this.updateCount++
+      }
+    }),
+    autoCancel: true,
+    alignment: DialogAlignment.Bottom,
+    offset: { dx: 0, dy: -20 }
+  })
   selectTypeDialogController: CustomDialogController = new CustomDialogController({
     builder: SingleSelectDialog({
       title: '请选择品种',
@@ -460,13 +414,19 @@ struct Operate {
         .fontColor($r('app.color.black'))
       Text('品种')
         .fontSize(15)
-        .width('30%')
+        .width('21%')
+        .textAlign(TextAlign.Center)
+        .height('100%')
+        .fontColor($r('app.color.black'))
+      Text('类型')
+        .fontSize(15)
+        .width('12%')
         .textAlign(TextAlign.Center)
         .height('100%')
         .fontColor($r('app.color.black'))
       Text('手')
         .fontSize(15)
-        .width('15%')
+        .width('12%')
         .textAlign(TextAlign.Center)
         .height('100%')
         .fontColor($r('app.color.black'))
@@ -503,7 +463,7 @@ struct Operate {
           })
         Text(bean.name)
           .fontSize(15)
-          .width('30%')
+          .width('21%')
           .textAlign(TextAlign.Center)
           .height('100%')
           .fontColor($r('app.color.black'))
@@ -512,9 +472,31 @@ struct Operate {
             this.isSelectType = true
             this.selectTypeDialogController.open()
           })
+
+        Text(bean.operateType)
+          .fontSize(15)
+          .width('12%')
+          .textAlign(TextAlign.Center)
+          .height('100%')
+          .fontColor($r('app.color.black'))
+          .onClick((e) => {
+            this.selectBean = bean
+            if (this.selectBean.name === '液化气' || this.selectBean.name === '塑料') {
+              this.operateTypeList = ['常规', '/', '-1']
+            } else if (this.selectBean.name === '纸浆' || this.selectBean.name === '豆油') {
+              this.operateTypeList = ['.', 't']
+            } else if (this.selectBean.name === '菜油') {
+              this.operateTypeList = ['/', '.', 't']
+            } else {
+              this.operateTypeList = ['常规', '/', '-1', '.', 't']
+            }
+            this.selectOperateTypeController.open()
+            // this.isSelectType = false
+          })
+
         Text(bean.hands.toString())
           .fontSize(15)
-          .width('15%')
+          .width('12%')
           .textAlign(TextAlign.Center)
           .height('100%')
           .fontColor($r('app.color.black'))

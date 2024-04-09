@@ -41,7 +41,7 @@ export struct SingleSelectDialog {
         ForEach(this.itemList, (item, index) => {
           ListItem() {
             Column() {
-              if (index > 0) {
+              if (this.itemList.length >= 6 ? index > 1 : index > 0) {
                 Blank()
                   .width('95%')
                   .height(0.3)
@@ -62,9 +62,11 @@ export struct SingleSelectDialog {
             this.controller.close();
           })
         })
-      }.padding(10)
+      }.padding({ left: 0, right: 0, top: 10, bottom: 10 })
+      .lanes(this.itemList.length >= 6 ? 2 : 1)
 
     }
+    .width('90%')
     .justifyContent(FlexAlign.Center)
     .padding(12)
   }

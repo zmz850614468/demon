@@ -133,6 +133,7 @@ export struct HandsSelectDialog {
       .rowsGap(10)
       .columnsGap(10)
     }
+    .width('90%')
     .justifyContent(FlexAlign.Center)
     .padding(12)
   }

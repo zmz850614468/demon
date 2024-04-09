@@ -18,6 +18,8 @@ export default class OperateBean implements DBBaseBean {
   inPrice: number = 0
   outPrice: number = 0
 
+  operateType: string = '常规' // 操作类型 常规 .  / -1  t
+
   /**
    * 解析数据库返回的数据信息
    * @param resultSet
@@ -53,3 +55,6 @@ export default class OperateBean implements DBBaseBean {
     return (date.getMonth() + 1) + "月 - " + date.getFullYear() + '年'
   }
 }
+
+
+
