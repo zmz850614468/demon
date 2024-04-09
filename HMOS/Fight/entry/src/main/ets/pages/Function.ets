@@ -101,6 +101,12 @@ struct Function {
         }.padding({ left: 10, right: 10, top: 20, bottom: 20 })
       }
 
+      if (!this.isOn) {
+        Image($r('app.media.operate'))
+          .width('98%')
+          .margin({ left: '1%', right: '1%', top: 15, bottom: 0 })
+      }
+
       Toggle({ type: ToggleType.Checkbox, isOn: this.isOn })
         .onChange((isOn) => {
           this.toggleFloat(isOn)
