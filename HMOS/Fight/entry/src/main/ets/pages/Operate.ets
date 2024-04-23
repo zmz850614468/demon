@@ -196,7 +196,7 @@ struct Operate {
     builder: SingleSelectDialog({
       title: '请选择操作类型',
       itemList: this.operateTypeList,
-      selected: this.selectBean.operateType,
+      selected:  this.selectBean.operateType,
       callBack: (selected: string) => {
         this.selectBean.operateType = selected
         this.updateCount++
@@ -206,6 +206,7 @@ struct Operate {
     alignment: DialogAlignment.Bottom,
     offset: { dx: 0, dy: -20 }
   })
+
   selectTypeDialogController: CustomDialogController = new CustomDialogController({
     builder: SingleSelectDialog({
       title: '请选择品种',
