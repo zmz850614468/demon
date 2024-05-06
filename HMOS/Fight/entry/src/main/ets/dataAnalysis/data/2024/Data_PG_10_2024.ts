@@ -15,7 +15,7 @@ export default class Data_PG_10_2024 {
     // basicList.push(new MonthBasicDataBean('24', '7', Data_PG_10_2024.month_7))
     // basicList.push(new MonthBasicDataBean('24', '6', Data_PG_10_2024.month_6))
     // basicList.push(new MonthBasicDataBean('24', '5', Data_PG_10_2024.month_5))
-    // basicList.push(new MonthBasicDataBean('24', '4', Data_PG_10_2024.month_4))
+    basicList.push(new MonthBasicDataBean('24', '4', Data_PG_10_2024.month_4))
     basicList.push(new MonthBasicDataBean('24', '3', Data_PG_10_2024.month_3))
     basicList.push(new MonthBasicDataBean('24', '2', Data_PG_10_2024.month_2))
     basicList.push(new MonthBasicDataBean('24', '1', Data_PG_10_2024.month_1))
@@ -32,7 +32,40 @@ export default class Data_PG_10_2024 {
   // static month_7: string =
   // static month_6: string =
   // static month_5: string =
-  // static month_4: string =
+  static month_4: string =
+    "\t29\t23.00\t1\t4652\t4726\n" +
+    "/\t2\t9.10\t-1\t4726\t4722\n" +
+    "\t2\t10.55\t1\t4722\t4780\n" +
+    "/\t2\t21.50\t-1\t4780\t4811\n" +
+    "\t3\t9.20\t1\t4811\t4785\n" +
+    "-1\t3\t14.25\t-1\t4785\t4798\n" +
+    "\t8\t9.10\t-1\t4731\t4782\n" +
+    "\t9\t9.20\t1\t4786\t4746\n" +
+    "\t9\t22.00\t-1\t4751\t4733\n" +
+    "\t11\t11.25\t1\t4732\t4686\n" +
+    "\t11\t21.10\t-1\t4686\t4708\n" +
+    "\t12\t13.55\t1\t4708\t4672\n" +
+    "\t15\t14.05\t-1\t4690\t4748\n" +
+    "\t16\t9.10\t1\t4748\t4691\n" +
+    ".\t16\t21.10\t1\t4691\t4744\n" +
+    "\t16\t23.00\t1\t4744\t4744\n" +
+    "\t17\t22.40\t-1\t4731\t4742\n" +
+    "/\t19\t9.50\t-1\t4742\t4686\n" +
+    "/\t19\t21.10\t1\t4638\t4649\n" +
+    "\t22\t13.35\t-1\t4613\t4596\n" +
+    "/\t22\t21.30\t1\t4596\t4616\n" +
+    "\t23\t9.20\t1\t4634\t4601\n" +
+    "-1\t23\t13.35\t-1\t4601\t4603\n" +
+    "\t23\t15.00\t-1\t4603\t4609\n" +
+    "\t24\t11.15\t1\t4608\t4619\n" +
+    "\t25\t21.20\t-1\t4625\t4628\n" +
+    "\t26\t10.55\t1\t4643\t4611\n" +
+    "\t29\t9.10\t-1\t4611\t4660\n" +
+    "\t29\t13.35\t1\t4660\t4621\n" +
+    "\t29\t22.20\t-1\t4621\t4598\n" +
+    "/\t30\t9.50\t1\t4598\t4593\n" +
+    "\t30\t10.35\t-1\t4593\t4556"
+
   static month_3: string =
     "\t29\t22.10\t1\t4691\t4767\n" +
     "/\t1\t14.25\t-1\t4767\t4747\n" +

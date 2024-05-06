@@ -43,6 +43,14 @@
         android:background="@drawable/selector"
         android:text="demon：整理可复用例子，有简单demo" />
 
+    <Button
+        android:id="@+id/bt_scan_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector"
+        android:text="扫码附近wifi" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
